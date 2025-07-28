@@ -1,0 +1,205 @@
+// LittleBrand UI Kit - Reset & Global Styles
+// Modern CSS reset and sensible defaults
+
+// Import dependencies for typography variables
+@use 'base' as base
+@use 'typography' as typography
+
+// Box model
+*,
+*::before,
+*::after
+  box-sizing: border-box
+
+// Remove default margins
+body,
+h1, h2, h3, h4, h5, h6,
+p, ul, ol, li,
+figure, figcaption, blockquote,
+dl, dd
+  margin: 0
+
+// Body defaults
+body
+  min-height: 100vh
+  line-height: typography.$line-normal
+  font-family: typography.$font-body
+  color: var(--color-text)
+  background: var(--color-background)
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+
+// Focus styles
+:focus
+  outline: none
+  
+:focus-visible
+  outline: base.$focus-ring-width solid var(--color-focus-ring)
+  outline-offset: base.$focus-ring-offset
+  border-radius: base.$radius-sm
+
+// Selection styles
+::selection
+  background: var(--color-selection-background)
+  color: var(--color-selection-text)
+
+// Links
+a
+  color: var(--color-primary)
+  text-decoration: none
+  
+  &:hover
+    text-decoration: underline
+    
+  &:focus-visible
+    outline: base.$focus-ring-width solid var(--color-focus-ring)
+    outline-offset: base.$focus-ring-offset
+    border-radius: base.$radius-sm
+
+// Lists
+ul, ol
+  padding-left: base.$space-xl
+  
+ul[role="list"],
+ol[role="list"]
+  padding-left: 0
+  list-style: none
+
+li + li
+  margin-top: base.$space-xs
+
+// Images and media
+img,
+picture,
+video,
+canvas,
+svg
+  display: block
+  max-width: 100%
+  height: auto
+
+// Tables
+table
+  border-collapse: collapse
+  width: 100%
+
+// Form elements
+input,
+button,
+textarea,
+select
+  font: inherit
+  color: inherit
+
+// Button reset
+button
+  cursor: pointer
+  background: none
+  border: none
+  padding: 0
+  
+  &:disabled
+    cursor: not-allowed
+    opacity: 0.6
+
+// Remove number input spinners
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button
+  -webkit-appearance: none
+  margin: 0
+
+input[type="number"]
+  -moz-appearance: textfield
+
+// Textarea
+textarea
+  resize: vertical
+  min-height: 6em
+
+// Select
+select
+  cursor: pointer
+
+// Fieldset
+fieldset
+  padding: base.$space-md
+  border: base.$border-thin solid var(--color-border)
+  border-radius: base.$radius-md
+  
+  legend
+    padding: 0 base.$space-sm
+
+// Details/Summary
+details
+  summary
+    cursor: pointer
+    
+    &:focus-visible
+      outline: base.$focus-ring-width solid var(--color-focus-ring)
+      outline-offset: base.$focus-ring-offset
+
+// Dialog
+dialog
+  padding: base.$space-lg
+  border: none
+  border-radius: base.$radius-lg
+  background: var(--color-surface)
+  color: var(--color-text)
+  
+  &::backdrop
+    background: var(--color-modal-backdrop)
+
+// Horizontal rule
+hr
+  height: base.$border-thin
+  border: none
+  background: var(--color-border)
+  margin: base.$space-xl 0
+
+// Address
+address
+  font-style: normal
+
+// Abbreviations
+abbr[title]
+  text-decoration: underline dotted
+  cursor: help
+
+// Mark
+mark
+  background: var(--color-warning-background)
+  color: var(--color-warning-text)
+  padding: 0.125em 0.25em
+  border-radius: base.$radius-sm
+
+// Progress
+progress
+  vertical-align: baseline
+
+// Meter
+meter
+  vertical-align: baseline
+
+// Sub/Sup
+sub,
+sup
+  font-size: 0.75em
+  line-height: 0
+  position: relative
+  vertical-align: baseline
+
+sub
+  bottom: -0.25em
+
+sup
+  top: -0.5em
+
+// Remove animations for users who prefer reduced motion
+@media (prefers-reduced-motion: reduce)
+  *,
+  *::before,
+  *::after
+    animation-duration: 0.01ms !important
+    animation-iteration-count: 1 !important
+    transition-duration: 0.01ms !important
+    scroll-behavior: auto !important

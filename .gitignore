@@ -1,3 +1,12 @@
+# Private context documents
+/context/
+
+# Claude Code files
+.claude/
+claude.json
+.claude-code/
+.claudecode/
+
 # Logs
 logs
 *.log
@@ -81,6 +90,10 @@ out
 # Nuxt.js build / generate output
 .nuxt
 dist
+
+# Vite build output
+/dist-ssr
+*.local
 
 # Gatsby files
 .cache/
