@@ -1,0 +1,185 @@
+// LittleBrand UI Kit - Theme Variables
+// CSS Custom Properties for theming support
+
+// Import dependencies
+@use 'colors' as colors
+@use 'base' as base
+
+// Light Theme (Default)
+:root
+  // === Background Colors ===
+  --color-background: #{colors.$gray-1}
+  --color-surface: white
+  --color-surface-raised: white
+  --color-surface-overlay: #{colors.$gray-a1}
+  
+  // === Border Colors ===
+  --color-border: #{colors.$gray-6}
+  --color-border-subtle: #{colors.$gray-4}
+  --color-border-strong: #{colors.$gray-8}
+  
+  // === Text Colors ===
+  --color-text: #{colors.$gray-12}
+  --color-text-secondary: #{colors.$gray-11}
+  --color-text-tertiary: #{colors.$gray-9}
+  --color-text-disabled: #{colors.$gray-8}
+  
+  // === Brand Colors ===
+  --color-primary: #{colors.$purple-9}
+  --color-primary-hover: #{colors.$purple-10}
+  --color-primary-active: #{colors.$purple-11}
+  --color-primary-subtle: #{colors.$purple-3}
+  --color-primary-text: white
+  
+  --color-secondary: #{colors.$teal-9}
+  --color-secondary-hover: #{colors.$teal-10}
+  --color-secondary-active: #{colors.$teal-11}
+  --color-secondary-subtle: #{colors.$teal-3}
+  --color-secondary-text: white
+  
+  // === State Colors ===
+  // Error
+  --color-error: #{colors.$red-9}
+  --color-error-hover: #{colors.$red-10}
+  --color-error-background: #{colors.$red-2}
+  --color-error-border: #{colors.$red-7}
+  --color-error-text: #{colors.$red-12}
+  
+  // Success
+  --color-success: #{colors.$green-9}
+  --color-success-hover: #{colors.$green-10}
+  --color-success-background: #{colors.$green-2}
+  --color-success-border: #{colors.$green-7}
+  --color-success-text: #{colors.$green-12}
+  
+  // Warning
+  --color-warning: #{colors.$yellow-9}
+  --color-warning-hover: #{colors.$yellow-10}
+  --color-warning-background: #{colors.$yellow-2}
+  --color-warning-border: #{colors.$yellow-7}
+  --color-warning-text: #{colors.$yellow-12}
+  
+  // Info
+  --color-info: #{colors.$blue-9}
+  --color-info-hover: #{colors.$blue-10}
+  --color-info-background: #{colors.$blue-2}
+  --color-info-border: #{colors.$blue-7}
+  --color-info-text: #{colors.$blue-12}
+  
+  // === Focus & Selection ===
+  --color-focus-ring: #{colors.$blue-7}
+  --color-selection-background: #{colors.$blue-a3}
+  --color-selection-text: inherit
+  
+  // === Component-specific ===
+  // Input
+  --color-input-background: white
+  --color-input-border: #{colors.$gray-7}
+  --color-input-border-hover: #{colors.$gray-8}
+  --color-input-border-focus: var(--color-primary)
+  --color-input-placeholder: #{colors.$gray-9}
+  
+  // Button
+  --color-button-ghost-hover: #{colors.$gray-a3}
+  --color-button-ghost-active: #{colors.$gray-a4}
+  
+  // Modal
+  --color-modal-backdrop: #{colors.$gray-a8}
+  
+  // Shadows (using box-shadow, not color)
+  --shadow-sm: #{base.$shadow-sm}
+  --shadow-md: #{base.$shadow-md}
+  --shadow-lg: #{base.$shadow-lg}
+
+// Dark Theme
+[data-theme="dark"]
+  // === Background Colors ===
+  --color-background: #{colors.$gray-dark-1}
+  --color-surface: #{colors.$gray-dark-2}
+  --color-surface-raised: #{colors.$gray-dark-3}
+  --color-surface-overlay: #{colors.$gray-dark-a2}
+  
+  // === Border Colors ===
+  --color-border: #{colors.$gray-dark-6}
+  --color-border-subtle: #{colors.$gray-dark-4}
+  --color-border-strong: #{colors.$gray-dark-8}
+  
+  // === Text Colors ===
+  --color-text: #{colors.$gray-dark-12}
+  --color-text-secondary: #{colors.$gray-dark-11}
+  --color-text-tertiary: #{colors.$gray-dark-9}
+  --color-text-disabled: #{colors.$gray-dark-8}
+  
+  // === Brand Colors ===
+  --color-primary: #{colors.$purple-dark-9}
+  --color-primary-hover: #{colors.$purple-dark-10}
+  --color-primary-active: #{colors.$purple-dark-11}
+  --color-primary-subtle: #{colors.$purple-dark-3}
+  --color-primary-text: white
+  
+  --color-secondary: #{colors.$teal-dark-9}
+  --color-secondary-hover: #{colors.$teal-dark-10}
+  --color-secondary-active: #{colors.$teal-dark-11}
+  --color-secondary-subtle: #{colors.$teal-dark-3}
+  --color-secondary-text: white
+  
+  // === State Colors ===
+  // Error
+  --color-error: #{colors.$red-dark-9}
+  --color-error-hover: #{colors.$red-dark-10}
+  --color-error-background: #{colors.$red-dark-2}
+  --color-error-border: #{colors.$red-dark-7}
+  --color-error-text: #{colors.$red-dark-12}
+  
+  // Success
+  --color-success: #{colors.$green-dark-9}
+  --color-success-hover: #{colors.$green-dark-10}
+  --color-success-background: #{colors.$green-dark-2}
+  --color-success-border: #{colors.$green-dark-7}
+  --color-success-text: #{colors.$green-dark-12}
+  
+  // Warning
+  --color-warning: #{colors.$yellow-dark-9}
+  --color-warning-hover: #{colors.$yellow-dark-10}
+  --color-warning-background: #{colors.$yellow-dark-2}
+  --color-warning-border: #{colors.$yellow-dark-7}
+  --color-warning-text: #{colors.$yellow-dark-12}
+  
+  // Info
+  --color-info: #{colors.$blue-dark-9}
+  --color-info-hover: #{colors.$blue-dark-10}
+  --color-info-background: #{colors.$blue-dark-2}
+  --color-info-border: #{colors.$blue-dark-7}
+  --color-info-text: #{colors.$blue-dark-12}
+  
+  // === Focus & Selection ===
+  --color-focus-ring: #{colors.$blue-dark-7}
+  --color-selection-background: #{colors.$blue-dark-a3}
+  --color-selection-text: inherit
+  
+  // === Component-specific ===
+  // Input
+  --color-input-background: #{colors.$gray-dark-1}
+  --color-input-border: #{colors.$gray-dark-7}
+  --color-input-border-hover: #{colors.$gray-dark-8}
+  --color-input-border-focus: var(--color-primary)
+  --color-input-placeholder: #{colors.$gray-dark-9}
+  
+  // Button
+  --color-button-ghost-hover: #{colors.$gray-dark-a3}
+  --color-button-ghost-active: #{colors.$gray-dark-a4}
+  
+  // Modal
+  --color-modal-backdrop: #{hsla(0, 0%, 0%, 0.7)}
+  
+  // Shadows (darker for dark mode)
+  --shadow-sm: 0 1px 2px hsla(0, 0%, 0%, 0.1)
+  --shadow-md: 0 4px 6px hsla(0, 0%, 0%, 0.15)
+  --shadow-lg: 0 10px 15px hsla(0, 0%, 0%, 0.2)
+
+// === Utility Classes for Theme Toggle ===
+.theme-light
+  color-scheme: light
+  
+.theme-dark
+  color-scheme: dark

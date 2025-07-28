@@ -1,0 +1,62 @@
+{
+  "name": "littlebrand-ui-kit",
+  "version": "0.1.0",
+  "description": "Clean, semantic Vue.js UI kit using Pug & SASS. Zero utility classes, CSS Grid-first, fully themeable.",
+  "type": "module",
+  "files": [
+    "dist",
+    "src/components",
+    "src/styles"
+  ],
+  "main": "./dist/littlebrand-ui.umd.js",
+  "module": "./dist/littlebrand-ui.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/littlebrand-ui.es.js",
+      "require": "./dist/littlebrand-ui.umd.js"
+    },
+    "./style.css": "./dist/style.css"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "echo 'No linting configured yet'",
+    "typecheck": "echo 'No type checking configured yet'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monkeyman1979/littlebrand-ui-kit.git"
+  },
+  "keywords": [
+    "vue",
+    "vue3",
+    "ui-kit",
+    "components",
+    "sass",
+    "pug",
+    "semantic-html",
+    "css-grid"
+  ],
+  "sideEffects": [
+    "*.css",
+    "*.sass"
+  ],
+  "author": "Ian Madrigal",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/monkeyman1979/littlebrand-ui-kit/issues"
+  },
+  "homepage": "https://github.com/monkeyman1979/littlebrand-ui-kit#readme",
+  "peerDependencies": {
+    "vue": "^3.3.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.1",
+    "@vue/compiler-sfc": "^3.5.18",
+    "pug": "^3.0.3",
+    "sass": "^1.89.2",
+    "vite": "^7.0.6",
+    "vue": "^3.5.18"
+  }
+}
