@@ -33,6 +33,16 @@ $line-compact: 1.25
 $line-normal: 1.5
 $line-relaxed: 1.75
 
+// Label Sizes (for buttons, form elements, etc.)
+$label-size-small: 0.75rem    // 12px
+$label-size-base: 0.875rem    // 14px
+$label-size-large: 1rem       // 16px
+
+// Letter Spacing
+$letter-spacing-normal: normal
+$letter-spacing-tight: -0.01em
+$letter-spacing-wide: -0.025em
+
 // Special Display Sizes
 $display-1: clamp(3rem, 5vw + 1rem, 5rem)
 $display-2: clamp(2.5rem, 4vw + 1rem, 4rem)
@@ -94,18 +104,18 @@ p
 
 // Label styles (for form labels, captions, etc.)
 .label
-  font-size: 0.875rem
+  font-size: $label-size-base
   font-family: $font-body
   font-weight: $weight-medium
   line-height: $line-normal
-  letter-spacing: 0.025em
+  letter-spacing: $letter-spacing-tight
   
   &.label-large
-    font-size: 1rem
+    font-size: $label-size-large
     
   &.label-small
-    font-size: 0.75rem
-    letter-spacing: 0.05em
+    font-size: $label-size-small
+    letter-spacing: $letter-spacing-wide
 
 // Code and preformatted text
 code,
@@ -117,13 +127,13 @@ code
   padding: 0.125em 0.25em
   background: var(--color-surface)
   border: 1px solid var(--color-border)
-  border-radius: base.$radius-sm
+  border-radius: base.$radius-1
 
 pre
-  padding: base.$space-md
+  padding: base.$space-4
   background: var(--color-surface)
   border: 1px solid var(--color-border)
-  border-radius: base.$radius-md
+  border-radius: base.$radius-3
   overflow-x: auto
   
   code
@@ -133,7 +143,7 @@ pre
 
 // Blockquotes
 blockquote
-  padding-left: base.$space-lg
+  padding-left: base.$space-6
   border-left: base.$border-thick solid var(--color-border)
   font-style: italic
   color: var(--color-text-secondary)
