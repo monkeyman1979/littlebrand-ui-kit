@@ -1,5 +1,6 @@
 # Private project files
 /context/
+CLAUDE.md
 .claude/
 claude.json
 .claude-code/
