@@ -36,7 +36,7 @@ body
 :focus-visible
   outline: base.$focus-ring-width solid var(--color-focus-ring)
   outline-offset: base.$focus-ring-offset
-  border-radius: base.$radius-1
+  border-radius: base.$radius-xs
 
 // Selection styles
 ::selection
@@ -54,7 +54,7 @@ a
   &:focus-visible
     outline: base.$focus-ring-width solid var(--color-focus-ring)
     outline-offset: base.$focus-ring-offset
-    border-radius: base.$radius-1
+    border-radius: base.$radius-xs
 
 // Lists
 ul, ol
@@ -124,7 +124,7 @@ select
 fieldset
   padding: base.$space-4
   border: base.$border-thin solid var(--color-border)
-  border-radius: base.$radius-3
+  border-radius: base.$radius-md
   
   legend
     padding: 0 base.$space-2
@@ -142,7 +142,7 @@ details
 dialog
   padding: base.$space-6
   border: none
-  border-radius: base.$radius-6
+  border-radius: base.$radius-2xl
   background: var(--color-surface)
   color: var(--color-text)
   
@@ -170,7 +170,7 @@ mark
   background: var(--color-warning-background)
   color: var(--color-warning-text)
   padding: 0.125em 0.25em
-  border-radius: base.$radius-1
+  border-radius: base.$radius-xs
 
 // Progress
 progress

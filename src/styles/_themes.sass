@@ -30,12 +30,26 @@
   --color-primary-active: #{colors.$orange-11}
   --color-primary-subtle: #{colors.$orange-4}
   --color-primary-text: white
+  // Interactive states (following Radix UI pattern)
+  --color-primary-3: #{colors.$orange-3}
+  --color-primary-4: #{colors.$orange-4}
+  --color-primary-5: #{colors.$orange-5}
+  --color-primary-a3: #{colors.$orange-a3}
+  --color-primary-a4: #{colors.$orange-a4}
+  --color-primary-a5: #{colors.$orange-a5}
   
   --color-secondary: #{colors.$teal-9}
   --color-secondary-hover: #{colors.$teal-10}
   --color-secondary-active: #{colors.$teal-11}
   --color-secondary-subtle: #{colors.$teal-4}
   --color-secondary-text: white
+  // Interactive states
+  --color-secondary-3: #{colors.$teal-3}
+  --color-secondary-4: #{colors.$teal-4}
+  --color-secondary-5: #{colors.$teal-5}
+  --color-secondary-a3: #{colors.$teal-a3}
+  --color-secondary-a4: #{colors.$teal-a4}
+  --color-secondary-a5: #{colors.$teal-a5}
   
   // === State Colors ===
   // Error
@@ -44,6 +58,13 @@
   --color-error-background: #{colors.$red-3}
   --color-error-border: #{colors.$red-7}
   --color-error-text: #{colors.$red-12}
+  // Interactive states
+  --color-error-3: #{colors.$red-3}
+  --color-error-4: #{colors.$red-4}
+  --color-error-5: #{colors.$red-5}
+  --color-error-a3: #{colors.$red-a3}
+  --color-error-a4: #{colors.$red-a4}
+  --color-error-a5: #{colors.$red-a5}
   
   // Success
   --color-success: #{colors.$green-9}
@@ -51,13 +72,29 @@
   --color-success-background: #{colors.$green-3}
   --color-success-border: #{colors.$green-7}
   --color-success-text: #{colors.$green-12}
+  // Interactive states
+  --color-success-3: #{colors.$green-3}
+  --color-success-4: #{colors.$green-4}
+  --color-success-5: #{colors.$green-5}
+  --color-success-a3: #{colors.$green-a3}
+  --color-success-a4: #{colors.$green-a4}
+  --color-success-a5: #{colors.$green-a5}
   
   // Warning
   --color-warning: #{colors.$yellow-9}
   --color-warning-hover: #{colors.$yellow-10}
   --color-warning-background: #{colors.$yellow-3}
   --color-warning-border: #{colors.$yellow-7}
-  --color-warning-text: #{colors.$yellow-12}
+  // ACCESSIBILITY: Using gray-12 for better contrast on light backgrounds
+  --color-warning-text: #{colors.$gray-12}
+  --color-warning-contrast-text: #{colors.$gray-12}  // For text on yellow backgrounds
+  // Interactive states
+  --color-warning-3: #{colors.$yellow-3}
+  --color-warning-4: #{colors.$yellow-4}
+  --color-warning-5: #{colors.$yellow-5}
+  --color-warning-a3: #{colors.$yellow-a3}
+  --color-warning-a4: #{colors.$yellow-a4}
+  --color-warning-a5: #{colors.$yellow-a5}
   
   // Info
   --color-info: #{colors.$blue-9}
@@ -65,9 +102,16 @@
   --color-info-background: #{colors.$blue-3}
   --color-info-border: #{colors.$blue-7}
   --color-info-text: #{colors.$blue-12}
+  // Interactive states
+  --color-info-3: #{colors.$blue-3}
+  --color-info-4: #{colors.$blue-4}
+  --color-info-5: #{colors.$blue-5}
+  --color-info-a3: #{colors.$blue-a3}
+  --color-info-a4: #{colors.$blue-a4}
+  --color-info-a5: #{colors.$blue-a5}
   
   // === Focus & Selection ===
-  --color-focus-ring: #{colors.$blue-7}
+  --color-focus-ring: #{colors.$blue-8}
   --color-selection-background: #{colors.$blue-a3}
   --color-selection-text: inherit
   
@@ -108,7 +152,7 @@
   --color-text: #{colors.$gray-dark-12}
   --color-text-secondary: #{colors.$gray-dark-11}
   --color-text-tertiary: #{colors.$gray-dark-9}
-  --color-text-disabled: #{colors.$gray-dark-7}
+  --color-text-disabled: #{colors.$gray-dark-9}
   
   // === Brand Colors ===
   --color-primary: #{colors.$orange-dark-9}
@@ -116,12 +160,26 @@
   --color-primary-active: #{colors.$orange-dark-11}
   --color-primary-subtle: #{colors.$orange-dark-3}
   --color-primary-text: white
+  // Interactive states
+  --color-primary-3: #{colors.$orange-dark-3}
+  --color-primary-4: #{colors.$orange-dark-4}
+  --color-primary-5: #{colors.$orange-dark-5}
+  --color-primary-a3: #{colors.$orange-dark-a3}
+  --color-primary-a4: #{colors.$orange-dark-a4}
+  --color-primary-a5: #{colors.$orange-dark-a5}
   
   --color-secondary: #{colors.$teal-dark-9}
   --color-secondary-hover: #{colors.$teal-dark-10}
   --color-secondary-active: #{colors.$teal-dark-11}
   --color-secondary-subtle: #{colors.$teal-dark-3}
   --color-secondary-text: white
+  // Interactive states
+  --color-secondary-3: #{colors.$teal-dark-3}
+  --color-secondary-4: #{colors.$teal-dark-4}
+  --color-secondary-5: #{colors.$teal-dark-5}
+  --color-secondary-a3: #{colors.$teal-dark-a3}
+  --color-secondary-a4: #{colors.$teal-dark-a4}
+  --color-secondary-a5: #{colors.$teal-dark-a5}
   
   // === State Colors ===
   // Error
@@ -130,6 +188,13 @@
   --color-error-background: #{colors.$red-dark-2}
   --color-error-border: #{colors.$red-dark-7}
   --color-error-text: #{colors.$red-dark-12}
+  // Interactive states
+  --color-error-3: #{colors.$red-dark-3}
+  --color-error-4: #{colors.$red-dark-4}
+  --color-error-5: #{colors.$red-dark-5}
+  --color-error-a3: #{colors.$red-dark-a3}
+  --color-error-a4: #{colors.$red-dark-a4}
+  --color-error-a5: #{colors.$red-dark-a5}
   
   // Success
   --color-success: #{colors.$green-dark-9}
@@ -137,13 +202,28 @@
   --color-success-background: #{colors.$green-dark-2}
   --color-success-border: #{colors.$green-dark-7}
   --color-success-text: #{colors.$green-dark-12}
+  // Interactive states
+  --color-success-3: #{colors.$green-dark-3}
+  --color-success-4: #{colors.$green-dark-4}
+  --color-success-5: #{colors.$green-dark-5}
+  --color-success-a3: #{colors.$green-dark-a3}
+  --color-success-a4: #{colors.$green-dark-a4}
+  --color-success-a5: #{colors.$green-dark-a5}
   
   // Warning
   --color-warning: #{colors.$yellow-dark-9}
   --color-warning-hover: #{colors.$yellow-dark-10}
   --color-warning-background: #{colors.$yellow-dark-2}
   --color-warning-border: #{colors.$yellow-dark-7}
-  --color-warning-text: #{colors.$gray-12}
+  --color-warning-text: #{colors.$yellow-dark-12}
+  --color-warning-contrast-text: #{colors.$gray-dark-1}  // Dark text for yellow backgrounds
+  // Interactive states
+  --color-warning-3: #{colors.$yellow-dark-3}
+  --color-warning-4: #{colors.$yellow-dark-4}
+  --color-warning-5: #{colors.$yellow-dark-5}
+  --color-warning-a3: #{colors.$yellow-dark-a3}
+  --color-warning-a4: #{colors.$yellow-dark-a4}
+  --color-warning-a5: #{colors.$yellow-dark-a5}
   
   // Info
   --color-info: #{colors.$blue-dark-9}
@@ -151,9 +231,16 @@
   --color-info-background: #{colors.$blue-dark-2}
   --color-info-border: #{colors.$blue-dark-7}
   --color-info-text: #{colors.$blue-dark-12}
+  // Interactive states
+  --color-info-3: #{colors.$blue-dark-3}
+  --color-info-4: #{colors.$blue-dark-4}
+  --color-info-5: #{colors.$blue-dark-5}
+  --color-info-a3: #{colors.$blue-dark-a3}
+  --color-info-a4: #{colors.$blue-dark-a4}
+  --color-info-a5: #{colors.$blue-dark-a5}
   
   // === Focus & Selection ===
-  --color-focus-ring: #{colors.$blue-dark-7}
+  --color-focus-ring: #{colors.$blue-dark-8}
   --color-selection-background: #{colors.$blue-dark-a3}
   --color-selection-text: inherit
   
