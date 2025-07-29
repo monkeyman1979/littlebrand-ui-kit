@@ -160,13 +160,287 @@
                 svg(viewBox="0 0 24 24" fill="currentColor")
                   path(d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22")
               | External Link
+              
+      .component-demo
+        h3 Input
+        
+        .demo-group
+          h4 Size Variants
+          .input-row
+            LbInput(v-model="inputSizeSmall" size="small" placeholder="Small input")
+            LbInput(v-model="inputSizeMedium" size="medium" placeholder="Medium input (default)")
+            LbInput(v-model="inputSizeLarge" size="large" placeholder="Large input")
+        
+        .demo-group
+          h4 Basic Examples
+          .input-row
+            LbInput(v-model="inputValue1" placeholder="Enter text...")
+            LbInput(v-model="inputValue2" type="email" placeholder="Enter email..." clearable)
+            LbInput(v-model="passwordValue" type="password" placeholder="Enter password...")
+        
+        .demo-group
+          h4 Password Toggle
+          .input-row
+            LbInput(v-model="passwordDemo1" type="password" placeholder="Your password")
+            LbInput(v-model="passwordDemo2" type="password" placeholder="Confirm password" clearable)
+        
+        .demo-group
+          h4 Search & Clearable
+          .input-row
+            LbInput(v-model="searchValue" type="search" placeholder="Search..." clearable)
+              template(#icon-leading)
+                svg(width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg")
+                  path(d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" fill="currentColor")
+            LbInput(v-model="clearableValue" placeholder="Type something to see clear button..." clearable)
+        
+        .demo-group
+          h4 Loading State
+          .input-row
+            LbInput(v-model="loadingValue" placeholder="Loading state example" :loading="true")
+            LbInput(v-model="asyncSearchValue" placeholder="Type to search..." :loading="isSearching" @input="handleAsyncSearch" clearable)
+              template(#icon-leading)
+                svg(width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg")
+                  path(d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" fill="currentColor")
+        
+        .demo-group
+          h4 Input States
+          .input-row
+            LbInput(v-model="inputDisabled" placeholder="Disabled input" :disabled="true")
+            LbInput(v-model="inputReadonly" placeholder="Readonly input" :readonly="true")
+            LbInput(v-model="inputInvalid" placeholder="Invalid input" :invalid="true")
+        
+        .demo-group
+          h4 With Custom Icons
+          .input-row
+            LbInput(v-model="inputWithTrailing" placeholder="Enter amount...")
+              template(#icon-trailing)
+                svg(width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg")
+                  path(d="M8 1a7 7 0 100 14A7 7 0 008 1zM8.75 4.5a.75.75 0 00-1.5 0v3.25H5.5a.75.75 0 000 1.5h1.75v2.25a.75.75 0 001.5 0V9.25h1.75a.75.75 0 000-1.5H8.75V4.5z" fill="currentColor")
+            LbInput(v-model="inputWithBoth" type="email" placeholder="Enter email..." clearable)
+              template(#icon-leading)
+                svg(width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg")
+                  path(d="M0 4a2 2 0 012-2h12a2 2 0 012 2v8a2 2 0 01-2 2H2a2 2 0 01-2-2V4zm2-1a1 1 0 00-1 1v.217l7 4.2 7-4.2V4a1 1 0 00-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 002 13h12a1 1 0 00.966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" fill="currentColor")
+      
+      .component-demo
+        h3 Form Components
+        
+        .demo-group
+          h4 Labels and Inputs
+          .form-field
+            LbLabel(for="form-name") Name
+            LbInput(id="form-name" v-model="formData.name" placeholder="Enter your name")
+          
+          .form-field
+            LbLabel(for="form-email" required) Email
+            LbInput(
+              id="form-email" 
+              v-model="formData.email" 
+              type="email" 
+              placeholder="your@email.com"
+              :aria-describedby="formData.email ? '' : 'email-hint'"
+            )
+            LbHintText(id="email-hint" v-if="!formData.email") We'll never share your email
+        
+        .demo-group
+          h4 Validation States
+          .form-field
+            LbLabel(for="valid-input") Valid Input
+            LbInput(
+              id="valid-input" 
+              v-model="validatedFields.valid" 
+              placeholder="This is valid"
+              aria-describedby="valid-hint"
+            )
+            LbHintText(id="valid-hint" success)
+              template(#icon-leading)
+                svg(width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg")
+                  path(d="M8 14A6 6 0 108 2a6 6 0 000 12zm2.78-7.22a.75.75 0 10-1.06-1.06L7.25 8.19l-.97-.97a.75.75 0 00-1.06 1.06l1.5 1.5a.75.75 0 001.06 0l3-3z" fill="currentColor")
+              | Looking good!
+          
+          .form-field
+            LbLabel(for="warning-input") Warning State
+            LbInput(
+              id="warning-input" 
+              v-model="validatedFields.warning" 
+              placeholder="This has a warning"
+              aria-describedby="warning-hint"
+            )
+            LbHintText(id="warning-hint" warning)
+              template(#icon-leading)
+                svg(width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg")
+                  path(d="M8.982 1.566a1.13 1.13 0 00-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 01-1.1 0L7.1 5.995A.905.905 0 018 5zm.002 6a1 1 0 100 2 1 1 0 000-2z" fill="currentColor")
+              | This username is already taken
+          
+          .form-field
+            LbLabel(for="error-input" required) Error State
+            LbInput(
+              id="error-input" 
+              v-model="validatedFields.error" 
+              placeholder="This has an error"
+              :invalid="true"
+              aria-describedby="error-hint"
+            )
+            LbHintText(id="error-hint" error) This field is required
+        
+        .demo-group
+          h4 Complex Form Example
+          form.example-form(@submit.prevent="handleSubmit")
+            .form-field
+              LbLabel(for="signup-email" required) Email Address
+              LbInput(
+                id="signup-email"
+                v-model="signupForm.email"
+                type="email"
+                placeholder="your@email.com"
+                :invalid="!!signupErrors.email"
+                :aria-describedby="signupErrors.email ? 'signup-email-error' : 'signup-email-hint'"
+              )
+                template(#icon-leading)
+                  svg(width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg")
+                    path(d="M0 4a2 2 0 012-2h12a2 2 0 012 2v8a2 2 0 01-2 2H2a2 2 0 01-2-2V4zm2-1a1 1 0 00-1 1v.217l7 4.2 7-4.2V4a1 1 0 00-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 002 13h12a1 1 0 00.966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" fill="currentColor")
+              LbHintText(id="signup-email-hint" v-if="!signupErrors.email") We'll use this to send you updates
+              LbHintText(id="signup-email-error" error v-if="signupErrors.email") {{ signupErrors.email }}
+            
+            .form-field
+              LbLabel(for="signup-password" required)
+                template(#icon)
+                  svg(width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg")
+                    path(d="M12.5 5h-9a1 1 0 00-1 1v7a1 1 0 001 1h9a1 1 0 001-1V6a1 1 0 00-1-1zm-4.5 5.5a1 1 0 110-2 1 1 0 010 2zM11 5V3.5C11 2.12 9.88 1 8.5 1h-1C6.12 1 5 2.12 5 3.5V5h1.5V3.5a1 1 0 011-1h1a1 1 0 011 1V5H11z" fill="currentColor")
+                | Create Password
+              LbInput(
+                id="signup-password"
+                v-model="signupForm.password"
+                type="password"
+                placeholder="Create a strong password"
+                :invalid="!!signupErrors.password"
+                aria-describedby="signup-password-requirements"
+              )
+              LbHintText(
+                id="signup-password-requirements"
+                :error="!!signupErrors.password"
+                :success="signupForm.password.length >= 8 && !signupErrors.password"
+              )
+                template(#icon-leading)
+                  svg(width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg")
+                    path(v-if="signupForm.password.length >= 8" d="M8 14A6 6 0 108 2a6 6 0 000 12zm2.78-7.22a.75.75 0 10-1.06-1.06L7.25 8.19l-.97-.97a.75.75 0 00-1.06 1.06l1.5 1.5a.75.75 0 001.06 0l3-3z" fill="currentColor")
+                    path(v-else d="M8 14A6 6 0 108 2a6 6 0 000 12zm0-9a.75.75 0 01.75.75v2.5a.75.75 0 01-1.5 0v-2.5A.75.75 0 018 5zm0 6a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor")
+                | {{ signupErrors.password || 'Password must be at least 8 characters' }}
+            
+            .form-actions
+              LbButton(type="submit" :disabled="!isFormValid") Sign Up
+              LbButton(type="button" variant="ghost" @click="resetForm") Reset
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { LbButton } from '../src'
+import { ref, onMounted, computed } from 'vue'
+import { LbButton, LbInput, LbLabel, LbHintText } from '../src'
 
 const isDark = ref(false)
+
+// Input demo values
+const inputValue1 = ref('')
+const inputValue2 = ref('')
+const passwordValue = ref('secretpassword123')
+const inputDisabled = ref('Disabled value')
+const inputReadonly = ref('Readonly value')
+const inputInvalid = ref('')
+const inputWithTrailing = ref('')
+const inputWithBoth = ref('')
+
+// Size variants
+const inputSizeSmall = ref('')
+const inputSizeMedium = ref('')
+const inputSizeLarge = ref('')
+
+// Password demos
+const passwordDemo1 = ref('mySecretPass123')
+const passwordDemo2 = ref('')
+
+// Search and clearable
+const searchValue = ref('')
+const clearableValue = ref('')
+
+// Loading states
+const loadingValue = ref('Loading example')
+const asyncSearchValue = ref('')
+const isSearching = ref(false)
+
+// Async search handler
+let searchTimeout
+const handleAsyncSearch = () => {
+  clearTimeout(searchTimeout)
+  if (asyncSearchValue.value) {
+    isSearching.value = true
+    searchTimeout = setTimeout(() => {
+      isSearching.value = false
+    }, 1500)
+  } else {
+    isSearching.value = false
+  }
+}
+
+// Form demo values
+const formData = ref({
+  name: '',
+  email: ''
+})
+
+// Validated fields examples
+const validatedFields = ref({
+  valid: 'This is valid',
+  warning: 'takenusername',
+  error: ''
+})
+
+// Complex form example
+const signupForm = ref({
+  email: '',
+  password: ''
+})
+
+const signupErrors = ref({
+  email: '',
+  password: ''
+})
+
+const isFormValid = computed(() => {
+  return signupForm.value.email && 
+         signupForm.value.password.length >= 8
+})
+
+const handleSubmit = () => {
+  // Reset errors
+  signupErrors.value = {
+    email: '',
+    password: ''
+  }
+  
+  // Validate email
+  if (!signupForm.value.email.includes('@')) {
+    signupErrors.value.email = 'Please enter a valid email address'
+  }
+  
+  // Validate password
+  if (signupForm.value.password.length < 8) {
+    signupErrors.value.password = 'Password is too short'
+  }
+  
+  // If no errors, show success
+  if (!signupErrors.value.email && !signupErrors.value.password) {
+    alert('Form submitted successfully!')
+  }
+}
+
+const resetForm = () => {
+  signupForm.value = {
+    email: '',
+    password: ''
+  }
+  signupErrors.value = {
+    email: '',
+    password: ''
+  }
+}
 
 const colors = [
   { name: 'Primary', var: '--color-primary' },
@@ -209,19 +483,26 @@ onMounted(() => {
   text-align: center
   border-bottom: base.$border-thin solid var(--color-border)
   
-  h1
-    margin-bottom: base.$space-2
+  h1, p
+    margin: 0
     
 .app-main
   max-width: 1200px
   margin: 0 auto
   padding: base.$space-8
   
+.app-main
+  display: flex
+  flex-direction: column
+  gap: base.$space-12
+
 section
-  margin-bottom: base.$space-12
+  display: flex
+  flex-direction: column
+  gap: base.$space-6
   
   h2
-    margin-bottom: base.$space-6
+    margin: 0
     
 .theme-section
   .theme-toggle
@@ -237,8 +518,9 @@ section
         background: var(--color-primary-hover)
         
 .typography-section
-  > *
-    margin-bottom: base.$space-4
+  display: flex
+  flex-direction: column
+  gap: base.$space-4
     
 .color-section
   .color-grid
@@ -247,26 +529,36 @@ section
     gap: base.$space-4
     
   .color-card
+    display: flex
+    flex-direction: column
+    gap: base.$space-2
     text-align: center
     
     .color-swatch
       height: 80px
       border-radius: base.$radius-md
       border: base.$border-thin solid var(--color-border)
-      margin-bottom: base.$space-2
       
 .components-section
+  display: flex
+  flex-direction: column
+  gap: base.$space-8
+  
   .component-demo
-    margin-bottom: base.$space-8
+    display: flex
+    flex-direction: column
+    gap: base.$space-8
     
     h3
-      margin-bottom: base.$space-6
+      margin: 0
       
   .demo-group
-    margin-bottom: base.$space-8
+    display: flex
+    flex-direction: column
+    gap: base.$space-4
     
     h4
-      margin-bottom: base.$space-4
+      margin: 0
       color: var(--color-text-secondary)
       text-transform: uppercase
       letter-spacing: 0.05em
@@ -289,4 +581,36 @@ section
     flex-wrap: wrap
     gap: base.$space-4
     align-items: center
+    
+  .input-row
+    display: grid
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr))
+    gap: base.$space-4
+    
+  .demo-note
+    font-size: 0.875rem
+    color: var(--color-text-secondary)
+    
+.form-field
+  display: flex
+  flex-direction: column
+  gap: base.$space-2
+  max-width: 400px
+
+.example-form
+  display: flex
+  flex-direction: column
+  gap: base.$space-6
+  background: var(--color-surface)
+  border: base.$border-thin solid var(--color-border)
+  border-radius: base.$radius-lg
+  padding: base.$space-8
+  max-width: 500px
+  
+  .form-field
+    max-width: none
+
+.form-actions
+  display: flex
+  gap: base.$space-4
 </style>
