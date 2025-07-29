@@ -1,20 +1,16 @@
 // LittleBrand UI Kit - Main Entry Point
 
 // Import all components
-// (We'll add actual component imports as we create them)
+import LbButton from './components/LbButton.vue'
 
 // Export individual components for tree-shaking
-// export { LbButton } from './components/LbButton'
-// export { LbInput } from './components/LbInput'
-// etc...
+export { LbButton }
 
 // Plugin install function for Vue.use()
 const LittleBrandUI = {
   install(app, options = {}) {
     // Register all components globally
-    // app.component('LbButton', LbButton)
-    // app.component('LbInput', LbInput)
-    // etc...
+    app.component('LbButton', LbButton)
     
     // Apply any global configuration
     if (options.theme) {

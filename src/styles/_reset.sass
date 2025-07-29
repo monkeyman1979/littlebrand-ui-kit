@@ -36,7 +36,7 @@ body
 :focus-visible
   outline: base.$focus-ring-width solid var(--color-focus-ring)
   outline-offset: base.$focus-ring-offset
-  border-radius: base.$radius-sm
+  border-radius: base.$radius-xs
 
 // Selection styles
 ::selection
@@ -54,11 +54,11 @@ a
   &:focus-visible
     outline: base.$focus-ring-width solid var(--color-focus-ring)
     outline-offset: base.$focus-ring-offset
-    border-radius: base.$radius-sm
+    border-radius: base.$radius-xs
 
 // Lists
 ul, ol
-  padding-left: base.$space-xl
+  padding-left: base.$space-8
   
 ul[role="list"],
 ol[role="list"]
@@ -66,7 +66,7 @@ ol[role="list"]
   list-style: none
 
 li + li
-  margin-top: base.$space-xs
+  margin-top: base.$space-1
 
 // Images and media
 img,
@@ -122,12 +122,12 @@ select
 
 // Fieldset
 fieldset
-  padding: base.$space-md
+  padding: base.$space-4
   border: base.$border-thin solid var(--color-border)
   border-radius: base.$radius-md
   
   legend
-    padding: 0 base.$space-sm
+    padding: 0 base.$space-2
 
 // Details/Summary
 details
@@ -140,9 +140,9 @@ details
 
 // Dialog
 dialog
-  padding: base.$space-lg
+  padding: base.$space-6
   border: none
-  border-radius: base.$radius-lg
+  border-radius: base.$radius-2xl
   background: var(--color-surface)
   color: var(--color-text)
   
@@ -154,7 +154,7 @@ hr
   height: base.$border-thin
   border: none
   background: var(--color-border)
-  margin: base.$space-xl 0
+  margin: base.$space-8 0
 
 // Address
 address
@@ -170,7 +170,7 @@ mark
   background: var(--color-warning-background)
   color: var(--color-warning-text)
   padding: 0.125em 0.25em
-  border-radius: base.$radius-sm
+  border-radius: base.$radius-xs
 
 // Progress
 progress
