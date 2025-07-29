@@ -23,22 +23,23 @@
   .trailing-icons(v-if="hasTrailingIcons")
     //- Loading spinner
     .icon.icon-loading(v-if="loading")
-      svg.spinner(
-        width="16" 
-        height="16" 
-        viewBox="0 0 16 16" 
-        fill="none" 
-        xmlns="http://www.w3.org/2000/svg"
-      )
-        circle(
-          cx="8" 
-          cy="8" 
-          r="6.67" 
-          stroke="currentColor" 
-          stroke-width="2.67" 
+      slot(name="icon-loading")
+        svg.spinner(
+          width="16" 
+          height="16" 
+          viewBox="0 0 16 16" 
           fill="none" 
-          stroke-linecap="round"
+          xmlns="http://www.w3.org/2000/svg"
         )
+          circle(
+            cx="8" 
+            cy="8" 
+            r="6.67" 
+            stroke="currentColor" 
+            stroke-width="2.67" 
+            fill="none" 
+            stroke-linecap="round"
+          )
     
     //- Password toggle
     button.icon.icon-password(
@@ -47,45 +48,45 @@
       @click="togglePassword"
       :aria-label="showPassword ? 'Hide password' : 'Show password'"
     )
-      //- Eye open icon
-      svg(
-        v-if="!showPassword"
-        width="16" 
-        height="16" 
-        viewBox="0 0 16 16" 
-        fill="none" 
-        xmlns="http://www.w3.org/2000/svg"
-      )
-        path(
-          d="M1 8s2.5-4.5 7-4.5S15 8 15 8s-2.5 4.5-7 4.5S1 8 1 8z" 
-          stroke="currentColor" 
-          stroke-width="1.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round"
+      slot(v-if="!showPassword" name="icon-password-show")
+        //- Eye open icon (default)
+        svg(
+          width="16" 
+          height="16" 
+          viewBox="0 0 16 16" 
+          fill="none" 
+          xmlns="http://www.w3.org/2000/svg"
         )
-        circle(
-          cx="8" 
-          cy="8" 
-          r="2" 
-          stroke="currentColor" 
-          stroke-width="1.5"
+          path(
+            d="M1 8s2.5-4.5 7-4.5S15 8 15 8s-2.5 4.5-7 4.5S1 8 1 8z" 
+            stroke="currentColor" 
+            stroke-width="1.5" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"
+          )
+          circle(
+            cx="8" 
+            cy="8" 
+            r="2" 
+            stroke="currentColor" 
+            stroke-width="1.5"
+          )
+      slot(v-else name="icon-password-hide")
+        //- Eye closed icon (default)
+        svg(
+          width="16" 
+          height="16" 
+          viewBox="0 0 16 16" 
+          fill="none" 
+          xmlns="http://www.w3.org/2000/svg"
         )
-      //- Eye closed icon
-      svg(
-        v-else
-        width="16" 
-        height="16" 
-        viewBox="0 0 16 16" 
-        fill="none" 
-        xmlns="http://www.w3.org/2000/svg"
-      )
-        path(
-          d="M2.42 12.58l11.16-11.16M6.71 6.71a2 2 0 002.83 2.83M14.12 14.12A7.82 7.82 0 018 12.5C3.5 12.5 1 8 1 8a14.25 14.25 0 001.88-2.12M5.6 3.9A7.92 7.92 0 018 3.5C12.5 3.5 15 8 15 8a14.36 14.36 0 01-1.62 2.04" 
-          stroke="currentColor" 
-          stroke-width="1.5" 
-          stroke-linecap="round" 
-          stroke-linejoin="round"
-        )
+          path(
+            d="M2.42 12.58l11.16-11.16M6.71 6.71a2 2 0 002.83 2.83M14.12 14.12A7.82 7.82 0 018 12.5C3.5 12.5 1 8 1 8a14.25 14.25 0 001.88-2.12M5.6 3.9A7.92 7.92 0 018 3.5C12.5 3.5 15 8 15 8a14.36 14.36 0 01-1.62 2.04" 
+            stroke="currentColor" 
+            stroke-width="1.5" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"
+          )
     
     //- Clear button
     button.icon.icon-clear(
@@ -94,20 +95,21 @@
       @click="clearInput"
       aria-label="Clear input"
     )
-      svg(
-        width="16" 
-        height="16" 
-        viewBox="0 0 16 16" 
-        fill="none" 
-        xmlns="http://www.w3.org/2000/svg"
-      )
-        circle(cx="8" cy="8" r="8" fill="currentColor" opacity="0.2")
-        path(
-          d="M10.5 5.5L5.5 10.5M5.5 5.5l5 5" 
-          stroke="currentColor" 
-          stroke-width="1.5" 
-          stroke-linecap="round"
+      slot(name="icon-clear")
+        svg(
+          width="16" 
+          height="16" 
+          viewBox="0 0 16 16" 
+          fill="none" 
+          xmlns="http://www.w3.org/2000/svg"
         )
+          circle(cx="8" cy="8" r="8" fill="currentColor" opacity="0.2")
+          path(
+            d="M10.5 5.5L5.5 10.5M5.5 5.5l5 5" 
+            stroke="currentColor" 
+            stroke-width="1.5" 
+            stroke-linecap="round"
+          )
     
     //- Custom trailing icon slot
     .icon(v-else-if="$slots['icon-trailing']")
@@ -189,6 +191,10 @@ const rootClasses = computed(() => ({
 const slots = defineSlots<{
   'icon-leading'?: () => any
   'icon-trailing'?: () => any
+  'icon-password-show'?: () => any
+  'icon-password-hide'?: () => any
+  'icon-clear'?: () => any
+  'icon-loading'?: () => any
 }>()
 
 // Methods

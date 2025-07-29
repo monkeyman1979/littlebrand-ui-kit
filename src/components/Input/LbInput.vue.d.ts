@@ -28,6 +28,10 @@ export interface LbInputEmits {
 export interface LbInputSlots {
   'icon-leading'(): VNode[]
   'icon-trailing'(): VNode[]
+  'icon-password-show'(): VNode[]
+  'icon-password-hide'(): VNode[]
+  'icon-clear'(): VNode[]
+  'icon-loading'(): VNode[]
 }
 
 declare const LbInput: DefineComponent<LbInputProps, {}, {}, {}, {}, {}, {}, {}>
