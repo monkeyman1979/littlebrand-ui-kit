@@ -1,10 +1,10 @@
 // LittleBrand UI Kit - Main Entry Point
 
 // Import all components
-import LbButton from './components/LbButton.vue'
-import LbInput from './components/LbInput.vue'
-import LbLabel from './components/LbLabel.vue'
-import LbHintText from './components/LbHintText.vue'
+import LbButton from './components/Button'
+import LbInput from './components/Input'
+import LbLabel from './components/Label'
+import LbHintText from './components/HintText'
 
 // Export individual components for tree-shaking
 export { LbButton, LbInput, LbLabel, LbHintText }

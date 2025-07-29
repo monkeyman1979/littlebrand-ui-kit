@@ -1,4 +1,4 @@
-import { DefineComponent } from 'vue'
+import type { DefineComponent, VNode } from 'vue'
 
 export interface LbHintTextProps {
   error?: boolean
@@ -8,9 +8,9 @@ export interface LbHintTextProps {
 }
 
 export interface LbHintTextSlots {
-  default: () => any
-  'icon-leading'?: () => any
-  'icon-trailing'?: () => any
+  default(): VNode[]
+  'icon-leading'?(): VNode[]
+  'icon-trailing'?(): VNode[]
 }
 
 declare const LbHintText: DefineComponent<LbHintTextProps, {}, {}, {}, {}, {}, {}, {}>

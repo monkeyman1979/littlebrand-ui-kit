@@ -1,4 +1,4 @@
-import { DefineComponent } from 'vue'
+import type { DefineComponent, VNode } from 'vue'
 
 export interface LbLabelProps {
   for?: string
@@ -6,9 +6,9 @@ export interface LbLabelProps {
 }
 
 export interface LbLabelSlots {
-  default: () => any
-  hint?: () => any
-  icon?: () => any
+  default(): VNode[]
+  hint?(): VNode[]
+  icon?(): VNode[]
 }
 
 declare const LbLabel: DefineComponent<LbLabelProps, {}, {}, {}, {}, {}, {}, {}>

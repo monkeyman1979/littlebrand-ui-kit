@@ -1,4 +1,4 @@
-import { DefineComponent } from 'vue'
+import type { DefineComponent, VNode } from 'vue'
 
 export interface LbInputProps {
   modelValue?: string | number
@@ -26,10 +26,10 @@ export interface LbInputEmits {
 }
 
 export interface LbInputSlots {
-  'icon-leading': () => any
-  'icon-trailing': () => any
+  'icon-leading'(): VNode[]
+  'icon-trailing'(): VNode[]
 }
 
-declare const LbInput: DefineComponent<LbInputProps, {}, {}, {}, {}, {}, {}, LbInputEmits>
+declare const LbInput: DefineComponent<LbInputProps, {}, {}, {}, {}, {}, {}, {}>
 
 export default LbInput

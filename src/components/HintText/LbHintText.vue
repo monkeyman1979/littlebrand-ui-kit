@@ -1,5 +1,5 @@
 <template lang="pug">
-.lb-hint-text(:id="id" :class="rootClasses" role="status")
+.lb-hint-text(:id="id" :class="rootClasses" role="status" v-if="$slots.default")
   .icon.icon-leading(v-if="$slots['icon-leading']")
     slot(name="icon-leading")
   span
@@ -19,18 +19,15 @@ interface Props {
   id?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  error: false,
-  warning: false,
-  success: false
-})
+const props = defineProps<Props>()
 
-// Computed
-const rootClasses = computed(() => ({
-  'error': props.error,
-  'warning': props.warning,
-  'success': props.success
-}))
+// Computed - only add the active state class
+const rootClasses = computed(() => {
+  if (props.error) return 'error'
+  if (props.warning) return 'warning'
+  if (props.success) return 'success'
+  return ''
+})
 
 // Slots
 defineSlots<{
@@ -41,8 +38,8 @@ defineSlots<{
 </script>
 
 <style lang="sass" scoped>
-@use '../styles/base' as base
-@use '../styles/typography' as typography
+@use '@/styles/base' as base
+@use '@/styles/typography' as typography
 
 .lb-hint-text
   display: flex
@@ -73,7 +70,6 @@ defineSlots<{
   
   // Icons
   .icon
-    flex-shrink: 0
     display: flex
     align-items: center
     width: base.$size-2xs // 12px

@@ -15,9 +15,9 @@
     :aria-describedby="ariaDescribedby || undefined"
     :autofocus="autofocus"
     @input="handleInput"
-    @change="handleChange"
-    @focus="handleFocus"
-    @blur="handleBlur"
+    @change="$emit('change', $event)"
+    @focus="$emit('focus', $event)"
+    @blur="$emit('blur', $event)"
   )
   //- Trailing icons container
   .trailing-icons(v-if="hasTrailingIcons")
@@ -162,16 +162,11 @@ const inputRef = ref<HTMLInputElement>()
 const showPassword = ref(false)
 
 // Computed
-const hasValue = computed(() => {
-  return props.modelValue !== '' && props.modelValue != null
-})
+const hasValue = computed(() => props.modelValue !== '' && props.modelValue != null)
 
-const currentType = computed(() => {
-  if (props.type === 'password' && showPassword.value) {
-    return 'text'
-  }
-  return props.type
-})
+const currentType = computed(() => 
+  props.type === 'password' && showPassword.value ? 'text' : props.type
+)
 
 const hasTrailingIcons = computed(() => {
   return props.loading || 
@@ -216,23 +211,11 @@ const handleInput = (event: Event) => {
   emit('update:modelValue', target.value)
   emit('input', event)
 }
-
-const handleChange = (event: Event) => {
-  emit('change', event)
-}
-
-const handleFocus = (event: FocusEvent) => {
-  emit('focus', event)
-}
-
-const handleBlur = (event: FocusEvent) => {
-  emit('blur', event)
-}
 </script>
 
 <style lang="sass" scoped>
-@use '../styles/base' as base
-@use '../styles/typography' as typography
+@use '@/styles/base' as base
+@use '@/styles/typography' as typography
 
 .lb-input
   position: relative
@@ -272,7 +255,7 @@ const handleBlur = (event: FocusEvent) => {
       border-color: var(--color-input-border-focus)
       box-shadow: 0 0 0 base.$focus-ring-width var(--color-primary-a5)
     
-    // Invalid state
+    // Invalid state when parent has .invalid class
     .invalid &
       border-color: var(--color-error-border)
       
@@ -328,6 +311,14 @@ const handleBlur = (event: FocusEvent) => {
   &.size-large.has-trailing-icons input
     padding-right: base.$space-13 // 48px for large
   
+  // Invalid state for input
+  &.invalid input
+    border-color: var(--color-error-border)
+    
+    &:focus
+      border-color: var(--color-error)
+      box-shadow: 0 0 0 base.$focus-ring-width var(--color-error-a5)
+  
   // Icon base styles
   .icon
     position: absolute
@@ -377,11 +368,12 @@ const handleBlur = (event: FocusEvent) => {
     input:focus ~ .trailing-icons &
       color: var(--color-text-secondary)
     
-    .invalid &
-      color: var(--color-error)
+  // Icon states based on parent classes
+  &.invalid .icon
+    color: var(--color-error)
     
-    .disabled &
-      opacity: 0.6
+  &.disabled .icon
+    opacity: 0.6
   
   // Trailing icons container
   .trailing-icons
@@ -401,8 +393,8 @@ const handleBlur = (event: FocusEvent) => {
       height: base.$size-xl // 32px
       
     .size-large &
-      width: base.$size-3xl// 48px
-      height: base.$size-3xl// 48px
+      width: base.$size-3xl // 48px
+      height: base.$size-3xl // 48px
   
   // Loading spinner animation
   .spinner

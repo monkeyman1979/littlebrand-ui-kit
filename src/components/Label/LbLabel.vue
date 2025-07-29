@@ -1,15 +1,15 @@
 <template lang="pug">
-label(:for="for" :class="rootClasses")
+label(:for="for" :class="{ required }")
   .icon(v-if="$slots.icon")
     slot(name="icon")
-  span
+  span(v-if="$slots.default || $slots.hint")
     slot
     span.hint(v-if="$slots.hint")
       slot(name="hint")
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { toRefs } from 'vue'
 
 // Props
 interface Props {
@@ -21,10 +21,8 @@ const props = withDefaults(defineProps<Props>(), {
   required: false
 })
 
-// Computed
-const rootClasses = computed(() => ({
-  'required': props.required
-}))
+// Destructure props for cleaner template usage
+const { required } = toRefs(props)
 
 // Slots
 defineSlots<{
@@ -35,8 +33,8 @@ defineSlots<{
 </script>
 
 <style lang="sass" scoped>
-@use '../styles/base' as base
-@use '../styles/typography' as typography
+@use '@/styles/base' as base
+@use '@/styles/typography' as typography
 
 label
   display: inline-flex
@@ -58,7 +56,6 @@ label
   
   // Icon
   .icon
-    flex-shrink: 0
     display: flex
     align-items: center
     color: var(--color-text-secondary)
