@@ -1,10 +1,10 @@
 <template lang="pug">
 .lb-hint-text(:id="id" :class="rootClasses" role="status")
-  .lb-hint-text__icon.lb-hint-text__icon--leading(v-if="$slots['icon-leading']")
+  .icon.icon-leading(v-if="$slots['icon-leading']")
     slot(name="icon-leading")
-  .lb-hint-text__message
+  span
     slot
-  .lb-hint-text__icon.lb-hint-text__icon--trailing(v-if="$slots['icon-trailing']")
+  .icon.icon-trailing(v-if="$slots['icon-trailing']")
     slot(name="icon-trailing")
 </template>
 
@@ -27,9 +27,9 @@ const props = withDefaults(defineProps<Props>(), {
 
 // Computed
 const rootClasses = computed(() => ({
-  'lb-hint-text--error': props.error,
-  'lb-hint-text--warning': props.warning,
-  'lb-hint-text--success': props.success
+  'error': props.error,
+  'warning': props.warning,
+  'success': props.success
 }))
 
 // Slots
@@ -46,43 +46,42 @@ defineSlots<{
 
 .lb-hint-text
   display: flex
-  align-items: flex-start
+  align-items: center
   gap: base.$space-2
   font-size: typography.$label-size-small // 12px
   line-height: typography.$line-normal
   color: var(--color-text-secondary)
   
   // State variations
-  &--error
+  &.error
     color: var(--color-error-text)
     
-    .lb-hint-text__icon
+    .icon
       color: var(--color-error)
   
-  &--warning
+  &.warning
     color: var(--color-warning-text)
     
-    .lb-hint-text__icon
+    .icon
       color: var(--color-warning)
   
-  &--success
+  &.success
     color: var(--color-success-text)
     
-    .lb-hint-text__icon
+    .icon
       color: var(--color-success)
   
-  // Icon containers
-  &__icon
+  // Icons
+  .icon
     flex-shrink: 0
     display: flex
     align-items: center
-    width: 1rem // 16px
-    height: 1.25rem // 20px to align with line height
+    width: base.$size-2xs // 12px
+    height: base.$size-2xs // 12px
     color: currentColor
-    
   
-  // Message text
-  &__message
+  // Message text wrapper
+  > span
     flex: 1
     
     // Ensure links inherit the state color

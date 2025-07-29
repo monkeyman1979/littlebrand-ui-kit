@@ -247,7 +247,7 @@ const handleBlur = (event: FocusEvent) => {
     background: var(--color-input-background)
     border: base.$border-thin solid var(--color-input-border)
     border-radius: base.$radius-md
-    font-size: 1rem
+    font-size: typography.$label-size-base
     font-family: inherit
     color: var(--color-text)
     transition: border-color base.$transition, box-shadow base.$transition
@@ -300,33 +300,33 @@ const handleBlur = (event: FocusEvent) => {
   &.size-small input
     height: base.$size-xl // 32px
     padding: 0 base.$space-3
-    font-size: 0.875rem // 14px
+    font-size: typography.$label-size-small
     
   &.size-large input
     height: base.$size-3xl // 48px
     padding: 0 base.$space-5
-    font-size: 1.125rem // 18px
+    font-size: typography.$label-size-large
   
   // Icon padding adjustments
   &.has-leading-icon input
-    padding-left: 2.5rem // 40px for medium
+    padding-left: base.$space-12 // 40px for medium
     
   &.has-trailing-icons input
-    padding-right: 2.5rem // 40px for medium
+    padding-right: base.$space-12 // 40px for medium
   
   // Small size with icons
   &.size-small.has-leading-icon input
-    padding-left: 2rem // 32px for small
+    padding-left: base.$space-11 // 32px for small
     
   &.size-small.has-trailing-icons input
-    padding-right: 2rem // 32px for small
+    padding-right: base.$space-11 // 32px for small
   
   // Large size with icons
   &.size-large.has-leading-icon input
-    padding-left: 3rem // 48px for large
+    padding-left: base.$space-13 // 48px for large
     
   &.size-large.has-trailing-icons input
-    padding-right: 3rem // 48px for large
+    padding-right: base.$space-13 // 48px for large
   
   // Icon base styles
   .icon
@@ -336,17 +336,17 @@ const handleBlur = (event: FocusEvent) => {
     display: flex
     align-items: center
     justify-content: center
-    width: 2.5rem // 40px
-    height: 2.5rem // 40px
+    width: base.$size-2xl // 40px
+    height: base.$size-2xl // 40px
     color: var(--color-text-tertiary)
     
     .size-small &
-      width: 2rem // 32px
-      height: 2rem // 32px
+      width: base.$size-xl // 32px
+      height: base.$size-xl // 32px
       
     .size-large &
-      width: 3rem // 48px
-      height: 3rem // 48px
+      width: base.$size-3xl // 48px
+      height: base.$size-3xl // 48px
     
     &.icon-leading
       left: 0
@@ -392,17 +392,17 @@ const handleBlur = (event: FocusEvent) => {
     display: flex
     align-items: center
     justify-content: center
-    width: 2.5rem // 40px
-    height: 2.5rem // 40px
-    gap: 0.125rem // 2px
+    width: base.$size-2xl // 40px
+    height: base.$size-2xl // 40px
+    gap: base.$space-1 // 2px
     
     .size-small &
-      width: 2rem // 32px
-      height: 2rem // 32px
+      width: base.$size-xl // 32px
+      height: base.$size-xl // 32px
       
     .size-large &
-      width: 3rem // 48px
-      height: 3rem // 48px
+      width: base.$size-3xl// 48px
+      height: base.$size-3xl// 48px
   
   // Loading spinner animation
   .spinner

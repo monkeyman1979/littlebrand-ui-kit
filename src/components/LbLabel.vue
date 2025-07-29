@@ -1,10 +1,10 @@
 <template lang="pug">
-label.lb-label(:for="for" :class="rootClasses")
-  .lb-label__icon(v-if="$slots.icon")
+label(:for="for" :class="rootClasses")
+  .icon(v-if="$slots.icon")
     slot(name="icon")
-  .lb-label__text
+  span
     slot
-    span.lb-label__hint(v-if="$slots.hint")
+    span.hint(v-if="$slots.hint")
       slot(name="hint")
 </template>
 
@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 // Computed
 const rootClasses = computed(() => ({
-  'lb-label--required': props.required
+  'required': props.required
 }))
 
 // Slots
@@ -38,44 +38,41 @@ defineSlots<{
 @use '../styles/base' as base
 @use '../styles/typography' as typography
 
-.lb-label
+label
   display: inline-flex
-  align-items: flex-start
+  align-items: center
   gap: base.$space-2
   font-family: typography.$font-body
   font-weight: typography.$weight-medium
   line-height: typography.$line-normal
   color: var(--color-text)
   cursor: pointer
-  
   font-size: typography.$label-size-base
   letter-spacing: typography.$letter-spacing-tight
   
   // Required indicator
-  &--required &__text::after
+  &.required > span::after
     content: ' *'
     color: var(--color-error)
     font-weight: typography.$weight-normal
   
-  // Icon container
-  &__icon
+  // Icon
+  .icon
     flex-shrink: 0
     display: flex
     align-items: center
     color: var(--color-text-secondary)
-    
-    width: 1rem // 16px
-    height: 1rem
+    width: base.$size-2xs // 12px
+    height: base.$size-2xs // 12px
   
-  // Text container
-  &__text
+  // Text wrapper
+  > span
     flex: 1
   
   // Hint text (inline)
-  &__hint
+  .hint
     font-weight: typography.$weight-normal
     color: var(--color-text-secondary)
     margin-left: base.$space-2
-    
-    font-size: 0.75rem // 12px
+    font-size: typography.$label-size-small
 </style>
