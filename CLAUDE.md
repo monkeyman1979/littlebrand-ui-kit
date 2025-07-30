@@ -1,0 +1,3 @@
+- Never use "!important" on any css.
+- Don't use BEM css, keep it simple naming
+- Always use flexbox or css grids with components and layout. Never add margins to create spacing between components and elements. You need to use the gap property for spacing between components and elements
