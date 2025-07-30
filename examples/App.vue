@@ -378,11 +378,162 @@
             .form-actions
               LbButton(type="submit" :disabled="!isFormValid") Sign Up
               LbButton(type="button" variant="ghost" @click="resetForm") Reset
+      
+      .component-demo
+        h3 Checkbox & Radio
+        
+        .demo-group
+          h4 Checkbox States
+          .checkbox-row
+            .checkbox-item
+              LbCheckbox(v-model="checkboxUnchecked" id="check-unchecked")
+              LbLabel(for="check-unchecked") Unchecked
+            .checkbox-item
+              LbCheckbox(v-model="checkboxChecked" id="check-checked")
+              LbLabel(for="check-checked") Checked
+            .checkbox-item
+              LbCheckbox(v-model="checkboxDisabled" disabled id="check-disabled")
+              LbLabel(for="check-disabled") Disabled
+            .checkbox-item
+              LbCheckbox(v-model="checkboxDisabledChecked" disabled id="check-disabled-checked")
+              LbLabel(for="check-disabled-checked") Disabled checked
+            .checkbox-item
+              LbCheckbox(v-model="checkboxInvalid" invalid id="check-invalid")
+              LbLabel(for="check-invalid") Invalid state
+        
+        .demo-group
+          h4 Indeterminate State
+          .checkbox-row
+            .checkbox-item
+              LbCheckbox(
+                v-model="parentCheckbox"
+                :indeterminate="isIndeterminate"
+                id="parent-checkbox"
+                @change="handleParentChange"
+              )
+              LbLabel(for="parent-checkbox") Select all items
+          .checkbox-group
+            .checkbox-item(v-for="(item, index) in checkboxItems" :key="index")
+              LbCheckbox(
+                v-model="item.checked"
+                :id="`child-checkbox-${index}`"
+                @change="handleChildChange"
+              )
+              LbLabel(:for="`child-checkbox-${index}`") {{ item.label }}
+        
+        .demo-group
+          h4 Multiple Selection (Array Binding)
+          .checkbox-row
+            .checkbox-item(v-for="option in multipleOptions" :key="option.value")
+              LbCheckbox(
+                v-model="selectedOptions"
+                :value="option.value"
+                :id="`multi-${option.value}`"
+              )
+              LbLabel(:for="`multi-${option.value}`") {{ option.label }}
+          .demo-note Selected: {{ selectedOptions.join(', ') || 'None' }}
+        
+        .demo-group
+          h4 Radio States
+          .radio-row
+            .radio-item
+              LbRadio(v-model="radioStates" value="unchecked" name="radio-states" id="radio-unchecked")
+              LbLabel(for="radio-unchecked") Unchecked
+            .radio-item
+              LbRadio(v-model="radioStates" value="checked" name="radio-states" id="radio-checked")
+              LbLabel(for="radio-checked") Checked
+            .radio-item
+              LbRadio(v-model="radioDisabled" value="disabled" disabled name="radio-disabled" id="radio-disabled")
+              LbLabel(for="radio-disabled") Disabled
+            .radio-item
+              LbRadio(v-model="radioDisabledChecked" value="disabled-checked" disabled name="radio-disabled-checked" id="radio-disabled-checked")
+              LbLabel(for="radio-disabled-checked") Disabled checked
+            .radio-item
+              LbRadio(v-model="radioInvalid" value="invalid" invalid name="radio-invalid" id="radio-invalid")
+              LbLabel(for="radio-invalid") Invalid state
+        
+        .demo-group
+          h4 Radio Group Example
+          .form-field
+            LbLabel Plan Selection
+            .radio-group(role="radiogroup" aria-labelledby="plan-label")
+              .radio-item(v-for="plan in planOptions" :key="plan.value")
+                LbRadio(
+                  v-model="selectedPlan"
+                  :value="plan.value"
+                  name="plan-selection"
+                  :id="`plan-${plan.value}`"
+                  :aria-describedby="`plan-${plan.value}-desc`"
+                )
+                .radio-content
+                  LbLabel(:for="`plan-${plan.value}`") {{ plan.name }}
+                  LbHintText(:id="`plan-${plan.value}-desc`") {{ plan.description }}
+            .demo-note Selected plan: {{ selectedPlan }}
+        
+        .demo-group
+          h4 Form Integration Example
+          form.example-form(@submit.prevent="handleCheckboxFormSubmit")
+            .form-field
+              LbLabel Notification Preferences
+              .checkbox-group(role="group" aria-labelledby="notifications-label")
+                .checkbox-item
+                  LbCheckbox(
+                    v-model="notificationPrefs.email"
+                    id="notif-email"
+                    aria-describedby="notif-email-hint"
+                  )
+                  LbLabel(for="notif-email") Email notifications
+                  LbHintText(id="notif-email-hint") Receive updates via email
+                
+                .checkbox-item
+                  LbCheckbox(
+                    v-model="notificationPrefs.sms"
+                    id="notif-sms"
+                    aria-describedby="notif-sms-hint"
+                  )
+                  LbLabel(for="notif-sms") SMS notifications
+                  LbHintText(id="notif-sms-hint") Receive text messages for urgent updates
+                
+                .checkbox-item
+                  LbCheckbox(
+                    v-model="notificationPrefs.push"
+                    id="notif-push"
+                    aria-describedby="notif-push-hint"
+                  )
+                  LbLabel(for="notif-push") Push notifications
+                  LbHintText(id="notif-push-hint") Get browser notifications
+            
+            .form-field
+              LbLabel(required) Frequency
+              .radio-group(role="radiogroup" aria-labelledby="frequency-label")
+                .radio-item(v-for="freq in frequencyOptions" :key="freq.value")
+                  LbRadio(
+                    v-model="notificationFrequency"
+                    :value="freq.value"
+                    name="notification-frequency"
+                    :id="`freq-${freq.value}`"
+                  )
+                  LbLabel(:for="`freq-${freq.value}`") {{ freq.label }}
+            
+            .form-field
+              LbCheckbox(
+                v-model="termsAccepted"
+                id="terms-checkbox"
+                :invalid="showTermsError"
+                aria-describedby="terms-error"
+                required
+              )
+              LbLabel(for="terms-checkbox") I agree to the terms and conditions
+              LbHintText(id="terms-error" error v-if="showTermsError") You must accept the terms to continue
+            
+            .form-actions
+              LbButton(type="submit") Save Preferences
+              LbButton(type="button" variant="ghost" @click="resetCheckboxForm") Reset
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import { LbButton, LbInput, LbLabel, LbHintText, LbTextarea } from '../src'
+import { LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio } from '../src'
 
 const isDark = ref(false)
 
@@ -420,6 +571,102 @@ const textareaValue2 = ref('This is some example text in a textarea component.')
 const textareaReadonly = ref('This textarea is readonly and cannot be edited.')
 const textareaDisabled = ref('This textarea is disabled.')
 const textareaInvalid = ref('')
+
+// Checkbox demo values
+const checkboxUnchecked = ref(false)
+const checkboxChecked = ref(true)
+const checkboxDisabled = ref(false)
+const checkboxDisabledChecked = ref(true)
+const checkboxInvalid = ref(true)
+
+// Indeterminate state demo
+const parentCheckbox = ref(false)
+const checkboxItems = ref([
+  { label: 'Item 1', checked: false },
+  { label: 'Item 2', checked: true },
+  { label: 'Item 3', checked: false }
+])
+
+const isIndeterminate = computed(() => {
+  const checkedCount = checkboxItems.value.filter(item => item.checked).length
+  return checkedCount > 0 && checkedCount < checkboxItems.value.length
+})
+
+const handleParentChange = () => {
+  const newValue = parentCheckbox.value
+  checkboxItems.value.forEach(item => {
+    item.checked = newValue
+  })
+}
+
+const handleChildChange = () => {
+  const checkedCount = checkboxItems.value.filter(item => item.checked).length
+  if (checkedCount === 0) {
+    parentCheckbox.value = false
+  } else if (checkedCount === checkboxItems.value.length) {
+    parentCheckbox.value = true
+  }
+}
+
+// Multiple selection demo
+const selectedOptions = ref(['option1', 'option3'])
+const multipleOptions = [
+  { value: 'option1', label: 'Option 1' },
+  { value: 'option2', label: 'Option 2' },
+  { value: 'option3', label: 'Option 3' },
+  { value: 'option4', label: 'Option 4' }
+]
+
+// Radio demo values
+const radioStates = ref('checked')
+const radioDisabled = ref('disabled')
+const radioDisabledChecked = ref('disabled-checked')
+const radioInvalid = ref('invalid')
+
+// Radio group demo
+const selectedPlan = ref('standard')
+const planOptions = [
+  { value: 'basic', name: 'Basic Plan', description: '$9/month - Essential features' },
+  { value: 'standard', name: 'Standard Plan', description: '$19/month - Most popular' },
+  { value: 'premium', name: 'Premium Plan', description: '$39/month - All features included' }
+]
+
+// Form integration demo
+const notificationPrefs = ref({
+  email: true,
+  sms: false,
+  push: true
+})
+
+const notificationFrequency = ref('daily')
+const frequencyOptions = [
+  { value: 'instant', label: 'Instant' },
+  { value: 'daily', label: 'Daily digest' },
+  { value: 'weekly', label: 'Weekly summary' },
+  { value: 'never', label: 'Never' }
+]
+
+const termsAccepted = ref(false)
+const showTermsError = ref(false)
+
+const handleCheckboxFormSubmit = () => {
+  showTermsError.value = !termsAccepted.value
+  
+  if (termsAccepted.value) {
+    alert(`Preferences saved!\n\nNotifications:\n- Email: ${notificationPrefs.value.email}\n- SMS: ${notificationPrefs.value.sms}\n- Push: ${notificationPrefs.value.push}\n\nFrequency: ${notificationFrequency.value}`)
+  }
+}
+
+const resetCheckboxForm = () => {
+  notificationPrefs.value = {
+    email: true,
+    sms: false,
+    push: true
+  }
+  notificationFrequency.value = 'daily'
+  termsAccepted.value = false
+  showTermsError.value = false
+}
 
 // Async search handler
 let searchTimeout
@@ -669,4 +916,33 @@ section
 .form-actions
   display: flex
   gap: base.$space-4
+  
+// Checkbox and Radio styles
+.checkbox-row,
+.radio-row
+  display: flex
+  flex-wrap: wrap
+  gap: base.$space-6
+  align-items: center
+  
+.checkbox-item,
+.radio-item
+  display: flex
+  align-items: center
+  gap: base.$space-3
+  
+.checkbox-group,
+.radio-group
+  display: flex
+  flex-direction: column
+  gap: base.$space-4
+  margin-top: base.$space-2
+  
+  .checkbox-item
+    margin-left: base.$space-6
+    
+.radio-content
+  display: flex
+  flex-direction: column
+  gap: base.$space-1
 </style>
