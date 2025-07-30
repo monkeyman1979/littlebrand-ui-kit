@@ -101,8 +101,8 @@ defineExpose({
   // Switch track
   .switch-track
     position: relative
-    width: base.$space-11 + base.$space-2 // 36px (32px + 4px)
-    height: base.$size-md // 20px
+    width: base.$space-14 // 56px
+    height: base.$size-xl // 32px
     background: var(--color-input-background)
     border: base.$border-medium solid var(--color-input-border)
     border-radius: base.$radius-full
@@ -112,10 +112,10 @@ defineExpose({
   .switch-thumb
     position: absolute
     top: 50%
-    left: base.$space-1 // 2px
+    left: base.$space-2 // 4px
     transform: translateY(-50%)
-    width: base.$space-6 // 14px
-    height: base.$space-6 // 14px
+    width: base.$size-lg // 24px
+    height: base.$size-lg // 24px
     background: var(--color-input-border)
     border-radius: base.$radius-full
     transition: transform base.$transition, background-color base.$transition
@@ -129,7 +129,7 @@ defineExpose({
       
     .switch-thumb
       background: white
-      transform: translateY(-50%) translateX(base.$space-6) // Move to right side (14px)
+      transform: translateY(-50%) translateX(base.$space-9 + base.$space-1) // Move 22px to right (20px + 2px)
       
   // Add smooth spring animation for the toggle
   &:not(.disabled) .switch-thumb
