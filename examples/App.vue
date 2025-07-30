@@ -529,11 +529,99 @@
             .form-actions
               LbButton(type="submit") Save Preferences
               LbButton(type="button" variant="ghost" @click="resetCheckboxForm") Reset
+      
+      .component-demo
+        h3 Switch
+        
+        .demo-group
+          h4 Switch States
+          .switch-row
+            .switch-item
+              LbSwitch(v-model="switchOff" id="switch-off")
+              LbLabel(for="switch-off") Off
+            .switch-item
+              LbSwitch(v-model="switchOn" id="switch-on")
+              LbLabel(for="switch-on") On
+            .switch-item
+              LbSwitch(v-model="switchDisabled" disabled id="switch-disabled")
+              LbLabel(for="switch-disabled") Disabled
+            .switch-item
+              LbSwitch(v-model="switchDisabledOn" disabled id="switch-disabled-on")
+              LbLabel(for="switch-disabled-on") Disabled on
+            .switch-item
+              LbSwitch(v-model="switchInvalid" invalid id="switch-invalid")
+              LbLabel(for="switch-invalid") Invalid state
+        
+        .demo-group
+          h4 With Labels and Descriptions
+          .form-field
+            .switch-field
+              LbSwitch(v-model="darkModeSwitch" id="dark-mode-switch" aria-describedby="dark-mode-hint")
+              .switch-label-group
+                LbLabel(for="dark-mode-switch") Dark Mode
+                LbHintText(id="dark-mode-hint") Enable dark theme for better viewing in low light
+          
+          .form-field
+            .switch-field
+              LbSwitch(v-model="notificationsSwitch" id="notifications-switch" aria-describedby="notifications-hint")
+              .switch-label-group
+                LbLabel(for="notifications-switch") Push Notifications
+                LbHintText(id="notifications-hint") Get notified about important updates
+          
+          .form-field
+            .switch-field
+              LbSwitch(v-model="autoSaveSwitch" id="auto-save-switch" aria-describedby="auto-save-hint")
+              .switch-label-group
+                LbLabel(for="auto-save-switch") Auto-save
+                LbHintText(id="auto-save-hint") Automatically save your work every 5 minutes
+        
+        .demo-group
+          h4 Settings Form Example
+          form.settings-form
+            .form-field
+              h5 Privacy Settings
+              .switch-group
+                .switch-field
+                  LbSwitch(v-model="privacySettings.profilePublic" id="profile-public")
+                  .switch-label-group
+                    LbLabel(for="profile-public") Public Profile
+                    LbHintText Others can view your profile information
+                
+                .switch-field
+                  LbSwitch(v-model="privacySettings.showActivity" id="show-activity")
+                  .switch-label-group
+                    LbLabel(for="show-activity") Show Activity Status
+                    LbHintText Let others see when you're online
+                
+                .switch-field
+                  LbSwitch(v-model="privacySettings.allowMessages" id="allow-messages")
+                  .switch-label-group
+                    LbLabel(for="allow-messages") Allow Direct Messages
+                    LbHintText Receive messages from other users
+            
+            .form-field
+              h5 Accessibility
+              .switch-group
+                .switch-field
+                  LbSwitch(v-model="accessibilitySettings.reduceMotion" id="reduce-motion")
+                  .switch-label-group
+                    LbLabel(for="reduce-motion") Reduce Motion
+                    LbHintText Minimize animations and transitions
+                
+                .switch-field
+                  LbSwitch(v-model="accessibilitySettings.highContrast" id="high-contrast")
+                  .switch-label-group
+                    LbLabel(for="high-contrast") High Contrast Mode
+                    LbHintText Increase color contrast for better visibility
+            
+            .form-actions
+              LbButton(type="button" @click="saveSettings") Save Settings
+              LbButton(type="button" variant="ghost" @click="resetSettings") Reset
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import { LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio } from '../src'
+import { LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch } from '../src'
 
 const isDark = ref(false)
 
@@ -649,6 +737,30 @@ const frequencyOptions = [
 const termsAccepted = ref(false)
 const showTermsError = ref(false)
 
+// Switch demo values
+const switchOff = ref(false)
+const switchOn = ref(true)
+const switchDisabled = ref(false)
+const switchDisabledOn = ref(true)
+const switchInvalid = ref(true)
+
+// Switch form examples
+const darkModeSwitch = ref(false)
+const notificationsSwitch = ref(true)
+const autoSaveSwitch = ref(true)
+
+// Settings form
+const privacySettings = ref({
+  profilePublic: true,
+  showActivity: true,
+  allowMessages: false
+})
+
+const accessibilitySettings = ref({
+  reduceMotion: false,
+  highContrast: false
+})
+
 const handleCheckboxFormSubmit = () => {
   showTermsError.value = !termsAccepted.value
   
@@ -666,6 +778,23 @@ const resetCheckboxForm = () => {
   notificationFrequency.value = 'daily'
   termsAccepted.value = false
   showTermsError.value = false
+}
+
+// Switch settings handlers
+const saveSettings = () => {
+  alert(`Settings saved!\n\nPrivacy:\n- Public Profile: ${privacySettings.value.profilePublic}\n- Show Activity: ${privacySettings.value.showActivity}\n- Allow Messages: ${privacySettings.value.allowMessages}\n\nAccessibility:\n- Reduce Motion: ${accessibilitySettings.value.reduceMotion}\n- High Contrast: ${accessibilitySettings.value.highContrast}`)
+}
+
+const resetSettings = () => {
+  privacySettings.value = {
+    profilePublic: true,
+    showActivity: true,
+    allowMessages: false
+  }
+  accessibilitySettings.value = {
+    reduceMotion: false,
+    highContrast: false
+  }
 }
 
 // Async search handler
@@ -945,4 +1074,45 @@ section
   display: flex
   flex-direction: column
   gap: base.$space-1
+
+// Switch styles
+.switch-row
+  display: flex
+  flex-wrap: wrap
+  gap: base.$space-6
+  align-items: center
+  
+.switch-item
+  display: flex
+  align-items: center
+  gap: base.$space-3
+  
+.switch-field
+  display: flex
+  align-items: flex-start
+  gap: base.$space-4
+  
+.switch-label-group
+  display: flex
+  flex-direction: column
+  gap: base.$space-1
+  
+.switch-group
+  display: flex
+  flex-direction: column
+  gap: base.$space-4
+  
+.settings-form
+  display: flex
+  flex-direction: column
+  gap: base.$space-6
+  background: var(--color-surface)
+  border: base.$border-thin solid var(--color-border)
+  border-radius: base.$radius-lg
+  padding: base.$space-8
+  max-width: 600px
+  
+  h5
+    margin: 0 0 base.$space-2 0
+    color: var(--color-text-secondary)
 </style>
