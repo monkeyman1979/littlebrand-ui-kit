@@ -5,9 +5,10 @@ import LbButton from './components/Button'
 import LbInput from './components/Input'
 import LbLabel from './components/Label'
 import LbHintText from './components/HintText'
+import LbTextarea from './components/Textarea'
 
 // Export individual components for tree-shaking
-export { LbButton, LbInput, LbLabel, LbHintText }
+export { LbButton, LbInput, LbLabel, LbHintText, LbTextarea }
 
 // Plugin install function for Vue.use()
 const LittleBrandUI = {
@@ -17,6 +18,7 @@ const LittleBrandUI = {
     app.component('LbInput', LbInput)
     app.component('LbLabel', LbLabel)
     app.component('LbHintText', LbHintText)
+    app.component('LbTextarea', LbTextarea)
     
     // Apply any global configuration
     if (options.theme) {

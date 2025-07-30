@@ -1,10 +1,10 @@
 # Private project files
-/context/
-CLAUDE.md
-.claude/
-claude.json
-.claude-code/
-.claudecode/
+# /context/
+# CLAUDE.md
+# .claude/
+# claude.json
+# .claude-code/
+# .claudecode/
 
 # Dependencies
 node_modules/

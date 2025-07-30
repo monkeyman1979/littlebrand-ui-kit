@@ -222,6 +222,55 @@
                   path(d="M0 4a2 2 0 012-2h12a2 2 0 012 2v8a2 2 0 01-2 2H2a2 2 0 01-2-2V4zm2-1a1 1 0 00-1 1v.217l7 4.2 7-4.2V4a1 1 0 00-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 002 13h12a1 1 0 00.966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" fill="currentColor")
       
       .component-demo
+        h3 Textarea
+        
+        .demo-group
+          h4 Basic Examples
+          .input-row
+            LbTextarea(v-model="textareaValue1" placeholder="Enter your message...")
+            LbTextarea(v-model="textareaValue2" placeholder="Another textarea...")
+        
+        .demo-group
+          h4 Textarea States
+          .input-row
+            LbTextarea(v-model="textareaDisabled" placeholder="Disabled textarea" :disabled="true")
+            LbTextarea(v-model="textareaReadonly" placeholder="Readonly textarea" :readonly="true")
+            LbTextarea(v-model="textareaInvalid" placeholder="Invalid textarea" :invalid="true")
+        
+        
+        .demo-group
+          h4 Resize Options
+          .input-row
+            LbTextarea(v-model="textareaValue1" placeholder="No resize" resize="none")
+            LbTextarea(v-model="textareaValue1" placeholder="Vertical resize (default)" resize="vertical")
+            LbTextarea(v-model="textareaValue1" placeholder="Both directions" resize="both")
+        
+        .demo-group
+          h4 With Labels and Hints
+          .form-field
+            LbLabel(for="textarea-feedback" required) Feedback
+            LbTextarea(
+              id="textarea-feedback"
+              v-model="textareaValue1"
+              placeholder="Tell us what you think..."
+              :rows="5"
+              aria-describedby="textarea-feedback-hint"
+            )
+            LbHintText(id="textarea-feedback-hint") Please provide detailed feedback to help us improve
+          
+          .form-field
+            LbLabel(for="textarea-bio") Bio
+              template(#hint) optional
+            LbTextarea(
+              id="textarea-bio"
+              v-model="textareaValue2"
+              placeholder="Tell us about yourself..."
+              :maxlength="200"
+              aria-describedby="textarea-bio-hint"
+            )
+            LbHintText(id="textarea-bio-hint") Write a short bio. Max 200 characters.
+      
+      .component-demo
         h3 Form Components
         
         .demo-group
@@ -333,7 +382,7 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import { LbButton, LbInput, LbLabel, LbHintText } from '../src'
+import { LbButton, LbInput, LbLabel, LbHintText, LbTextarea } from '../src'
 
 const isDark = ref(false)
 
@@ -364,6 +413,13 @@ const clearableValue = ref('')
 const loadingValue = ref('Loading example')
 const asyncSearchValue = ref('')
 const isSearching = ref(false)
+
+// Textarea demo values
+const textareaValue1 = ref('')
+const textareaValue2 = ref('This is some example text in a textarea component.')
+const textareaReadonly = ref('This textarea is readonly and cannot be edited.')
+const textareaDisabled = ref('This textarea is disabled.')
+const textareaInvalid = ref('')
 
 // Async search handler
 let searchTimeout
