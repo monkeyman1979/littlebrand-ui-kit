@@ -225,34 +225,10 @@
         h3 Textarea
         
         .demo-group
-          h4 Size Variants
-          .input-row
-            LbTextarea(v-model="textareaSizeSmall" size="small" placeholder="Small textarea" :rows="3")
-            LbTextarea(v-model="textareaSizeMedium" size="medium" placeholder="Medium textarea (default)")
-            LbTextarea(v-model="textareaSizeLarge" size="large" placeholder="Large textarea" :rows="5")
-        
-        .demo-group
           h4 Basic Examples
           .input-row
             LbTextarea(v-model="textareaValue1" placeholder="Enter your message...")
-            LbTextarea(v-model="textareaValue2" placeholder="Another textarea..." clearable)
-        
-        .demo-group
-          h4 Character Count
-          .input-row
-            LbTextarea(
-              v-model="textareaCharCount" 
-              placeholder="Type something to see character count..."
-              :maxlength="100"
-              show-character-count
-            )
-            LbTextarea(
-              v-model="textareaCharCount" 
-              placeholder="Character count with clearable..."
-              :maxlength="150"
-              show-character-count
-              clearable
-            )
+            LbTextarea(v-model="textareaValue2" placeholder="Another textarea...")
         
         .demo-group
           h4 Textarea States
@@ -290,7 +266,6 @@
               v-model="textareaValue2"
               placeholder="Tell us about yourself..."
               :maxlength="200"
-              show-character-count
               aria-describedby="textarea-bio-hint"
             )
             LbHintText(id="textarea-bio-hint") Write a short bio. Max 200 characters.
@@ -445,13 +420,6 @@ const textareaValue2 = ref('This is some example text in a textarea component.')
 const textareaReadonly = ref('This textarea is readonly and cannot be edited.')
 const textareaDisabled = ref('This textarea is disabled.')
 const textareaInvalid = ref('')
-const textareaClearable = ref('This textarea has a clear button when it contains text.')
-const textareaWithIcon = ref('')
-const textareaLoading = ref('Loading state example')
-const textareaCharCount = ref('Type something to see the character count.')
-const textareaSizeSmall = ref('')
-const textareaSizeMedium = ref('')
-const textareaSizeLarge = ref('')
 
 // Async search handler
 let searchTimeout

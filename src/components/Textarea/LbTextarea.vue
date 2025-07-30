@@ -21,10 +21,6 @@
     @focus="$emit('focus', $event)"
     @blur="$emit('blur', $event)"
   )
-  //- Character count at bottom
-  .bottom-info(v-if="showCharacterCount && maxlength")
-    .character-count
-      span {{ characterCount }} / {{ maxlength }}
 </template>
 
 <script setup lang="ts">
@@ -40,14 +36,12 @@ interface Props {
   required?: boolean
   id?: string
   ariaDescribedby?: string
-  size?: 'small' | 'medium' | 'large'
   autofocus?: boolean
   rows?: number
   cols?: number
   minlength?: number
   maxlength?: number
   spellcheck?: boolean
-  showCharacterCount?: boolean
   resize?: 'none' | 'vertical' | 'horizontal' | 'both'
 }
 
@@ -57,11 +51,9 @@ const props = withDefaults(defineProps<Props>(), {
   readonly: false,
   invalid: false,
   required: false,
-  size: 'medium',
   autofocus: false,
   rows: 4,
   spellcheck: true,
-  showCharacterCount: false,
   resize: 'vertical'
 })
 
@@ -78,14 +70,10 @@ const emit = defineEmits<{
 const textareaRef = ref<HTMLTextAreaElement>()
 
 // Computed
-const characterCount = computed(() => props.modelValue?.length || 0)
-
 const rootClasses = computed(() => ({
   'disabled': props.disabled,
   'readonly': props.readonly,
   'invalid': props.invalid,
-  'has-character-count': props.showCharacterCount && props.maxlength,
-  [`size-${props.size}`]: true,
   [`resize-${props.resize}`]: true
 }))
 
@@ -109,9 +97,6 @@ defineExpose({
 .lb-textarea
   position: relative
   width: 100%
-  isolation: isolate
-  overflow: visible
-  contain: layout
   
   // Textarea styles
   textarea
@@ -143,6 +128,10 @@ defineExpose({
       border-color: var(--color-input-border-focus)
       box-shadow: 0 0 0 base.$focus-ring-width var(--color-primary-a5)
     
+    // Focus takes precedence over hover
+    &:focus:hover:not(:disabled):not(:read-only)
+      border-color: var(--color-input-border-focus)
+      box-shadow: 0 0 0 base.$focus-ring-width var(--color-primary-a5)
     
     // Invalid state when parent has .invalid class
     .invalid &
@@ -168,17 +157,6 @@ defineExpose({
         border-color: var(--color-input-border)
         box-shadow: none
   
-  // Size variations
-  &.size-small textarea
-    min-height: base.$size-7xl // 80px for small
-    padding: base.$space-2 base.$space-3
-    font-size: typography.$label-size-small
-    
-  &.size-large textarea
-    min-height: base.$size-11xl // 112px for large
-    padding: base.$space-4 base.$space-5
-    font-size: typography.$label-size-large
-  
   // Resize controls
   &.resize-none textarea
     resize: none
@@ -192,10 +170,6 @@ defineExpose({
   &.resize-both textarea
     resize: both
   
-  // Add padding when character count is shown
-  &.has-character-count textarea
-    padding-bottom: base.$space-10 // Make room for character count inside textarea
-  
   // Invalid state for textarea
   &.invalid textarea
     border-color: var(--color-error-border)
@@ -203,37 +177,4 @@ defineExpose({
     &:focus
       border-color: var(--color-error)
       box-shadow: 0 0 0 base.$focus-ring-width var(--color-error-a5)
-  
-  // Bottom info container for character count
-  .bottom-info
-    position: absolute
-    right: base.$space-4
-    bottom: base.$space-4
-    pointer-events: none
-    z-index: 1
-    
-    .size-small &
-      right: base.$space-3
-      bottom: base.$space-3
-      
-    .size-large &
-      right: base.$space-5
-      bottom: base.$space-5
-  
-  // Character count
-  .character-count
-    font-size: typography.$label-size-small
-    color: var(--color-text-tertiary)
-    white-space: nowrap
-    background: var(--color-input-background)
-    padding: base.$space-1 base.$space-2
-    border-radius: base.$radius-xs
-    
-    // When focused, make it more visible
-    textarea:focus ~ .bottom-info &
-      color: var(--color-text-secondary)
-    
-    // When at or over limit
-    .invalid &
-      color: var(--color-error)
 </style>

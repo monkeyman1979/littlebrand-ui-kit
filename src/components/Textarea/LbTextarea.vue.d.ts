@@ -1,4 +1,4 @@
-import { DefineComponent } from 'vue'
+import type { DefineComponent } from 'vue'
 
 export interface LbTextareaProps {
   modelValue?: string
@@ -9,25 +9,23 @@ export interface LbTextareaProps {
   required?: boolean
   id?: string
   ariaDescribedby?: string
-  size?: 'small' | 'medium' | 'large'
   autofocus?: boolean
   rows?: number
   cols?: number
   minlength?: number
   maxlength?: number
   spellcheck?: boolean
-  showCharacterCount?: boolean
   resize?: 'none' | 'vertical' | 'horizontal' | 'both'
 }
 
 export interface LbTextareaEmits {
-  'update:modelValue': [value: string]
-  'input': [event: Event]
-  'change': [event: Event]
-  'focus': [event: FocusEvent]
-  'blur': [event: FocusEvent]
+  'update:modelValue': (value: string) => void
+  'input': (event: Event) => void
+  'change': (event: Event) => void
+  'focus': (event: FocusEvent) => void
+  'blur': (event: FocusEvent) => void
 }
 
-declare const LbTextarea: DefineComponent<LbTextareaProps, {}, {}, {}, {}, {}, {}, LbTextareaEmits>
+declare const LbTextarea: DefineComponent<LbTextareaProps, {}, {}, {}, {}, {}, {}, {}>
 
 export default LbTextarea
