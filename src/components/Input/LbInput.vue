@@ -4,7 +4,7 @@
     slot(name="icon-leading")
   input(
     ref="inputRef"
-    :id="id"
+    :id="computedId"
     :type="currentType"
     :value="modelValue"
     :placeholder="placeholder"
@@ -12,7 +12,7 @@
     :readonly="readonly"
     :required="required"
     :aria-invalid="invalid || undefined"
-    :aria-describedby="ariaDescribedby || undefined"
+    :aria-describedby="computedAriaDescribedby"
     :autofocus="autofocus"
     @input="handleInput"
     @change="$emit('change', $event)"
@@ -117,7 +117,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, inject, type ComputedRef } from 'vue'
 
 // Props
 interface Props {
@@ -163,8 +163,20 @@ const emit = defineEmits<{
 const inputRef = ref<HTMLInputElement>()
 const showPassword = ref(false)
 
+// Inject form field context if available
+const injectedId = inject<ComputedRef<string> | undefined>('formFieldId', undefined)
+const injectedAriaDescribedby = inject<ComputedRef<string | undefined> | undefined>('formFieldAriaDescribedby', undefined)
+
 // Computed
 const hasValue = computed(() => props.modelValue !== '' && props.modelValue != null)
+
+const computedId = computed(() => {
+  return props.id || injectedId?.value
+})
+
+const computedAriaDescribedby = computed(() => {
+  return props.ariaDescribedby || injectedAriaDescribedby?.value || undefined
+})
 
 const currentType = computed(() => 
   props.type === 'password' && showPassword.value ? 'text' : props.type

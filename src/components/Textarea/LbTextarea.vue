@@ -2,7 +2,7 @@
 .lb-textarea(:class="rootClasses")
   textarea(
     ref="textareaRef"
-    :id="id"
+    :id="computedId"
     :value="modelValue"
     :placeholder="placeholder"
     :disabled="disabled"
@@ -13,7 +13,7 @@
     :minlength="minlength"
     :maxlength="maxlength"
     :aria-invalid="invalid || undefined"
-    :aria-describedby="ariaDescribedby || undefined"
+    :aria-describedby="computedAriaDescribedby"
     :autofocus="autofocus"
     :spellcheck="spellcheck"
     @input="handleInput"
@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, inject, type ComputedRef } from 'vue'
 
 // Props
 interface Props {
@@ -69,6 +69,10 @@ const emit = defineEmits<{
 // Refs
 const textareaRef = ref<HTMLTextAreaElement>()
 
+// Inject form field context if available
+const injectedId = inject<ComputedRef<string> | undefined>('formFieldId', undefined)
+const injectedAriaDescribedby = inject<ComputedRef<string | undefined> | undefined>('formFieldAriaDescribedby', undefined)
+
 // Computed
 const rootClasses = computed(() => ({
   'disabled': props.disabled,
@@ -76,6 +80,14 @@ const rootClasses = computed(() => ({
   'invalid': props.invalid,
   [`resize-${props.resize}`]: true
 }))
+
+const computedId = computed(() => {
+  return props.id || injectedId?.value
+})
+
+const computedAriaDescribedby = computed(() => {
+  return props.ariaDescribedby || injectedAriaDescribedby?.value || undefined
+})
 
 // Event handlers
 const handleInput = (event: Event) => {
