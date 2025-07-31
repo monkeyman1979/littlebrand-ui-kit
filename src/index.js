@@ -11,9 +11,10 @@ import LbRadio from './components/Radio'
 import LbSwitch from './components/Switch'
 import LbSelect from './components/Select'
 import LbFormField from './components/FormField'
+import LbDialog from './components/Dialog'
 
 // Export individual components for tree-shaking
-export { LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField }
+export { LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog }
 
 // Plugin install function for Vue.use()
 const LittleBrandUI = {
@@ -29,6 +30,7 @@ const LittleBrandUI = {
     app.component('LbSwitch', LbSwitch)
     app.component('LbSelect', LbSelect)
     app.component('LbFormField', LbFormField)
+    app.component('LbDialog', LbDialog)
     
     // Apply any global configuration
     if (options.theme) {
