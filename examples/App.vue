@@ -617,11 +617,86 @@
             .form-actions
               LbButton(type="button" @click="saveSettings") Save Settings
               LbButton(type="button" variant="ghost" @click="resetSettings") Reset
+      
+      .component-demo
+        h3 Select
+        
+        .demo-group
+          h4 Size Variants
+          .input-row
+            LbSelect(v-model="selectSizeSmall" :options="colorOptions" placeholder="Small select" size="small")
+            LbSelect(v-model="selectSizeMedium" :options="colorOptions" placeholder="Medium select (default)" size="medium")
+            LbSelect(v-model="selectSizeLarge" :options="colorOptions" placeholder="Large select" size="large")
+        
+        .demo-group
+          h4 Basic Examples
+          .input-row
+            LbSelect(v-model="selectValue1" :options="countryOptions" placeholder="Select a country")
+            LbSelect(v-model="selectValue2" :options="colorOptions" placeholder="Choose a color")
+            LbSelect(v-model="selectValue3" :options="priorityOptions" placeholder="Set priority" required)
+        
+        .demo-group
+          h4 Select States
+          .input-row
+            LbSelect(v-model="selectDisabled" :options="colorOptions" placeholder="Disabled select" :disabled="true")
+            LbSelect(v-model="selectInvalid" :options="colorOptions" placeholder="Invalid select" :invalid="true")
+            LbSelect(v-model="selectWithValue" :options="colorOptions" placeholder="Select with value")
+        
+        .demo-group
+          h4 With Disabled Options
+          .input-row
+            LbSelect(v-model="selectWithDisabledOptions" :options="optionsWithDisabled" placeholder="Some options are disabled")
+        
+        .demo-group
+          h4 Custom Icon Slot
+          .input-row
+            LbSelect(v-model="selectCustomIcon" :options="iconOptions" placeholder="Custom dropdown icon")
+              template(#icon)
+                svg(width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg")
+                  path(d="M5 12l5-5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round")
+        
+        .demo-group
+          h4 Form Integration
+          .form-field
+            LbLabel(for="select-country" required) Country
+            LbSelect(
+              id="select-country"
+              v-model="formData.country"
+              :options="countryOptions"
+              placeholder="Select your country"
+              aria-describedby="country-hint"
+            )
+            LbHintText(id="country-hint") Choose your country of residence
+          
+          .form-field
+            LbLabel(for="select-timezone") Timezone
+              template(#hint) optional
+            LbSelect(
+              id="select-timezone"
+              v-model="formData.timezone"
+              :options="timezoneOptions"
+              placeholder="Select timezone"
+              aria-describedby="timezone-hint"
+            )
+            LbHintText(id="timezone-hint") Your local timezone for scheduling
+          
+          .form-field
+            LbLabel(for="select-notification" required) Notification Method
+            LbSelect(
+              id="select-notification"
+              v-model="formData.notificationMethod"
+              :options="notificationMethodOptions"
+              placeholder="How should we contact you?"
+              :invalid="!!formErrors.notificationMethod"
+              :aria-describedby="formErrors.notificationMethod ? 'notification-error' : 'notification-hint'"
+            )
+            LbHintText(id="notification-hint" v-if="!formErrors.notificationMethod") Select your preferred contact method
+            LbHintText(id="notification-error" error v-if="formErrors.notificationMethod") {{ formErrors.notificationMethod }}
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import { LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch } from '../src'
+import { LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect } from '../src'
 
 const isDark = ref(false)
 
@@ -814,7 +889,10 @@ const handleAsyncSearch = () => {
 // Form demo values
 const formData = ref({
   name: '',
-  email: ''
+  email: '',
+  country: '',
+  timezone: '',
+  notificationMethod: ''
 })
 
 // Validated fields examples
@@ -834,6 +912,85 @@ const signupErrors = ref({
   email: '',
   password: ''
 })
+
+const formErrors = ref({
+  notificationMethod: ''
+})
+
+// Select demo values
+const selectValue1 = ref('')
+const selectValue2 = ref('')
+const selectValue3 = ref('')
+const selectDisabled = ref('blue')
+const selectInvalid = ref('')
+const selectWithValue = ref('green')
+const selectWithDisabledOptions = ref('')
+const selectCustomIcon = ref('')
+
+// Select size variants
+const selectSizeSmall = ref('')
+const selectSizeMedium = ref('')
+const selectSizeLarge = ref('')
+
+// Select options
+const colorOptions = [
+  { value: 'red', label: 'Red' },
+  { value: 'green', label: 'Green' },
+  { value: 'blue', label: 'Blue' },
+  { value: 'yellow', label: 'Yellow' },
+  { value: 'purple', label: 'Purple' },
+  { value: 'orange', label: 'Orange' }
+]
+
+const countryOptions = [
+  { value: 'us', label: 'United States' },
+  { value: 'ca', label: 'Canada' },
+  { value: 'mx', label: 'Mexico' },
+  { value: 'uk', label: 'United Kingdom' },
+  { value: 'fr', label: 'France' },
+  { value: 'de', label: 'Germany' },
+  { value: 'jp', label: 'Japan' },
+  { value: 'au', label: 'Australia' }
+]
+
+const priorityOptions = [
+  { value: 'low', label: 'Low Priority' },
+  { value: 'medium', label: 'Medium Priority' },
+  { value: 'high', label: 'High Priority' },
+  { value: 'urgent', label: 'Urgent' }
+]
+
+const optionsWithDisabled = [
+  { value: 'available1', label: 'Available Option 1' },
+  { value: 'available2', label: 'Available Option 2' },
+  { value: 'disabled1', label: 'Disabled Option 1', disabled: true },
+  { value: 'available3', label: 'Available Option 3' },
+  { value: 'disabled2', label: 'Disabled Option 2', disabled: true },
+  { value: 'available4', label: 'Available Option 4' }
+]
+
+const iconOptions = [
+  { value: 'option1', label: 'Option 1' },
+  { value: 'option2', label: 'Option 2' },
+  { value: 'option3', label: 'Option 3' }
+]
+
+const timezoneOptions = [
+  { value: 'pst', label: 'Pacific Standard Time (PST)' },
+  { value: 'mst', label: 'Mountain Standard Time (MST)' },
+  { value: 'cst', label: 'Central Standard Time (CST)' },
+  { value: 'est', label: 'Eastern Standard Time (EST)' },
+  { value: 'gmt', label: 'Greenwich Mean Time (GMT)' },
+  { value: 'cet', label: 'Central European Time (CET)' },
+  { value: 'jst', label: 'Japan Standard Time (JST)' }
+]
+
+const notificationMethodOptions = [
+  { value: 'email', label: 'Email' },
+  { value: 'sms', label: 'SMS Text Message' },
+  { value: 'push', label: 'Push Notification' },
+  { value: 'none', label: 'No Notifications' }
+]
 
 const isFormValid = computed(() => {
   return signupForm.value.email && 
