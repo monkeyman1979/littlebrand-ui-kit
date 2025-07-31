@@ -352,7 +352,7 @@ defineExpose({
   align-items: center
   justify-content: flex-end
   gap: base.$space-4
-  padding: base.$space-10
+  padding: base.$space-7
   padding-top: 0
   flex-shrink: 0
   
