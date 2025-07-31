@@ -39,6 +39,19 @@ You will create and enhance Vue.js components following these strict guidelines:
 - Reference existing styles from the styles folder
 - Use CSS custom properties (variables) for all values - never hardcode colors, spacing, or sizes
 
+**CRITICAL Variable Usage Rules:**
+- Use `$size-*` variables (from _base.sass) for setting heights and widths of elements
+- Use `$space-*` variables ONLY for padding, margins, and flexbox/grid gaps
+- Example: `height: base.$size-xl` for element height, `padding: base.$space-4` for padding
+- NEVER use space variables for widths/heights or size variables for spacing
+
+**Sass Ampersand (&) Selector Rules:**
+- The ampersand (&) must ALWAYS be placed at the beginning of the selector
+- NEVER use & after a class name in your selectors
+- Correct: `&.size-small .select-icon` or `&.invalid select`
+- Incorrect: `.size-small &` or `.invalid &`
+- This ensures proper CSS specificity and follows Sass best practices
+
 **Color System:**
 - Follow RadixUI color structure with scale numbers 1-12
 - Use the project's custom color implementations, not RadixUI's actual colors
