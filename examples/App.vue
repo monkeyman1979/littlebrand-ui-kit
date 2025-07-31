@@ -619,6 +619,141 @@
               LbButton(type="button" variant="ghost" @click="resetSettings") Reset
       
       .component-demo
+        h3 Dialog
+        
+        .demo-group
+          h4 Basic Dialog
+          .button-row
+            LbButton(@click="showBasicDialog = true") Open Basic Dialog
+            LbButton(@click="showTitleDialog = true" variant="outline") Another Basic Dialog
+            LbButton(@click="showFullscreenDialog = true" variant="tonal") Fullscreen with Title
+        
+        .demo-group
+          h4 Dialog Options
+          .button-row
+            LbButton(@click="showNoBackdropDialog = true" variant="ghost") No Backdrop Close
+            LbButton(@click="showNoEscapeDialog = true" variant="ghost") No Escape Close
+            LbButton(@click="showNoCloseDialog = true" variant="ghost") No Close Button
+        
+        .demo-group
+          h4 Dialog with Long Content
+          .button-row
+            LbButton(@click="showScrollDialog = true" color="primary") Open Scrollable Dialog
+            LbButton(@click="showFormDialog = true" color="secondary" variant="outline") Form in Dialog
+        
+        // Basic Dialog
+        LbDialog(v-model="showBasicDialog")
+          p This is a basic dialog with default settings.
+          p Click outside or press Escape to close.
+        
+        // Dialog with Title (only shows in fullscreen)
+        LbDialog(v-model="showTitleDialog")
+          p This is a basic dialog. Titles only show in fullscreen dialogs.
+          p Close button is absolutely positioned in the top-right corner.
+        
+        // Fullscreen Dialog
+        LbDialog(v-model="showFullscreenDialog" variant="fullscreen" title="Fullscreen Dialog")
+          p This is a fullscreen dialog that takes up the entire viewport.
+          p It's particularly useful for mobile devices or when you need maximum space.
+          template(#footer)
+            LbButton(@click="showFullscreenDialog = false" variant="ghost") Close
+            LbButton(@click="showFullscreenDialog = false") Save Changes
+        
+        // No Backdrop Close Dialog
+        LbDialog(v-model="showNoBackdropDialog" :closeOnBackdrop="false")
+          p This dialog cannot be closed by clicking the backdrop.
+          p You must use the close button or press Escape.
+        
+        // No Escape Close Dialog
+        LbDialog(v-model="showNoEscapeDialog" :closeOnEscape="false")
+          p This dialog cannot be closed by pressing the Escape key.
+          p You must use the close button or click the backdrop.
+        
+        // No Close Button Dialog
+        LbDialog(v-model="showNoCloseDialog" :showClose="false")
+          p This dialog has no close button.
+          p You can still close it with Escape or clicking the backdrop.
+          template(#footer)
+            LbButton(@click="showNoCloseDialog = false" variant="ghost") Cancel
+            LbButton(@click="showNoCloseDialog = false") Confirm
+        
+        // Scrollable Content Dialog
+        LbDialog(v-model="showScrollDialog")
+          .scroll-content
+            h3 Terms of Service
+            h4 1. Acceptance of Terms
+            p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            
+            h4 2. Use of Service
+            p Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            
+            h4 3. Privacy Policy
+            p Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+            
+            h4 4. User Obligations
+            p Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.
+            
+            h4 5. Intellectual Property
+            p At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
+            
+            h4 6. Limitation of Liability
+            p Similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit.
+            
+            h4 7. Modifications
+            p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+            
+            h4 8. Termination
+            p Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            
+            h4 9. Governing Law
+            p Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+            
+            h4 10. Contact Information
+            p For any questions about these terms, please contact us at legal@example.com.
+          template(#footer)
+            LbButton(@click="showScrollDialog = false" variant="ghost") Decline
+            LbButton(@click="acceptTerms") Accept Terms
+        
+        // Form Dialog
+        LbDialog(v-model="showFormDialog" title="Create New Project")
+          form.dialog-form(@submit.prevent="handleCreateProject")
+            .form-field
+              LbLabel(for="project-name" required) Project Name
+              LbInput(
+                id="project-name"
+                v-model="newProject.name"
+                placeholder="My Awesome Project"
+                required
+              )
+            
+            .form-field
+              LbLabel(for="project-description") Description
+              LbTextarea(
+                id="project-description"
+                v-model="newProject.description"
+                placeholder="Brief description of your project..."
+                :rows="4"
+              )
+            
+            .form-field
+              LbLabel(for="project-visibility") Visibility
+              LbSelect(
+                id="project-visibility"
+                v-model="newProject.visibility"
+                :options="visibilityOptions"
+              )
+            
+            .form-field.checkbox-field
+              LbCheckbox(
+                id="project-initialize"
+                v-model="newProject.initializeRepo"
+              )
+              LbLabel(for="project-initialize") Initialize with README
+          template(#footer)
+            LbButton(@click="showFormDialog = false" variant="ghost") Cancel
+            LbButton(@click="handleCreateProject" :disabled="!newProject.name") Create Project
+      
+      .component-demo
         h3 Select
         
         .demo-group
@@ -850,7 +985,7 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import { LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField } from '../src'
+import { LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog } from '../src'
 
 const isDark = ref(false)
 
@@ -1007,6 +1142,50 @@ const resetCheckboxForm = () => {
   notificationFrequency.value = 'daily'
   termsAccepted.value = false
   showTermsError.value = false
+}
+
+// Dialog demo values
+const showBasicDialog = ref(false)
+const showTitleDialog = ref(false)
+const showFullscreenDialog = ref(false)
+const showNoBackdropDialog = ref(false)
+const showNoEscapeDialog = ref(false)
+const showNoCloseDialog = ref(false)
+const showScrollDialog = ref(false)
+const showFormDialog = ref(false)
+
+// Form dialog data
+const newProject = ref({
+  name: '',
+  description: '',
+  visibility: 'public',
+  initializeRepo: true
+})
+
+const visibilityOptions = [
+  { value: 'public', label: 'Public' },
+  { value: 'private', label: 'Private' },
+  { value: 'internal', label: 'Internal' }
+]
+
+// Dialog handlers
+const acceptTerms = () => {
+  showScrollDialog.value = false
+  alert('Terms accepted!')
+}
+
+const handleCreateProject = () => {
+  if (newProject.value.name) {
+    alert(`Project "${newProject.value.name}" created successfully!`)
+    showFormDialog.value = false
+    // Reset form
+    newProject.value = {
+      name: '',
+      description: '',
+      visibility: 'public',
+      initializeRepo: true
+    }
+  }
 }
 
 // Switch settings handlers
@@ -1356,7 +1535,6 @@ section
   display: flex
   flex-direction: column
   gap: base.$space-2
-  max-width: 400px
 
 .form-grid
   display: grid
@@ -1448,5 +1626,35 @@ section
   
   h5
     margin: 0 0 base.$space-2 0
+    color: var(--color-text-secondary)
+
+// Dialog demo styles
+.dialog-form
+  display: flex
+  flex-direction: column
+  gap: base.$space-6
+  
+  .form-field
+    display: flex
+    flex-direction: column
+    gap: base.$space-2
+    
+    &.checkbox-field
+      flex-direction: row
+      align-items: center
+      gap: base.$space-3
+
+.scroll-content
+  h4
+    margin-top: base.$space-8
+    margin-bottom: base.$space-4
+    color: var(--color-text)
+    
+    &:first-child
+      margin-top: 0
+  
+  p
+    margin-bottom: base.$space-6
+    line-height: 1.6
     color: var(--color-text-secondary)
 </style>
