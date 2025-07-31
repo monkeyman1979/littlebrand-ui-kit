@@ -9,7 +9,6 @@ Teleport(to="body")
       v-if="modelValue"
       :class="overlayClasses"
       @click="handleBackdropClick"
-      @keydown.escape="handleEscape"
       tabindex="-1"
       ref="overlayRef"
     )
@@ -44,8 +43,7 @@ Teleport(to="body")
             stroke-linecap="round"
             stroke-linejoin="round"
           )
-            line(x1="18" y1="6" x2="6" y2="18")
-            line(x1="6" y1="6" x2="18" y2="18")
+            path(d="M18 6L6 18M6 6l12 12")
         
         .dialog-content(:id="contentId")
           slot
@@ -55,7 +53,7 @@ Teleport(to="body")
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch, nextTick, onBeforeUnmount, onMounted } from 'vue'
+import { computed, ref, nextTick, onBeforeUnmount, onMounted } from 'vue'
 
 // Types
 export type DialogVariant = 'default' | 'fullscreen'
@@ -85,17 +83,19 @@ const emit = defineEmits<{
   'open': []
 }>()
 
+// Utils
+const generateId = (prefix: string) => `${prefix}-${Math.random().toString(36).substring(2, 9)}`
+
 // Refs
 const overlayRef = ref<HTMLElement>()
-const titleId = `dialog-title-${Math.random().toString(36).substring(2, 9)}`
-const contentId = `dialog-content-${Math.random().toString(36).substring(2, 9)}`
+const titleId = generateId('dialog-title')
+const contentId = generateId('dialog-content')
 
 // Store original body overflow
 let originalBodyOverflow = ''
 let originalBodyPaddingRight = ''
 
 // Focus management
-const focusableElements = ref<HTMLElement[]>([])
 const lastFocusedElement = ref<HTMLElement | null>(null)
 
 const getFocusableElements = () => {
@@ -113,11 +113,12 @@ const trapFocus = (event: KeyboardEvent) => {
   
   const firstElement = elements[0]
   const lastElement = elements[elements.length - 1]
+  const { activeElement } = document
   
-  if (event.shiftKey && document.activeElement === firstElement) {
+  if (event.shiftKey && activeElement === firstElement) {
     event.preventDefault()
     lastElement.focus()
-  } else if (!event.shiftKey && document.activeElement === lastElement) {
+  } else if (!event.shiftKey && activeElement === lastElement) {
     event.preventDefault()
     firstElement.focus()
   }
@@ -149,9 +150,7 @@ const dialogClasses = computed(() => ({
   [`variant-${props.variant}`]: true
 }))
 
-const hasHeader = computed(() => {
-  return props.title || !!slots.header
-})
+const hasHeader = computed(() => props.title || !!slots.header)
 
 // Get slots
 const slots = defineSlots<{
@@ -172,11 +171,6 @@ const handleBackdropClick = (event: MouseEvent) => {
   }
 }
 
-const handleEscape = () => {
-  if (props.closeOnEscape) {
-    close()
-  }
-}
 
 const onEnter = async () => {
   await nextTick()
@@ -220,16 +214,18 @@ onMounted(() => {
   document.addEventListener('keydown', handleEscapeKey)
 })
 
-// Clean up escape key listener when unmounted
+// Clean up on unmount
 onBeforeUnmount(() => {
+  // Remove escape key listener
   document.removeEventListener('keydown', handleEscapeKey)
-})
-
-// Also clean up scroll lock on unmount if dialog is open
-onBeforeUnmount(() => {
+  
+  // Clean up scroll lock if dialog is open
   if (props.modelValue) {
     unlockScroll()
   }
+  
+  // Remove focus trap listener if still attached
+  overlayRef.value?.removeEventListener('keydown', trapFocus)
 })
 
 // Component options
@@ -254,7 +250,7 @@ defineExpose({
   position: fixed
   inset: 0
   z-index: base.$z-modal-backdrop
-  background: hsla(0, 0%, 0%, 0.5)
+  background: var(--color-modal-backdrop)
   backdrop-filter: blur(2px)
   overflow-y: auto
   -webkit-overflow-scrolling: touch
@@ -361,7 +357,7 @@ defineExpose({
   flex-shrink: 0
   
   // Add top spacing if there's content
-  .dialog-content:not(:empty) + &
+  .dialog-content + &
     padding-top: base.$space-10
 
 // Transitions
