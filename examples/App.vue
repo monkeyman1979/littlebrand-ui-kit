@@ -692,11 +692,165 @@
             )
             LbHintText(id="notification-hint" v-if="!formErrors.notificationMethod") Select your preferred contact method
             LbHintText(id="notification-error" error v-if="formErrors.notificationMethod") {{ formErrors.notificationMethod }}
+      
+      .component-demo
+        h3 FormField
+        p The FormField component simplifies form creation by combining labels, form controls, and hint/validation messages.
+        
+        .demo-group
+          h4 Basic Usage
+          .form-grid
+            LbFormField(
+              label="Username"
+              hint="Choose a unique username"
+              required
+            )
+              template(#default="{ id, 'aria-describedby': ariaDescribedby }")
+                LbInput(
+                  :id="id"
+                  v-model="formFieldData.username"
+                  placeholder="Enter username"
+                  :aria-describedby="ariaDescribedby"
+                )
+            
+            LbFormField(
+              label="Email Address"
+              hint="We'll never share your email"
+            )
+              template(#default="{ id, 'aria-describedby': ariaDescribedby }")
+                LbInput(
+                  :id="id"
+                  v-model="formFieldData.email"
+                  type="email"
+                  placeholder="you@example.com"
+                  :aria-describedby="ariaDescribedby"
+                )
+        
+        .demo-group
+          h4 With Different Form Controls
+          .form-grid
+            LbFormField(
+              label="Password"
+              hint="Must be at least 8 characters"
+              required
+            )
+              template(#default="{ id, 'aria-describedby': ariaDescribedby }")
+                LbInput(
+                  :id="id"
+                  v-model="formFieldData.password"
+                  type="password"
+                  placeholder="Enter password"
+                  :aria-describedby="ariaDescribedby"
+                )
+            
+            LbFormField(
+              label="Bio"
+              hint="Tell us about yourself"
+            )
+              template(#default="{ id, 'aria-describedby': ariaDescribedby }")
+                LbTextarea(
+                  :id="id"
+                  v-model="formFieldData.bio"
+                  placeholder="Write a short bio..."
+                  :rows="4"
+                  :aria-describedby="ariaDescribedby"
+                )
+            
+            LbFormField(
+              label="Role"
+              hint="Select your account type"
+              required
+            )
+              template(#default="{ id, 'aria-describedby': ariaDescribedby }")
+                LbSelect(
+                  :id="id"
+                  v-model="formFieldData.role"
+                  :options="roleOptions"
+                  placeholder="Choose a role"
+                  :aria-describedby="ariaDescribedby"
+                )
+        
+        .demo-group
+          h4 Validation States
+          .form-grid
+            LbFormField(
+              label="Website URL"
+              error="Please enter a valid URL starting with https://"
+            )
+              template(#default="{ id, 'aria-describedby': ariaDescribedby }")
+                LbInput(
+                  :id="id"
+                  v-model="formFieldData.website"
+                  type="url"
+                  placeholder="https://example.com"
+                  :aria-describedby="ariaDescribedby"
+                  invalid
+                )
+            
+            LbFormField(
+              label="Notifications"
+              warning="Changing this will affect all devices"
+            )
+              template(#default="{ id }")
+                LbSwitch(
+                  :id="id"
+                  v-model="formFieldData.notifications"
+                )
+            
+            LbFormField(
+              label="Verification Code"
+              success="Code verified successfully!"
+            )
+              template(#default="{ id, 'aria-describedby': ariaDescribedby }")
+                LbInput(
+                  :id="id"
+                  value="ABC123"
+                  placeholder="Enter code"
+                  :aria-describedby="ariaDescribedby"
+                  readonly
+                )
+        
+        .demo-group
+          h4 Custom IDs and Label Icons
+          .form-grid
+            LbFormField(
+              id="custom-field-id"
+              label="Security Key"
+              hint="Enter your 2FA key"
+              required
+            )
+              template(#label-icon)
+                svg(width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg")
+                  path(d="M11 5a3 3 0 11-6 0 3 3 0 016 0zM8 9a6 6 0 00-5.784 7.5.75.75 0 001.495-.154A4.5 4.5 0 018 12.5a4.5 4.5 0 014.289 3.846.75.75 0 101.495.154A6 6 0 008 9z" fill="currentColor")
+              template(#default="{ id, 'aria-describedby': ariaDescribedby }")
+                LbInput(
+                  :id="id"
+                  value=""
+                  type="password"
+                  placeholder="Enter security key"
+                  :aria-describedby="ariaDescribedby"
+                )
+            
+            LbFormField(
+              label="Priority Email"
+              hint="For urgent notifications only"
+            )
+              template(#label-icon)
+                svg(width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg")
+                  path(d="M8 2a6 6 0 100 12A6 6 0 008 2zM8 4.5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 018 4.5zm0 7a.75.75 0 100-1.5.75.75 0 000 1.5z" fill="currentColor")
+              template(#default="{ id, 'aria-describedby': ariaDescribedby }")
+                LbInput(
+                  :id="id"
+                  value=""
+                  type="email"
+                  placeholder="priority@example.com"
+                  :aria-describedby="ariaDescribedby"
+                )
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import { LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect } from '../src'
+import { LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField } from '../src'
 
 const isDark = ref(false)
 
@@ -895,6 +1049,17 @@ const formData = ref({
   notificationMethod: ''
 })
 
+// FormField demo data
+const formFieldData = ref({
+  username: '',
+  email: '',
+  password: '',
+  bio: '',
+  website: '',
+  role: null,
+  notifications: false
+})
+
 // Validated fields examples
 const validatedFields = ref({
   valid: 'This is valid',
@@ -973,6 +1138,13 @@ const iconOptions = [
   { value: 'option1', label: 'Option 1' },
   { value: 'option2', label: 'Option 2' },
   { value: 'option3', label: 'Option 3' }
+]
+
+const roleOptions = [
+  { value: 'admin', label: 'Administrator' },
+  { value: 'editor', label: 'Editor' },
+  { value: 'viewer', label: 'Viewer' },
+  { value: 'guest', label: 'Guest' }
 ]
 
 const timezoneOptions = [
@@ -1185,6 +1357,11 @@ section
   flex-direction: column
   gap: base.$space-2
   max-width: 400px
+
+.form-grid
+  display: grid
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))
+  gap: base.$space-6
 
 .example-form
   display: flex
