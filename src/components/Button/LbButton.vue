@@ -156,6 +156,7 @@ defineOptions({
   &:focus-visible
     outline: base.$focus-ring-width solid var(--color-focus-ring)
     outline-offset: base.$focus-ring-offset
+    transition: none
   
   // Size modifiers
   &.small
