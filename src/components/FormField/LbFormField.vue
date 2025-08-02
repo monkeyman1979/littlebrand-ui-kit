@@ -89,7 +89,7 @@ defineOptions({
 
 .lb-form-field
   display: grid
-  gap: base.$space-2
+  gap: var(--space-xs)
   width: 100%
   align-self: start
 </style>

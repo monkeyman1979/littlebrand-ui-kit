@@ -147,9 +147,9 @@ defineExpose({
   select
     width: 100%
     height: 100%
-    padding: 0 var(--space-10) 0 var(--space-4) // Right padding for icon
+    padding: 0 var(--space-2xl) 0 var(--space-sm) // Right padding for icon
     background: var(--color-input-background)
-    border: var(--border-thin) solid var(--color-input-border)
+    border: var(--border-sm) solid var(--color-input-border)
     border-radius: var(--radius-md)
     font-size: var(--font-size-label-base)
     font-family: inherit
@@ -189,7 +189,7 @@ defineExpose({
       background: var(--color-surface)
       color: var(--color-text-disabled)
       cursor: not-allowed
-      opacity: 0.6
+      opacity: var(--opacity-60)
   
   // Placeholder style
   &.has-placeholder select
@@ -200,14 +200,15 @@ defineExpose({
     height: var(--input-height-small) // 32px
     
     select
-      padding: 0 var(--space-9) 0 var(--space-3)
+      padding: 0 var(--space-xl) 0 var(--space-sm)
       font-size: var(--font-size-label-small)
+      border-radius: var(--radius-sm)
     
   &.size-large
     height: var(--input-height-large) // 48px
     
     select
-      padding: 0 var(--space-12) 0 var(--space-5)
+      padding: 0 var(--space-4xl) 0 var(--space-md)
       font-size: var(--font-size-label-large)
   
   // Disabled state
@@ -218,7 +219,7 @@ defineExpose({
   .select-icon
     position: absolute
     top: 50%
-    right: var(--space-4)
+    right: var(--space-sm)
     transform: translateY(-50%)
     display: flex
     align-items: center
@@ -228,22 +229,22 @@ defineExpose({
     transition: color var(--transition)
     
     svg
-      width: 1rem // 16px
-      height: 1rem // 16px
+      width: var(--icon-size-sm) // 18px - medium size
+      height: var(--icon-size-sm) // 18px
     
   &.size-small .select-icon
-    right: var(--space-3)
+    right: var(--space-xs)
     
     svg
-      width: 0.875rem // 14px - no exact size variable for 14px
-      height: 0.875rem // 14px
+      width: var(--icon-size-xs) // 16px - small size
+      height: var(--icon-size-xs) // 16px
       
   &.size-large .select-icon
-    right: var(--space-5)
+    right: var(--space-md)
     
     svg
-      width: 1.125rem // 18px
-      height: 1.125rem // 18px
+      width: var(--icon-size-md) // 20px - large size
+      height: var(--icon-size-md) // 20px
     
   // Icon hover and focus states
   select:hover:not(:disabled) ~ .select-icon

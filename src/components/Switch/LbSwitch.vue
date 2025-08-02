@@ -88,7 +88,7 @@ defineExpose({
   // Hidden native checkbox
   input[type="checkbox"]
     position: absolute
-    opacity: 0
+    opacity: var(--opacity-0)
     width: 100%
     height: 100%
     margin: 0
@@ -101,24 +101,24 @@ defineExpose({
   // Switch track
   .switch-track
     position: relative
-    width: base.$space-14 // 56px
-    height: base.$size-xl // 32px
+    width: var(--space-6xl) // 56px
+    height: var(--btn-height-small) // 32px
     background: var(--color-input-background)
-    border: base.$border-medium solid var(--color-input-border)
-    border-radius: base.$radius-full
-    transition: background-color base.$transition, border-color base.$transition, box-shadow base.$transition
+    border: var(--border-md) solid var(--color-input-border)
+    border-radius: var(--radius-full)
+    transition: background-color var(--transition), border-color var(--transition), box-shadow var(--transition)
   
   // Switch thumb
   .switch-thumb
     position: absolute
     top: 50%
-    left: 2px
+    left: var(--space-2xs)
     transform: translateY(-50%)
-    width: base.$size-lg // 24px
-    height: base.$size-lg // 24px
+    width: var(--icon-size-lg) // 24px
+    height: var(--icon-size-lg) // 24px
     background: var(--color-input-border)
-    border-radius: base.$radius-full
-    transition: transform base.$transition, background-color base.$transition
+    border-radius: var(--radius-full)
+    transition: transform var(--transition), background-color var(--transition)
     will-change: transform
   
   // Checked state
@@ -129,11 +129,11 @@ defineExpose({
       
     .switch-thumb
       background: white
-      transform: translateY(-50%) translateX(base.$space-9 + base.$space-2) // Move 24px to right (20px + 4px)
+      transform: translateY(-50%) translateX(calc(var(--space-xl) + var(--space-xs))) // Move 24px to right (20px + 4px)
       
   // Add smooth spring animation for the toggle
   &:not(.disabled) .switch-thumb
-    transition: transform 200ms cubic-bezier(0.4, 0.0, 0.2, 1), background-color base.$transition
+    transition: transform 200ms cubic-bezier(0.4, 0.0, 0.2, 1), background-color var(--transition)
   
   // Hover state
   &:not(.checked) input:not(:disabled):hover ~ .switch-track
@@ -149,7 +149,7 @@ defineExpose({
   // Focus state
   input:focus-visible ~ .switch-track
     outline: none
-    box-shadow: 0 0 0 base.$focus-ring-width var(--color-primary-a5)
+    box-shadow: 0 0 0 var(--focus-ring-width) var(--color-primary-a5)
     border-color: var(--color-input-border-focus)
   
   // Invalid state
@@ -158,7 +158,7 @@ defineExpose({
       border-color: var(--color-error-border)
       
     input:focus-visible ~ .switch-track
-      box-shadow: 0 0 0 base.$focus-ring-width var(--color-error-a5)
+      box-shadow: 0 0 0 var(--focus-ring-width) var(--color-error-a5)
       border-color: var(--color-error)
       
     &.checked .switch-track
@@ -167,7 +167,7 @@ defineExpose({
   
   // Disabled state
   &.disabled
-    opacity: 0.6
+    opacity: var(--opacity-60)
     
     .switch-track
       background: var(--color-surface)

@@ -249,7 +249,7 @@ defineExpose({
 .lb-dialog-overlay
   position: fixed
   inset: 0
-  z-index: base.$z-modal-backdrop
+  z-index: var(--z-modal-backdrop)
   background: var(--color-modal-backdrop)
   backdrop-filter: blur(2px)
   overflow-y: auto
@@ -258,7 +258,7 @@ defineExpose({
   // Center the dialog using CSS Grid
   display: grid
   place-items: center
-  padding: base.$space-10
+  padding: var(--space-2xl)
   
   // Full-screen variant removes padding
   &.variant-fullscreen
@@ -268,8 +268,8 @@ defineExpose({
 .lb-dialog
   position: relative
   background: var(--color-surface)
-  border-radius: base.$radius-xl
-  box-shadow: base.$shadow-lg
+  border-radius: var(--radius-xl)
+  box-shadow: var(--shadow-lg)
   max-width: min(90vw, 32rem)
   width: 100%
   max-height: min(90vh, 48rem)
@@ -288,8 +288,8 @@ defineExpose({
 .dialog-header
   display: flex
   align-items: center
-  gap: base.$space-7
-  padding: base.$space-10
+  gap: var(--space-lg)
+  padding: var(--space-2xl)
   flex-shrink: 0
   
   .header-content
@@ -299,21 +299,21 @@ defineExpose({
 // Close button (ghost icon button style)
 .dialog-close
   position: absolute
-  top: base.$space-4
-  right: base.$space-4
+  top: var(--space-sm)
+  right: var(--space-sm)
   z-index: 1
   display: flex
   align-items: center
   justify-content: center
-  width: base.$size-xl
-  height: base.$size-xl
+  width: var(--btn-height-small)
+  height: var(--btn-height-small)
   padding: 0
   border: none
   background: transparent
   color: var(--color-text-tertiary)
   cursor: pointer
-  border-radius: base.$radius-md
-  transition: all base.$transition
+  border-radius: var(--radius-md)
+  transition: all var(--transition)
   
   &:hover
     background: var(--color-button-ghost-hover)
@@ -324,22 +324,22 @@ defineExpose({
     
   &:focus-visible
     outline: none
-    box-shadow: 0 0 0 base.$focus-ring-width var(--color-focus-ring)
+    box-shadow: 0 0 0 var(--focus-ring-width) var(--color-focus-ring)
     
   svg
-    width: base.$size-sm
-    height: base.$size-sm
+    width: var(--icon-size-sm)
+    height: var(--icon-size-sm)
     
   // Adjust position for fullscreen variant
   .lb-dialog.variant-fullscreen &
-    top: base.$space-7
-    right: base.$space-7
+    top: var(--space-lg)
+    right: var(--space-lg)
 
 // Dialog content
 .dialog-content
   flex: 1
   overflow-y: auto
-  padding: base.$space-10
+  padding: var(--space-2xl)
   color: var(--color-text-secondary)
   
   // Adjust padding when fullscreen with header
@@ -351,44 +351,44 @@ defineExpose({
   display: flex
   align-items: center
   justify-content: flex-end
-  gap: base.$space-4
-  padding: base.$space-7
+  gap: var(--space-sm)
+  padding: var(--space-lg)
   padding-top: 0
   flex-shrink: 0
   
   // Add top spacing if there's content
   .dialog-content + &
-    padding-top: base.$space-10
+    padding-top: var(--space-10)
 
 // Transitions
 .dialog-enter-active
-  transition: opacity base.$transition
+  transition: opacity var(--transition)
 
 .dialog-leave-active
   transition: opacity 200ms ease
 
 .dialog-enter-from,
 .dialog-leave-to
-  opacity: 0
+  opacity: var(--opacity-0)
   
 .dialog-enter-active .lb-dialog
-  transition: transform base.$transition, opacity base.$transition
+  transition: transform var(--transition), opacity var(--transition)
   
 .dialog-leave-active .lb-dialog
   transition: transform 200ms ease, opacity 200ms ease
 
 .dialog-enter-from .lb-dialog
-  opacity: 0
-  transform: scale(0.95) translateY(base.$space-4)
+  opacity: var(--opacity-0)
+  transform: scale(0.95) translateY(var(--space-sm))
   
 .dialog-leave-to .lb-dialog
-  opacity: 0
-  transform: scale(0.95) translateY(base.$space-4)
+  opacity: var(--opacity-0)
+  transform: scale(0.95) translateY(var(--space-sm))
 
 // Responsive adjustments
 @media (max-width: 640px)
   .lb-dialog-overlay
-    padding: base.$space-7
+    padding: var(--space-lg)
     
   .lb-dialog
     max-width: 100%
@@ -396,6 +396,6 @@ defineExpose({
   .dialog-header,
   .dialog-content,
   .dialog-footer
-    padding-left: base.$space-7
-    padding-right: base.$space-7
+    padding-left: var(--space-7)
+    padding-right: var(--space-7)
 </style>

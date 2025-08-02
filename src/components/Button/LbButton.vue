@@ -130,7 +130,7 @@ defineOptions({
   display: inline-grid
   grid-auto-flow: column
   align-items: center
-  gap: var(--space-1)
+  gap: var(--space-2xs)
   padding: 0 var(--btn-padding-x-medium)
   height: var(--btn-height-medium)
   border: none
@@ -238,12 +238,12 @@ defineOptions({
     &.disabled
       .spinner circle
         stroke: var(--color-text)
-        opacity: 0.4
+        opacity: var(--opacity-40)
     
   .content
     display: flex
     align-items: center
-    padding: 0 var(--space-3)
+    padding: 0 var(--space-xs)
     
   .icon-leading,
   .icon-trailing
@@ -262,7 +262,7 @@ defineOptions({
       stroke-dasharray: 62.83
       stroke-dashoffset: 47.12
       animation: lb-spinner-dash 1.5s ease-in-out infinite
-      opacity: 0.8
+      opacity: var(--opacity-80)
 
 // Variant styles
 @mixin button-variant($variant, $color, $color-name)
@@ -294,13 +294,13 @@ defineOptions({
   @else if $variant == 'outline'
     background-color: transparent
     color: var(--color-#{$color})
-    box-shadow: inset 0 0 0 2px var(--color-#{$color})
+    box-shadow: inset 0 0 0 var(--border-md) var(--color-#{$color})
     &:hover:not(.disabled):not(.loading)
       background-color: var(--color-#{$color})
       color: if($color == 'warning', var(--color-warning-contrast-text), white)
     &.disabled
       color: var(--color-text-disabled)
-      box-shadow: inset 0 0 0 2px var(--color-border)
+      box-shadow: inset 0 0 0 var(--border-md) var(--color-border)
       
   @else if $variant == 'ghost'
     background-color: transparent
@@ -324,12 +324,12 @@ defineOptions({
     text-decoration: none
     display: inline-flex
     align-items: baseline
-    gap: var(--space-1)
+    gap: var(--space-2xs)
     &:hover:not(.disabled):not(.loading)
       text-decoration: underline
       color: if($color == 'warning', var(--color-warning-text), var(--color-#{$color}))
     &:active:not(.disabled):not(.loading)
-      opacity: 0.8
+      opacity: var(--opacity-80)
     &.disabled
       color: var(--color-text-disabled)
       cursor: not-allowed
@@ -372,5 +372,5 @@ $color-map: ('primary': 'orange', 'secondary': 'teal', 'success': 'green', 'warn
   
 .lb-fade-enter-from,
 .lb-fade-leave-to
-  opacity: 0
+  opacity: var(--opacity-0)
 </style>

@@ -244,9 +244,9 @@ const handleInput = (event: Event) => {
     // Default size (medium)
     width: 100%
     height: var(--input-height-medium)
-    padding: 0 var(--space-4)
+    padding: 0 var(--space-sm)
     background: var(--color-input-background)
-    border: var(--border-thin) solid var(--color-input-border)
+    border: var(--border-sm) solid var(--color-input-border)
     border-radius: var(--radius-md)
     font-size: var(--font-size-label-base)
     font-family: inherit
@@ -257,7 +257,7 @@ const handleInput = (event: Event) => {
     // Placeholder
     &::placeholder
       color: var(--color-input-placeholder)
-      opacity: 1 // Firefox fix
+      opacity: var(--opacity-100) // Firefox fix
     
     // States
     &:hover:not(:disabled):not(:read-only)
@@ -286,7 +286,7 @@ const handleInput = (event: Event) => {
       background: var(--color-surface)
       color: var(--color-text-disabled)
       cursor: not-allowed
-      opacity: 0.6
+      opacity: var(--opacity-60)
     
     // Readonly state
     &:read-only
@@ -300,34 +300,35 @@ const handleInput = (event: Event) => {
   // Size variations
   &.size-small input
     height: var(--input-height-small)
-    padding: 0 var(--space-3)
+    padding: 0 var(--space-sm)
     font-size: var(--font-size-label-small)
+    border-radius: var(--radius-sm)
     
   &.size-large input
     height: var(--input-height-large)
-    padding: 0 var(--space-5)
+    padding: 0 var(--space-md)
     font-size: var(--font-size-label-large)
   
   // Icon padding adjustments
   &.has-leading-icon input
-    padding-left: var(--space-12) // 40px for medium
+    padding-left: var(--space-4xl) // 40px for medium
     
   &.has-trailing-icons input
-    padding-right: var(--space-12) // 40px for medium
+    padding-right: var(--space-4xl) // 40px for medium
   
   // Small size with icons
   &.size-small.has-leading-icon input
-    padding-left: var(--space-11) // 32px for small
+    padding-left: var(--space-3xl) // 32px for small
     
   &.size-small.has-trailing-icons input
-    padding-right: var(--space-11) // 32px for small
+    padding-right: var(--space-3xl) // 32px for small
   
   // Large size with icons
   &.size-large.has-leading-icon input
-    padding-left: var(--space-13) // 48px for large
+    padding-left: var(--space-5xl) // 48px for large
     
   &.size-large.has-trailing-icons input
-    padding-right: var(--space-13) // 48px for large
+    padding-right: var(--space-5xl) // 48px for large
   
   // Invalid state for input
   &.invalid input
@@ -376,11 +377,11 @@ const handleInput = (event: Event) => {
       
       &:focus-visible
         outline: var(--focus-ring-width) solid var(--color-focus-ring)
-        outline-offset: -2px
+        outline-offset: calc(var(--space-2xs) * -1)
         border-radius: var(--radius-xs)
       
       &:active
-        opacity: 0.8
+        opacity: var(--opacity-80)
     
     // Icon color states
     input:focus ~ .trailing-icons &
@@ -404,7 +405,7 @@ const handleInput = (event: Event) => {
     justify-content: center
     width: var(--input-height-medium)
     height: var(--input-height-medium)
-    gap: var(--space-1) // 2px
+    gap: var(--space-2xs) // 2px
     
     .size-small &
       width: var(--input-height-small)

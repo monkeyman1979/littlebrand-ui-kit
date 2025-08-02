@@ -186,7 +186,7 @@ defineExpose({
   // Hidden native checkbox
   input[type="checkbox"]
     position: absolute
-    opacity: 0
+    opacity: var(--opacity-0)
     width: 100%
     height: 100%
     margin: 0
@@ -202,12 +202,12 @@ defineExpose({
     display: flex
     align-items: center
     justify-content: center
-    width: base.$size-md // 20px
-    height: base.$size-md // 20px
+    width: var(--icon-size-sm) // 18px (1.125rem)
+    height: var(--icon-size-sm) // 18px (1.125rem)
     background: var(--color-input-background)
-    border: base.$border-medium solid var(--color-input-border)
-    border-radius: base.$radius-sm
-    transition: background-color base.$transition, border-color base.$transition, box-shadow base.$transition
+    border: var(--border-md) solid var(--color-input-border)
+    border-radius: var(--radius-xs)
+    transition: background-color var(--transition), border-color var(--transition), box-shadow var(--transition)
     will-change: background-color, border-color
     
   
@@ -217,9 +217,9 @@ defineExpose({
     align-items: center
     justify-content: center
     color: white
-    opacity: 0
+    opacity: var(--opacity-0)
     transform: scale(0)
-    transition: opacity base.$transition, transform base.$transition
+    transition: opacity var(--transition), transform var(--transition)
     will-change: opacity, transform
     
     svg
@@ -234,7 +234,7 @@ defineExpose({
       border-color: var(--color-primary)
       
     .icon
-      opacity: 1
+      opacity: var(--opacity-100)
       transform: scale(1)
       
     // Animation
@@ -253,7 +253,7 @@ defineExpose({
   // Focus state
   input:focus-visible ~ .checkbox-visual
     outline: none
-    box-shadow: 0 0 0 base.$focus-ring-width var(--color-primary-a5)
+    box-shadow: 0 0 0 var(--focus-ring-width) var(--color-primary-a5)
     border-color: var(--color-input-border-focus)
   
   // Invalid state
@@ -262,7 +262,7 @@ defineExpose({
       border-color: var(--color-error-border)
       
     input:focus-visible ~ .checkbox-visual
-      box-shadow: 0 0 0 base.$focus-ring-width var(--color-error-a5)
+      box-shadow: 0 0 0 var(--focus-ring-width) var(--color-error-a5)
       border-color: var(--color-error)
       
     &.checked .checkbox-visual,
@@ -272,7 +272,7 @@ defineExpose({
   
   // Disabled state
   &.disabled
-    opacity: 0.6
+    opacity: var(--opacity-60)
     
     .checkbox-visual
       background: var(--color-surface)
