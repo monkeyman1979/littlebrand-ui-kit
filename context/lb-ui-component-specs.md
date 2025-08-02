@@ -3,6 +3,9 @@
 ## Overview
 Detailed specifications for each component in the LittleBrand UI Kit v1. Each component spec includes props, slots, events, and specific implementation notes.
 
+## Important: CSS Variable System
+All components use CSS custom properties for ALL visual values. This enables runtime customization without recompiling. Components reference CSS variables like `var(--space-sm)`, `var(--color-primary)`, `var(--radius-md)`, etc. Never use hardcoded values or compile-time SASS variables for visual properties.
+
 ## LbButton
 
 ### Purpose
@@ -280,7 +283,14 @@ Overlay dialog for focused content.
 - Associated labels for all inputs
 
 ### Theme Integration:
-- All colors via CSS custom properties
+- All values via CSS custom properties (colors, spacing, sizing, borders, radii, opacity)
+- Runtime customization - change CSS variables without recompiling
 - Automatic dark mode support
-- No hard-coded color values
+- No hard-coded values anywhere
 - Consistent state colors (error, success, etc.)
+- T-shirt sizing for all measurements:
+  - Spacing: --space-2xs through --space-10xl
+  - Sizing: --size-xs through --size-6xl
+  - Borders: --border-xs through --border-2xl
+  - Radii: --radius-xs through --radius-2xl
+  - Opacity: --opacity-0 through --opacity-100 (by tens)

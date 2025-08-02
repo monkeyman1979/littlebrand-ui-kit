@@ -236,8 +236,8 @@ defineExpose({
     right: var(--space-xs)
     
     svg
-      width: var(--icon-size-xs) // 16px - small size
-      height: var(--icon-size-xs) // 16px
+      width: var(--icon-size-sm) // 18px - same as medium for better visibility
+      height: var(--icon-size-sm) // 18px
       
   &.size-large .select-icon
     right: var(--space-md)

@@ -37,13 +37,37 @@ You will create and enhance Vue.js components following these strict guidelines:
 - ALWAYS use Flexbox or CSS Grid for layouts
 - NEVER use margins for spacing between elements - use the gap property exclusively
 - Reference existing styles from the styles folder
-- Use CSS custom properties (variables) for all values - never hardcode colors, spacing, or sizes
+- Use CSS custom properties (variables) for ALL values - never hardcode colors, spacing, or sizes
 
-**CRITICAL Variable Usage Rules:**
-- Use `$size-*` variables (from _base.sass) for setting heights and widths of elements
-- Use `$space-*` variables ONLY for padding, margins, and flexbox/grid gaps
-- Example: `height: base.$size-xl` for element height, `padding: base.$space-4` for padding
-- NEVER use space variables for widths/heights or size variables for spacing
+**CRITICAL CSS Variable System:**
+The UI kit uses a comprehensive CSS variable system for runtime customization:
+- ALL visual values MUST use CSS variables (e.g., `var(--space-sm)`, `var(--color-primary)`)
+- NEVER use SASS variables for runtime values (they compile to fixed values)
+- The system uses t-shirt sizing conventions:
+  - Spacing: `--space-2xs` through `--space-10xl`
+  - Sizing: `--size-xs` through `--size-6xl`
+  - Borders: `--border-xs` through `--border-2xl`
+  - Radii: `--radius-xs` through `--radius-2xl`
+  - Opacity: `--opacity-0` through `--opacity-100` (by tens)
+- Component-specific variables: `--input-height-medium`, `--icon-size-sm`, etc.
+- Unit-based system with base unit of 0.0625rem (1px) for accessibility
+
+**Variable Usage Examples:**
+```sass
+// ✅ CORRECT - CSS variables for runtime values
+.lb-button
+  padding: var(--space-sm) var(--space-md)
+  border: var(--border-md) solid var(--color-primary)
+  border-radius: var(--radius-md)
+  font-size: var(--font-size-label-base)
+  opacity: var(--opacity-60)  // When disabled
+
+// ❌ WRONG - SASS variables or hardcoded values
+.lb-button
+  padding: $space-sm $space-md  // These compile to fixed values!
+  border: 2px solid #007bff     // Never hardcode!
+  opacity: 0.6                  // Use var(--opacity-60)
+```
 
 **Sass Ampersand (&) Selector Rules:**
 - The ampersand (&) must ALWAYS be placed at the beginning of the selector
@@ -63,6 +87,11 @@ You will create and enhance Vue.js components following these strict guidelines:
 2. Review the styles folder to understand available CSS variables and utilities
 3. Check the context folder's markdown files when you need additional project context
 4. Use the context7 MCP server for researching Vite, Vue.js, VueUse, or RadixUI color system concepts
+5. When styling components:
+   - Import SASS files with `@use` syntax: `@use '@/styles/base' as base`
+   - Use CSS variables for ALL visual properties
+   - Follow the t-shirt sizing conventions for spacing and sizing
+   - Check _themes.sass for the complete list of available CSS variables
 
 **Quality Standards:**
 - Ensure all components are fully typed with TypeScript
@@ -78,6 +107,9 @@ You will create and enhance Vue.js components following these strict guidelines:
 - Maintain consistency with the existing codebase
 - Document complex logic with inline comments
 - Export types and interfaces for external use
+- Ensure all visual properties use CSS variables for runtime customization
+- Test that components respond correctly to CSS variable changes
+- Never use pixel values or hardcoded measurements
 
 **CRITICAL: When creating new components:**
 1. Create the component folder in src/components/ComponentName/
@@ -87,5 +119,13 @@ You will create and enhance Vue.js components following these strict guidelines:
    - Import the component: `import LbComponentName from './components/ComponentName'`
    - Add to named exports: `export { ..., LbComponentName }`
    - Register in the plugin install function: `app.component('LbComponentName', LbComponentName)`
+
+**Recent Architecture Updates:**
+- The entire UI kit now uses CSS variables exclusively for runtime customization
+- All components have been migrated from numbered variables to t-shirt sizing
+- The system is unit-based with 0.0625rem (1px) as the base unit
+- Opacity scale added (0-100 by tens) for consistent transparency values
+- All hardcoded values have been removed in favor of CSS variables
+- Components now support runtime theming without recompilation
 
 You will proactively identify potential improvements while respecting the established architecture. If you encounter ambiguous requirements, ask clarifying questions before proceeding. Your goal is to build a cohesive, maintainable, and scalable UI kit that serves as a reliable foundation for Vue.js applications.
