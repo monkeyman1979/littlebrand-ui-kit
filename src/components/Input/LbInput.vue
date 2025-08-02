@@ -243,15 +243,15 @@ const handleInput = (event: Event) => {
   input
     // Default size (medium)
     width: 100%
-    height: base.$size-2xl // 40px
-    padding: 0 base.$space-4
+    height: var(--input-height-medium)
+    padding: 0 var(--space-4)
     background: var(--color-input-background)
-    border: base.$border-thin solid var(--color-input-border)
-    border-radius: base.$radius-md
-    font-size: typography.$label-size-base
+    border: var(--border-thin) solid var(--color-input-border)
+    border-radius: var(--radius-md)
+    font-size: var(--font-size-label-base)
     font-family: inherit
     color: var(--color-text)
-    transition: border-color base.$transition, box-shadow base.$transition
+    transition: border-color var(--transition), box-shadow var(--transition)
     box-sizing: border-box
     
     // Placeholder
@@ -266,12 +266,12 @@ const handleInput = (event: Event) => {
     &:focus
       outline: none
       border-color: var(--color-input-border-focus)
-      box-shadow: 0 0 0 base.$focus-ring-width var(--color-primary-a5)
+      box-shadow: 0 0 0 var(--focus-ring-width) var(--color-primary-a5)
     
     // Focus takes precedence over hover
     &:focus:hover:not(:disabled):not(:read-only)
       border-color: var(--color-input-border-focus)
-      box-shadow: 0 0 0 base.$focus-ring-width var(--color-primary-a5)
+      box-shadow: 0 0 0 var(--focus-ring-width) var(--color-primary-a5)
     
     // Invalid state when parent has .invalid class
     .invalid &
@@ -279,7 +279,7 @@ const handleInput = (event: Event) => {
       
       &:focus
         border-color: var(--color-error)
-        box-shadow: 0 0 0 base.$focus-ring-width var(--color-error-a5)
+        box-shadow: 0 0 0 var(--focus-ring-width) var(--color-error-a5)
     
     // Disabled state
     &:disabled
@@ -299,35 +299,35 @@ const handleInput = (event: Event) => {
   
   // Size variations
   &.size-small input
-    height: base.$size-xl // 32px
-    padding: 0 base.$space-3
-    font-size: typography.$label-size-small
+    height: var(--input-height-small)
+    padding: 0 var(--space-3)
+    font-size: var(--font-size-label-small)
     
   &.size-large input
-    height: base.$size-3xl // 48px
-    padding: 0 base.$space-5
-    font-size: typography.$label-size-large
+    height: var(--input-height-large)
+    padding: 0 var(--space-5)
+    font-size: var(--font-size-label-large)
   
   // Icon padding adjustments
   &.has-leading-icon input
-    padding-left: base.$space-12 // 40px for medium
+    padding-left: var(--space-12) // 40px for medium
     
   &.has-trailing-icons input
-    padding-right: base.$space-12 // 40px for medium
+    padding-right: var(--space-12) // 40px for medium
   
   // Small size with icons
   &.size-small.has-leading-icon input
-    padding-left: base.$space-11 // 32px for small
+    padding-left: var(--space-11) // 32px for small
     
   &.size-small.has-trailing-icons input
-    padding-right: base.$space-11 // 32px for small
+    padding-right: var(--space-11) // 32px for small
   
   // Large size with icons
   &.size-large.has-leading-icon input
-    padding-left: base.$space-13 // 48px for large
+    padding-left: var(--space-13) // 48px for large
     
   &.size-large.has-trailing-icons input
-    padding-right: base.$space-13 // 48px for large
+    padding-right: var(--space-13) // 48px for large
   
   // Invalid state for input
   &.invalid input
@@ -335,7 +335,7 @@ const handleInput = (event: Event) => {
     
     &:focus
       border-color: var(--color-error)
-      box-shadow: 0 0 0 base.$focus-ring-width var(--color-error-a5)
+      box-shadow: 0 0 0 var(--focus-ring-width) var(--color-error-a5)
   
   // Icon base styles
   .icon
@@ -345,17 +345,17 @@ const handleInput = (event: Event) => {
     display: flex
     align-items: center
     justify-content: center
-    width: base.$size-2xl // 40px
-    height: base.$size-2xl // 40px
+    width: var(--input-height-medium)
+    height: var(--input-height-medium)
     color: var(--color-text-tertiary)
     
     .size-small &
-      width: base.$size-xl // 32px
-      height: base.$size-xl // 32px
+      width: var(--input-height-small)
+      height: var(--input-height-small)
       
     .size-large &
-      width: base.$size-3xl // 48px
-      height: base.$size-3xl // 48px
+      width: var(--input-height-large)
+      height: var(--input-height-large)
     
     &.icon-leading
       left: 0
@@ -369,15 +369,15 @@ const handleInput = (event: Event) => {
       background: none
       border: none
       padding: 0
-      transition: color base.$transition, opacity base.$transition
+      transition: color var(--transition), opacity var(--transition)
       
       &:hover
         color: var(--color-text-secondary)
       
       &:focus-visible
-        outline: base.$focus-ring-width solid var(--color-focus-ring)
+        outline: var(--focus-ring-width) solid var(--color-focus-ring)
         outline-offset: -2px
-        border-radius: base.$radius-xs
+        border-radius: var(--radius-xs)
       
       &:active
         opacity: 0.8
@@ -402,17 +402,17 @@ const handleInput = (event: Event) => {
     display: flex
     align-items: center
     justify-content: center
-    width: base.$size-2xl // 40px
-    height: base.$size-2xl // 40px
-    gap: base.$space-1 // 2px
+    width: var(--input-height-medium)
+    height: var(--input-height-medium)
+    gap: var(--space-1) // 2px
     
     .size-small &
-      width: base.$size-xl // 32px
-      height: base.$size-xl // 32px
+      width: var(--input-height-small)
+      height: var(--input-height-small)
       
     .size-large &
-      width: base.$size-3xl // 48px
-      height: base.$size-3xl // 48px
+      width: var(--input-height-large)
+      height: var(--input-height-large)
   
   // Loading spinner animation
   .spinner

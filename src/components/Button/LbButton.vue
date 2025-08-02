@@ -130,18 +130,18 @@ defineOptions({
   display: inline-grid
   grid-auto-flow: column
   align-items: center
-  gap: base.$space-1
-  padding: 0 base.$space-9
-  height: base.$size-2xl
+  gap: var(--space-1)
+  padding: 0 var(--btn-padding-x-medium)
+  height: var(--btn-height-medium)
   border: none
-  border-radius: base.$radius-md
-  font-family: typography.$font-body
-  font-size: typography.$label-size-base
-  font-weight: typography.$weight-medium
-  line-height: typography.$line-normal
-  letter-spacing: typography.$letter-spacing-tight
+  border-radius: var(--radius-md)
+  font-family: var(--font-body)
+  font-size: var(--btn-font-size-medium)
+  font-weight: var(--font-weight-medium)
+  line-height: var(--line-height-normal)
+  letter-spacing: var(--letter-spacing-tight)
   cursor: pointer
-  transition: all 0.3s ease-in-out
+  transition: all var(--transition)
   text-decoration: none
   white-space: nowrap
   user-select: none
@@ -154,40 +154,40 @@ defineOptions({
     color: inherit
   
   &:focus-visible
-    outline: base.$focus-ring-width solid var(--color-focus-ring)
-    outline-offset: base.$focus-ring-offset
+    outline: var(--focus-ring-width) solid var(--color-focus-ring)
+    outline-offset: var(--focus-ring-offset)
     transition: none
   
   // Size modifiers
   &.small
-    height: base.$size-xl
-    padding: 0 base.$space-5
-    font-size: typography.$label-size-small
-    letter-spacing: typography.$letter-spacing-normal
-    border-radius: base.$radius-sm
+    height: var(--btn-height-small)
+    padding: 0 var(--btn-padding-x-small)
+    font-size: var(--btn-font-size-small)
+    letter-spacing: var(--letter-spacing-normal)
+    border-radius: var(--radius-sm)
     svg
-      width: base.$size-sm
-      height: base.$size-sm
+      width: var(--icon-size-sm)
+      height: var(--icon-size-sm)
     
   &.medium
-    height: base.$size-2xl
-    padding: 0 base.$space-7
-    font-size: typography.$label-size-base
-    letter-spacing: typography.$letter-spacing-tight
-    border-radius: base.$radius-md
+    height: var(--btn-height-medium)
+    padding: 0 var(--btn-padding-x-medium)
+    font-size: var(--btn-font-size-medium)
+    letter-spacing: var(--letter-spacing-tight)
+    border-radius: var(--radius-md)
     svg
-      width: base.$size-md
-      height: base.$size-md
+      width: var(--icon-size-md)
+      height: var(--icon-size-md)
     
   &.large
-    height: base.$size-3xl
-    padding: 0 base.$space-9
-    font-size: typography.$label-size-large
-    letter-spacing: typography.$letter-spacing-wide
-    border-radius: base.$radius-md
+    height: var(--btn-height-large)
+    padding: 0 var(--btn-padding-x-large)
+    font-size: var(--btn-font-size-large)
+    letter-spacing: var(--letter-spacing-wide)
+    border-radius: var(--radius-md)
     svg
-      width: base.$size-lg
-      height: base.$size-lg
+      width: var(--icon-size-lg)
+      height: var(--icon-size-lg)
     
   &.full-width
     width: 100%
@@ -200,16 +200,16 @@ defineOptions({
     justify-content: center
     
     &.small
-      width: base.$size-xl
-      height: base.$size-xl
+      width: var(--btn-height-small)
+      height: var(--btn-height-small)
     
     &.medium
-      width: base.$size-2xl
-      height: base.$size-2xl
+      width: var(--btn-height-medium)
+      height: var(--btn-height-medium)
     
     &.large
-      width: base.$size-3xl
-      height: base.$size-3xl
+      width: var(--btn-height-large)
+      height: var(--btn-height-large)
     
   // Link variant overrides
   &[class*="link-"]
@@ -243,7 +243,7 @@ defineOptions({
   .content
     display: flex
     align-items: center
-    padding: 0 base.$space-3
+    padding: 0 var(--space-3)
     
   .icon-leading,
   .icon-trailing
@@ -324,7 +324,7 @@ defineOptions({
     text-decoration: none
     display: inline-flex
     align-items: baseline
-    gap: base.$space-1
+    gap: var(--space-1)
     &:hover:not(.disabled):not(.loading)
       text-decoration: underline
       color: if($color == 'warning', var(--color-warning-text), var(--color-#{$color}))
