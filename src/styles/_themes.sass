@@ -135,6 +135,114 @@
   --shadow-sm: #{base.$shadow-sm}
   --shadow-md: #{base.$shadow-md}
   --shadow-lg: #{base.$shadow-lg}
+  
+  // === Typography ===
+  // Font families
+  --font-heading: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace
+  
+  // Font weights
+  --font-weight-normal: 400
+  --font-weight-medium: 500
+  --font-weight-semibold: 600
+  --font-weight-bold: 700
+  
+  // Line heights
+  --line-height-compact: 1.25
+  --line-height-normal: 1.5
+  --line-height-relaxed: 1.75
+  
+  // Font sizes - Labels
+  --font-size-label-small: 0.75rem
+  --font-size-label-base: 0.875rem
+  --font-size-label-large: 1rem
+  
+  // Letter spacing
+  --letter-spacing-tighter: -0.025em
+  --letter-spacing-tight: -0.01em
+  --letter-spacing-normal: normal
+  --letter-spacing-wide: 0.025em
+  
+  // === Spacing ===
+  --space-1: #{base.$space-1}
+  --space-2: #{base.$space-2}
+  --space-3: #{base.$space-3}
+  --space-4: #{base.$space-4}
+  --space-5: #{base.$space-5}
+  --space-6: #{base.$space-6}
+  --space-7: #{base.$space-7}
+  --space-8: #{base.$space-8}
+  --space-9: #{base.$space-9}
+  --space-10: #{base.$space-10}
+  --space-11: #{base.$space-11}
+  --space-12: #{base.$space-12}
+  --space-13: #{base.$space-13}
+  --space-14: #{base.$space-14}
+  --space-15: #{base.$space-15}
+  --space-16: #{base.$space-16}
+  --space-17: #{base.$space-17}
+  --space-18: #{base.$space-18}
+  
+  // === Layout ===
+  // Border radius
+  --radius-xs: #{base.$radius-xs}
+  --radius-sm: #{base.$radius-sm}
+  --radius-md: #{base.$radius-md}
+  --radius-lg: #{base.$radius-lg}
+  --radius-xl: #{base.$radius-xl}
+  --radius-2xl: #{base.$radius-2xl}
+  --radius-3xl: #{base.$radius-3xl}
+  --radius-4xl: #{base.$radius-4xl}
+  --radius-full: #{base.$radius-full}
+  
+  // Border widths
+  --border-thin: #{base.$border-thin}
+  --border-medium: #{base.$border-medium}
+  --border-thick: #{base.$border-thick}
+  
+  // Z-index
+  --z-dropdown: #{base.$z-dropdown}
+  --z-modal-backdrop: #{base.$z-modal-backdrop}
+  --z-modal: #{base.$z-modal}
+  --z-notification: #{base.$z-notification}
+  
+  // Transitions
+  --transition: #{base.$transition}
+  --transition-fast: 150ms ease
+  --transition-slow: 500ms ease
+  
+  // Focus states
+  --focus-ring-width: #{base.$focus-ring-width}
+  --focus-ring-offset: #{base.$focus-ring-offset}
+  
+  // === Component Sizing ===
+  // Button sizes
+  --btn-height-small: #{base.$size-xl}
+  --btn-height-medium: #{base.$size-2xl}
+  --btn-height-large: #{base.$size-3xl}
+  --btn-padding-x-small: #{base.$space-5}
+  --btn-padding-x-medium: #{base.$space-7}
+  --btn-padding-x-large: #{base.$space-9}
+  --btn-font-size-small: var(--font-size-label-small)
+  --btn-font-size-medium: var(--font-size-label-base)
+  --btn-font-size-large: var(--font-size-label-large)
+  
+  // Input sizes
+  --input-height-small: #{base.$size-xl}
+  --input-height-medium: #{base.$size-2xl}
+  --input-height-large: #{base.$size-3xl}
+  --input-padding-x: #{base.$space-5}
+  --input-padding-y: #{base.$space-4}
+  
+  // Icon sizes
+  --icon-size-sm: #{base.$size-sm}
+  --icon-size-md: #{base.$size-md}
+  --icon-size-lg: #{base.$size-lg}
+  
+  // Form field
+  --form-field-gap: #{base.$space-4}
+  --form-field-margin: #{base.$space-10}
 
 // Dark Theme
 [data-theme="dark"]
@@ -265,6 +373,10 @@
   --shadow-sm: 0 1px 2px hsla(0, 0%, 0%, 0.1)
   --shadow-md: 0 4px 6px hsla(0, 0%, 0%, 0.15)
   --shadow-lg: 0 10px 15px hsla(0, 0%, 0%, 0.2)
+  
+  // === Typography adjustments for dark mode ===
+  // Most typography variables inherit from root, but can be overridden if needed
+  // Example: --font-weight-normal: 300  // Lighter weight for dark backgrounds
 
 // === Utility Classes for Theme Toggle ===
 .theme-light
