@@ -1,5 +1,8 @@
 // LittleBrand UI Kit - Main Entry Point
 
+// Import global styles (themes, reset, typography)
+import './styles/index.sass'
+
 // Import all components
 import LbButton from './components/Button'
 import LbInput from './components/Input'
