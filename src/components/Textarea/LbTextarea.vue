@@ -169,21 +169,21 @@ defineExpose({
   textarea
     // Default size (medium)
     width: 100%
-    min-height: base.$size-3xl // 48px minimum (matches large input)
-    padding: base.$space-3 base.$space-4
+    min-height: var(--btn-height-large) // 48px minimum (matches large input)
+    padding: var(--space-xs) var(--space-sm)
     background: var(--color-input-background)
-    border: base.$border-thin solid var(--color-input-border)
-    border-radius: base.$radius-md
-    font-size: typography.$label-size-base
+    border: var(--border-sm) solid var(--color-input-border)
+    border-radius: var(--radius-md)
+    font-size: var(--font-size-label-base)
     font-family: inherit
     color: var(--color-text)
-    line-height: typography.$line-relaxed
-    transition: border-color base.$transition, box-shadow base.$transition
+    line-height: var(--line-height-relaxed)
+    transition: border-color var(--transition), box-shadow var(--transition)
     
     // Placeholder
     &::placeholder
       color: var(--color-input-placeholder)
-      opacity: 1 // Firefox fix
+      opacity: var(--opacity-100) // Firefox fix
     
     // States
     &:hover:not(:disabled):not(:read-only)
@@ -192,12 +192,12 @@ defineExpose({
     &:focus
       outline: none
       border-color: var(--color-input-border-focus)
-      box-shadow: 0 0 0 base.$focus-ring-width var(--color-primary-a5)
+      box-shadow: 0 0 0 var(--focus-ring-width) var(--color-primary-a5)
     
     // Focus takes precedence over hover
     &:focus:hover:not(:disabled):not(:read-only)
       border-color: var(--color-input-border-focus)
-      box-shadow: 0 0 0 base.$focus-ring-width var(--color-primary-a5)
+      box-shadow: 0 0 0 var(--focus-ring-width) var(--color-primary-a5)
     
     // Invalid state when parent has .invalid class
     .invalid &
@@ -205,14 +205,14 @@ defineExpose({
       
       &:focus
         border-color: var(--color-error)
-        box-shadow: 0 0 0 base.$focus-ring-width var(--color-error-a5)
+        box-shadow: 0 0 0 var(--focus-ring-width) var(--color-error-a5)
     
     // Disabled state
     &:disabled
       background: var(--color-surface)
       color: var(--color-text-disabled)
       cursor: not-allowed
-      opacity: 0.6
+      opacity: var(--opacity-60)
     
     // Readonly state
     &:read-only

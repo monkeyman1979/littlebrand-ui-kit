@@ -1428,9 +1428,9 @@ onMounted(() => {
   min-height: 100vh
   
 .app-header
-  padding: base.$space-12 base.$space-8
+  padding: base.$space-4xl base.$space-lg
   text-align: center
-  border-bottom: base.$border-thin solid var(--color-border)
+  border-bottom: base.$border-sm solid var(--color-border)
   
   h1, p
     margin: 0
@@ -1438,17 +1438,17 @@ onMounted(() => {
 .app-main
   max-width: 1200px
   margin: 0 auto
-  padding: base.$space-8
+  padding: base.$space-lg
   
 .app-main
   display: flex
   flex-direction: column
-  gap: base.$space-12
+  gap: base.$space-2xs
 
 section
   display: flex
   flex-direction: column
-  gap: base.$space-6
+  gap: base.$space-md
   
   h2
     margin: 0
@@ -1456,7 +1456,7 @@ section
 .theme-section
   .theme-toggle
     button
-      padding: base.$space-2 base.$space-4
+      padding: base.$space-xs base.$space-sm
       background: var(--color-primary)
       color: var(--color-primary-text)
       border-radius: base.$radius-md
@@ -1469,34 +1469,34 @@ section
 .typography-section
   display: flex
   flex-direction: column
-  gap: base.$space-4
+  gap: base.$space-sm
     
 .color-section
   .color-grid
     display: grid
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr))
-    gap: base.$space-4
+    gap: base.$space-sm
     
   .color-card
     display: flex
     flex-direction: column
-    gap: base.$space-2
+    gap: base.$space-xs
     text-align: center
     
     .color-swatch
       height: 80px
       border-radius: base.$radius-md
-      border: base.$border-thin solid var(--color-border)
+      border: base.$border-sm solid var(--color-border)
       
 .components-section
   display: flex
   flex-direction: column
-  gap: base.$space-8
+  gap: base.$space-lg
   
   .component-demo
     display: flex
     flex-direction: column
-    gap: base.$space-8
+    gap: base.$space-lg
     
     h3
       margin: 0
@@ -1504,7 +1504,7 @@ section
   .demo-group
     display: flex
     flex-direction: column
-    gap: base.$space-4
+    gap: base.$space-sm
     
     h4
       margin: 0
@@ -1514,13 +1514,13 @@ section
       
   .button-grid
     display: grid
-    gap: base.$space-6
+    gap: base.$space-md
     
   .variant-row
     display: grid
     grid-template-columns: 100px 1fr
     align-items: center
-    gap: base.$space-4
+    gap: base.$space-sm
     
     h5
       color: var(--color-text-secondary)
@@ -1528,13 +1528,13 @@ section
   .button-row
     display: flex
     flex-wrap: wrap
-    gap: base.$space-4
+    gap: base.$space-sm
     align-items: center
     
   .input-row
     display: grid
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr))
-    gap: base.$space-4
+    gap: base.$space-sm
     
   .demo-note
     font-size: 0.875rem
@@ -1543,21 +1543,21 @@ section
 .form-field
   display: flex
   flex-direction: column
-  gap: base.$space-2
+  gap: base.$space-xs
 
 .form-grid
   display: grid
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))
-  gap: base.$space-6
+  gap: base.$space-md
 
 .example-form
   display: flex
   flex-direction: column
-  gap: base.$space-6
+  gap: base.$space-md
   background: var(--color-surface)
-  border: base.$border-thin solid var(--color-border)
+  border: base.$border-sm solid var(--color-border)
   border-radius: base.$radius-lg
-  padding: base.$space-8
+  padding: base.$space-lg
   max-width: 500px
   
   .form-field
@@ -1565,105 +1565,105 @@ section
 
 .form-actions
   display: flex
-  gap: base.$space-4
+  gap: base.$space-sm
   
 // Checkbox and Radio styles
 .checkbox-row,
 .radio-row
   display: flex
   flex-wrap: wrap
-  gap: base.$space-6
+  gap: base.$space-md
   align-items: center
   
 .checkbox-item,
 .radio-item
   display: flex
   align-items: center
-  gap: base.$space-3
+  gap: base.$space-xs
   
 .checkbox-group,
 .radio-group
   display: flex
   flex-direction: column
-  gap: base.$space-4
-  margin-top: base.$space-2
+  gap: base.$space-sm
+  margin-top: base.$space-xs
   
   .checkbox-item
-    margin-left: base.$space-6
+    margin-left: base.$space-md
     
 .radio-content
   display: flex
   flex-direction: column
-  gap: base.$space-1
+  gap: base.$space-2xs
 
 // Switch styles
 .switch-row
   display: flex
   flex-wrap: wrap
-  gap: base.$space-6
+  gap: base.$space-md
   align-items: center
   
 .switch-item
   display: flex
   align-items: center
-  gap: base.$space-3
+  gap: base.$space-xs
   
 .switch-field
   display: flex
   align-items: flex-start
-  gap: base.$space-4
+  gap: base.$space-sm
   
 .switch-label-group
   display: flex
   flex-direction: column
-  gap: base.$space-1
+  gap: base.$space-2xs
   
 .switch-group
   display: flex
   flex-direction: column
-  gap: base.$space-4
+  gap: base.$space-sm
   
 .settings-form
   display: flex
   flex-direction: column
-  gap: base.$space-6
+  gap: base.$space-md
   background: var(--color-surface)
-  border: base.$border-thin solid var(--color-border)
+  border: base.$border-sm solid var(--color-border)
   border-radius: base.$radius-lg
-  padding: base.$space-8
+  padding: base.$space-lg
   max-width: 600px
   
   h5
-    margin: 0 0 base.$space-2 0
+    margin: 0 0 base.$space-xs 0
     color: var(--color-text-secondary)
 
 // Dialog demo styles
 .dialog-form
   display: flex
   flex-direction: column
-  gap: base.$space-6
+  gap: base.$space-md
   
   .form-field
     display: flex
     flex-direction: column
-    gap: base.$space-2
+    gap: base.$space-xs
     
     &.checkbox-field
       flex-direction: row
       align-items: center
-      gap: base.$space-3
+      gap: base.$space-xs
 
 .scroll-content
   h4
-    margin-top: base.$space-8
-    margin-bottom: base.$space-4
+    margin-top: base.$space-lg
+    margin-bottom: base.$space-sm
     color: var(--color-text)
     
     &:first-child
       margin-top: 0
   
   p
-    margin-bottom: base.$space-6
+    margin-bottom: base.$space-md
     line-height: 1.6
     color: var(--color-text-secondary)
 </style>

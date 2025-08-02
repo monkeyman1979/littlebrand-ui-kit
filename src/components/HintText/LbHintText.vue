@@ -44,9 +44,9 @@ defineSlots<{
 .lb-hint-text
   display: flex
   align-items: center
-  gap: base.$space-2
-  font-size: typography.$label-size-small // 12px
-  line-height: typography.$line-normal
+  gap: var(--space-xs)
+  font-size: var(--font-size-label-small) // 12px
+  line-height: var(--line-height-normal)
   color: var(--color-text-secondary)
   
   // State variations
@@ -72,8 +72,8 @@ defineSlots<{
   .icon
     display: flex
     align-items: center
-    width: base.$size-2xs // 12px
-    height: base.$size-2xs // 12px
+    width: var(--icon-size-xs) // 12px
+    height: var(--icon-size-xs) // 12px
     color: currentColor
   
   // Message text wrapper

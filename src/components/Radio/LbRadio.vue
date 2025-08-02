@@ -128,7 +128,7 @@ defineExpose({
   // Hidden native radio
   input[type="radio"]
     position: absolute
-    opacity: 0
+    opacity: var(--opacity-0)
     width: 100%
     height: 100%
     margin: 0
@@ -144,12 +144,12 @@ defineExpose({
     display: flex
     align-items: center
     justify-content: center
-    width: base.$size-md // 20px
-    height: base.$size-md // 20px
+    width: var(--icon-size-sm) // 18px (1.125rem)
+    height: var(--icon-size-sm) // 18px (1.125rem)
     background: var(--color-input-background)
-    border: base.$border-medium solid var(--color-input-border)
-    border-radius: base.$radius-full
-    transition: background-color base.$transition, border-color base.$transition, box-shadow base.$transition
+    border: var(--border-md) solid var(--color-input-border)
+    border-radius: var(--radius-full)
+    transition: background-color var(--transition), border-color var(--transition), box-shadow var(--transition)
     will-change: background-color, border-color
     
   
@@ -158,13 +158,13 @@ defineExpose({
     display: flex
     align-items: center
     justify-content: center
-    width: base.$space-4 // 8px
-    height: base.$space-4 // 8px
+    width: var(--space-sm) // 8px
+    height: var(--space-sm) // 8px
     background: white
-    border-radius: base.$radius-full
-    opacity: 0
+    border-radius: var(--radius-full)
+    opacity: var(--opacity-0)
     transform: scale(0)
-    transition: opacity base.$transition, transform base.$transition
+    transition: opacity var(--transition), transform var(--transition)
     will-change: opacity, transform
     
   
@@ -175,9 +175,8 @@ defineExpose({
       border-color: var(--color-primary)
       
     .radio-dot
-      opacity: 1
+      opacity: var(--opacity-100)
       transform: scale(1)
-      animation: lb-radio-pop 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)
   
   // Hover state
   input:not(:disabled):hover ~ .radio-visual
@@ -190,7 +189,7 @@ defineExpose({
   // Focus state
   input:focus-visible ~ .radio-visual
     outline: none
-    box-shadow: 0 0 0 base.$focus-ring-width var(--color-primary-a5)
+    box-shadow: 0 0 0 var(--focus-ring-width) var(--color-primary-a5)
     border-color: var(--color-input-border-focus)
   
   // Invalid state
@@ -199,7 +198,7 @@ defineExpose({
       border-color: var(--color-error-border)
       
     input:focus-visible ~ .radio-visual
-      box-shadow: 0 0 0 base.$focus-ring-width var(--color-error-a5)
+      box-shadow: 0 0 0 var(--focus-ring-width) var(--color-error-a5)
       border-color: var(--color-error)
       
     &.checked .radio-visual
@@ -208,7 +207,7 @@ defineExpose({
   
   // Disabled state
   &.disabled
-    opacity: 0.6
+    opacity: var(--opacity-60)
     
     .radio-visual
       background: var(--color-surface)
@@ -221,12 +220,4 @@ defineExpose({
     input:hover ~ .radio-visual
       border-color: var(--color-input-border)
 
-// Animation keyframes
-@keyframes lb-radio-pop
-  0%
-    transform: scale(0)
-  50%
-    transform: scale(1.3)
-  100%
-    transform: scale(1)
 </style>

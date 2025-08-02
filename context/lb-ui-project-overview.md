@@ -97,8 +97,9 @@ section.login-form
 - **Vite** for building
 - **Pug** for templates
 - **SASS** for styles (not SCSS)
-- **CSS Custom Properties** for theming
+- **CSS Custom Properties** for runtime theming and customization
 - **CSS Grid** for layouts
+- **Unit-based design system** (base unit: 0.0625rem = 1px)
 
 ## Component Prefix
 All components use the `Lb` prefix (for LittleBrand):
@@ -123,6 +124,25 @@ littlebrand-ui/
 - **Raw SASS files** included for maximum customization
 - **No compiled CSS** - users compile with their build tools
 
+## Customization Strategy
+Runtime customization via CSS variables:
+```css
+/* Override any value at runtime */
+:root {
+  --space-md: 1.5rem;  /* Change medium spacing */
+  --color-primary: hsl(250, 95%, 60%);  /* Change brand color */
+  --radius-md: 0.75rem;  /* Change border radius */
+}
+
+/* Component-specific overrides */
+.my-app {
+  --input-height-medium: 3rem;  /* Larger inputs */
+  --font-size-label-base: 0.875rem;  /* Smaller text */
+}
+```
+
+No recompilation needed - just change CSS variables!
+
 ## V1 Scope
 Form-focused components with full theme support:
 - Button, Input, Textarea, Select
@@ -137,6 +157,9 @@ Form-focused components with full theme support:
 4. **HSL colors** with 1-12 scale (Radix-inspired)
 5. **Icon slots** - Bring your own icons
 6. **300ms transitions** - Single, consistent timing
+7. **CSS Variables for everything** - Runtime customization without recompiling
+8. **T-shirt sizing convention** - Intuitive scale (2xs through 10xl) for spacing, sizing, borders, and radii
+9. **Unit-based system** - All measurements based on rem units for accessibility
 
 ## Success Criteria
 - Zero learning curve for Vue developers

@@ -135,6 +135,129 @@
   --shadow-sm: #{base.$shadow-sm}
   --shadow-md: #{base.$shadow-md}
   --shadow-lg: #{base.$shadow-lg}
+  
+  // === Typography ===
+  // Font families
+  --font-heading: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace
+  
+  // Font weights
+  --font-weight-normal: 400
+  --font-weight-medium: 500
+  --font-weight-semibold: 600
+  --font-weight-bold: 700
+  
+  // Line heights
+  --line-height-compact: 1.25
+  --line-height-normal: 1.5
+  --line-height-relaxed: 1.75
+  
+  // Font sizes - Labels
+  --font-size-label-small: 0.75rem
+  --font-size-label-base: 0.875rem
+  --font-size-label-large: 1rem
+  
+  // Letter spacing
+  --letter-spacing-tighter: -0.025em
+  --letter-spacing-tight: -0.01em
+  --letter-spacing-normal: normal
+  --letter-spacing-wide: 0.025em
+  
+  // === Spacing ===
+  --space-2xs: #{base.$space-2xs}
+  --space-xs: #{base.$space-xs}
+  --space-sm: #{base.$space-sm}
+  --space-md: #{base.$space-md}
+  --space-lg: #{base.$space-lg}
+  --space-xl: #{base.$space-xl}
+  --space-2xl: #{base.$space-2xl}
+  --space-3xl: #{base.$space-3xl}
+  --space-4xl: #{base.$space-4xl}
+  --space-5xl: #{base.$space-5xl}
+  --space-6xl: #{base.$space-6xl}
+  --space-7xl: #{base.$space-7xl}
+  --space-8xl: #{base.$space-8xl}
+  --space-9xl: #{base.$space-9xl}
+  --space-10xl: #{base.$space-10xl}
+  
+  // === Layout ===
+  // Border radius
+  --radius-xs: #{base.$radius-xs}
+  --radius-sm: #{base.$radius-sm}
+  --radius-md: #{base.$radius-md}
+  --radius-lg: #{base.$radius-lg}
+  --radius-xl: #{base.$radius-xl}
+  --radius-2xl: #{base.$radius-2xl}
+  --radius-3xl: #{base.$radius-3xl}
+  --radius-4xl: #{base.$radius-4xl}
+  --radius-5xl: #{base.$radius-5xl}
+  --radius-6xl: #{base.$radius-6xl}
+  --radius-7xl: #{base.$radius-7xl}
+  --radius-8xl: #{base.$radius-8xl}
+  --radius-9xl: #{base.$radius-9xl}
+  --radius-full: #{base.$radius-full}
+  
+  // Border widths
+  --border-sm: #{base.$border-sm}
+  --border-md: #{base.$border-md}
+  
+  // Z-index
+  --z-dropdown: #{base.$z-dropdown}
+  --z-modal-backdrop: #{base.$z-modal-backdrop}
+  --z-modal: #{base.$z-modal}
+  --z-notification: #{base.$z-notification}
+  
+  // Transitions
+  --transition: #{base.$transition}
+  --transition-fast: 150ms ease
+  --transition-slow: 500ms ease
+  
+  // Focus states
+  --focus-ring-width: #{base.$focus-ring-width}
+  --focus-ring-offset: #{base.$focus-ring-offset}
+  
+  // === Opacity ===
+  --opacity-0: #{base.$opacity-0}
+  --opacity-10: #{base.$opacity-10}
+  --opacity-20: #{base.$opacity-20}
+  --opacity-30: #{base.$opacity-30}
+  --opacity-40: #{base.$opacity-40}
+  --opacity-50: #{base.$opacity-50}
+  --opacity-60: #{base.$opacity-60}
+  --opacity-70: #{base.$opacity-70}
+  --opacity-80: #{base.$opacity-80}
+  --opacity-90: #{base.$opacity-90}
+  --opacity-100: #{base.$opacity-100}
+  
+  // === Component Sizing ===
+  // Button sizes
+  --btn-height-small: #{base.$size-5xl}
+  --btn-height-medium: #{base.$size-6xl}
+  --btn-height-large: #{base.$size-7xl}
+  --btn-padding-x-small: #{base.$space-md}
+  --btn-padding-x-medium: #{base.$space-lg}
+  --btn-padding-x-large: #{base.$space-xl}
+  --btn-font-size-small: var(--font-size-label-small)
+  --btn-font-size-medium: var(--font-size-label-base)
+  --btn-font-size-large: var(--font-size-label-large)
+  
+  // Input sizes
+  --input-height-small: #{base.$size-5xl}
+  --input-height-medium: #{base.$size-6xl}
+  --input-height-large: #{base.$size-7xl}
+  --input-padding-x: #{base.$space-md}
+  --input-padding-y: #{base.$space-sm}
+  
+  // Icon sizes
+  --icon-size-xs: #{base.$size-md}
+  --icon-size-sm: #{base.$size-2xl}
+  --icon-size-md: #{base.$size-3xl}
+  --icon-size-lg: #{base.$size-4xl}
+  
+  // Form field
+  --form-field-gap: #{base.$space-sm}
+  --form-field-margin: #{base.$space-2xl}
 
 // Dark Theme
 [data-theme="dark"]
@@ -265,6 +388,10 @@
   --shadow-sm: 0 1px 2px hsla(0, 0%, 0%, 0.1)
   --shadow-md: 0 4px 6px hsla(0, 0%, 0%, 0.15)
   --shadow-lg: 0 10px 15px hsla(0, 0%, 0%, 0.2)
+  
+  // === Typography adjustments for dark mode ===
+  // Most typography variables inherit from root, but can be overridden if needed
+  // Example: --font-weight-normal: 300  // Lighter weight for dark backgrounds
 
 // === Utility Classes for Theme Toggle ===
 .theme-light

@@ -141,20 +141,20 @@ defineExpose({
 .lb-select
   position: relative
   width: 100%
-  height: base.$size-2xl // 40px - medium size default
+  height: var(--input-height-medium) // 40px - medium size default
   
   // Select element styles
   select
     width: 100%
     height: 100%
-    padding: 0 base.$space-10 0 base.$space-4 // Right padding for icon
+    padding: 0 var(--space-2xl) 0 var(--space-sm) // Right padding for icon
     background: var(--color-input-background)
-    border: base.$border-thin solid var(--color-input-border)
-    border-radius: base.$radius-md
-    font-size: typography.$label-size-base
+    border: var(--border-sm) solid var(--color-input-border)
+    border-radius: var(--radius-md)
+    font-size: var(--font-size-label-base)
     font-family: inherit
     color: var(--color-text)
-    transition: border-color base.$transition, box-shadow base.$transition
+    transition: border-color var(--transition), box-shadow var(--transition)
     box-sizing: border-box
     cursor: pointer
     
@@ -170,26 +170,26 @@ defineExpose({
     &:focus
       outline: none
       border-color: var(--color-input-border-focus)
-      box-shadow: 0 0 0 base.$focus-ring-width var(--color-primary-a5)
+      box-shadow: 0 0 0 var(--focus-ring-width) var(--color-primary-a5)
     
     // Focus takes precedence over hover
     &:focus:hover:not(:disabled)
       border-color: var(--color-input-border-focus)
-      box-shadow: 0 0 0 base.$focus-ring-width var(--color-primary-a5)
+      box-shadow: 0 0 0 var(--focus-ring-width) var(--color-primary-a5)
     
   &.invalid select
     border-color: var(--color-error-border)
     
     &:focus
       border-color: var(--color-error)
-      box-shadow: 0 0 0 base.$focus-ring-width var(--color-error-a5)
+      box-shadow: 0 0 0 var(--focus-ring-width) var(--color-error-a5)
     
     // Disabled state
     &:disabled
       background: var(--color-surface)
       color: var(--color-text-disabled)
       cursor: not-allowed
-      opacity: 0.6
+      opacity: var(--opacity-60)
   
   // Placeholder style
   &.has-placeholder select
@@ -197,18 +197,19 @@ defineExpose({
   
   // Size variations
   &.size-small
-    height: base.$size-xl // 32px
+    height: var(--input-height-small) // 32px
     
     select
-      padding: 0 base.$space-9 0 base.$space-3
-      font-size: typography.$label-size-small
+      padding: 0 var(--space-xl) 0 var(--space-sm)
+      font-size: var(--font-size-label-small)
+      border-radius: var(--radius-sm)
     
   &.size-large
-    height: base.$size-3xl // 48px
+    height: var(--input-height-large) // 48px
     
     select
-      padding: 0 base.$space-12 0 base.$space-5
-      font-size: typography.$label-size-large
+      padding: 0 var(--space-4xl) 0 var(--space-md)
+      font-size: var(--font-size-label-large)
   
   // Disabled state
   &.disabled .select-icon
@@ -218,32 +219,32 @@ defineExpose({
   .select-icon
     position: absolute
     top: 50%
-    right: base.$space-4
+    right: var(--space-sm)
     transform: translateY(-50%)
     display: flex
     align-items: center
     justify-content: center
     color: var(--color-text-tertiary)
     pointer-events: none
-    transition: color base.$transition
+    transition: color var(--transition)
     
     svg
-      width: base.$size-xs // 16px
-      height: base.$size-xs // 16px
+      width: var(--icon-size-sm) // 18px - medium size
+      height: var(--icon-size-sm) // 18px
     
   &.size-small .select-icon
-    right: base.$space-3
+    right: var(--space-xs)
     
     svg
-      width: 0.875rem // 14px - no exact size variable for 14px
-      height: 0.875rem // 14px
+      width: var(--icon-size-sm) // 18px - same as medium for better visibility
+      height: var(--icon-size-sm) // 18px
       
   &.size-large .select-icon
-    right: base.$space-5
+    right: var(--space-md)
     
     svg
-      width: base.$size-sm // 18px
-      height: base.$size-sm // 18px
+      width: var(--icon-size-md) // 20px - large size
+      height: var(--icon-size-md) // 20px
     
   // Icon hover and focus states
   select:hover:not(:disabled) ~ .select-icon

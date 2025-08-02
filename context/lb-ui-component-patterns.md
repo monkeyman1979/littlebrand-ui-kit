@@ -18,8 +18,9 @@ This guide establishes the coding patterns and standards for all LittleBrand UI 
 
 <style lang="sass" scoped>
 // Import only needed SASS files
-// Use CSS custom properties for themes
+// Use CSS custom properties for ALL values
 // Grid/Flexbox for ALL layouts
+// No hardcoded sizes, spacing, or colors
 </style>
 ```
 
@@ -149,14 +150,40 @@ const hintId = props.hint ? useId() : null
 
 ## Style Patterns
 
+### CSS Variable Usage
+All runtime values MUST use CSS custom properties:
+```sass
+// ✅ CORRECT - CSS variables for runtime values
+.lb-input
+  padding: var(--space-sm)
+  border: var(--border-sm) solid var(--color-input-border)
+  border-radius: var(--radius-md)
+  font-size: var(--font-size-label-base)
+  
+// ❌ WRONG - SASS variables for runtime values
+.lb-input
+  padding: $space-sm  // These compile to fixed values!
+  border: $border-thin solid $color-border
+```
+
+Available CSS Variable Categories:
+- **Spacing**: `--space-2xs` through `--space-10xl`
+- **Sizing**: `--size-xs` through `--size-6xl`
+- **Borders**: `--border-xs` through `--border-2xl`
+- **Radii**: `--radius-xs` through `--radius-2xl`
+- **Opacity**: `--opacity-0` through `--opacity-100` (by tens)
+- **Colors**: All color variables
+- **Typography**: Font sizes, weights, line heights
+- **Component-specific**: Input heights, icon sizes, etc.
+
 ### Import Strategy
 ```sass
 // Import only what this component needs
-@import '@/styles/base'     // For spacing, borders, etc
-@import '@/styles/colors'   // If using color variables
-@import '@/styles/typography' // If setting typography
+@use '@/styles/base' as base     // For SASS variables and mixins
+@use '@/styles/typography' as typography // If setting typography
 
 // Never import main.sass in components
+// All actual values come from CSS variables at runtime
 ```
 
 ### Component Root Styles
@@ -165,35 +192,35 @@ const hintId = props.hint ? useId() : null
   // Layout with Grid/Flexbox
   display: inline-flex
   align-items: center
-  gap: $space-sm
+  gap: var(--space-sm)
   
   // Spacing with padding, never margin
-  padding: $space-sm $space-md
+  padding: var(--space-sm) var(--space-md)
   
-  // Visual styles using theme variables
+  // Visual styles using CSS variables
   background: var(--color-primary)
   color: var(--color-on-primary)
-  border: $border-medium solid transparent
-  border-radius: $radius-md
+  border: var(--border-md) solid transparent
+  border-radius: var(--radius-md)
   
   // Typography
-  font-family: $font-body
-  font-size: 1rem
-  font-weight: $weight-medium
+  font-family: var(--font-body)
+  font-size: var(--font-size-label-base)
+  font-weight: var(--font-weight-medium)
   
   // Transitions
-  transition: all $transition
+  transition: all var(--transition)
   
   // States
   &:hover:not(:disabled)
     background: var(--color-primary-hover)
     
   &:focus-visible
-    outline: $focus-ring-width solid var(--color-focus-ring)
-    outline-offset: $focus-ring-offset
+    outline: var(--focus-ring-width) solid var(--color-focus-ring)
+    outline-offset: calc(var(--space-2xs) * -1)
     
   &:disabled
-    opacity: 0.6
+    opacity: var(--opacity-60)
     cursor: not-allowed
 ```
 
@@ -203,7 +230,7 @@ const hintId = props.hint ? useId() : null
 ```sass
 .lb-form-field
   display: grid
-  gap: $space-xs
+  gap: var(--space-xs)
   
   // Label above input
   grid-template-areas:
@@ -216,7 +243,7 @@ const hintId = props.hint ? useId() : null
 ```sass
 .lb-button-group
   display: flex
-  gap: $space-sm
+  gap: var(--space-sm)
   
   // Wrap on small screens naturally
   flex-wrap: wrap
@@ -232,7 +259,7 @@ const hintId = props.hint ? useId() : null
   
   &__content
     display: grid
-    gap: $space-md
+    gap: var(--space-md)
     max-width: min(90vw, 600px)
     max-height: 90vh
 ```
@@ -251,6 +278,10 @@ const hintId = props.hint ? useId() : null
 // ❌ WRONG - No pixel values
 .lb-input
   padding: 8px 16px
+  
+// ❌ WRONG - No SASS variables for runtime values
+.lb-button
+  padding: $space-sm $space-md  // Use var(--space-sm) instead
   
 // ❌ WRONG - No !important
 .lb-modal
