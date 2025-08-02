@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, inject, type ComputedRef } from 'vue'
+import { computed, ref, inject, watch, nextTick, onMounted, type ComputedRef } from 'vue'
 
 // Props
 interface Props {
@@ -43,6 +43,8 @@ interface Props {
   maxlength?: number
   spellcheck?: boolean
   resize?: 'none' | 'vertical' | 'horizontal' | 'both'
+  autoResize?: boolean
+  maxRows?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -54,7 +56,8 @@ const props = withDefaults(defineProps<Props>(), {
   autofocus: false,
   rows: 4,
   spellcheck: true,
-  resize: 'vertical'
+  resize: 'vertical',
+  autoResize: false
 })
 
 // Emits
@@ -68,6 +71,7 @@ const emit = defineEmits<{
 
 // Refs
 const textareaRef = ref<HTMLTextAreaElement>()
+const lineHeight = ref<number>(0)
 
 // Inject form field context if available
 const injectedId = inject<ComputedRef<string> | undefined>('formFieldId', undefined)
@@ -96,6 +100,57 @@ const handleInput = (event: Event) => {
   emit('input', event)
 }
 
+// Auto-resize functionality
+const adjustHeight = () => {
+  if (!props.autoResize || !textareaRef.value) return
+  
+  const textarea = textareaRef.value
+  
+  // Reset height to get accurate scrollHeight
+  textarea.style.height = 'auto'
+  
+  // Calculate the height needed for content
+  const scrollHeight = textarea.scrollHeight
+  
+  // Calculate max height if maxRows is set
+  let maxHeight = Infinity
+  if (props.maxRows && lineHeight.value) {
+    // Get computed styles to calculate padding
+    const computedStyle = window.getComputedStyle(textarea)
+    const paddingTop = parseFloat(computedStyle.paddingTop)
+    const paddingBottom = parseFloat(computedStyle.paddingBottom)
+    const borderTop = parseFloat(computedStyle.borderTopWidth)
+    const borderBottom = parseFloat(computedStyle.borderBottomWidth)
+    
+    // Calculate max height based on maxRows
+    maxHeight = (lineHeight.value * props.maxRows) + paddingTop + paddingBottom + borderTop + borderBottom
+  }
+  
+  // Set the new height, respecting maxHeight
+  textarea.style.height = `${Math.min(scrollHeight, maxHeight)}px`
+}
+
+// Watch for content changes
+watch(() => props.modelValue, () => {
+  if (props.autoResize) {
+    nextTick(() => {
+      adjustHeight()
+    })
+  }
+})
+
+// Initialize on mount
+onMounted(() => {
+  if (props.autoResize && textareaRef.value) {
+    // Calculate line height for maxRows calculation
+    const computedStyle = window.getComputedStyle(textareaRef.value)
+    lineHeight.value = parseFloat(computedStyle.lineHeight)
+    
+    // Initial height adjustment
+    adjustHeight()
+  }
+})
+
 // Expose refs for parent access
 defineExpose({
   textareaRef
@@ -114,7 +169,7 @@ defineExpose({
   textarea
     // Default size (medium)
     width: 100%
-    min-height: base.$size-9xl // 96px for 4 rows
+    min-height: base.$size-3xl // 48px minimum (matches large input)
     padding: base.$space-3 base.$space-4
     background: var(--color-input-background)
     border: base.$border-thin solid var(--color-input-border)
@@ -124,7 +179,6 @@ defineExpose({
     color: var(--color-text)
     line-height: typography.$line-relaxed
     transition: border-color base.$transition, box-shadow base.$transition
-    box-sizing: border-box
     
     // Placeholder
     &::placeholder
