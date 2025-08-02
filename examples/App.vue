@@ -237,6 +237,12 @@
             LbTextarea(v-model="textareaReadonly" placeholder="Readonly textarea" :readonly="true")
             LbTextarea(v-model="textareaInvalid" placeholder="Invalid textarea" :invalid="true")
         
+        .demo-group
+          h4 Auto-Resize Options
+          .input-row
+            LbTextarea(v-model="textareaAutoResize1" placeholder="Type to see auto-resize..." auto-resize)
+            LbTextarea(v-model="textareaAutoResize2" placeholder="Auto-resize with max 8 rows" auto-resize :max-rows="8")
+            LbTextarea(v-model="textareaAutoResize3" placeholder="Starts with 6 rows" :rows="6" auto-resize :max-rows="12")
         
         .demo-group
           h4 Resize Options
@@ -1023,6 +1029,9 @@ const textareaValue2 = ref('This is some example text in a textarea component.')
 const textareaReadonly = ref('This textarea is readonly and cannot be edited.')
 const textareaDisabled = ref('This textarea is disabled.')
 const textareaInvalid = ref('')
+const textareaAutoResize1 = ref('')
+const textareaAutoResize2 = ref('')
+const textareaAutoResize3 = ref('')
 
 // Checkbox demo values
 const checkboxUnchecked = ref(false)
