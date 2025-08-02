@@ -112,7 +112,7 @@ defineExpose({
   .switch-thumb
     position: absolute
     top: 50%
-    left: base.$space-2 // 4px
+    left: 2px
     transform: translateY(-50%)
     width: base.$size-lg // 24px
     height: base.$size-lg // 24px
@@ -129,7 +129,7 @@ defineExpose({
       
     .switch-thumb
       background: white
-      transform: translateY(-50%) translateX(base.$space-9 + base.$space-1) // Move 22px to right (20px + 2px)
+      transform: translateY(-50%) translateX(base.$space-9 + base.$space-2) // Move 24px to right (20px + 4px)
       
   // Add smooth spring animation for the toggle
   &:not(.disabled) .switch-thumb
