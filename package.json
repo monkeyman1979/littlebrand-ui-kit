@@ -9,13 +9,13 @@
     "src/styles"
   ],
   "main": "./dist/littlebrand-ui.umd.js",
-  "module": "./dist/littlebrand-ui.es.js",
+  "module": "./dist/littlebrand-ui.js",
   "exports": {
     ".": {
-      "import": "./dist/littlebrand-ui.es.js",
+      "import": "./dist/littlebrand-ui.js",
       "require": "./dist/littlebrand-ui.umd.js"
     },
-    "./style.css": "./dist/style.css"
+    "./style.css": "./dist/littlebrand-ui.css"
   },
   "scripts": {
     "dev": "vite",
