@@ -1,38 +1,38 @@
 <template lang="pug">
 .app-container
-  header.app-header
-    h1 LittleBrand UI Kit
-    p.body-large A clean, semantic Vue.js UI kit with zero utility classes
+    header.app-header
+      h1 LittleBrand UI Kit
+      p.body-large A clean, semantic Vue.js UI kit with zero utility classes
     
-  main.app-main
-    section.theme-section
-      h2 Theme Support
-      .theme-toggle
-        button(@click="toggleTheme") Toggle {{ isDark ? 'Light' : 'Dark' }} Mode
-    
-    section.typography-section
-      h2 Typography
-      .display-1 Display 1
-      .display-2 Display 2
-      h1 Heading 1
-      h2 Heading 2
-      h3 Heading 3
-      h4 Heading 4
-      h5 Heading 5
-      h6 Heading 6
-      p This is a regular paragraph with normal text.
-      p.body-large This is large body text for emphasis.
-      p.body-small This is small body text for fine print.
+    main.app-main
+      section.theme-section
+        h2 Theme Support
+        .theme-toggle
+          button(@click="toggleTheme") Toggle {{ isDark ? 'Light' : 'Dark' }} Mode
       
-    section.color-section
-      h2 Color Palette
+      section.typography-section
+        h2 Typography
+        .display-1 Display 1
+        .display-2 Display 2
+        h1 Heading 1
+        h2 Heading 2
+        h3 Heading 3
+        h4 Heading 4
+        h5 Heading 5
+        h6 Heading 6
+        p This is a regular paragraph with normal text.
+        p.body-large This is large body text for emphasis.
+        p.body-small This is small body text for fine print.
+      
+      section.color-section
+        h2 Color Palette
       .color-grid
         .color-card(v-for="color in colors" :key="color.name")
           .color-swatch(:style="{ background: `var(${color.var})` }")
           .label {{ color.name }}
           
-    section.components-section
-      h2 Components
+      section.components-section
+        h2 Components
       
       .component-demo
         h3 Buttons
@@ -987,11 +987,330 @@
                   placeholder="priority@example.com"
                   :aria-describedby="ariaDescribedby"
                 )
+      
+      .component-demo
+        h3 Badge
+        p Notification indicators for numbers and status
+        
+        .demo-group
+          h4 Basic Badges
+          .button-row
+            span.badge-demo-item
+              | Notifications
+              LbBadge(variant="error") 5
+            span.badge-demo-item
+              | Messages
+              LbBadge(variant="primary") 12
+            span.badge-demo-item
+              | Updates
+              LbBadge(variant="success" :max="99") 150
+        
+        .demo-group
+          h4 Dot Indicators
+          .button-row
+            span.badge-demo-item
+              | Status
+              LbBadge(variant="success" dot)
+            span.badge-demo-item
+              | Warning
+              LbBadge(variant="warning" dot)
+            span.badge-demo-item
+              | Error
+              LbBadge(variant="error" dot)
+        
+        .demo-group
+          h4 Sizes and Variants
+          .button-row
+            LbBadge(size="small") SM
+            LbBadge(size="medium") MD
+            LbBadge(size="large") LG
+          .button-row
+            LbBadge(variant="default") Default
+            LbBadge(variant="primary") Primary
+            LbBadge(variant="secondary") Secondary
+            LbBadge(variant="success") Success
+            LbBadge(variant="warning") Warning
+            LbBadge(variant="error") Error
+            LbBadge(variant="info") Info
+        
+        .demo-group
+          h4 With Icons/Buttons
+          .button-row
+            LbButton(variant="outline")
+              | Inbox
+              LbBadge(variant="error" size="small" style="margin-left: 8px") 3
+            LbButton(variant="ghost" icon-only)
+              template(#icon-leading)
+                svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+                  path(d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9")
+              .badge-wrapper
+                LbBadge(variant="error" size="small" dot style="position: absolute; top: -4px; right: -4px")
+      
+      .component-demo
+        h3 Avatar
+        p Circular profile images with initials fallback and status indicators
+        
+        .demo-group
+          h4 Size Variants
+          .button-row
+            LbAvatar(src="https://i.pravatar.cc/150?img=1" alt="Jane Doe" size="xs")
+            LbAvatar(src="https://i.pravatar.cc/150?img=2" alt="John Smith" size="sm")
+            LbAvatar(src="https://i.pravatar.cc/150?img=3" alt="Alice Johnson" size="md")
+            LbAvatar(src="https://i.pravatar.cc/150?img=4" alt="Bob Wilson" size="lg")
+            LbAvatar(src="https://i.pravatar.cc/150?img=5" alt="Carol White" size="xl")
+        
+        .demo-group
+          h4 Initials Fallback
+          .button-row
+            LbAvatar(name="John Doe" size="md")
+            LbAvatar(name="Jane Smith" size="md" variant="secondary")
+            LbAvatar(name="Alice" size="md" variant="success")
+            LbAvatar(name="Bob Wilson" size="md" variant="warning")
+            LbAvatar(name="Carol" size="md" variant="error")
+            LbAvatar(name="David Lee" size="md" variant="info")
+        
+        .demo-group
+          h4 Status Indicators
+          .button-row
+            LbAvatar(name="Online User" status="online" size="md")
+            LbAvatar(name="Offline User" status="offline" size="md")
+            LbAvatar(name="Away User" status="away" size="md")
+            LbAvatar(name="Busy User" status="busy" size="md")
+        
+        .demo-group
+          h4 Image with Status
+          .button-row
+            LbAvatar(src="https://i.pravatar.cc/150?img=10" alt="Online" status="online" size="lg")
+            LbAvatar(src="https://i.pravatar.cc/150?img=11" alt="Away" status="away" size="lg")
+            LbAvatar(src="https://i.pravatar.cc/150?img=12" alt="Busy" status="busy" size="lg")
+            LbAvatar(src="https://i.pravatar.cc/150?img=13" alt="Offline" status="offline" size="lg")
+        
+        .demo-group
+          h4 Fallback Behavior
+          .button-row
+            LbAvatar(size="md")
+            LbAvatar(src="https://invalid-url.com/image.jpg" alt="Failed to load" size="md")
+            LbAvatar(src="https://invalid-url.com/image.jpg" alt="With Name" name="Error User" size="md" variant="error")
+      
+      .component-demo
+        h3 Chip
+        p Material Design 3 style chips for filtering and selection
+        
+        .demo-group
+          h4 Chip Variants
+          .button-row
+            LbChip(variant="assist" @click="handleChipClick")
+              template(#leadingIcon)
+                svg(viewBox="0 0 24 24" fill="currentColor" width="18" height="18")
+                  path(d="M10.5 18.25a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z")
+                  path(fill-rule="evenodd" d="M8.625.75A3.375 3.375 0 005.25 4.125v15.75a3.375 3.375 0 003.375 3.375h6.75a3.375 3.375 0 003.375-3.375V4.125A3.375 3.375 0 0015.375.75h-6.75zM7.5 4.125C7.5 3.504 8.004 3 8.625 3H9.75v.375c0 .621.504 1.125 1.125 1.125h2.25c.621 0 1.125-.504 1.125-1.125V3h1.125c.621 0 1.125.504 1.125 1.125v15.75c0 .621-.504 1.125-1.125 1.125h-6.75A1.125 1.125 0 017.5 19.875V4.125z")
+              | Settings
+            
+            LbChip(
+              variant="filter" 
+              v-model:selected="filterChipSelected"
+            ) Active only
+            
+            LbChip(variant="input" deletable @delete="handleChipDelete") Vue.js
+            
+            LbChip(variant="suggestion" @click="handleChipClick") Add location
+        
+        .demo-group
+          h4 Filter Chips Example
+          .button-row
+            LbChip(
+              v-for="filter in filterOptions"
+              :key="filter.value"
+              variant="filter"
+              v-model:selected="filter.selected"
+            ) {{ filter.label }}
+          .demo-note Active filters: {{ activeFilters }}
+        
+        .demo-group
+          h4 Input Chips (Tags)
+          .button-row
+            LbChip(
+              v-for="(tag, index) in tags"
+              :key="tag"
+              variant="input"
+              deletable
+              @delete="removeTag(index)"
+            ) {{ tag }}
+            LbButton(variant="ghost" size="small" @click="addTag")
+              template(#icon-leading)
+                svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+                  path(d="M12 4v16m8-8H4")
+              | Add Tag
+        
+        .demo-group
+          h4 States and Sizes
+          .button-row
+            LbChip(size="small") Small
+            LbChip(size="medium") Medium
+            LbChip(size="large") Large
+          .button-row
+            LbChip Enabled
+            LbChip(disabled) Disabled
+            LbChip(:clickable="false") Non-clickable
+      
+      .component-demo
+        h3 Bottom Sheet
+        p Swipeable sheets that expand from the bottom
+        
+        .demo-group
+          h4 Sheet Examples
+          .button-row
+            LbButton(@click="showBasicSheet = true") Basic Sheet
+            LbButton(@click="showExpandableSheet = true" variant="outline") Expandable Sheet
+            LbButton(@click="showPersistentSheet = true" variant="tonal") Persistent Sheet
+        
+        // Basic Bottom Sheet
+        LbBottomSheet(v-model="showBasicSheet")
+          template(#header)
+            h3 Basic Bottom Sheet
+          p This is a simple bottom sheet. You can swipe down to dismiss it.
+          p Try dragging the handle at the top!
+          
+        // Expandable Bottom Sheet
+        LbBottomSheet(
+          v-model="showExpandableSheet"
+          :expandable="true"
+          max-height="60vh"
+        )
+          template(#header)
+            h3 Expandable Sheet
+            p Drag up to expand to fullscreen
+          .sheet-content
+            p This sheet can be expanded to full screen by dragging up.
+            p It starts at 60% viewport height but can expand to 100%.
+            div(v-for="i in 20" :key="i")
+              p Lorem ipsum dolor sit amet, consectetur adipiscing elit. {{ i }}
+          template(#footer)
+            LbButton(@click="showExpandableSheet = false" full-width) Close Sheet
+        
+        // Persistent Bottom Sheet
+        LbBottomSheet(
+          v-model="showPersistentSheet"
+          :persistent="true"
+          :show-handle="false"
+        )
+          template(#header)
+            h3 Confirm Action
+          p This sheet cannot be dismissed by clicking the backdrop.
+          p You must use one of the action buttons below.
+          template(#footer)
+            .button-row(style="width: 100%; justify-content: flex-end")
+              LbButton(@click="showPersistentSheet = false" variant="ghost") Cancel
+              LbButton(@click="confirmSheetAction" variant="filled" color="error") Delete
+      
+      .component-demo
+        h3 Navigation Bar
+        p Bottom navigation for mobile interfaces
+        
+        .demo-group
+          h4 Basic Navigation Bar
+          .navigation-demo
+            LbNavigationBar(v-model="activeNavItem" :fixed="false")
+              LbNavigationBarItem(value="home" label="Home")
+                template(#icon)
+                  svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+                    path(d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6")
+                template(#activeIcon)
+                  svg(viewBox="0 0 24 24" fill="currentColor")
+                    path(d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z")
+              
+              LbNavigationBarItem(value="search" label="Search")
+                template(#icon)
+                  svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+                    path(d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z")
+              
+              LbNavigationBarItem(value="notifications" label="Notifications")
+                template(#icon)
+                  svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+                    path(d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9")
+              
+              LbNavigationBarItem(value="profile" label="Profile")
+                template(#icon)
+                  svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+                    path(d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z")
+          .demo-note Active: {{ activeNavItem }}
+        
+        .demo-group
+          h4 Customization Options
+          .input-row
+            LbSelect(
+              v-model="navActiveColor"
+              :options="navColorOptions"
+              placeholder="Active Color"
+            )
+            .switch-field
+              LbSwitch(v-model="navShowLabels" id="nav-labels")
+              LbLabel(for="nav-labels") Show Labels
+          .navigation-demo
+            LbNavigationBar(
+              v-model="activeNavItem2"
+              :fixed="false"
+              :active-color="navActiveColor"
+              :show-labels="navShowLabels"
+            )
+              LbNavigationBarItem(value="home" label="Home")
+                template(#icon)
+                  svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+                    path(d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6")
+              
+              LbNavigationBarItem(value="explore" label="Explore")
+                template(#icon)
+                  svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+                    path(d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7")
+              
+              LbNavigationBarItem(value="add" label="Create" disabled)
+                template(#icon)
+                  svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+                    path(d="M12 4v16m8-8H4")
+              
+              LbNavigationBarItem(value="activity" label="Activity")
+                template(#icon)
+                  svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+                    path(d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z")
+              
+              LbNavigationBarItem(value="profile" label="Profile")
+                template(#icon)
+                  svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+                    path(d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z")
+      
+      .component-demo
+        h3 Snackbar
+        p Temporary notifications with actions
+        
+        .demo-group
+          h4 Basic Snackbars
+          .button-row
+            LbButton(@click="showDefaultSnackbar") Default
+            LbButton(@click="showSuccessSnackbar" color="success") Success
+            LbButton(@click="showErrorSnackbar" color="error") Error
+            LbButton(@click="showWarningSnackbar" color="warning") Warning
+            LbButton(@click="showInfoSnackbar" color="info") Info
+        
+        .demo-group
+          h4 With Actions
+          .button-row
+            LbButton(@click="showActionSnackbar" variant="outline") With Action
+            LbButton(@click="showPersistentSnackbar" variant="outline") Persistent
+            LbButton(@click="showLongActionSnackbar" variant="outline") Long Action
+            LbButton(@click="showMultipleSnackbars" variant="outline") Multiple
+        
+        .demo-group
+          h4 Snackbar Management
+          .button-row
+            LbButton(@click="clearAllSnackbars" variant="ghost" color="error") Clear All
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import { LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog } from '../src'
+import { 
+  LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog,
+  LbBadge, LbNavigationBar, LbNavigationBarItem, LbBottomSheet, LbChip, LbAvatar, useSnackbar
+} from '../src'
 
 const isDark = ref(false)
 
@@ -1410,6 +1729,157 @@ const toggleTheme = () => {
   document.documentElement.setAttribute('data-theme', isDark.value ? 'dark' : 'light')
 }
 
+// Badge demo data
+const badgeCount = ref(5)
+
+// Chip demo data
+const filterChipSelected = ref(false)
+const filterOptions = ref([
+  { value: 'new', label: 'New', selected: true },
+  { value: 'popular', label: 'Popular', selected: false },
+  { value: 'trending', label: 'Trending', selected: true },
+  { value: 'featured', label: 'Featured', selected: false }
+])
+const tags = ref(['Vue.js', 'TypeScript', 'UI Kit', 'Component Library'])
+
+const activeFilters = computed(() => {
+  return filterOptions.value
+    .filter(f => f.selected)
+    .map(f => f.label)
+    .join(', ')
+})
+
+const handleChipClick = () => {
+  console.log('Chip clicked')
+}
+
+const handleChipDelete = () => {
+  console.log('Chip deleted')
+}
+
+const removeTag = (index) => {
+  tags.value.splice(index, 1)
+}
+
+const addTag = () => {
+  const newTag = prompt('Enter new tag:')
+  if (newTag) {
+    tags.value.push(newTag)
+  }
+}
+
+// Bottom Sheet demo data
+const showBasicSheet = ref(false)
+const showExpandableSheet = ref(false)
+const showPersistentSheet = ref(false)
+
+const confirmSheetAction = () => {
+  alert('Action confirmed!')
+  showPersistentSheet.value = false
+}
+
+// Navigation Bar demo data
+const activeNavItem = ref('home')
+const activeNavItem2 = ref('home')
+const navActiveColor = ref('primary')
+const navShowLabels = ref(true)
+
+const navColorOptions = [
+  { value: 'primary', label: 'Primary' },
+  { value: 'secondary', label: 'Secondary' },
+  { value: 'success', label: 'Success' },
+  { value: 'warning', label: 'Warning' },
+  { value: 'error', label: 'Error' },
+  { value: 'info', label: 'Info' }
+]
+
+// Snackbar demo data
+// Get snackbar methods from the composable
+const { showSnackbar, clearAll: clearAllSnackbars } = useSnackbar()
+
+const showDefaultSnackbar = () => {
+  showSnackbar({
+    message: 'This is a default snackbar'
+  })
+}
+
+const showSuccessSnackbar = () => {
+  showSnackbar({
+    message: 'Operation completed successfully!',
+    variant: 'success'
+  })
+}
+
+const showErrorSnackbar = () => {
+  showSnackbar({
+    message: 'An error occurred. Please try again.',
+    variant: 'error'
+  })
+}
+
+const showWarningSnackbar = () => {
+  showSnackbar({
+    message: 'This action cannot be undone',
+    variant: 'warning'
+  })
+}
+
+const showInfoSnackbar = () => {
+  showSnackbar({
+    message: 'New update available',
+    variant: 'info'
+  })
+}
+
+const showActionSnackbar = () => {
+  showSnackbar({
+    message: 'File deleted',
+    variant: 'default',
+    action: {
+      label: 'Undo',
+      handler: () => {
+        alert('Undo clicked!')
+      }
+    }
+  })
+}
+
+const showPersistentSnackbar = () => {
+  showSnackbar({
+    message: 'New version available. Update now?',
+    variant: 'info',
+    action: {
+      label: 'Update',
+      handler: () => {
+        alert('Updating...')
+      }
+    }
+  })
+}
+
+const showLongActionSnackbar = () => {
+  showSnackbar({
+    message: 'Photo already has the label "travel". Would you like to add a new label?',
+    variant: 'default',
+    action: {
+      label: 'Add a new label',
+      handler: () => {
+        alert('Adding new label...')
+      }
+    }
+  })
+}
+
+const showMultipleSnackbars = () => {
+  showSnackbar({ message: 'First snackbar', variant: 'default' })
+  setTimeout(() => {
+    showSnackbar({ message: 'Second snackbar', variant: 'info' })
+  }, 500)
+  setTimeout(() => {
+    showSnackbar({ message: 'Third snackbar (max visible)', variant: 'success' })
+  }, 1000)
+}
+
 onMounted(() => {
   // Check for user's theme preference
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -1666,4 +2136,39 @@ section
     margin-bottom: base.$space-md
     line-height: 1.6
     color: var(--color-text-secondary)
+
+// Badge demo styles
+.badge-demo-item
+  display: inline-flex
+  align-items: center
+  gap: base.$space-xs
+  padding: base.$space-xs base.$space-sm
+  background: var(--color-surface)
+  border: base.$border-sm solid var(--color-border)
+  border-radius: base.$radius-md
+
+.badge-wrapper
+  position: relative
+
+// Navigation demo styles
+.navigation-demo
+  background: var(--color-surface)
+  border: base.$border-sm solid var(--color-border)
+  border-radius: base.$radius-lg
+  overflow: hidden
+  position: relative
+  height: 200px
+  
+  .lb-navigation-bar
+    position: absolute
+    bottom: 0
+    left: 0
+    right: 0
+
+// Sheet demo content
+.sheet-content
+  padding: base.$space-lg
+  
+  p
+    margin-bottom: base.$space-md
 </style>

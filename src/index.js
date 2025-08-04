@@ -4,7 +4,10 @@
 import './styles/index.sass'
 
 // Import all components
+import LbAvatar from './components/Avatar'
+import LbBadge from './components/Badge'
 import LbButton from './components/Button'
+import LbChip from './components/Chip'
 import LbInput from './components/Input'
 import LbLabel from './components/Label'
 import LbHintText from './components/HintText'
@@ -15,15 +18,21 @@ import LbSwitch from './components/Switch'
 import LbSelect from './components/Select'
 import LbFormField from './components/FormField'
 import LbDialog from './components/Dialog'
+import LbBottomSheet from './components/BottomSheet'
+import LbNavigationBar, { LbNavigationBarItem } from './components/NavigationBar'
+import { LbSnackbar, LbSnackbarProvider, useSnackbar, createSnackbarHelpers } from './components/Snackbar'
 
 // Export individual components for tree-shaking
-export { LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog }
+export { LbAvatar, LbBadge, LbButton, LbChip, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog, LbBottomSheet, LbNavigationBar, LbNavigationBarItem, LbSnackbar, LbSnackbarProvider, useSnackbar, createSnackbarHelpers }
 
 // Plugin install function for Vue.use()
 const LittleBrandUI = {
   install(app, options = {}) {
     // Register all components globally
+    app.component('LbAvatar', LbAvatar)
+    app.component('LbBadge', LbBadge)
     app.component('LbButton', LbButton)
+    app.component('LbChip', LbChip)
     app.component('LbInput', LbInput)
     app.component('LbLabel', LbLabel)
     app.component('LbHintText', LbHintText)
@@ -34,6 +43,11 @@ const LittleBrandUI = {
     app.component('LbSelect', LbSelect)
     app.component('LbFormField', LbFormField)
     app.component('LbDialog', LbDialog)
+    app.component('LbBottomSheet', LbBottomSheet)
+    app.component('LbNavigationBar', LbNavigationBar)
+    app.component('LbNavigationBarItem', LbNavigationBarItem)
+    app.component('LbSnackbar', LbSnackbar)
+    app.component('LbSnackbarProvider', LbSnackbarProvider)
     
     // Apply any global configuration
     if (options.theme) {
