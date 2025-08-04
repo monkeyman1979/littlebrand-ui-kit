@@ -100,6 +100,8 @@ const initialHeight = ref(0)
 const velocity = ref(0)
 const lastMoveTime = ref(0)
 const lastMoveY = ref(0)
+const isContentAtTop = ref(true)
+const touchStartedOnContent = ref(false)
 
 // Store original body overflow
 let originalBodyOverflow = ''
@@ -108,12 +110,31 @@ let originalBodyPaddingRight = ''
 // Focus management
 const lastFocusedElement = ref<HTMLElement | null>(null)
 
+// Check if content is scrolled to top
+const checkContentScroll = () => {
+  if (contentRef.value) {
+    isContentAtTop.value = contentRef.value.scrollTop <= 0
+  }
+}
+
 // Touch/mouse event handlers
 const handleTouchStart = (event: TouchEvent) => {
   if (!props.swipeable) return
   
   const touch = event.touches[0]
-  startDrag(touch.clientY)
+  const target = event.target as HTMLElement
+  
+  // Check if touch started on content area or its children
+  touchStartedOnContent.value = contentRef.value?.contains(target) || false
+  
+  // Only start drag if on handle OR if content is at top and swiping down
+  if (handleRef.value?.contains(target)) {
+    startDrag(touch.clientY)
+  } else if (touchStartedOnContent.value && isContentAtTop.value) {
+    // Store initial position but don't start drag yet
+    startY.value = touch.clientY
+    lastMoveY.value = touch.clientY
+  }
 }
 
 const handleMouseDown = (event: MouseEvent) => {
@@ -140,10 +161,25 @@ const startDrag = (y: number) => {
 }
 
 const handleTouchMove = (event: TouchEvent) => {
-  if (!isDragging.value) return
-  
   const touch = event.touches[0]
-  updateDrag(touch.clientY)
+  
+  // If we're already dragging, continue
+  if (isDragging.value) {
+    updateDrag(touch.clientY)
+    return
+  }
+  
+  // If touch started on content and content is at top
+  if (touchStartedOnContent.value && isContentAtTop.value) {
+    const deltaY = touch.clientY - startY.value
+    
+    // If dragging down and passed threshold, start drag
+    if (deltaY > 10 && !isDragging.value) {
+      event.preventDefault()
+      startDrag(startY.value)
+      updateDrag(touch.clientY)
+    }
+  }
 }
 
 const handleMouseMove = (event: MouseEvent) => {
@@ -168,11 +204,22 @@ const updateDrag = (y: number) => {
   // Only allow downward drag or upward when expandable
   if (deltaY > 0 || (props.expandable && deltaY < 0)) {
     // Apply drag with resistance
-    const resistance = deltaY > 0 ? 1 : 0.3
+    let resistance = deltaY > 0 ? 1 : 0.3
+    
+    // Add extra resistance when already expanded and trying to drag up more
+    if (currentState.value === 'expanded' && deltaY < 0) {
+      resistance = 0.1
+    }
+    
     const adjustedDelta = deltaY * resistance
     
     if (sheetRef.value) {
-      sheetRef.value.style.transform = `translateY(${Math.max(0, adjustedDelta)}px)`
+      // Prevent dragging beyond expanded state
+      if (currentState.value === 'expanded' && adjustedDelta < 0) {
+        sheetRef.value.style.transform = `translateY(${Math.max(adjustedDelta, -20)}px)`
+      } else {
+        sheetRef.value.style.transform = `translateY(${Math.max(0, adjustedDelta)}px)`
+      }
     }
   }
 }
@@ -200,24 +247,33 @@ const endDrag = () => {
   const velocityThreshold = 0.5
   const distanceThreshold = 100
   
-  // Reset transform
-  sheetRef.value.style.transform = ''
-  
   // Determine action based on drag distance and velocity
   if (deltaY > distanceThreshold || velocity.value > velocityThreshold) {
     // Dismiss if dragged down significantly or with high downward velocity
     if (currentState.value === 'expanded') {
+      // Reset transform before changing state
+      sheetRef.value.style.transform = ''
       currentState.value = 'default'
       emit('collapse')
     } else {
-      close()
+      // For closing, apply the transform as part of the close animation
+      sheetRef.value.style.transition = 'transform 200ms ease'
+      sheetRef.value.style.transform = 'translateY(100%)'
+      setTimeout(() => {
+        close()
+      }, 200)
     }
   } else if (props.expandable && (deltaY < -distanceThreshold || velocity.value < -velocityThreshold)) {
     // Expand if dragged up significantly or with high upward velocity
     if (currentState.value === 'default') {
+      // Reset transform before changing state
+      sheetRef.value.style.transform = ''
       currentState.value = 'expanded'
       emit('expand')
     }
+  } else {
+    // If not crossing threshold, smoothly reset transform
+    sheetRef.value.style.transform = ''
   }
   
   isDragging.value = false
@@ -338,6 +394,17 @@ const onEnter = async () => {
   // Set up touch event listeners
   document.addEventListener('touchmove', handleTouchMove, { passive: false })
   document.addEventListener('touchend', handleTouchEnd)
+  
+  // Set up content scroll listener
+  if (contentRef.value) {
+    contentRef.value.addEventListener('scroll', checkContentScroll)
+    checkContentScroll() // Check initial state
+  }
+  
+  // Add touch listeners to the sheet itself
+  if (sheetRef.value) {
+    sheetRef.value.addEventListener('touchstart', handleTouchStart, { passive: true })
+  }
 }
 
 const onAfterLeave = () => {
@@ -352,6 +419,20 @@ const onAfterLeave = () => {
   // Remove touch event listeners
   document.removeEventListener('touchmove', handleTouchMove)
   document.removeEventListener('touchend', handleTouchEnd)
+  
+  // Remove content scroll listener
+  if (contentRef.value) {
+    contentRef.value.removeEventListener('scroll', checkContentScroll)
+  }
+  
+  // Remove sheet touch listener
+  if (sheetRef.value) {
+    sheetRef.value.removeEventListener('touchstart', handleTouchStart)
+  }
+  
+  // Reset states
+  touchStartedOnContent.value = false
+  isContentAtTop.value = true
   
   // Restore focus to last focused element
   lastFocusedElement.value?.focus()
@@ -451,7 +532,8 @@ defineExpose({
   padding-bottom: env(safe-area-inset-bottom)
   
   &.state-expanded
-    max-height: 100vh
+    max-height: 100dvh
+    max-height: calc(100dvh - env(safe-area-inset-top, 0px))
     border-radius: 0
     
     .sheet-handle
@@ -467,9 +549,10 @@ defineExpose({
   display: flex
   align-items: center
   justify-content: center
-  height: var(--space-2xl)
+  height: var(--space-3xl)
   cursor: grab
   flex-shrink: 0
+  touch-action: pan-y
   
   &:before
     content: ''
@@ -491,7 +574,7 @@ defineExpose({
 
 // Header
 .sheet-header
-  padding: var(--space-lg) var(--space-2xl) var(--space-md)
+  padding: 0.5rem var(--space-2xl)
   border-bottom: var(--border-sm) solid var(--color-border-subtle)
   flex-shrink: 0
 

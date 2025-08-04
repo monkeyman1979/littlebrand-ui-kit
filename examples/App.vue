@@ -1180,11 +1180,7 @@
               | Add Tag
         
         .demo-group
-          h4 States and Sizes
-          .button-row
-            LbChip(size="small") Small
-            LbChip(size="medium") Medium
-            LbChip(size="large") Large
+          h4 States
           .button-row
             LbChip Enabled
             LbChip(disabled) Disabled
@@ -1204,7 +1200,7 @@
         // Basic Bottom Sheet
         LbBottomSheet(v-model="showBasicSheet")
           template(#header)
-            h3 Basic Bottom Sheet
+            h5 Basic Bottom Sheet
           p This is a simple bottom sheet. You can swipe down to dismiss it.
           p Try dragging the handle at the top!
           
@@ -1215,8 +1211,7 @@
           max-height="60vh"
         )
           template(#header)
-            h3 Expandable Sheet
-            p Drag up to expand to fullscreen
+            h5 Expandable Sheet
           .sheet-content
             p This sheet can be expanded to full screen by dragging up.
             p It starts at 60% viewport height but can expand to 100%.
@@ -1232,7 +1227,7 @@
           :show-handle="false"
         )
           template(#header)
-            h3 Confirm Action
+            h5 Confirm Action
           p This sheet cannot be dismissed by clicking the backdrop.
           p You must use one of the action buttons below.
           template(#footer)
