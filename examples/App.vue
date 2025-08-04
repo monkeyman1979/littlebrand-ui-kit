@@ -1950,15 +1950,19 @@ onMounted(() => {
 .app-main
   display: flex
   flex-direction: column
-  gap: base.$space-2xs
+  gap: base.$space-3xl
 
 section
   display: flex
   flex-direction: column
-  gap: base.$space-md
+  gap: base.$space-lg
+  margin-bottom: base.$space-3xl
+  
+  &:last-child
+    margin-bottom: 0
   
   h2
-    margin: 0
+    margin: 0 0 base.$space-md 0
     
 .theme-section
   .theme-toggle
@@ -1976,13 +1980,17 @@ section
 .typography-section
   display: flex
   flex-direction: column
-  gap: base.$space-sm
+  gap: base.$space-md
+  
+  > *
+    margin: 0
     
 .color-section
   .color-grid
     display: grid
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr))
-    gap: base.$space-sm
+    gap: base.$space-lg
+    margin-top: base.$space-xs
     
   .color-card
     display: flex
@@ -2004,6 +2012,14 @@ section
     display: flex
     flex-direction: column
     gap: base.$space-lg
+    margin-bottom: base.$space-4xl
+    padding: base.$space-2xl
+    background: var(--color-surface-raised)
+    border-radius: var(--radius-lg)
+    border: base.$border-sm solid var(--color-border-subtle)
+    
+    &:last-child
+      margin-bottom: 0
     
     h3
       margin: 0
@@ -2011,10 +2027,14 @@ section
   .demo-group
     display: flex
     flex-direction: column
-    gap: base.$space-sm
+    gap: base.$space-lg
+    margin-bottom: base.$space-xl
+    
+    &:last-child
+      margin-bottom: 0
     
     h4
-      margin: 0
+      margin: 0 0 base.$space-xs 0
       color: var(--color-text-secondary)
       text-transform: uppercase
       letter-spacing: 0.05em
@@ -2035,13 +2055,15 @@ section
   .button-row
     display: flex
     flex-wrap: wrap
-    gap: base.$space-sm
+    gap: base.$space-md
     align-items: center
+    margin-top: base.$space-xs
     
   .input-row
     display: grid
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr))
-    gap: base.$space-sm
+    gap: base.$space-lg
+    margin-top: base.$space-xs
     
   .demo-note
     font-size: 0.875rem
@@ -2050,7 +2072,11 @@ section
 .form-field
   display: flex
   flex-direction: column
-  gap: base.$space-xs
+  gap: base.$space-sm
+  margin-bottom: base.$space-lg
+  
+  &:last-child
+    margin-bottom: 0
 
 .form-grid
   display: grid
@@ -2079,8 +2105,9 @@ section
 .radio-row
   display: flex
   flex-wrap: wrap
-  gap: base.$space-md
+  gap: base.$space-lg
   align-items: center
+  margin-top: base.$space-xs
   
 .checkbox-item,
 .radio-item
@@ -2107,8 +2134,9 @@ section
 .switch-row
   display: flex
   flex-wrap: wrap
-  gap: base.$space-md
+  gap: base.$space-lg
   align-items: center
+  margin-top: base.$space-xs
   
 .switch-item
   display: flex
@@ -2185,9 +2213,10 @@ section
 .navigation-badge-demo
   display: flex
   gap: base.$space-xl
-  padding: base.$space-md
+  padding: base.$space-lg
   background: var(--color-surface-lowered)
   border-radius: var(--radius-md)
+  margin-top: base.$space-xs
   
   .nav-item
     position: relative
@@ -2206,6 +2235,7 @@ section
 .avatar-badge-item
   position: relative
   display: inline-block
+  margin: 0 base.$space-xs
 
 .badge-wrapper
   position: relative
