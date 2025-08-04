@@ -160,7 +160,6 @@ defineOptions({
   align-items: center
   justify-content: center
   border-radius: var(--radius-full)
-  overflow: hidden
   background-color: var(--color-surface-raised)
   box-shadow: var(--shadow-sm)
   flex-shrink: 0
@@ -191,6 +190,7 @@ defineOptions({
   height: 100%
   object-fit: cover
   transition: opacity var(--transition)
+  border-radius: var(--radius-full)
   
   &.loading
     opacity: var(--opacity-0)
@@ -210,6 +210,8 @@ defineOptions({
   font-weight: var(--font-weight-medium)
   transition: opacity var(--transition)
   opacity: var(--opacity-0)
+  border-radius: var(--radius-full)
+  overflow: hidden
   
   &.visible
     opacity: var(--opacity-100)
@@ -269,62 +271,62 @@ defineOptions({
   justify-content: center
   
 .default-icon
-  // Icon sizes that scale with avatar size
+  // Icon sizes that scale with avatar size using CSS variables
   .lb-avatar.size-xs &
-    width: var(--space-sm) // 12px
-    height: var(--space-sm) // 12px
+    width: var(--icon-size-sm)
+    height: var(--icon-size-sm)
     
   .lb-avatar.size-sm &
-    width: var(--space-md) // 16px
-    height: var(--space-md) // 16px
+    width: var(--icon-size-sm)
+    height: var(--icon-size-sm)
     
   .lb-avatar.size-md &
-    width: var(--space-lg) // 20px
-    height: var(--space-lg) // 20px
+    width: var(--icon-size-md)
+    height: var(--icon-size-md)
     
   .lb-avatar.size-lg &
-    width: var(--space-xl) // 24px
-    height: var(--space-xl) // 24px
+    width: var(--icon-size-lg)
+    height: var(--icon-size-lg)
     
   .lb-avatar.size-xl &
-    width: var(--space-2xl) // 28px
-    height: var(--space-2xl) // 28px
+    width: var(--icon-size-lg)
+    height: var(--icon-size-lg)
 
 .status-indicator
   position: absolute
   border-radius: var(--radius-full)
-  border: var(--border-sm) solid var(--color-surface)
+  border: 2px solid var(--color-surface)
   
-  // Status indicator sizes based on avatar size
+  // Status indicator sizes and positioning based on avatar size
   .lb-avatar.size-xs &
-    width: var(--space-sm) // 6px
-    height: var(--space-sm) // 6px
+    width: 0.5rem // 8px
+    height: 0.5rem // 8px
+    bottom: -0.125rem // -2px
+    right: -0.125rem // -2px
+    
+  .lb-avatar.size-sm &
+    width: 0.625rem // 10px
+    height: 0.625rem // 10px
+    bottom: -0.125rem // -2px
+    right: -0.125rem // -2px
+    
+  .lb-avatar.size-md &
+    width: 0.75rem // 12px
+    height: 0.75rem // 12px
     bottom: 0
     right: 0
     
-  .lb-avatar.size-sm &
-    width: var(--space-md) // 8px
-    height: var(--space-md) // 8px
-    bottom: var(--space-2xs) // -1px
-    right: var(--space-2xs) // -1px
-    
-  .lb-avatar.size-md &
-    width: var(--space-lg) // 10px
-    height: var(--space-lg) // 10px
-    bottom: var(--space-xs) // 0px
-    right: var(--space-xs) // 0px
-    
   .lb-avatar.size-lg &
-    width: var(--space-xl) // 12px
-    height: var(--space-xl) // 12px
-    bottom: var(--space-xs) // 2px
-    right: var(--space-xs) // 2px
+    width: 0.875rem // 14px
+    height: 0.875rem // 14px
+    bottom: 0
+    right: 0
     
   .lb-avatar.size-xl &
-    width: var(--space-2xl) // 14px
-    height: var(--space-2xl) // 14px
-    bottom: var(--space-sm) // 4px
-    right: var(--space-sm) // 4px
+    width: 1rem // 16px
+    height: 1rem // 16px
+    bottom: 0.125rem // 2px
+    right: 0.125rem // 2px
     
   // Status colors
   &.status-online

@@ -993,33 +993,44 @@
         p Notification indicators for numbers and status
         
         .demo-group
-          h4 Basic Badges
-          .button-row
-            span.badge-demo-item
-              | Notifications
-              LbBadge(variant="error") 5
-            span.badge-demo-item
-              | Messages
-              LbBadge(variant="primary") 12
-            span.badge-demo-item
-              | Updates
-              LbBadge(variant="success" :max="99") 150
+          h4 Navigation Style (Like Screenshot)
+          .navigation-badge-demo
+            .nav-item
+              svg(viewBox="0 0 24 24" fill="currentColor" width="24" height="24")
+                path(d="M3 3h18a1 1 0 011 1v16a1 1 0 01-1 1H3a1 1 0 01-1-1V4a1 1 0 011-1zm1 2v14h16V5H4zm2 2h2v2H6V7zm4 0h8v2h-8V7zm0 4h8v2h-8v-2zm0 4h5v2h-5v-2zm-4-4h2v2H6v-2zm0 4h2v2H6v-2z")
+              span Mail
+              LbBadge(variant="error" position="top-right") 999+
+            .nav-item
+              svg(viewBox="0 0 24 24" fill="currentColor" width="24" height="24")
+                path(d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z")
+              span Chat
+              LbBadge(variant="error" position="top-right") 10
+            .nav-item
+              svg(viewBox="0 0 24 24" fill="currentColor" width="24" height="24")
+                path(d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z")
+              span Rooms
+              LbBadge(variant="default" position="top-right" dot)
+            .nav-item
+              svg(viewBox="0 0 24 24" fill="currentColor" width="24" height="24")
+                path(d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z")
+              span Meet
+              LbBadge(variant="error" position="top-right") 3
         
         .demo-group
-          h4 Dot Indicators
+          h4 Badge with Avatars
           .button-row
-            span.badge-demo-item
-              | Status
-              LbBadge(variant="success" dot)
-            span.badge-demo-item
-              | Warning
-              LbBadge(variant="warning" dot)
-            span.badge-demo-item
-              | Error
-              LbBadge(variant="error" dot)
+            .avatar-badge-item
+              LbAvatar(name="John Doe" size="md" status="online")
+              LbBadge(variant="error" position="top-right" size="small" dot)
+            .avatar-badge-item
+              LbAvatar(src="https://picsum.photos/seed/badge1/100/100" alt="User" size="lg" status="away")
+              LbBadge(variant="error" position="top-right") 5
+            .avatar-badge-item
+              LbAvatar(name="Jane Smith" size="xl" status="busy")
+              LbBadge(variant="primary" position="top-right") 12
         
         .demo-group
-          h4 Sizes and Variants
+          h4 Inline Badges
           .button-row
             LbBadge(size="small") SM
             LbBadge(size="medium") MD
@@ -2175,8 +2186,31 @@ section
   gap: base.$space-xs
   padding: base.$space-xs base.$space-sm
   background: var(--color-surface)
-  border: base.$border-sm solid var(--color-border)
-  border-radius: base.$radius-md
+
+.navigation-badge-demo
+  display: flex
+  gap: base.$space-xl
+  padding: base.$space-md
+  background: var(--color-surface-lowered)
+  border-radius: var(--radius-md)
+  
+  .nav-item
+    position: relative
+    display: flex
+    flex-direction: column
+    align-items: center
+    gap: base.$space-xs
+    color: var(--color-text-secondary)
+    
+    svg
+      color: var(--color-text-tertiary)
+    
+    span
+      font-size: var(--font-size-label-small)
+
+.avatar-badge-item
+  position: relative
+  display: inline-block
 
 .badge-wrapper
   position: relative

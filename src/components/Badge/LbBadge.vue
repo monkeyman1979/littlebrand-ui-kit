@@ -13,6 +13,7 @@ import { computed } from 'vue'
 // Types
 type Variant = 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'
 type Size = 'small' | 'medium' | 'large'
+type Position = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'inline'
 
 // Props
 const props = withDefaults(defineProps<{
@@ -20,11 +21,13 @@ const props = withDefaults(defineProps<{
   size?: Size
   dot?: boolean
   max?: number
+  position?: Position
 }>(), {
-  variant: 'default',
+  variant: 'error',
   size: 'medium',
   dot: false,
-  max: 99
+  max: 999,
+  position: 'inline'
 })
 
 // Slots
@@ -36,6 +39,7 @@ const slots = defineSlots<{
 const badgeClasses = computed(() => [
   `variant-${props.variant}`,
   `size-${props.size}`,
+  `position-${props.position}`,
   {
     'is-dot': props.dot
   }
@@ -96,69 +100,97 @@ defineOptions({
 @use '@/styles/base' as base
 
 .lb-badge
-  position: relative
   display: inline-flex
   align-items: center
   justify-content: center
   font-family: var(--font-body)
-  font-weight: var(--font-weight-medium)
-  line-height: var(--line-height-compact)
+  font-weight: var(--font-weight-semibold)
+  line-height: 1
   letter-spacing: var(--letter-spacing-tight)
-  border-radius: var(--radius-full)
+  border-radius: var(--radius-lg)
   white-space: nowrap
   user-select: none
   vertical-align: top
   animation: lb-badge-appear 0.2s ease-out
+  box-shadow: var(--shadow-sm)
   
   // Base sizing for medium (default)
-  min-width: var(--size-3xl)
-  height: var(--size-3xl)
-  padding: 0 var(--space-xs)
-  font-size: var(--font-size-label-small)
+  min-width: 1.25rem // 20px
+  height: 1.25rem // 20px
+  padding: 0 0.375rem // 6px
+  font-size: 0.75rem // 12px
+  
+  // Position variants
+  &.position-top-right
+    position: absolute
+    top: 0
+    right: 0
+    transform: translate(25%, -25%)
+    
+  &.position-top-left
+    position: absolute
+    top: 0
+    left: 0
+    transform: translate(-25%, -25%)
+    
+  &.position-bottom-right
+    position: absolute
+    bottom: 0
+    right: 0
+    transform: translate(25%, 25%)
+    
+  &.position-bottom-left
+    position: absolute
+    bottom: 0
+    left: 0
+    transform: translate(-25%, 25%)
+    
+  &.position-inline
+    position: relative
   
   // Size variants
   &.size-small
-    min-width: var(--size-2xl)
-    height: var(--size-2xl)
-    padding: 0 var(--space-2xs)
-    font-size: 0.625rem
+    min-width: 1rem // 16px
+    height: 1rem // 16px
+    padding: 0 0.25rem // 4px
+    font-size: 0.625rem // 10px
     
   &.size-large
-    min-width: var(--size-4xl)
-    height: var(--size-4xl)
-    padding: 0 var(--space-sm)
-    font-size: var(--font-size-label-base)
+    min-width: 1.5rem // 24px
+    height: 1.5rem // 24px
+    padding: 0 0.5rem // 8px
+    font-size: 0.875rem // 14px
   
   // Dot variant overrides
   &.is-dot
-    min-width: var(--space-sm)
-    width: var(--space-sm)
-    height: var(--space-sm)
+    min-width: 0.5rem // 8px
+    width: 0.5rem // 8px
+    height: 0.5rem // 8px
     padding: 0
     border-radius: var(--radius-full)
     
     &.size-small
-      width: var(--space-xs)
-      height: var(--space-xs)
-      min-width: var(--space-xs)
+      width: 0.375rem // 6px
+      height: 0.375rem // 6px
+      min-width: 0.375rem
       
     &.size-large
-      width: var(--space-md)
-      height: var(--space-md)
-      min-width: var(--space-md)
+      width: 0.625rem // 10px
+      height: 0.625rem // 10px
+      min-width: 0.625rem
 
-// Variant styles
+// Variant styles - notification bubble appearance
 .lb-badge.variant-default
-  background-color: var(--color-border-strong)
-  color: var(--color-surface)
+  background-color: var(--color-text-secondary)
+  color: white
 
 .lb-badge.variant-primary
   background-color: var(--color-primary)
-  color: var(--color-primary-text)
+  color: white
 
 .lb-badge.variant-secondary
   background-color: var(--color-secondary)
-  color: var(--color-secondary-text)
+  color: white
 
 .lb-badge.variant-success
   background-color: var(--color-success)
