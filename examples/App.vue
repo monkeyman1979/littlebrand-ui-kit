@@ -1246,12 +1246,16 @@
             .switch-field
               LbSwitch(v-model="navShowLabels" id="nav-labels")
               LbLabel(for="nav-labels") Show Labels
+            .switch-field
+              LbSwitch(v-model="navNoActiveBackground" id="nav-no-bg")
+              LbLabel(for="nav-no-bg") No Active Background
           .navigation-demo
             LbNavigationBar(
               v-model="activeNavItem2"
               :fixed="false"
               :active-color="navActiveColor"
               :show-labels="navShowLabels"
+              :no-active-background="navNoActiveBackground"
             )
               LbNavigationBarItem(value="home" label="Home")
                 template(#icon)
@@ -1783,6 +1787,7 @@ const activeNavItem = ref('home')
 const activeNavItem2 = ref('home')
 const navActiveColor = ref('primary')
 const navShowLabels = ref(true)
+const navNoActiveBackground = ref(false)
 
 const navColorOptions = [
   { value: 'primary', label: 'Primary' },

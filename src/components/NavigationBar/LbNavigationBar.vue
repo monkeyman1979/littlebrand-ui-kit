@@ -15,10 +15,12 @@ const props = withDefaults(defineProps<{
   showLabels?: boolean
   activeColor?: ActiveColor
   fixed?: boolean
+  noActiveBackground?: boolean
 }>(), {
   showLabels: true,
   activeColor: 'primary',
-  fixed: true
+  fixed: true,
+  noActiveBackground: false
 })
 
 // Emits
@@ -39,7 +41,8 @@ const navigationBarClasses = computed(() => [
   `active-${props.activeColor}`,
   {
     'fixed': props.fixed,
-    'show-labels': props.showLabels
+    'show-labels': props.showLabels,
+    'no-active-background': props.noActiveBackground
   }
 ])
 
@@ -48,6 +51,7 @@ provide('navigationBar', {
   activeValue,
   showLabels: computed(() => props.showLabels),
   activeColor: computed(() => props.activeColor),
+  noActiveBackground: computed(() => props.noActiveBackground),
   updateActive: (value: string | number) => {
     activeValue.value = value
     emit('update:modelValue', value)
@@ -65,14 +69,19 @@ defineOptions({
 @use '@/styles/base' as base
 
 .lb-navigation-bar
-  display: flex
-  align-items: center
-  justify-content: space-around
-  height: 3.5rem // 56px - Material Design 3 standard
+  display: grid
+  grid-auto-flow: column
+  grid-auto-columns: 1fr
+  align-items: stretch
+  height: 4rem // 64px fixed height
   background-color: var(--color-surface)
   border-top: var(--border-sm) solid var(--color-border-subtle)
   box-shadow: var(--shadow-sm)
   z-index: var(--z-dropdown)
+  
+  // Account for safe area on mobile devices by increasing height
+  @supports (padding: env(safe-area-inset-bottom))
+    height: calc(4rem + env(safe-area-inset-bottom))
   
   &.fixed
     position: fixed
@@ -80,10 +89,4 @@ defineOptions({
     left: 0
     right: 0
     z-index: var(--z-dropdown)
-  
-  // Ensure proper spacing distribution for up to 6 items
-  > *
-    flex: 1
-    max-width: calc(100% / 6)
-    min-width: 0
 </style>

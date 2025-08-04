@@ -34,6 +34,7 @@ interface NavigationBarContext {
   activeValue: { value: string | number | null }
   showLabels: { value: boolean }
   activeColor: { value: string }
+  noActiveBackground: { value: boolean }
   updateActive: (value: string | number) => void
 }
 
@@ -42,6 +43,7 @@ const navigationBar = inject<NavigationBarContext>('navigationBar', {
   activeValue: { value: null },
   showLabels: { value: true },
   activeColor: { value: 'primary' },
+  noActiveBackground: { value: false },
   updateActive: () => {}
 })
 
@@ -58,12 +60,17 @@ const activeColor = computed(() =>
   navigationBar.activeColor.value
 )
 
+const noActiveBackground = computed(() =>
+  navigationBar.noActiveBackground.value
+)
+
 const itemClasses = computed(() => [
   `color-${activeColor.value}`,
   {
     'active': isActive.value,
     'disabled': props.disabled,
-    'no-label': !showLabels.value || !props.label
+    'no-label': !showLabels.value || !props.label,
+    'no-active-background': noActiveBackground.value
   }
 ])
 
@@ -90,23 +97,28 @@ defineOptions({
   align-items: center
   justify-content: center
   gap: var(--space-xs)
-  padding: var(--space-sm)
-  min-height: 3rem // 48px minimum touch target
+  padding: 0
+  min-height: var(--size-2xl) // 48px minimum touch target
+  height: 100%
   background: none
   border: none
-  border-radius: var(--radius-sm)
+  border-radius: 0
   cursor: pointer
   transition: all var(--transition-fast)
   color: var(--color-text-tertiary)
   outline: none
   position: relative
+  width: 100%
   
   &:focus-visible
     outline: var(--focus-ring-width) solid var(--color-focus-ring)
     outline-offset: var(--focus-ring-offset)
   
-  &:hover:not(.disabled)
+  &:hover:not(.disabled):not(.no-active-background)
     background-color: var(--color-surface-overlay)
+  
+  &.no-active-background:hover:not(.disabled)
+    background-color: transparent
   
   &:active:not(.disabled)
     transform: scale(0.98)
@@ -188,8 +200,8 @@ defineOptions({
     color: var(--color-info-hover)
     background-color: var(--color-info-a3)
 
-// Active state background colors
-.lb-navigation-bar-item
+// Active state background colors (only when not using no-active-background)
+.lb-navigation-bar-item:not(.no-active-background)
   &.active.color-primary
     background-color: var(--color-primary-a4)
     
