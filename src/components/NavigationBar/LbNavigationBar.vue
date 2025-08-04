@@ -1,0 +1,92 @@
+<template lang="pug">
+nav.lb-navigation-bar(:class="navigationBarClasses")
+  slot
+</template>
+
+<script setup lang="ts">
+import { computed, provide, ref, watch } from 'vue'
+
+// Types
+type ActiveColor = 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'
+
+// Props
+const props = withDefaults(defineProps<{
+  modelValue?: string | number
+  showLabels?: boolean
+  activeColor?: ActiveColor
+  fixed?: boolean
+  noActiveBackground?: boolean
+}>(), {
+  showLabels: true,
+  activeColor: 'primary',
+  fixed: true,
+  noActiveBackground: false
+})
+
+// Emits
+const emit = defineEmits<{
+  'update:modelValue': [value: string | number]
+}>()
+
+// Reactive state
+const activeValue = ref(props.modelValue)
+
+// Watch for prop changes
+watch(() => props.modelValue, (newValue) => {
+  activeValue.value = newValue
+})
+
+// Computed
+const navigationBarClasses = computed(() => [
+  `active-${props.activeColor}`,
+  {
+    'fixed': props.fixed,
+    'show-labels': props.showLabels,
+    'no-active-background': props.noActiveBackground
+  }
+])
+
+// Provide context to child items
+provide('navigationBar', {
+  activeValue,
+  showLabels: computed(() => props.showLabels),
+  activeColor: computed(() => props.activeColor),
+  noActiveBackground: computed(() => props.noActiveBackground),
+  updateActive: (value: string | number) => {
+    activeValue.value = value
+    emit('update:modelValue', value)
+  }
+})
+
+// Component options
+defineOptions({
+  name: 'LbNavigationBar',
+  inheritAttrs: false
+})
+</script>
+
+<style lang="sass" scoped>
+@use '@/styles/base' as base
+
+.lb-navigation-bar
+  display: grid
+  grid-auto-flow: column
+  grid-auto-columns: 1fr
+  align-items: stretch
+  height: 4rem // 64px fixed height
+  background-color: var(--color-surface)
+  border-top: var(--border-sm) solid var(--color-border-subtle)
+  box-shadow: var(--shadow-sm)
+  z-index: var(--z-dropdown)
+  
+  // Account for safe area on mobile devices by increasing height
+  @supports (padding: env(safe-area-inset-bottom))
+    height: calc(4rem + env(safe-area-inset-bottom))
+  
+  &.fixed
+    position: fixed
+    bottom: 0
+    left: 0
+    right: 0
+    z-index: var(--z-dropdown)
+</style>

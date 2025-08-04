@@ -358,7 +358,7 @@ defineExpose({
   
   // Add top spacing if there's content
   .dialog-content + &
-    padding-top: var(--space-10)
+    padding-top: var(--space-lg)
 
 // Transitions
 .dialog-enter-active
@@ -396,6 +396,6 @@ defineExpose({
   .dialog-header,
   .dialog-content,
   .dialog-footer
-    padding-left: var(--space-7)
-    padding-right: var(--space-7)
+    padding-left: var(--space-lg)
+    padding-right: var(--space-lg)
 </style>

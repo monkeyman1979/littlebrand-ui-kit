@@ -1,38 +1,38 @@
 <template lang="pug">
 .app-container
-  header.app-header
-    h1 LittleBrand UI Kit
-    p.body-large A clean, semantic Vue.js UI kit with zero utility classes
+    header.app-header
+      h1 LittleBrand UI Kit
+      p.body-large A clean, semantic Vue.js UI kit with zero utility classes
     
-  main.app-main
-    section.theme-section
-      h2 Theme Support
-      .theme-toggle
-        button(@click="toggleTheme") Toggle {{ isDark ? 'Light' : 'Dark' }} Mode
-    
-    section.typography-section
-      h2 Typography
-      .display-1 Display 1
-      .display-2 Display 2
-      h1 Heading 1
-      h2 Heading 2
-      h3 Heading 3
-      h4 Heading 4
-      h5 Heading 5
-      h6 Heading 6
-      p This is a regular paragraph with normal text.
-      p.body-large This is large body text for emphasis.
-      p.body-small This is small body text for fine print.
+    main.app-main
+      section.theme-section
+        h2 Theme Support
+        .theme-toggle
+          button(@click="toggleTheme") Toggle {{ isDark ? 'Light' : 'Dark' }} Mode
       
-    section.color-section
-      h2 Color Palette
+      section.typography-section
+        h2 Typography
+        .display-1 Display 1
+        .display-2 Display 2
+        h1 Heading 1
+        h2 Heading 2
+        h3 Heading 3
+        h4 Heading 4
+        h5 Heading 5
+        h6 Heading 6
+        p This is a regular paragraph with normal text.
+        p.body-large This is large body text for emphasis.
+        p.body-small This is small body text for fine print.
+      
+      section.color-section
+        h2 Color Palette
       .color-grid
         .color-card(v-for="color in colors" :key="color.name")
           .color-swatch(:style="{ background: `var(${color.var})` }")
           .label {{ color.name }}
           
-    section.components-section
-      h2 Components
+      section.components-section
+        h2 Components
       
       .component-demo
         h3 Buttons
@@ -987,11 +987,366 @@
                   placeholder="priority@example.com"
                   :aria-describedby="ariaDescribedby"
                 )
+      
+      .component-demo
+        h3 Badge
+        p Notification indicators for numbers and status
+        
+        .demo-group
+          h4 Navigation Style (Like Screenshot)
+          .navigation-badge-demo
+            .nav-item
+              svg(viewBox="0 0 24 24" fill="currentColor" width="24" height="24")
+                path(d="M3 3h18a1 1 0 011 1v16a1 1 0 01-1 1H3a1 1 0 01-1-1V4a1 1 0 011-1zm1 2v14h16V5H4zm2 2h2v2H6V7zm4 0h8v2h-8V7zm0 4h8v2h-8v-2zm0 4h5v2h-5v-2zm-4-4h2v2H6v-2zm0 4h2v2H6v-2z")
+              span Mail
+              LbBadge(variant="error" position="top-right") 999+
+            .nav-item
+              svg(viewBox="0 0 24 24" fill="currentColor" width="24" height="24")
+                path(d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z")
+              span Chat
+              LbBadge(variant="error" position="top-right") 10
+            .nav-item
+              svg(viewBox="0 0 24 24" fill="currentColor" width="24" height="24")
+                path(d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z")
+              span Rooms
+              LbBadge(variant="default" position="top-right" dot)
+            .nav-item
+              svg(viewBox="0 0 24 24" fill="currentColor" width="24" height="24")
+                path(d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z")
+              span Meet
+              LbBadge(variant="error" position="top-right") 3
+        
+        .demo-group
+          h4 Badge with Avatars
+          .button-row
+            .avatar-badge-item
+              LbAvatar(name="John Doe" size="md" status="online")
+              LbBadge(variant="error" position="top-right" size="small" dot)
+            .avatar-badge-item
+              LbAvatar(src="https://picsum.photos/seed/badge1/100/100" alt="User" size="lg" status="away")
+              LbBadge(variant="error" position="top-right") 5
+            .avatar-badge-item
+              LbAvatar(name="Jane Smith" size="xl" status="busy")
+              LbBadge(variant="primary" position="top-right") 12
+        
+        .demo-group
+          h4 Inline Badges
+          .button-row
+            LbBadge(size="small") SM
+            LbBadge(size="medium") MD
+            LbBadge(size="large") LG
+          .button-row
+            LbBadge(variant="default") Default
+            LbBadge(variant="primary") Primary
+            LbBadge(variant="secondary") Secondary
+            LbBadge(variant="success") Success
+            LbBadge(variant="warning") Warning
+            LbBadge(variant="error") Error
+            LbBadge(variant="info") Info
+        
+        .demo-group
+          h4 With Icons/Buttons
+          .button-row
+            LbButton(variant="outline")
+              | Inbox
+              LbBadge(variant="error" size="small" style="margin-left: 8px") 3
+            LbButton(variant="ghost" icon-only)
+              template(#icon-leading)
+                svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+                  path(d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9")
+              .badge-wrapper
+                LbBadge(variant="error" size="small" dot style="position: absolute; top: -4px; right: -4px")
+      
+      .component-demo
+        h3 Avatar
+        p Circular profile images with initials fallback and status indicators
+        
+        .demo-group
+          h4 Size Variants
+          .button-row
+            LbAvatar(src="https://i.pravatar.cc/150?img=1" alt="Jane Doe" size="xs")
+            LbAvatar(src="https://i.pravatar.cc/150?img=2" alt="John Smith" size="sm")
+            LbAvatar(src="https://i.pravatar.cc/150?img=3" alt="Alice Johnson" size="md")
+            LbAvatar(src="https://i.pravatar.cc/150?img=4" alt="Bob Wilson" size="lg")
+            LbAvatar(src="https://i.pravatar.cc/150?img=5" alt="Carol White" size="xl")
+        
+        .demo-group
+          h4 Initials Fallback
+          .button-row
+            LbAvatar(name="John Doe" size="md")
+            LbAvatar(name="Jane Smith" size="md" variant="secondary")
+            LbAvatar(name="Alice" size="md" variant="success")
+            LbAvatar(name="Bob Wilson" size="md" variant="warning")
+            LbAvatar(name="Carol" size="md" variant="error")
+            LbAvatar(name="David Lee" size="md" variant="info")
+        
+        .demo-group
+          h4 Status Indicators
+          .button-row
+            LbAvatar(name="Online User" status="online" size="md")
+            LbAvatar(name="Offline User" status="offline" size="md")
+            LbAvatar(name="Away User" status="away" size="md")
+            LbAvatar(name="Busy User" status="busy" size="md")
+        
+        .demo-group
+          h4 Image with Status
+          .button-row
+            LbAvatar(src="https://i.pravatar.cc/150?img=10" alt="Online" status="online" size="lg")
+            LbAvatar(src="https://i.pravatar.cc/150?img=11" alt="Away" status="away" size="lg")
+            LbAvatar(src="https://i.pravatar.cc/150?img=12" alt="Busy" status="busy" size="lg")
+            LbAvatar(src="https://i.pravatar.cc/150?img=13" alt="Offline" status="offline" size="lg")
+        
+        .demo-group
+          h4 Fallback Behavior
+          .button-row
+            LbAvatar(size="md")
+            LbAvatar(src="https://invalid-url.com/image.jpg" alt="Failed to load" size="md")
+            LbAvatar(src="https://invalid-url.com/image.jpg" alt="With Name" name="Error User" size="md" variant="error")
+      
+      .component-demo
+        h3 Chip
+        p Material Design 3 style chips for filtering and selection
+        
+        .demo-group
+          h4 Chip Variants
+          .button-row
+            LbChip(variant="assist" @click="handleChipClick")
+              template(#leadingIcon)
+                svg(viewBox="0 0 24 24" fill="currentColor" width="18" height="18")
+                  path(d="M19.5 21a3 3 0 003-3V9a3 3 0 00-3-3h-5.379a.75.75 0 01-.53-.22L11.47 3.66A2.25 2.25 0 009.879 3H4.5a3 3 0 00-3 3v12a3 3 0 003 3h15zm.624-8.719a.75.75 0 00-.124-.418l-.625-1a.75.75 0 00-.635-.363h-3.19a.75.75 0 00-.447.146l-.688.52a.75.75 0 01-.447.145H11a.75.75 0 100 1.5h2.968c.288 0 .571-.079.82-.229l.688-.52a.75.75 0 01.447-.145h2.786l.331.53a.75.75 0 11-1.267.79l-.281-.45v5.191a.75.75 0 101.5 0v-6a.747.747 0 00.002-.062z")
+              | Assist
+            
+            LbChip(
+              variant="filter" 
+              v-model:selected="filterChipSelected"
+            ) Filter
+            
+            LbChip(variant="input" deletable @delete="handleChipDelete") Input
+            
+            LbChip(variant="suggestion" @click="handleChipClick") Suggestion
+        
+        .demo-group
+          h4 With Leading Avatar
+          .button-row
+            LbChip(variant="input" deletable @delete="handleChipDelete")
+              template(#leadingAvatar)
+                LbAvatar(src="https://picsum.photos/seed/chip1/100/100" alt="User" size="xs")
+              | John Doe
+            
+            LbChip(variant="input" deletable @delete="handleChipDelete")
+              template(#leadingAvatar)
+                LbAvatar(name="Jane Smith" size="xs")
+              | Jane Smith
+        
+        .demo-group
+          h4 With Dropdown
+          .button-row
+            LbChip(variant="filter" :has-dropdown="true" @click="handleChipClick") 
+              template(#leadingIcon)
+                svg(viewBox="0 0 24 24" fill="currentColor" width="18" height="18")
+                  path(d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z")
+                  path(d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z")
+              | Filter chip
+            
+            LbChip(variant="assist" :has-dropdown="true" @click="handleChipClick") More options
+            
+            LbChip(variant="suggestion" :has-dropdown="true" @click="handleChipClick") Choose date
+        
+        .demo-group
+          h4 Filter Chips Example
+          .button-row
+            LbChip(
+              v-for="filter in filterOptions"
+              :key="filter.value"
+              variant="filter"
+              v-model:selected="filter.selected"
+            ) {{ filter.label }}
+          .demo-note Active filters: {{ activeFilters }}
+        
+        .demo-group
+          h4 Input Chips (Tags)
+          .button-row
+            LbChip(
+              v-for="(tag, index) in tags"
+              :key="tag"
+              variant="input"
+              deletable
+              @delete="removeTag(index)"
+            ) {{ tag }}
+            LbButton(variant="ghost" size="small" @click="addTag")
+              template(#icon-leading)
+                svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+                  path(d="M12 4v16m8-8H4")
+              | Add Tag
+        
+        .demo-group
+          h4 States
+          .button-row
+            LbChip Enabled
+            LbChip(disabled) Disabled
+            LbChip(:clickable="false") Non-clickable
+      
+      .component-demo
+        h3 Bottom Sheet
+        p Swipeable sheets that expand from the bottom
+        
+        .demo-group
+          h4 Sheet Examples
+          .button-row
+            LbButton(@click="showBasicSheet = true") Basic Sheet
+            LbButton(@click="showExpandableSheet = true" variant="outline") Expandable Sheet
+            LbButton(@click="showPersistentSheet = true" variant="tonal") Persistent Sheet
+        
+        // Basic Bottom Sheet
+        LbBottomSheet(v-model="showBasicSheet")
+          template(#header)
+            h5 Basic Bottom Sheet
+          p This is a simple bottom sheet. You can swipe down to dismiss it.
+          p Try dragging the handle at the top!
+          
+        // Expandable Bottom Sheet
+        LbBottomSheet(
+          v-model="showExpandableSheet"
+          :expandable="true"
+          max-height="60vh"
+        )
+          template(#header)
+            h5 Expandable Sheet
+          .sheet-content
+            p This sheet can be expanded to full screen by dragging up.
+            p It starts at 60% viewport height but can expand to 100%.
+            div(v-for="i in 20" :key="i")
+              p Lorem ipsum dolor sit amet, consectetur adipiscing elit. {{ i }}
+          template(#footer)
+            LbButton(@click="showExpandableSheet = false" full-width) Close Sheet
+        
+        // Persistent Bottom Sheet
+        LbBottomSheet(
+          v-model="showPersistentSheet"
+          :persistent="true"
+          :show-handle="false"
+        )
+          template(#header)
+            h5 Confirm Action
+          p This sheet cannot be dismissed by clicking the backdrop.
+          p You must use one of the action buttons below.
+          template(#footer)
+            .button-row(style="width: 100%; justify-content: flex-end")
+              LbButton(@click="showPersistentSheet = false" variant="ghost") Cancel
+              LbButton(@click="confirmSheetAction" variant="filled" color="error") Delete
+      
+      .component-demo
+        h3 Navigation Bar
+        p Bottom navigation for mobile interfaces
+        
+        .demo-group
+          h4 Basic Navigation Bar
+          .navigation-demo
+            LbNavigationBar(v-model="activeNavItem" :fixed="false")
+              LbNavigationBarItem(value="home" label="Home")
+                template(#icon)
+                  svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+                    path(d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6")
+                template(#activeIcon)
+                  svg(viewBox="0 0 24 24" fill="currentColor")
+                    path(d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z")
+              
+              LbNavigationBarItem(value="search" label="Search")
+                template(#icon)
+                  svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+                    path(d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z")
+              
+              LbNavigationBarItem(value="notifications" label="Notifications")
+                template(#icon)
+                  svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+                    path(d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9")
+              
+              LbNavigationBarItem(value="profile" label="Profile")
+                template(#icon)
+                  svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+                    path(d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z")
+          .demo-note Active: {{ activeNavItem }}
+        
+        .demo-group
+          h4 Customization Options
+          .input-row
+            LbSelect(
+              v-model="navActiveColor"
+              :options="navColorOptions"
+              placeholder="Active Color"
+            )
+            .switch-field
+              LbSwitch(v-model="navShowLabels" id="nav-labels")
+              LbLabel(for="nav-labels") Show Labels
+            .switch-field
+              LbSwitch(v-model="navNoActiveBackground" id="nav-no-bg")
+              LbLabel(for="nav-no-bg") No Active Background
+          .navigation-demo
+            LbNavigationBar(
+              v-model="activeNavItem2"
+              :fixed="false"
+              :active-color="navActiveColor"
+              :show-labels="navShowLabels"
+              :no-active-background="navNoActiveBackground"
+            )
+              LbNavigationBarItem(value="home" label="Home")
+                template(#icon)
+                  svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+                    path(d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6")
+              
+              LbNavigationBarItem(value="explore" label="Explore")
+                template(#icon)
+                  svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+                    path(d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7")
+              
+              LbNavigationBarItem(value="add" label="Create" disabled)
+                template(#icon)
+                  svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+                    path(d="M12 4v16m8-8H4")
+              
+              LbNavigationBarItem(value="activity" label="Activity")
+                template(#icon)
+                  svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+                    path(d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z")
+              
+              LbNavigationBarItem(value="profile" label="Profile")
+                template(#icon)
+                  svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+                    path(d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z")
+      
+      .component-demo
+        h3 Snackbar
+        p Temporary notifications with actions
+        
+        .demo-group
+          h4 Basic Snackbars
+          .button-row
+            LbButton(@click="showDefaultSnackbar") Default
+            LbButton(@click="showSuccessSnackbar" color="success") Success
+            LbButton(@click="showErrorSnackbar" color="error") Error
+            LbButton(@click="showWarningSnackbar" color="warning") Warning
+            LbButton(@click="showInfoSnackbar" color="info") Info
+        
+        .demo-group
+          h4 With Actions
+          .button-row
+            LbButton(@click="showActionSnackbar" variant="outline") With Action
+            LbButton(@click="showPersistentSnackbar" variant="outline") Persistent
+            LbButton(@click="showLongActionSnackbar" variant="outline") Long Action
+            LbButton(@click="showMultipleSnackbars" variant="outline") Multiple
+        
+        .demo-group
+          h4 Snackbar Management
+          .button-row
+            LbButton(@click="clearAllSnackbars" variant="ghost" color="error") Clear All
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import { LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog } from '../src'
+import { 
+  LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog,
+  LbBadge, LbNavigationBar, LbNavigationBarItem, LbBottomSheet, LbChip, LbAvatar, useSnackbar
+} from '../src'
 
 const isDark = ref(false)
 
@@ -1410,6 +1765,158 @@ const toggleTheme = () => {
   document.documentElement.setAttribute('data-theme', isDark.value ? 'dark' : 'light')
 }
 
+// Badge demo data
+const badgeCount = ref(5)
+
+// Chip demo data
+const filterChipSelected = ref(false)
+const filterOptions = ref([
+  { value: 'new', label: 'New', selected: true },
+  { value: 'popular', label: 'Popular', selected: false },
+  { value: 'trending', label: 'Trending', selected: true },
+  { value: 'featured', label: 'Featured', selected: false }
+])
+const tags = ref(['Vue.js', 'TypeScript', 'UI Kit', 'Component Library'])
+
+const activeFilters = computed(() => {
+  return filterOptions.value
+    .filter(f => f.selected)
+    .map(f => f.label)
+    .join(', ')
+})
+
+const handleChipClick = () => {
+  console.log('Chip clicked')
+}
+
+const handleChipDelete = () => {
+  console.log('Chip deleted')
+}
+
+const removeTag = (index) => {
+  tags.value.splice(index, 1)
+}
+
+const addTag = () => {
+  const newTag = prompt('Enter new tag:')
+  if (newTag) {
+    tags.value.push(newTag)
+  }
+}
+
+// Bottom Sheet demo data
+const showBasicSheet = ref(false)
+const showExpandableSheet = ref(false)
+const showPersistentSheet = ref(false)
+
+const confirmSheetAction = () => {
+  alert('Action confirmed!')
+  showPersistentSheet.value = false
+}
+
+// Navigation Bar demo data
+const activeNavItem = ref('home')
+const activeNavItem2 = ref('home')
+const navActiveColor = ref('primary')
+const navShowLabels = ref(true)
+const navNoActiveBackground = ref(false)
+
+const navColorOptions = [
+  { value: 'primary', label: 'Primary' },
+  { value: 'secondary', label: 'Secondary' },
+  { value: 'success', label: 'Success' },
+  { value: 'warning', label: 'Warning' },
+  { value: 'error', label: 'Error' },
+  { value: 'info', label: 'Info' }
+]
+
+// Snackbar demo data
+// Get snackbar methods from the composable
+const { showSnackbar, clearAll: clearAllSnackbars } = useSnackbar()
+
+const showDefaultSnackbar = () => {
+  showSnackbar({
+    message: 'This is a default snackbar'
+  })
+}
+
+const showSuccessSnackbar = () => {
+  showSnackbar({
+    message: 'Operation completed successfully!',
+    variant: 'success'
+  })
+}
+
+const showErrorSnackbar = () => {
+  showSnackbar({
+    message: 'An error occurred. Please try again.',
+    variant: 'error'
+  })
+}
+
+const showWarningSnackbar = () => {
+  showSnackbar({
+    message: 'This action cannot be undone',
+    variant: 'warning'
+  })
+}
+
+const showInfoSnackbar = () => {
+  showSnackbar({
+    message: 'New update available',
+    variant: 'info'
+  })
+}
+
+const showActionSnackbar = () => {
+  showSnackbar({
+    message: 'File deleted',
+    variant: 'default',
+    action: {
+      label: 'Undo',
+      handler: () => {
+        alert('Undo clicked!')
+      }
+    }
+  })
+}
+
+const showPersistentSnackbar = () => {
+  showSnackbar({
+    message: 'New version available. Update now?',
+    variant: 'info',
+    action: {
+      label: 'Update',
+      handler: () => {
+        alert('Updating...')
+      }
+    }
+  })
+}
+
+const showLongActionSnackbar = () => {
+  showSnackbar({
+    message: 'Photo already has the label "travel". Would you like to add a new label?',
+    variant: 'default',
+    action: {
+      label: 'Add a new label',
+      handler: () => {
+        alert('Adding new label...')
+      }
+    }
+  })
+}
+
+const showMultipleSnackbars = () => {
+  showSnackbar({ message: 'First snackbar', variant: 'default' })
+  setTimeout(() => {
+    showSnackbar({ message: 'Second snackbar', variant: 'info' })
+  }, 500)
+  setTimeout(() => {
+    showSnackbar({ message: 'Third snackbar (max visible)', variant: 'success' })
+  }, 1000)
+}
+
 onMounted(() => {
   // Check for user's theme preference
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -1443,15 +1950,19 @@ onMounted(() => {
 .app-main
   display: flex
   flex-direction: column
-  gap: base.$space-2xs
+  gap: base.$space-3xl
 
 section
   display: flex
   flex-direction: column
-  gap: base.$space-md
+  gap: base.$space-lg
+  margin-bottom: base.$space-3xl
+  
+  &:last-child
+    margin-bottom: 0
   
   h2
-    margin: 0
+    margin: 0 0 base.$space-md 0
     
 .theme-section
   .theme-toggle
@@ -1469,13 +1980,17 @@ section
 .typography-section
   display: flex
   flex-direction: column
-  gap: base.$space-sm
+  gap: base.$space-md
+  
+  > *
+    margin: 0
     
 .color-section
   .color-grid
     display: grid
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr))
-    gap: base.$space-sm
+    gap: base.$space-lg
+    margin-top: base.$space-xs
     
   .color-card
     display: flex
@@ -1497,6 +2012,14 @@ section
     display: flex
     flex-direction: column
     gap: base.$space-lg
+    margin-bottom: base.$space-4xl
+    padding: base.$space-2xl
+    background: var(--color-surface-raised)
+    border-radius: var(--radius-lg)
+    border: base.$border-sm solid var(--color-border-subtle)
+    
+    &:last-child
+      margin-bottom: 0
     
     h3
       margin: 0
@@ -1504,10 +2027,14 @@ section
   .demo-group
     display: flex
     flex-direction: column
-    gap: base.$space-sm
+    gap: base.$space-lg
+    margin-bottom: base.$space-xl
+    
+    &:last-child
+      margin-bottom: 0
     
     h4
-      margin: 0
+      margin: 0 0 base.$space-xs 0
       color: var(--color-text-secondary)
       text-transform: uppercase
       letter-spacing: 0.05em
@@ -1528,13 +2055,15 @@ section
   .button-row
     display: flex
     flex-wrap: wrap
-    gap: base.$space-sm
+    gap: base.$space-md
     align-items: center
+    margin-top: base.$space-xs
     
   .input-row
     display: grid
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr))
-    gap: base.$space-sm
+    gap: base.$space-lg
+    margin-top: base.$space-xs
     
   .demo-note
     font-size: 0.875rem
@@ -1543,7 +2072,11 @@ section
 .form-field
   display: flex
   flex-direction: column
-  gap: base.$space-xs
+  gap: base.$space-sm
+  margin-bottom: base.$space-lg
+  
+  &:last-child
+    margin-bottom: 0
 
 .form-grid
   display: grid
@@ -1572,8 +2105,9 @@ section
 .radio-row
   display: flex
   flex-wrap: wrap
-  gap: base.$space-md
+  gap: base.$space-lg
   align-items: center
+  margin-top: base.$space-xs
   
 .checkbox-item,
 .radio-item
@@ -1600,8 +2134,9 @@ section
 .switch-row
   display: flex
   flex-wrap: wrap
-  gap: base.$space-md
+  gap: base.$space-lg
   align-items: center
+  margin-top: base.$space-xs
   
 .switch-item
   display: flex
@@ -1666,4 +2201,64 @@ section
     margin-bottom: base.$space-md
     line-height: 1.6
     color: var(--color-text-secondary)
+
+// Badge demo styles
+.badge-demo-item
+  display: inline-flex
+  align-items: center
+  gap: base.$space-xs
+  padding: base.$space-xs base.$space-sm
+  background: var(--color-surface)
+
+.navigation-badge-demo
+  display: flex
+  gap: base.$space-xl
+  padding: base.$space-lg
+  background: var(--color-surface-lowered)
+  border-radius: var(--radius-md)
+  margin-top: base.$space-xs
+  
+  .nav-item
+    position: relative
+    display: flex
+    flex-direction: column
+    align-items: center
+    gap: base.$space-xs
+    color: var(--color-text-secondary)
+    
+    svg
+      color: var(--color-text-tertiary)
+    
+    span
+      font-size: var(--font-size-label-small)
+
+.avatar-badge-item
+  position: relative
+  display: inline-block
+  margin: 0 base.$space-xs
+
+.badge-wrapper
+  position: relative
+
+// Navigation demo styles
+.navigation-demo
+  background: var(--color-surface)
+  border: base.$border-sm solid var(--color-border)
+  border-radius: base.$radius-lg
+  overflow: hidden
+  position: relative
+  height: 200px
+  
+  .lb-navigation-bar
+    position: absolute
+    bottom: 0
+    left: 0
+    right: 0
+
+// Sheet demo content
+.sheet-content
+  padding: base.$space-lg
+  
+  p
+    margin-bottom: base.$space-md
 </style>
