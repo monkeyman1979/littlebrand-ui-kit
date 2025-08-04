@@ -1102,18 +1102,44 @@
             LbChip(variant="assist" @click="handleChipClick")
               template(#leadingIcon)
                 svg(viewBox="0 0 24 24" fill="currentColor" width="18" height="18")
-                  path(d="M10.5 18.25a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z")
-                  path(fill-rule="evenodd" d="M8.625.75A3.375 3.375 0 005.25 4.125v15.75a3.375 3.375 0 003.375 3.375h6.75a3.375 3.375 0 003.375-3.375V4.125A3.375 3.375 0 0015.375.75h-6.75zM7.5 4.125C7.5 3.504 8.004 3 8.625 3H9.75v.375c0 .621.504 1.125 1.125 1.125h2.25c.621 0 1.125-.504 1.125-1.125V3h1.125c.621 0 1.125.504 1.125 1.125v15.75c0 .621-.504 1.125-1.125 1.125h-6.75A1.125 1.125 0 017.5 19.875V4.125z")
-              | Settings
+                  path(d="M19.5 21a3 3 0 003-3V9a3 3 0 00-3-3h-5.379a.75.75 0 01-.53-.22L11.47 3.66A2.25 2.25 0 009.879 3H4.5a3 3 0 00-3 3v12a3 3 0 003 3h15zm.624-8.719a.75.75 0 00-.124-.418l-.625-1a.75.75 0 00-.635-.363h-3.19a.75.75 0 00-.447.146l-.688.52a.75.75 0 01-.447.145H11a.75.75 0 100 1.5h2.968c.288 0 .571-.079.82-.229l.688-.52a.75.75 0 01.447-.145h2.786l.331.53a.75.75 0 11-1.267.79l-.281-.45v5.191a.75.75 0 101.5 0v-6a.747.747 0 00.002-.062z")
+              | Assist
             
             LbChip(
               variant="filter" 
               v-model:selected="filterChipSelected"
-            ) Active only
+            ) Filter
             
-            LbChip(variant="input" deletable @delete="handleChipDelete") Vue.js
+            LbChip(variant="input" deletable @delete="handleChipDelete") Input
             
-            LbChip(variant="suggestion" @click="handleChipClick") Add location
+            LbChip(variant="suggestion" @click="handleChipClick") Suggestion
+        
+        .demo-group
+          h4 With Leading Avatar
+          .button-row
+            LbChip(variant="input" deletable @delete="handleChipDelete")
+              template(#leadingAvatar)
+                LbAvatar(src="https://picsum.photos/seed/chip1/100/100" alt="User" size="xs")
+              | John Doe
+            
+            LbChip(variant="input" deletable @delete="handleChipDelete")
+              template(#leadingAvatar)
+                LbAvatar(name="Jane Smith" size="xs")
+              | Jane Smith
+        
+        .demo-group
+          h4 With Dropdown
+          .button-row
+            LbChip(variant="filter" :has-dropdown="true" @click="handleChipClick") 
+              template(#leadingIcon)
+                svg(viewBox="0 0 24 24" fill="currentColor" width="18" height="18")
+                  path(d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z")
+                  path(d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z")
+              | Filter chip
+            
+            LbChip(variant="assist" :has-dropdown="true" @click="handleChipClick") More options
+            
+            LbChip(variant="suggestion" :has-dropdown="true" @click="handleChipClick") Choose date
         
         .demo-group
           h4 Filter Chips Example

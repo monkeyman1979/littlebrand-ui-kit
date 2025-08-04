@@ -4,17 +4,22 @@ button.lb-chip(
   :disabled="disabled"
   :role="clickable ? 'button' : null"
   :aria-pressed="variant === 'filter' ? selected.toString() : null"
+  :aria-expanded="hasDropdown ? 'false' : null"
   :tabindex="disabled ? -1 : 0"
   @click="handleClick"
   @keydown.enter="handleClick"
   @keydown.space.prevent="handleClick"
 )
+  //- Leading avatar slot
+  span.avatar-container(v-if="$slots.leadingAvatar")
+    slot(name="leadingAvatar")
+  
   //- Leading icon slot
-  span.icon-leading(v-if="$slots.leadingIcon")
+  span.icon-leading(v-else-if="$slots.leadingIcon")
     slot(name="leadingIcon")
   
   //- Selected checkmark for filter chips
-  span.icon-selected(v-if="variant === 'filter' && selected")
+  span.icon-selected(v-if="variant === 'filter' && selected && !$slots.leadingIcon && !$slots.leadingAvatar")
     svg(viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg")
       path(d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor")
   
@@ -22,8 +27,13 @@ button.lb-chip(
   span.content
     slot
   
-  //- Trailing icon or delete button
-  span.icon-trailing(v-if="$slots.trailingIcon && !deletable")
+  //- Dropdown indicator
+  span.icon-dropdown(v-if="hasDropdown && !deletable")
+    svg(viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg")
+      path(d="M7 10l5 5 5-5z" fill="currentColor")
+  
+  //- Trailing icon slot
+  span.icon-trailing(v-else-if="$slots.trailingIcon && !deletable")
     slot(name="trailingIcon")
   
   //- Delete button for deletable chips
@@ -55,13 +65,15 @@ const props = withDefaults(defineProps<{
   clickable?: boolean
   deletable?: boolean
   size?: Size
+  hasDropdown?: boolean
 }>(), {
   variant: 'assist',
   selected: false,
   disabled: false,
   clickable: true,
   deletable: false,
-  size: 'medium'
+  size: 'medium',
+  hasDropdown: false
 })
 
 // Emits
@@ -86,8 +98,9 @@ const chipClasses = computed(() => [
     'disabled': props.disabled,
     'clickable': props.clickable,
     'deletable': props.deletable,
-    'has-leading-icon': !!slots.leadingIcon || (props.variant === 'filter' && props.selected),
-    'has-trailing-icon': !!slots.trailingIcon || props.deletable
+    'has-leading-icon': !!slots.leadingIcon || !!slots.leadingAvatar || (props.variant === 'filter' && props.selected && !slots.leadingIcon && !slots.leadingAvatar),
+    'has-trailing-icon': !!slots.trailingIcon || props.deletable || props.hasDropdown,
+    'has-dropdown': props.hasDropdown
   }
 ])
 
@@ -125,7 +138,7 @@ defineOptions({
   align-items: center
   gap: var(--space-xs)
   border: var(--border-sm) solid var(--color-border)
-  border-radius: var(--radius-full)
+  border-radius: var(--radius-sm)
   font-family: var(--font-body)
   font-weight: var(--font-weight-medium)
   line-height: var(--line-height-compact)
@@ -144,66 +157,41 @@ defineOptions({
     outline-offset: var(--focus-ring-offset)
     transition: none
   
-  // Size variants
-  &.size-small
-    height: var(--space-5xl)
-    padding: 0 var(--space-sm)
-    font-size: var(--font-size-label-small)
-    gap: var(--space-2xs)
-    
-    &.has-leading-icon
-      padding-left: var(--space-xs)
-      
-    &.has-trailing-icon
-      padding-right: var(--space-xs)
-    
-    .icon-leading,
-    .icon-trailing,
-    .icon-selected,
-    .delete-button
-      svg
-        width: var(--icon-size-sm)
-        height: var(--icon-size-sm)
+  // Fixed height of 32px for all chips
+  height: 2rem
+  padding: 0 var(--space-md)
+  font-size: var(--font-size-label-base)
+  gap: var(--space-xs)
   
-  &.size-medium
-    height: var(--space-6xl)
-    padding: 0 var(--space-md)
-    font-size: var(--font-size-label-base)
-    gap: var(--space-xs)
+  &.has-leading-icon
+    padding-left: var(--space-sm)
     
-    &.has-leading-icon
-      padding-left: var(--space-sm)
-      
-    &.has-trailing-icon
-      padding-right: var(--space-sm)
-    
-    .icon-leading,
-    .icon-trailing,
-    .icon-selected,
-    .delete-button
-      svg
-        width: var(--icon-size-md)
-        height: var(--icon-size-md)
+  &.has-trailing-icon
+    padding-right: var(--space-sm)
   
-  &.size-large
-    height: var(--space-7xl)
-    padding: 0 var(--space-lg)
-    font-size: var(--font-size-label-large)
-    gap: var(--space-sm)
+  // Icon sizes - 18x18px
+  .icon-leading,
+  .icon-trailing,
+  .icon-selected,
+  .icon-dropdown,
+  .delete-button
+    svg
+      width: 1.125rem
+      height: 1.125rem
+  
+  // Avatar container - 24x24px
+  .avatar-container
+    display: inline-flex
+    align-items: center
+    justify-content: center
+    flex-shrink: 0
+    width: 1.5rem
+    height: 1.5rem
+    margin: -0.25rem 0
     
-    &.has-leading-icon
-      padding-left: var(--space-md)
-      
-    &.has-trailing-icon
-      padding-right: var(--space-md)
-    
-    .icon-leading,
-    .icon-trailing,
-    .icon-selected,
-    .delete-button
-      svg
-        width: var(--icon-size-lg)
-        height: var(--icon-size-lg)
+    :deep(.lb-avatar)
+      width: 1.5rem
+      height: 1.5rem
   
   // Variant styles
   &.variant-assist
@@ -291,7 +279,8 @@ defineOptions({
   // Icon containers
   .icon-leading,
   .icon-trailing,
-  .icon-selected
+  .icon-selected,
+  .icon-dropdown
     display: inline-flex
     align-items: center
     justify-content: center
@@ -304,6 +293,12 @@ defineOptions({
   .icon-selected
     color: var(--color-primary)
   
+  .icon-dropdown
+    opacity: var(--opacity-70)
+    
+    .lb-chip:hover:not(.disabled) &
+      opacity: var(--opacity-100)
+  
   // Content
   .content
     display: flex
@@ -312,6 +307,7 @@ defineOptions({
     min-width: 0
     overflow: hidden
     text-overflow: ellipsis
+    padding: 0 var(--space-xs)
   
   // Delete button
   .delete-button
