@@ -20,10 +20,11 @@ import LbFormField from './components/FormField'
 import LbDialog from './components/Dialog'
 import LbBottomSheet from './components/BottomSheet'
 import LbNavigationBar, { LbNavigationBarItem } from './components/NavigationBar'
+import LbProgress from './components/Progress'
 import { LbSnackbar, LbSnackbarProvider, useSnackbar, createSnackbarHelpers } from './components/Snackbar'
 
 // Export individual components for tree-shaking
-export { LbAvatar, LbBadge, LbButton, LbChip, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog, LbBottomSheet, LbNavigationBar, LbNavigationBarItem, LbSnackbar, LbSnackbarProvider, useSnackbar, createSnackbarHelpers }
+export { LbAvatar, LbBadge, LbButton, LbChip, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog, LbBottomSheet, LbNavigationBar, LbNavigationBarItem, LbProgress, LbSnackbar, LbSnackbarProvider, useSnackbar, createSnackbarHelpers }
 
 // Plugin install function for Vue.use()
 const LittleBrandUI = {
@@ -46,6 +47,7 @@ const LittleBrandUI = {
     app.component('LbBottomSheet', LbBottomSheet)
     app.component('LbNavigationBar', LbNavigationBar)
     app.component('LbNavigationBarItem', LbNavigationBarItem)
+    app.component('LbProgress', LbProgress)
     app.component('LbSnackbar', LbSnackbar)
     app.component('LbSnackbarProvider', LbSnackbarProvider)
     

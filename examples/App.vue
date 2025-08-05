@@ -1339,13 +1339,149 @@
           h4 Snackbar Management
           .button-row
             LbButton(@click="clearAllSnackbars" variant="ghost" color="error") Clear All
+      
+      .component-demo
+        h3 Progress
+        p Linear and circular progress indicators with customizable sizes and states
+        
+        .demo-group
+          h4 Linear Progress - All Sizes
+          p Demonstrates all three thickness options: thin (2px), normal (4px), and thick (8px)
+          .progress-demo-grid
+            .progress-item
+              .progress-label Thin (2px) - {{ linearProgress1 }}%
+              LbProgress(:value="linearProgress1" type="linear" size="thin")
+            .progress-item
+              .progress-label Normal (4px) - {{ linearProgress2 }}%
+              LbProgress(:value="linearProgress2" type="linear" size="normal")
+            .progress-item
+              .progress-label Thick (8px) - {{ linearProgress3 }}%
+              LbProgress(:value="linearProgress3" type="linear" size="thick")
+        
+        .demo-group
+          h4 Linear Progress - Indeterminate
+          p All sizes in indeterminate (loading) state
+          .progress-demo-grid
+            .progress-item
+              .progress-label Indeterminate Thin
+              LbProgress(type="linear" size="thin" :indeterminate="true")
+            .progress-item
+              .progress-label Indeterminate Normal
+              LbProgress(type="linear" size="normal" :indeterminate="true")
+            .progress-item
+              .progress-label Indeterminate Thick
+              LbProgress(type="linear" size="thick" :indeterminate="true")
+        
+        .demo-group
+          h4 Circular Progress - All Sizes
+          p Demonstrates all four circular sizes: xs (24px), sm (32px), md (40px), lg (48px)
+          .progress-demo-grid
+            .progress-item
+              .progress-label Extra Small (xs) - {{ circularProgress1 }}%
+              LbProgress(:value="circularProgress1" type="circular" size="normal" circular-size="xs")
+            .progress-item
+              .progress-label Small (sm) - {{ circularProgress2 }}%
+              LbProgress(:value="circularProgress2" type="circular" size="normal" circular-size="sm")
+            .progress-item
+              .progress-label Medium (md) - {{ circularProgress3 }}%
+              LbProgress(:value="circularProgress3" type="circular" size="normal" circular-size="md")
+            .progress-item
+              .progress-label Large (lg) - {{ circularProgress4 }}%
+              LbProgress(:value="circularProgress4" type="circular" size="normal" circular-size="lg")
+        
+        .demo-group
+          h4 Circular Progress - Size vs Thickness Combinations
+          p Shows how circular size and stroke thickness work independently
+          .progress-demo-grid
+            .progress-item
+              .progress-label XS + Thin stroke - {{ circularProgress1 }}%
+              LbProgress(:value="circularProgress1" type="circular" size="thin" circular-size="xs")
+            .progress-item
+              .progress-label XS + Thick stroke - {{ circularProgress2 }}%
+              LbProgress(:value="circularProgress2" type="circular" size="thick" circular-size="xs")
+            .progress-item
+              .progress-label LG + Thin stroke - {{ circularProgress3 }}%
+              LbProgress(:value="circularProgress3" type="circular" size="thin" circular-size="lg")
+            .progress-item
+              .progress-label LG + Thick stroke - {{ circularProgress4 }}%
+              LbProgress(:value="circularProgress4" type="circular" size="thick" circular-size="lg")
+        
+        .demo-group
+          h4 Circular Progress - With Value Display
+          p All sizes showing percentage values
+          .progress-demo-grid
+            .progress-item
+              .progress-label XS with value - {{ circularProgress1 }}%
+              LbProgress(:value="circularProgress1" type="circular" size="normal" circular-size="xs" :show-value="true")
+            .progress-item
+              .progress-label SM with value - {{ circularProgress2 }}%
+              LbProgress(:value="circularProgress2" type="circular" size="normal" circular-size="sm" :show-value="true")
+            .progress-item
+              .progress-label MD with value - {{ circularProgress3 }}%
+              LbProgress(:value="circularProgress3" type="circular" size="normal" circular-size="md" :show-value="true")
+            .progress-item
+              .progress-label LG with value - {{ circularProgress4 }}%
+              LbProgress(:value="circularProgress4" type="circular" size="normal" circular-size="lg" :show-value="true")
+        
+        .demo-group
+          h4 Circular Progress - Indeterminate
+          p All sizes in indeterminate (loading) state
+          .progress-demo-grid
+            .progress-item
+              .progress-label Indeterminate XS
+              LbProgress(type="circular" size="normal" circular-size="xs" :indeterminate="true")
+            .progress-item
+              .progress-label Indeterminate SM
+              LbProgress(type="circular" size="normal" circular-size="sm" :indeterminate="true")
+            .progress-item
+              .progress-label Indeterminate MD
+              LbProgress(type="circular" size="normal" circular-size="md" :indeterminate="true")
+            .progress-item
+              .progress-label Indeterminate LG
+              LbProgress(type="circular" size="normal" circular-size="lg" :indeterminate="true")
+        
+        .demo-group
+          h4 Different Progress Values
+          .progress-demo-grid
+            .progress-item
+              .progress-label 0% Complete
+              LbProgress(:value="0" type="linear" size="normal")
+            .progress-item
+              .progress-label 25% Complete
+              LbProgress(:value="25" type="linear" size="normal")
+            .progress-item
+              .progress-label 50% Complete
+              LbProgress(:value="50" type="linear" size="normal")
+            .progress-item
+              .progress-label 75% Complete
+              LbProgress(:value="75" type="linear" size="normal")
+            .progress-item
+              .progress-label 100% Complete
+              LbProgress(:value="100" type="linear" size="normal")
+        
+        .demo-group
+          h4 Interactive Progress
+          .progress-controls
+            .control-group
+              LbLabel Demo Linear Progress ({{ interactiveProgress }}%)
+              LbInput(
+                v-model="interactiveProgress"
+                type="range"
+                min="0"
+                max="100"
+                step="1"
+              )
+              LbProgress(:value="interactiveProgress" type="linear" size="thick")
+            .control-group
+              LbLabel Demo Circular Progress ({{ interactiveProgress }}%)
+              LbProgress(:value="interactiveProgress" type="circular" size="normal" circular-size="lg" :show-value="true")
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { 
   LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog,
-  LbBadge, LbNavigationBar, LbNavigationBarItem, LbBottomSheet, LbChip, LbAvatar, useSnackbar
+  LbBadge, LbNavigationBar, LbNavigationBarItem, LbBottomSheet, LbChip, LbAvatar, LbProgress, useSnackbar
 } from '../src'
 
 const isDark = ref(false)
@@ -1776,6 +1912,16 @@ const filterOptions = ref([
   { value: 'trending', label: 'Trending', selected: true },
   { value: 'featured', label: 'Featured', selected: false }
 ])
+
+// Progress demo data
+const linearProgress1 = ref(45)
+const linearProgress2 = ref(70)
+const linearProgress3 = ref(90)
+const circularProgress1 = ref(30)
+const circularProgress2 = ref(85)
+const circularProgress3 = ref(60)
+const circularProgress4 = ref(75)
+const interactiveProgress = ref(50)
 const tags = ref(['Vue.js', 'TypeScript', 'UI Kit', 'Component Library'])
 
 const activeFilters = computed(() => {
@@ -1924,6 +2070,23 @@ onMounted(() => {
     isDark.value = true
     document.documentElement.setAttribute('data-theme', 'dark')
   }
+  
+  // Animate progress values for demonstration
+  const animateProgress = () => {
+    linearProgress1.value = Math.floor(Math.random() * 101)
+    linearProgress2.value = Math.floor(Math.random() * 101)
+    linearProgress3.value = Math.floor(Math.random() * 101)
+    circularProgress1.value = Math.floor(Math.random() * 101)
+    circularProgress2.value = Math.floor(Math.random() * 101)
+    circularProgress3.value = Math.floor(Math.random() * 101)
+    circularProgress4.value = Math.floor(Math.random() * 101)
+  }
+  
+  // Start with initial animation
+  animateProgress()
+  
+  // Continue animating every 3 seconds
+  setInterval(animateProgress, 3000)
 })
 </script>
 
@@ -2261,4 +2424,31 @@ section
   
   p
     margin-bottom: base.$space-md
+
+// Progress demo styles
+.progress-demo-grid
+  display: grid
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))
+  gap: base.$space-lg
+  
+.progress-item
+  display: flex
+  flex-direction: column
+  gap: base.$space-sm
+  
+  .progress-label
+    font-size: var(--font-size-label-base)
+    color: var(--color-text-secondary)
+    margin-bottom: base.$space-xs
+
+.progress-controls
+  display: flex
+  flex-direction: column
+  gap: base.$space-xl
+  
+  .control-group
+    display: flex
+    flex-direction: column
+    gap: base.$space-sm
+    max-width: 400px
 </style>
