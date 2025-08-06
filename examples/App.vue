@@ -1,22 +1,22 @@
 <template lang="pug">
 .app-container
-    header.app-header
-      h1 LittleBrand UI Kit
-      p.body-large A clean, semantic Vue.js UI kit with zero utility classes
-    
-    main.app-main
-      section.theme-section
-        h2 Theme Support
-        .theme-toggle
-          LbButton(@click="toggleTheme" variant="filled" color="primary")
-            template(#icon-leading)
-              svg(v-if="!isDark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
-                path(d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z")
-              svg(v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
-                path(d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z")
-            | {{ isDark ? 'Light Mode' : 'Dark Mode' }}
+  header.app-header
+    h1 LittleBrand UI Kit
+    p.body-large A clean, semantic Vue.js UI kit with zero utility classes
+  
+  main.app-main
+    section.theme-section
+      h2 Theme Support
+      .theme-toggle
+        LbButton(@click="toggleTheme" variant="filled" color="primary")
+          template(#icon-leading)
+            svg(v-if="!isDark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+              path(d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z")
+            svg(v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+              path(d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z")
+          | {{ isDark ? 'Light Mode' : 'Dark Mode' }}
       
-      section.typography-section
+    section.typography-section
         h2 Typography
         .display-1 Display 1
         .display-2 Display 2
@@ -30,15 +30,15 @@
         p.body-large This is large body text for emphasis.
         p.body-small This is small body text for fine print.
       
-      section.color-section
-        h2 Color Palette
+    section.color-section
+      h2 Color Palette
       .color-grid
         .color-card(v-for="color in colors" :key="color.name")
           .color-swatch(:style="{ background: `var(${color.var})` }")
           .label {{ color.name }}
           
-      section.components-section
-        h2 Components
+    section.components-section
+      h2 Components
       
       .component-demo
         h3 Buttons
@@ -299,7 +299,7 @@
               placeholder="your@email.com"
               :aria-describedby="formData.email ? '' : 'email-hint'"
             )
-            LbHintText(id="email-hint" v-if="!formData.email") We'll never share your email
+            LbHintText(id="email-hint" v-if="!formData.email") | We'll never share your email
         
         .demo-group
           h4 Validation States
@@ -358,7 +358,7 @@
                 template(#icon-leading)
                   svg(width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg")
                     path(d="M0 4a2 2 0 012-2h12a2 2 0 012 2v8a2 2 0 01-2 2H2a2 2 0 01-2-2V4zm2-1a1 1 0 00-1 1v.217l7 4.2 7-4.2V4a1 1 0 00-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 002 13h12a1 1 0 00.966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" fill="currentColor")
-              LbHintText(id="signup-email-hint" v-if="!signupErrors.email") We'll use this to send you updates
+              LbHintText(id="signup-email-hint" v-if="!signupErrors.email") | We'll use this to send you updates
               LbHintText(id="signup-email-error" error v-if="signupErrors.email") {{ signupErrors.email }}
             
             .form-field
@@ -602,7 +602,7 @@
                   LbSwitch(v-model="privacySettings.showActivity" id="show-activity")
                   .switch-label-group
                     LbLabel(for="show-activity") Show Activity Status
-                    LbHintText Let others see when you're online
+                    LbHintText | Let others see when you're online
                 
                 .switch-field
                   LbSwitch(v-model="privacySettings.allowMessages" id="allow-messages")
@@ -665,7 +665,7 @@
         // Fullscreen Dialog
         LbDialog(v-model="showFullscreenDialog" variant="fullscreen" title="Fullscreen Dialog")
           p This is a fullscreen dialog that takes up the entire viewport.
-          p It's particularly useful for mobile devices or when you need maximum space.
+          p | It's particularly useful for mobile devices or when you need maximum space.
           template(#footer)
             LbButton(@click="showFullscreenDialog = false" variant="ghost") Close
             LbButton(@click="showFullscreenDialog = false") Save Changes
@@ -1762,7 +1762,7 @@
               
               .filter-info
                 p(v-if="!statusFilters || statusFilters.length === 0") Showing all items
-                p(v-else) Filters: {{ statusFilters.join(' + ') }}
+                p(v-else) | Filters: {{ statusFilters.join(' + ') }}
 </template>
 
 <script setup>
