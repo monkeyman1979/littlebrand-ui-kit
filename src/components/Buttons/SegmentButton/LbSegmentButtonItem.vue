@@ -10,15 +10,15 @@ button.lb-segment-button-item(
   :role="(segmentButton.allowEmpty.value || segmentButton.multiSelect.value) ? 'button' : 'radio'"
   :aria-checked="(segmentButton.allowEmpty.value || segmentButton.multiSelect.value) ? undefined : isActive"
 )
-  span.icon-container(v-if="slots.icon")
+  span.icon-container(v-if="hasIcon")
     slot(name="icon")
   
-  span.label(v-if="slots.default")
+  span.label(v-if="hasLabel")
     slot
 </template>
 
 <script setup lang="ts">
-import { computed, inject, ref, onMounted, onUnmounted, useSlots } from 'vue'
+import { computed, inject, ref, toRef, onMounted, onUnmounted, useSlots } from 'vue'
 import type { SegmentButtonContext } from './types'
 
 // Props
@@ -32,6 +32,8 @@ const props = withDefaults(defineProps<{
 
 // Slots
 const slots = useSlots()
+const hasIcon = computed(() => !!slots.icon)
+const hasLabel = computed(() => !!slots.default)
 
 // Refs
 const itemRef = ref<HTMLButtonElement>()
@@ -50,8 +52,11 @@ const segmentButton = injectedContext
 // Computed
 const isActive = computed(() => {
   const activeValue = segmentButton.activeValue.value
+  if (activeValue === undefined) {
+    return false
+  }
   if (Array.isArray(activeValue)) {
-    return activeValue.includes(props.value)
+    return (activeValue as (string | number)[]).includes(props.value)
   }
   return activeValue === props.value
 })
@@ -61,16 +66,16 @@ const isDisabled = computed(() =>
 )
 
 const itemClasses = computed(() => {
-  const classes: any[] = [
+  const classes: string[] = [
     `size-${segmentButton.size.value}`,
     `color-${segmentButton.color.value}`
   ]
   
   if (isActive.value) classes.push('active')
   if (isDisabled.value) classes.push('disabled')
-  if (!!slots.icon) classes.push('has-icon')
-  if (!!slots.icon && !slots.default) classes.push('icon-only')
-  if (!slots.icon && !!slots.default) classes.push('text-only')
+  if (hasIcon.value) classes.push('has-icon')
+  if (hasIcon.value && !hasLabel.value) classes.push('icon-only')
+  if (!hasIcon.value && hasLabel.value) classes.push('text-only')
   
   return classes
 })

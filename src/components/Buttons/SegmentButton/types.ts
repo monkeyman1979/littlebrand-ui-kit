@@ -6,7 +6,7 @@ export type Width = 'full' | 'auto'
 export type Color = 'primary' | 'secondary' | 'neutral'
 
 export interface SegmentButtonContext {
-  activeValue: Ref<string | number | string[] | number[] | undefined>
+  activeValue: Ref<string | number | (string | number)[] | undefined>
   size: ComputedRef<Size>
   color: ComputedRef<Color>
   disabled: ComputedRef<boolean>

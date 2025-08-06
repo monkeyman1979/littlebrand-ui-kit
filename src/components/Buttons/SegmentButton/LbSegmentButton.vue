@@ -10,12 +10,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, provide, ref, watch, onMounted, onUnmounted, nextTick } from 'vue'
+import { computed, provide, ref, shallowRef, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import type { Size, Width, Color } from './types'
 
 // Props
 const props = withDefaults(defineProps<{
-  modelValue?: string | number | string[] | number[]
+  modelValue?: string | number | (string | number)[]
   size?: Size
   width?: Width
   color?: Color
@@ -34,13 +34,13 @@ const props = withDefaults(defineProps<{
 
 // Emits
 const emit = defineEmits<{
-  'update:modelValue': [value: string | number | string[] | number[] | undefined]
+  'update:modelValue': [value: string | number | (string | number)[] | undefined]
 }>()
 
 // Reactive state
-const activeValue = ref<string | number | string[] | number[] | undefined>(props.modelValue)
+const activeValue = ref<string | number | (string | number)[] | undefined>(props.modelValue)
 const segmentButtonRef = ref<HTMLElement>()
-const segmentItems = ref<HTMLElement[]>([])
+const segmentItems = shallowRef<HTMLElement[]>([])
 
 // Watch for prop changes
 watch(() => props.modelValue, (newValue) => {
@@ -64,16 +64,18 @@ const segmentButtonClasses = computed(() => {
 
 // Register segment item
 const registerSegmentItem = (element: HTMLElement) => {
-  if (!segmentItems.value.includes(element)) {
-    segmentItems.value.push(element)
+  const items = segmentItems.value
+  if (!items.includes(element)) {
+    segmentItems.value = [...items, element]
   }
 }
 
 // Unregister segment item
 const unregisterSegmentItem = (element: HTMLElement) => {
-  const index = segmentItems.value.indexOf(element)
+  const items = segmentItems.value
+  const index = items.indexOf(element)
   if (index > -1) {
-    segmentItems.value.splice(index, 1)
+    segmentItems.value = items.filter((_, i) => i !== index)
   }
 }
 
@@ -136,27 +138,21 @@ const updateActive = (value: string | number) => {
       let newValue: (string | number)[]
       
       if (Array.isArray(currentValue)) {
-        const index = currentValue.indexOf(value)
-        if (index > -1) {
-          // Remove if already selected
-          newValue = currentValue.filter(v => v !== value)
-        } else {
-          // Add if not selected
-          newValue = [...currentValue, value]
-        }
+        const hasValue = currentValue.includes(value)
+        newValue = hasValue 
+          ? currentValue.filter(v => v !== value)
+          : [...currentValue, value]
       } else if (currentValue === value) {
-        // If current value is the single value being toggled, remove it
         newValue = []
       } else if (currentValue !== undefined) {
-        // Convert single value to array and add new value
         newValue = [currentValue, value]
       } else {
-        // Initialize as array with first value
         newValue = [value]
       }
       
-      activeValue.value = newValue
-      emit('update:modelValue', newValue)
+      const finalValue = newValue.length > 0 ? newValue : undefined
+      activeValue.value = finalValue
+      emit('update:modelValue', finalValue)
     } else {
       // Single-select mode
       if (props.allowEmpty && activeValue.value === value) {
@@ -185,18 +181,12 @@ provide('segmentButton', {
 
 // Mount keyboard listener
 onMounted(() => {
-  nextTick(() => {
-    if (segmentButtonRef.value) {
-      segmentButtonRef.value.addEventListener('keydown', handleKeydown)
-    }
-  })
+  segmentButtonRef.value?.addEventListener('keydown', handleKeydown)
 })
 
 // Cleanup on unmount
 onUnmounted(() => {
-  if (segmentButtonRef.value) {
-    segmentButtonRef.value.removeEventListener('keydown', handleKeydown)
-  }
+  segmentButtonRef.value?.removeEventListener('keydown', handleKeydown)
 })
 
 // Component options
