@@ -7,7 +7,7 @@ nav.lb-navigation-bar(:class="navigationBarClasses")
 import { computed, provide, ref, watch } from 'vue'
 
 // Types
-type ActiveColor = 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'
+type ActiveColor = 'primary' | 'secondary' | 'neutral' | 'success' | 'warning' | 'error' | 'info'
 
 // Props
 const props = withDefaults(defineProps<{

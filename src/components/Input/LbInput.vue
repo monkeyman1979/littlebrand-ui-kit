@@ -132,7 +132,7 @@ interface Props {
   ariaDescribedby?: string
   clearable?: boolean
   loading?: boolean
-  size?: 'small' | 'medium' | 'large'
+  size?: 'medium' | 'large'
   autofocus?: boolean
 }
 
@@ -298,12 +298,6 @@ const handleInput = (event: Event) => {
         box-shadow: none
   
   // Size variations
-  &.size-small input
-    height: var(--lb-input-height-small)
-    padding: 0 var(--lb-space-sm)
-    font-size: var(--lb-font-size-label-small)
-    border-radius: var(--lb-radius-sm)
-    
   &.size-large input
     height: var(--lb-input-height-large)
     padding: 0 var(--lb-space-md)
@@ -315,13 +309,6 @@ const handleInput = (event: Event) => {
     
   &.has-trailing-icons input
     padding-right: var(--lb-space-4xl) // 40px for medium
-  
-  // Small size with icons
-  &.size-small.has-leading-icon input
-    padding-left: var(--lb-space-3xl) // 32px for small
-    
-  &.size-small.has-trailing-icons input
-    padding-right: var(--lb-space-3xl) // 32px for small
   
   // Large size with icons
   &.size-large.has-leading-icon input
@@ -350,10 +337,6 @@ const handleInput = (event: Event) => {
     height: var(--lb-input-height-medium)
     color: var(--lb-text-neutral-contrast-low)
     
-    .size-small &
-      width: var(--lb-input-height-small)
-      height: var(--lb-input-height-small)
-      
     .size-large &
       width: var(--lb-input-height-large)
       height: var(--lb-input-height-large)
@@ -407,10 +390,6 @@ const handleInput = (event: Event) => {
     height: var(--lb-input-height-medium)
     gap: var(--lb-space-2xs) // 2px
     
-    .size-small &
-      width: var(--lb-input-height-small)
-      height: var(--lb-input-height-small)
-      
     .size-large &
       width: var(--lb-input-height-large)
       height: var(--lb-input-height-large)

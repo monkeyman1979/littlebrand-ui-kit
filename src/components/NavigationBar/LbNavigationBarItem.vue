@@ -154,6 +154,9 @@ defineOptions({
   &.active.color-secondary
     color: var(--lb-fill-secondary-normal)
   
+  &.active.color-neutral
+    color: var(--lb-text-neutral-contrast-high)
+  
   &.active.color-success
     color: var(--lb-text-success-normal)
   

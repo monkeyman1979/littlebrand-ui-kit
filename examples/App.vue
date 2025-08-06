@@ -60,7 +60,6 @@
         .demo-group
           h4 Sizes
           .button-row
-            LbButton(size="small") Small
             LbButton(size="medium") Medium
             LbButton(size="large") Large
             
@@ -89,7 +88,7 @@
         .demo-group
           h4 Icon Only
           .button-row
-            LbButton(icon-only variant="filled" color="primary" size="small")
+            LbButton(icon-only variant="filled" color="primary" size="medium")
               template(#icon-leading)
                 svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
                   path(d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6")
@@ -173,7 +172,6 @@
         .demo-group
           h4 Size Variants
           .input-row
-            LbInput(v-model="inputSizeSmall" size="small" placeholder="Small input")
             LbInput(v-model="inputSizeMedium" size="medium" placeholder="Medium input (default)")
             LbInput(v-model="inputSizeLarge" size="large" placeholder="Large input")
         
@@ -771,7 +769,6 @@
         .demo-group
           h4 Size Variants
           .input-row
-            LbSelect(v-model="selectSizeSmall" :options="colorOptions" placeholder="Small select" size="small")
             LbSelect(v-model="selectSizeMedium" :options="colorOptions" placeholder="Medium select (default)" size="medium")
             LbSelect(v-model="selectSizeLarge" :options="colorOptions" placeholder="Large select" size="large")
         
@@ -1191,7 +1188,7 @@
               deletable
               @delete="removeTag(index)"
             ) {{ tag }}
-            LbButton(variant="ghost" size="small" @click="addTag")
+            LbButton(variant="ghost" size="medium" @click="addTag")
               template(#icon-leading)
                 svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
                   path(d="M12 4v16m8-8H4")
@@ -1527,13 +1524,13 @@
               span Location: San Francisco, CA
             LbDivider(size="thin")
             .action-row
-              LbButton(variant="ghost" size="small") Message
+              LbButton(variant="ghost" size="medium") Message
               LbDivider(orientation="vertical" size="thin")
-              LbButton(variant="ghost" size="small") Follow
+              LbButton(variant="ghost" size="medium") Follow
               LbDivider(orientation="vertical" size="thin")
-              LbButton(variant="ghost" size="small") More
+              LbButton(variant="ghost" size="medium") More
           
-          .list-example
+          .list-example.surface-subtle
             .list-item
               h5 Settings
               p Manage your account preferences
@@ -1728,7 +1725,6 @@ const inputWithTrailing = ref('')
 const inputWithBoth = ref('')
 
 // Size variants
-const inputSizeSmall = ref('')
 const inputSizeMedium = ref('')
 const inputSizeLarge = ref('')
 
@@ -2003,7 +1999,6 @@ const selectWithDisabledOptions = ref('')
 const selectCustomIcon = ref('')
 
 // Select size variants
-const selectSizeSmall = ref('')
 const selectSizeMedium = ref('')
 const selectSizeLarge = ref('')
 
@@ -2212,6 +2207,7 @@ const navShowLabels = ref(true)
 const navColorOptions = [
   { value: 'primary', label: 'Primary' },
   { value: 'secondary', label: 'Secondary' },
+  { value: 'neutral', label: 'Neutral' },
   { value: 'success', label: 'Success' },
   { value: 'warning', label: 'Warning' },
   { value: 'error', label: 'Error' },
@@ -2757,6 +2753,10 @@ section
   border-radius: base.$radius-md
   overflow: hidden
   max-width: 500px
+  
+  &.surface-subtle
+    background: var(--lb-surface-neutral-subtle)
+    border: none
   
   .list-item
     padding: base.$space-lg

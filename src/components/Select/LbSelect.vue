@@ -65,7 +65,7 @@ export interface LbSelectProps {
   name?: string
   id?: string
   ariaDescribedby?: string
-  size?: 'small' | 'medium' | 'large'
+  size?: 'medium' | 'large'
 }
 
 // Props
@@ -196,14 +196,6 @@ defineExpose({
     color: var(--lb-text-neutral-contrast-low)
   
   // Size variations
-  &.size-small
-    height: var(--lb-input-height-small) // 32px
-    
-    select
-      padding: 0 var(--lb-space-xl) 0 var(--lb-space-sm)
-      font-size: var(--lb-font-size-label-small)
-      border-radius: var(--lb-radius-sm)
-    
   &.size-large
     height: var(--lb-input-height-large) // 48px
     
@@ -232,13 +224,6 @@ defineExpose({
       width: var(--lb-icon-size-sm) // 18px - medium size
       height: var(--lb-icon-size-sm) // 18px
     
-  &.size-small .select-icon
-    right: var(--lb-space-xs)
-    
-    svg
-      width: var(--lb-icon-size-sm) // 18px - same as medium for better visibility
-      height: var(--lb-icon-size-sm) // 18px
-      
   &.size-large .select-icon
     right: var(--lb-space-md)
     

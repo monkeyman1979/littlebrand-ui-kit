@@ -64,6 +64,6 @@ export interface LbAvatarEmits {
   error: [event: Event]
 }
 
-declare const LbAvatar: DefineComponent<LbAvatarProps, {}, {}, {}, {}, any, any, LbAvatarEmits, string, {}, string, LbAvatarSlots>
+declare const LbAvatar: DefineComponent<LbAvatarProps>
 
 export default LbAvatar

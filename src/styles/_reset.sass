@@ -1,9 +1,8 @@
 // LittleBrand UI Kit - Reset & Global Styles
 // Modern CSS reset and sensible defaults
 
-// Import dependencies for typography variables
+// Import base for spacing and borders only
 @use 'base' as base
-@use 'typography' as typography
 
 // Box model
 *,
@@ -22,8 +21,8 @@ dl, dd
 // Body defaults
 body
   min-height: 100vh
-  line-height: typography.$line-normal
-  font-family: typography.$font-body
+  line-height: 1.5  // Standard line-height, hardcoded for reset stability
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif  // System font stack
   color: var(--lb-text-neutral-contrast-high)
   background: var(--lb-background-base)
   -webkit-font-smoothing: antialiased
