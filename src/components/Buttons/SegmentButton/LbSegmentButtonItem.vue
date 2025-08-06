@@ -10,15 +10,16 @@ button.lb-segment-button-item(
   :role="(segmentButton.allowEmpty.value || segmentButton.multiSelect.value) ? 'button' : 'radio'"
   :aria-checked="(segmentButton.allowEmpty.value || segmentButton.multiSelect.value) ? undefined : isActive"
 )
-  span.icon-container(v-if="hasIcon")
+  span.icon-container(v-if="$slots.icon")
     slot(name="icon")
   
-  span.label(v-if="hasLabel")
+  span.label(v-if="$slots.default")
     slot
 </template>
 
 <script setup lang="ts">
 import { computed, inject, ref, toRef, onMounted, onUnmounted, useSlots } from 'vue'
+import type { VNode } from 'vue'
 import type { SegmentButtonContext } from './types'
 
 // Props
@@ -32,8 +33,19 @@ const props = withDefaults(defineProps<{
 
 // Slots
 const slots = useSlots()
-const hasIcon = computed(() => !!slots.icon)
-const hasLabel = computed(() => !!slots.default)
+
+// Helper to check if slot has actual content
+const hasSlotContent = (slotContent: VNode[] | undefined): boolean => {
+  if (!slotContent) return false
+  return slotContent.some(vnode => {
+    // Check if it's a text node with actual content
+    if (typeof vnode.children === 'string') {
+      return vnode.children.trim().length > 0
+    }
+    // Check if it has child nodes
+    return !!vnode.children
+  })
+}
 
 // Refs
 const itemRef = ref<HTMLButtonElement>()
@@ -73,9 +85,18 @@ const itemClasses = computed(() => {
   
   if (isActive.value) classes.push('active')
   if (isDisabled.value) classes.push('disabled')
-  if (hasIcon.value) classes.push('has-icon')
-  if (hasIcon.value && !hasLabel.value) classes.push('icon-only')
-  if (!hasIcon.value && hasLabel.value) classes.push('text-only')
+  
+  // Determine layout type based on slots
+  const hasIcon = !!slots.icon
+  const hasLabel = hasSlotContent(slots.default?.())
+  
+  if (hasIcon && !hasLabel) {
+    classes.push('icon-only')
+  } else if (!hasIcon && hasLabel) {
+    classes.push('text-only')
+  } else if (hasIcon && hasLabel) {
+    classes.push('icon-and-text')
+  }
   
   return classes
 })
@@ -192,12 +213,12 @@ defineOptions({
     font-size: var(--lb-font-size-label-base)
     
     .icon-container
-      width: 20px
-      height: 20px
+      width: var(--lb-icon-size-sm) // 18px
+      height: var(--lb-icon-size-sm) // 18px
       
       :deep(svg)
-        width: 20px
-        height: 20px
+        width: var(--lb-icon-size-sm) // 18px
+        height: var(--lb-icon-size-sm) // 18px
 
 
   // Icon and text layout
@@ -215,10 +236,25 @@ defineOptions({
   // Icon-only styling
   &.icon-only
     gap: 0
+    padding: 0
+    justify-content: center
+    align-items: center
+    
+    // Force hide label even if slot exists
+    .label
+      display: none
     
     &.size-medium
-      min-width: base.$size-6xl // 40px
-      padding: 0
+      min-width: 3.5rem // 56px for better icon spacing
+      width: auto // Let it size based on content
+  
+  // Text-only styling (default behavior)
+  &.text-only
+    // Uses default padding and gap
+  
+  // Icon and text styling
+  &.icon-and-text
+    // Uses default padding and gap
     
 
 

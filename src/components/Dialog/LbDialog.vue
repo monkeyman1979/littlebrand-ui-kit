@@ -27,23 +27,27 @@ Teleport(to="body")
               h3.dialog-title(v-if="title" :id="titleId") {{ title }}
         
         //- Close button (absolute positioned)
-        button.dialog-close(
+        LbButton.dialog-close(
           v-if="showClose"
-          type="button"
+          icon-only
+          variant="ghost"
+          color="neutral"
+          size="small"
           @click="close"
           aria-label="Close dialog"
         )
-          svg(
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          )
-            path(d="M18 6L6 18M6 6l12 12")
+          template(#icon-leading)
+            svg(
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            )
+              path(d="M18 6L6 18M6 6l12 12")
         
         .dialog-content(:id="contentId")
           slot
@@ -54,6 +58,7 @@ Teleport(to="body")
 
 <script setup lang="ts">
 import { computed, ref, nextTick, onBeforeUnmount, onMounted } from 'vue'
+import LbButton from '@/components/Buttons/Button/LbButton.vue'
 
 // Types
 export type DialogVariant = 'default' | 'fullscreen'
@@ -296,39 +301,12 @@ defineExpose({
     flex: 1
     min-width: 0 // Allow text truncation if needed
 
-// Close button (ghost icon button style)
+// Close button positioning
 .dialog-close
   position: absolute
   top: var(--lb-space-sm)
   right: var(--lb-space-sm)
   z-index: 1
-  display: flex
-  align-items: center
-  justify-content: center
-  width: var(--btn-height-small)
-  height: var(--btn-height-small)
-  padding: 0
-  border: none
-  background: transparent
-  color: var(--lb-text-neutral-contrast-low)
-  cursor: pointer
-  border-radius: var(--lb-radius-md)
-  transition: all var(--lb-transition)
-  
-  &:hover
-    background: var(--color-button-ghost-hover)
-    color: var(--lb-text-neutral-contrast-high)
-    
-  &:active
-    background: var(--color-button-ghost-active)
-    
-  &:focus-visible
-    outline: none
-    box-shadow: 0 0 0 var(--focus-ring-width) var(--lb-focus-ring-color)
-    
-  svg
-    width: var(--lb-icon-size-sm)
-    height: var(--lb-icon-size-sm)
     
   // Adjust position for fullscreen variant
   .lb-dialog.variant-fullscreen &
@@ -339,7 +317,7 @@ defineExpose({
 .dialog-content
   flex: 1
   overflow-y: auto
-  padding: var(--lb-space-2xl)
+  padding: var(--lb-space-3xl) var(--lb-space-2xl) var(--lb-space-2xl) var(--lb-space-2xl)
   color: var(--lb-text-neutral-contrast-low)
   
   // Adjust padding when fullscreen with header

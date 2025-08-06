@@ -183,13 +183,13 @@ defineExpose({
     &:focus
       border-color: var(--lb-border-error-active)
       box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-error-active)
-    
-    // Disabled state
-    &:disabled
-      background: var(--lb-background-surface)
-      color: var(--lb-text-neutral-disabled)
-      cursor: not-allowed
-      opacity: var(--lb-opacity-60)
+  
+  // Disabled state for select element
+  select:disabled
+    background: var(--lb-surface-neutral-subtle)
+    color: var(--lb-text-neutral-disabled)
+    cursor: not-allowed
+    opacity: var(--lb-opacity-60)
   
   // Placeholder style
   &.has-placeholder select
