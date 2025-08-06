@@ -1475,13 +1475,96 @@
             .control-group
               LbLabel Demo Circular Progress ({{ interactiveProgress }}%)
               LbProgress(:value="interactiveProgress" type="circular" size="normal" circular-size="lg" :show-value="true")
+      
+      .component-demo
+        h3 Divider
+        p Visual separators for organizing content sections
+        
+        .demo-group
+          h4 Horizontal Dividers - Sizes
+          .divider-demo-vertical
+            .divider-item
+              p Content above thin divider (1px)
+              LbDivider(orientation="horizontal" size="thin")
+              p Content below thin divider (1px)
+            .divider-item
+              p Content above medium divider (2px)
+              LbDivider(orientation="horizontal" size="medium")
+              p Content below medium divider (2px)
+            .divider-item
+              p Content above thick divider (4px)
+              LbDivider(orientation="horizontal" size="thick")
+              p Content below thick divider (4px)
+        
+        .demo-group
+          h4 Inset Dividers
+          .divider-demo-vertical
+            .divider-item
+              p Full width divider (default)
+              LbDivider
+              p Inset divider with spacing
+              LbDivider(inset)
+              p End of section
+        
+        .demo-group
+          h4 Vertical Dividers
+          .divider-demo-horizontal
+            .divider-item-horizontal
+              span Item 1
+              LbDivider(orientation="vertical" size="thin")
+              span Item 2
+              LbDivider(orientation="vertical" size="medium")
+              span Item 3
+              LbDivider(orientation="vertical" size="thick")
+              span Item 4
+        
+        .demo-group
+          h4 Vertical Dividers with Inset
+          .divider-demo-horizontal(style="height: 60px")
+            .divider-item-horizontal
+              span Full height
+              LbDivider(orientation="vertical")
+              span Inset vertical
+              LbDivider(orientation="vertical" inset)
+              span End
+        
+        .demo-group
+          h4 Real-world Examples
+          .card-example
+            h5 User Profile
+            p John Doe - Software Engineer
+            LbDivider(size="thin")
+            .info-row
+              span Email: john.doe@example.com
+            .info-row
+              span Location: San Francisco, CA
+            LbDivider(size="thin")
+            .action-row
+              LbButton(variant="ghost" size="small") Message
+              LbDivider(orientation="vertical" size="thin")
+              LbButton(variant="ghost" size="small") Follow
+              LbDivider(orientation="vertical" size="thin")
+              LbButton(variant="ghost" size="small") More
+          
+          .list-example
+            .list-item
+              h5 Settings
+              p Manage your account preferences
+            LbDivider(inset)
+            .list-item
+              h5 Privacy
+              p Control your data and visibility
+            LbDivider(inset)
+            .list-item
+              h5 Notifications
+              p Choose what updates you receive
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { 
   LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog,
-  LbBadge, LbNavigationBar, LbNavigationBarItem, LbBottomSheet, LbChip, LbAvatar, LbProgress, useSnackbar
+  LbBadge, LbNavigationBar, LbNavigationBarItem, LbBottomSheet, LbChip, LbAvatar, LbProgress, LbDivider, useSnackbar
 } from '../src'
 
 const isDark = ref(false)
@@ -2451,4 +2534,88 @@ section
     flex-direction: column
     gap: base.$space-sm
     max-width: 400px
+
+// Divider demo styles
+.divider-demo-vertical
+  display: flex
+  flex-direction: column
+  gap: base.$space-xl
+  
+  .divider-item
+    display: flex
+    flex-direction: column
+    
+    p
+      margin: base.$space-md 0
+      color: var(--color-text-secondary)
+
+.divider-demo-horizontal
+  display: flex
+  align-items: stretch
+  gap: 0
+  min-height: base.$space-4xl
+  
+  .divider-item-horizontal
+    display: flex
+    align-items: center
+    gap: 0
+    
+    span
+      padding: 0 base.$space-md
+      color: var(--color-text-secondary)
+      white-space: nowrap
+      
+    .lb-divider
+      height: 100%
+
+.card-example
+  background: var(--color-surface)
+  border: base.$border-sm solid var(--color-border)
+  border-radius: base.$radius-md
+  padding: base.$space-lg
+  max-width: 400px
+  
+  h5
+    margin: 0 0 base.$space-xs 0
+    
+  > p
+    margin: 0 0 base.$space-md 0
+    color: var(--color-text-secondary)
+    
+  .info-row
+    padding: base.$space-xs 0
+    color: var(--color-text-secondary)
+    font-size: var(--font-size-label-base)
+    
+  .action-row
+    display: flex
+    align-items: stretch
+    gap: 0
+    margin-top: base.$space-md
+    min-height: base.$space-3xl
+    
+    .lb-button
+      align-self: center
+      
+    .lb-divider
+      height: base.$space-2xl
+      align-self: center
+
+.list-example
+  background: var(--color-surface)
+  border: base.$border-sm solid var(--color-border)
+  border-radius: base.$radius-md
+  overflow: hidden
+  max-width: 500px
+  
+  .list-item
+    padding: base.$space-lg
+    
+    h5
+      margin: 0 0 base.$space-xs 0
+      
+    p
+      margin: 0
+      color: var(--color-text-secondary)
+      font-size: var(--font-size-label-base)
 </style>
