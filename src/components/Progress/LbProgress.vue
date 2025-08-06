@@ -163,6 +163,8 @@ defineOptions({
       overflow: hidden
         
       .progress-fill
+        position: absolute
+        top: 0
         height: 100%
         background-color: var(--lb-fill-primary-normal)
         border-radius: var(--lb-radius-full)
@@ -171,8 +173,8 @@ defineOptions({
     // Indeterminate linear animation
     &.indeterminate
       .progress-fill
-        width: 25%
-        animation: lb-linear-indeterminate 1.5s linear infinite
+        width: auto
+        animation: lb-linear-indeterminate 2s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite
     
     // Size variants for linear (heights match stroke widths)
     &.size-thin
@@ -249,9 +251,14 @@ defineOptions({
 // Linear indeterminate animation
 @keyframes lb-linear-indeterminate
   0%
-    transform: translateX(-100%)
+    left: -35%
+    right: 100%
+  60%
+    left: 100%
+    right: -90%
   100%
-    transform: translateX(400%)
+    left: 100%
+    right: -90%
 
 // Circular indeterminate animation
 @keyframes lb-circular-indeterminate
