@@ -2524,15 +2524,6 @@ section
   .demo-note
     font-size: 0.875rem
     color: var(--lb-text-neutral-contrast-low)
-    
-.form-field
-  display: flex
-  flex-direction: column
-  gap: base.$space-sm
-  margin-bottom: base.$space-lg
-  
-  &:last-child
-    margin-bottom: 0
 
 .form-grid
   display: grid

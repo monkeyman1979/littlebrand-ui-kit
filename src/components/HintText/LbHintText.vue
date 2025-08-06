@@ -72,8 +72,8 @@ defineSlots<{
   .icon
     display: flex
     align-items: center
-    width: var(--lb-icon-size-xs) // 12px
-    height: var(--lb-icon-size-xs) // 12px
+    width: var(--lb-icon-size-sm) // 18px
+    height: var(--lb-icon-size-sm) // 18px
     color: currentColor
   
   // Message text wrapper
@@ -86,5 +86,5 @@ defineSlots<{
       text-decoration: underline
       
       &:hover
-        opacity: 0.8
+        opacity: var(--lb-opacity-80)
 </style>
