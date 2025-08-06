@@ -254,8 +254,8 @@ defineExpose({
 .lb-dialog-overlay
   position: fixed
   inset: 0
-  z-index: var(--z-modal-backdrop)
-  background: var(--color-modal-backdrop)
+  z-index: var(--lb-z-modal-backdrop)
+  background: var(--lb-background-overlay)
   backdrop-filter: blur(2px)
   overflow-y: auto
   -webkit-overflow-scrolling: touch

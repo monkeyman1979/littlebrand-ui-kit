@@ -2172,6 +2172,7 @@ const resetForm = () => {
 const colors = [
   { name: 'Primary', var: '--lb-fill-primary-normal' },
   { name: 'Secondary', var: '--lb-fill-secondary-normal' },
+  { name: 'Neutral', var: '--lb-fill-neutral-normal' },
   { name: 'Error', var: '--lb-fill-error-normal' },
   { name: 'Success', var: '--lb-fill-success-normal' },
   { name: 'Warning', var: '--lb-fill-warning-normal' },
