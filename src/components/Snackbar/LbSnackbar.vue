@@ -163,11 +163,11 @@ defineOptions({
   align-items: stretch
   width: min(31.25rem, 90%)
   min-height: var(--size-2xl)
-  padding: var(--space-md) var(--space-lg)
-  background-color: var(--color-surface-raised)
-  border: var(--border-sm) solid var(--color-border)
-  border-radius: var(--radius-sm)
-  box-shadow: var(--shadow-lg)
+  padding: var(--lb-space-md) var(--lb-space-lg)
+  background-color: var(--lb-background-surface-raised)
+  border: var(--lb-border-sm) solid var(--lb-border-neutral-line)
+  border-radius: var(--lb-radius-sm)
+  box-shadow: var(--lb-shadow-lg)
   pointer-events: auto
   overflow: hidden
   transition: transform 200ms ease-out
@@ -175,7 +175,7 @@ defineOptions({
   
   // Safe area support for mobile
   @supports (padding: env(safe-area-inset-bottom))
-    padding-bottom: max(var(--space-md), env(safe-area-inset-bottom))
+    padding-bottom: max(var(--lb-space-md), env(safe-area-inset-bottom))
   
   &.dragging
     transition: none
@@ -186,16 +186,16 @@ defineOptions({
   display: flex
   align-items: flex-start
   flex-wrap: wrap
-  gap: var(--space-sm)
+  gap: var(--lb-space-sm)
   width: 100%
   position: relative
 
 .snackbar-message
   flex: 1 1 auto
-  font-size: var(--font-size-label-base)
-  font-weight: var(--font-weight-normal)
-  line-height: var(--line-height-normal)
-  color: var(--color-text)
+  font-size: var(--lb-font-size-label-base)
+  font-weight: var(--lb-font-weight-normal)
+  line-height: var(--lb-line-height-normal)
+  color: var(--lb-text-neutral-contrast-high)
   word-wrap: break-word
   align-self: center
 
@@ -214,46 +214,40 @@ defineOptions({
 .lb-snackbar
   // Default variant
   &.variant-default
-    background-color: var(--color-surface-raised)
-    border-color: var(--color-border)
+    background-color: var(--lb-background-surface-raised)
+    border-color: var(--lb-border-neutral-line)
   
   // Success variant
   &.variant-success
-    background-color: var(--color-success-3)
-    border-color: var(--color-success-border)
+    background-color: var(--lb-surface-success-subtle)
+    border-color: var(--lb-border-success-normal)
+    
+    .snackbar-message
+      color: var(--lb-text-success-normal)
   
   // Error variant
   &.variant-error
-    background-color: var(--color-error-3)
-    border-color: var(--color-error-border)
+    background-color: var(--lb-surface-error-subtle)
+    border-color: var(--lb-border-error-normal)
+    
+    .snackbar-message
+      color: var(--lb-text-error-normal)
   
   // Warning variant
   &.variant-warning
-    background-color: var(--color-warning-3)
-    border-color: var(--color-warning-border)
+    background-color: var(--lb-surface-warning-subtle)
+    border-color: var(--lb-border-warning-normal)
     
     .snackbar-message
-      color: var(--color-warning-text)
+      color: var(--lb-text-warning-normal)
   
   // Info variant
   &.variant-info
-    background-color: var(--color-info-3)
-    border-color: var(--color-info-border)
+    background-color: var(--lb-surface-info-subtle)
+    border-color: var(--lb-border-info-normal)
+    
+    .snackbar-message
+      color: var(--lb-text-info-normal)
 
-// Dark mode adjustments
-[data-theme="dark"]
-  .lb-snackbar
-    background-color: var(--color-surface-raised)
-    
-    &.variant-success
-      background-color: var(--color-success-3)
-    
-    &.variant-error
-      background-color: var(--color-error-3)
-    
-    &.variant-warning
-      background-color: var(--color-warning-3)
-    
-    &.variant-info
-      background-color: var(--color-info-3)
+// Dark mode adjustments are handled by the token system
 </style>

@@ -8,7 +8,13 @@
       section.theme-section
         h2 Theme Support
         .theme-toggle
-          button(@click="toggleTheme") Toggle {{ isDark ? 'Light' : 'Dark' }} Mode
+          LbButton(@click="toggleTheme" variant="filled" color="primary")
+            template(#icon-leading)
+              svg(v-if="!isDark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+                path(d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z")
+              svg(v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+                path(d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z")
+            | {{ isDark ? 'Light Mode' : 'Dark Mode' }}
       
       section.typography-section
         h2 Typography
@@ -999,17 +1005,17 @@
               svg(viewBox="0 0 24 24" fill="currentColor" width="24" height="24")
                 path(d="M3 3h18a1 1 0 011 1v16a1 1 0 01-1 1H3a1 1 0 01-1-1V4a1 1 0 011-1zm1 2v14h16V5H4zm2 2h2v2H6V7zm4 0h8v2h-8V7zm0 4h8v2h-8v-2zm0 4h5v2h-5v-2zm-4-4h2v2H6v-2zm0 4h2v2H6v-2z")
               span Mail
-              LbBadge(variant="error" position="top-right") 999+
+              LbBadge(variant="error" position="top-right" size="small") 999+
             .nav-item
               svg(viewBox="0 0 24 24" fill="currentColor" width="24" height="24")
                 path(d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z")
               span Chat
-              LbBadge(variant="error" position="top-right") 10
+              LbBadge(variant="error" position="top-right" size="small") 10
             .nav-item
               svg(viewBox="0 0 24 24" fill="currentColor" width="24" height="24")
                 path(d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z")
               span Rooms
-              LbBadge(variant="default" position="top-right" dot)
+              LbBadge(variant="default" position="top-right" size="small" dot)
             .nav-item
               svg(viewBox="0 0 24 24" fill="currentColor" width="24" height="24")
                 path(d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z")
@@ -1039,6 +1045,7 @@
             LbBadge(variant="default") Default
             LbBadge(variant="primary") Primary
             LbBadge(variant="secondary") Secondary
+            LbBadge(variant="neutral") Neutral
             LbBadge(variant="success") Success
             LbBadge(variant="warning") Warning
             LbBadge(variant="error") Error
@@ -1124,6 +1131,17 @@
             LbChip(variant="input" deletable @delete="handleChipDelete") Input
             
             LbChip(variant="suggestion" @click="handleChipClick") Suggestion
+        
+        .demo-group
+          h4 Chip Colors
+          .button-row
+            LbChip(variant="filter" color="primary") Primary
+            LbChip(variant="filter" color="secondary") Secondary
+            LbChip(variant="filter" color="neutral") Neutral
+            LbChip(variant="filter" color="success") Success
+            LbChip(variant="filter" color="warning") Warning
+            LbChip(variant="filter" color="error") Error
+            LbChip(variant="filter" color="info") Info
         
         .demo-group
           h4 With Leading Avatar
@@ -1240,35 +1258,7 @@
         p Bottom navigation for mobile interfaces
         
         .demo-group
-          h4 Basic Navigation Bar
-          .navigation-demo
-            LbNavigationBar(v-model="activeNavItem" :fixed="false")
-              LbNavigationBarItem(value="home" label="Home")
-                template(#icon)
-                  svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
-                    path(d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6")
-                template(#activeIcon)
-                  svg(viewBox="0 0 24 24" fill="currentColor")
-                    path(d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z")
-              
-              LbNavigationBarItem(value="search" label="Search")
-                template(#icon)
-                  svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
-                    path(d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z")
-              
-              LbNavigationBarItem(value="notifications" label="Notifications")
-                template(#icon)
-                  svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
-                    path(d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9")
-              
-              LbNavigationBarItem(value="profile" label="Profile")
-                template(#icon)
-                  svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
-                    path(d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z")
-          .demo-note Active: {{ activeNavItem }}
-        
-        .demo-group
-          h4 Customization Options
+          h4 Navigation Bar Demo
           .input-row
             LbSelect(
               v-model="navActiveColor"
@@ -1278,16 +1268,12 @@
             .switch-field
               LbSwitch(v-model="navShowLabels" id="nav-labels")
               LbLabel(for="nav-labels") Show Labels
-            .switch-field
-              LbSwitch(v-model="navNoActiveBackground" id="nav-no-bg")
-              LbLabel(for="nav-no-bg") No Active Background
           .navigation-demo
             LbNavigationBar(
-              v-model="activeNavItem2"
+              v-model="activeNavItem"
               :fixed="false"
               :active-color="navActiveColor"
               :show-labels="navShowLabels"
-              :no-active-background="navNoActiveBackground"
             )
               LbNavigationBarItem(value="home" label="Home")
                 template(#icon)
@@ -1313,6 +1299,7 @@
                 template(#icon)
                   svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
                     path(d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z")
+          .demo-note Active: {{ activeNavItem }}
       
       .component-demo
         h3 Snackbar
@@ -1573,15 +1560,8 @@
             p.demo-note Selected: {{ selectedSegment1 }}
         
         .demo-group
-          h4 Size Variants
+          h4 Size Variant
           .segment-demo
-            .segment-row
-              h5 Small
-              LbSegmentButton(v-model="selectedSize" size="small")
-                LbSegmentButtonItem(value="small") Small
-                LbSegmentButtonItem(value="medium") Medium
-                LbSegmentButtonItem(value="large") Large
-            
             .segment-row
               h5 Medium (Default)
               LbSegmentButton(v-model="selectedSize")
@@ -1703,7 +1683,7 @@
             
             .example-card
               h5 Date Range Selector
-              LbSegmentButton(v-model="dateRange" size="small")
+              LbSegmentButton(v-model="dateRange")
                 LbSegmentButtonItem(value="today") Today
                 LbSegmentButtonItem(value="week") This Week
                 LbSegmentButtonItem(value="month") This Month
@@ -1717,7 +1697,7 @@
                 
             .example-card
               h5 Filter Options (Multi-select)
-              LbSegmentButton(v-model="statusFilters" :multiSelect="true" size="small" color="neutral")
+              LbSegmentButton(v-model="statusFilters" :multiSelect="true" color="neutral")
                 LbSegmentButtonItem(value="active") Active
                 LbSegmentButtonItem(value="archived") Archived
                 LbSegmentButtonItem(value="starred") Starred
@@ -2134,16 +2114,16 @@ const resetForm = () => {
 }
 
 const colors = [
-  { name: 'Primary', var: '--color-primary' },
-  { name: 'Secondary', var: '--color-secondary' },
-  { name: 'Error', var: '--color-error' },
-  { name: 'Success', var: '--color-success' },
-  { name: 'Warning', var: '--color-warning' },
-  { name: 'Info', var: '--color-info' },
+  { name: 'Primary', var: '--lb-fill-primary-normal' },
+  { name: 'Secondary', var: '--lb-fill-secondary-normal' },
+  { name: 'Error', var: '--lb-fill-error-normal' },
+  { name: 'Success', var: '--lb-fill-success-normal' },
+  { name: 'Warning', var: '--lb-fill-warning-normal' },
+  { name: 'Info', var: '--lb-fill-info-normal' },
 ]
 
 const buttonVariants = ['filled', 'tonal', 'outline', 'ghost']
-const buttonColors = ['primary', 'secondary', 'success', 'warning', 'error', 'info']
+const buttonColors = ['primary', 'secondary', 'neutral', 'success', 'warning', 'error', 'info']
 
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1)
 
@@ -2226,10 +2206,8 @@ const confirmSheetAction = () => {
 
 // Navigation Bar demo data
 const activeNavItem = ref('home')
-const activeNavItem2 = ref('home')
 const navActiveColor = ref('primary')
 const navShowLabels = ref(true)
-const navNoActiveBackground = ref(false)
 
 const navColorOptions = [
   { value: 'primary', label: 'Primary' },
@@ -2364,7 +2342,7 @@ onMounted(() => {
 .app-header
   padding: base.$space-4xl base.$space-lg
   text-align: center
-  border-bottom: base.$border-sm solid var(--color-border)
+  border-bottom: base.$border-sm solid var(--lb-border-neutral-normal)
   
   h1, p
     margin: 0
@@ -2393,16 +2371,7 @@ section
     
 .theme-section
   .theme-toggle
-    button
-      padding: base.$space-xs base.$space-sm
-      background: var(--color-primary)
-      color: var(--color-primary-text)
-      border-radius: base.$radius-md
-      font-weight: typography.$weight-medium
-      transition: base.$transition
-      
-      &:hover
-        background: var(--color-primary-hover)
+    margin-top: base.$space-md
         
 .typography-section
   display: flex
@@ -2428,7 +2397,7 @@ section
     .color-swatch
       height: 80px
       border-radius: base.$radius-md
-      border: base.$border-sm solid var(--color-border)
+      border: base.$border-sm solid var(--lb-border-neutral-normal)
       
 .components-section
   display: flex
@@ -2441,9 +2410,9 @@ section
     gap: base.$space-lg
     margin-bottom: base.$space-4xl
     padding: base.$space-2xl
-    background: var(--color-surface-raised)
-    border-radius: var(--radius-lg)
-    border: base.$border-sm solid var(--color-border-subtle)
+    background: var(--lb-surface-neutral-subtle)
+    border-radius: var(--lb-radius-lg)
+    border: base.$border-sm solid var(--lb-border-neutral-line)
     
     &:last-child
       margin-bottom: 0
@@ -2462,7 +2431,7 @@ section
     
     h4
       margin: 0 0 base.$space-xs 0
-      color: var(--color-text-secondary)
+      color: var(--lb-text-neutral-contrast-low)
       text-transform: uppercase
       letter-spacing: 0.05em
       
@@ -2477,7 +2446,7 @@ section
     gap: base.$space-sm
     
     h5
-      color: var(--color-text-secondary)
+      color: var(--lb-text-neutral-contrast-low)
       
   .button-row
     display: flex
@@ -2494,7 +2463,7 @@ section
     
   .demo-note
     font-size: 0.875rem
-    color: var(--color-text-secondary)
+    color: var(--lb-text-neutral-contrast-low)
     
 .form-field
   display: flex
@@ -2514,8 +2483,8 @@ section
   display: flex
   flex-direction: column
   gap: base.$space-md
-  background: var(--color-surface)
-  border: base.$border-sm solid var(--color-border)
+  background: var(--lb-surface-neutral-normal)
+  border: base.$border-sm solid var(--lb-border-neutral-normal)
   border-radius: base.$radius-lg
   padding: base.$space-lg
   max-width: 500px
@@ -2589,15 +2558,15 @@ section
   display: flex
   flex-direction: column
   gap: base.$space-md
-  background: var(--color-surface)
-  border: base.$border-sm solid var(--color-border)
+  background: var(--lb-surface-neutral-normal)
+  border: base.$border-sm solid var(--lb-border-neutral-normal)
   border-radius: base.$radius-lg
   padding: base.$space-lg
   max-width: 600px
   
   h5
     margin: 0 0 base.$space-xs 0
-    color: var(--color-text-secondary)
+    color: var(--lb-text-neutral-contrast-low)
 
 // Dialog demo styles
 .dialog-form
@@ -2619,7 +2588,7 @@ section
   h4
     margin-top: base.$space-lg
     margin-bottom: base.$space-sm
-    color: var(--color-text)
+    color: var(--lb-text-neutral-contrast-high)
     
     &:first-child
       margin-top: 0
@@ -2627,7 +2596,7 @@ section
   p
     margin-bottom: base.$space-md
     line-height: 1.6
-    color: var(--color-text-secondary)
+    color: var(--lb-text-neutral-contrast-low)
 
 // Badge demo styles
 .badge-demo-item
@@ -2635,14 +2604,14 @@ section
   align-items: center
   gap: base.$space-xs
   padding: base.$space-xs base.$space-sm
-  background: var(--color-surface)
+  background: var(--lb-surface-neutral-normal)
 
 .navigation-badge-demo
   display: flex
   gap: base.$space-xl
   padding: base.$space-lg
-  background: var(--color-surface-lowered)
-  border-radius: var(--radius-md)
+  background: var(--lb-surface-neutral-subtle)
+  border-radius: var(--lb-radius-md)
   margin-top: base.$space-xs
   
   .nav-item
@@ -2651,13 +2620,13 @@ section
     flex-direction: column
     align-items: center
     gap: base.$space-xs
-    color: var(--color-text-secondary)
+    color: var(--lb-text-neutral-contrast-low)
     
     svg
-      color: var(--color-text-tertiary)
+      color: var(--lb-text-neutral-disabled)
     
     span
-      font-size: var(--font-size-label-small)
+      font-size: var(--lb-font-size-label-small)
 
 .avatar-badge-item
   position: relative
@@ -2669,8 +2638,8 @@ section
 
 // Navigation demo styles
 .navigation-demo
-  background: var(--color-surface)
-  border: base.$border-sm solid var(--color-border)
+  background: var(--lb-surface-neutral-normal)
+  border: base.$border-sm solid var(--lb-border-neutral-normal)
   border-radius: base.$radius-lg
   overflow: hidden
   position: relative
@@ -2701,8 +2670,8 @@ section
   gap: base.$space-sm
   
   .progress-label
-    font-size: var(--font-size-label-base)
-    color: var(--color-text-secondary)
+    font-size: var(--lb-font-size-label-base)
+    color: var(--lb-text-neutral-contrast-low)
     margin-bottom: base.$space-xs
 
 .progress-controls
@@ -2728,7 +2697,7 @@ section
     
     p
       margin: base.$space-md 0
-      color: var(--color-text-secondary)
+      color: var(--lb-text-neutral-contrast-low)
 
 .divider-demo-horizontal
   display: flex
@@ -2743,15 +2712,15 @@ section
     
     span
       padding: 0 base.$space-md
-      color: var(--color-text-secondary)
+      color: var(--lb-text-neutral-contrast-low)
       white-space: nowrap
       
     .lb-divider
       height: 100%
 
 .card-example
-  background: var(--color-surface)
-  border: base.$border-sm solid var(--color-border)
+  background: var(--lb-surface-neutral-normal)
+  border: base.$border-sm solid var(--lb-border-neutral-normal)
   border-radius: base.$radius-md
   padding: base.$space-lg
   max-width: 400px
@@ -2761,12 +2730,12 @@ section
     
   > p
     margin: 0 0 base.$space-md 0
-    color: var(--color-text-secondary)
+    color: var(--lb-text-neutral-contrast-low)
     
   .info-row
     padding: base.$space-xs 0
-    color: var(--color-text-secondary)
-    font-size: var(--font-size-label-base)
+    color: var(--lb-text-neutral-contrast-low)
+    font-size: var(--lb-font-size-label-base)
     
   .action-row
     display: flex
@@ -2783,8 +2752,8 @@ section
       align-self: center
 
 .list-example
-  background: var(--color-surface)
-  border: base.$border-sm solid var(--color-border)
+  background: var(--lb-surface-neutral-normal)
+  border: base.$border-sm solid var(--lb-border-neutral-normal)
   border-radius: base.$radius-md
   overflow: hidden
   max-width: 500px
@@ -2797,8 +2766,8 @@ section
       
     p
       margin: 0
-      color: var(--color-text-secondary)
-      font-size: var(--font-size-label-base)
+      color: var(--lb-text-neutral-contrast-low)
+      font-size: var(--lb-font-size-label-base)
 
 // SegmentButton demo styles
 .segment-demo
@@ -2808,8 +2777,8 @@ section
   
   .demo-note
     margin-top: base.$space-sm
-    font-size: var(--font-size-label-base)
-    color: var(--color-text-secondary)
+    font-size: var(--lb-font-size-label-base)
+    color: var(--lb-text-neutral-contrast-low)
 
 .segment-row
   display: flex
@@ -2818,14 +2787,14 @@ section
   
   h5
     margin: 0
-    color: var(--color-text-secondary)
-    font-size: var(--font-size-label-base)
+    color: var(--lb-text-neutral-contrast-low)
+    font-size: var(--lb-font-size-label-base)
     text-transform: uppercase
     letter-spacing: 0.05em
 
 .example-card
-  background: var(--color-surface)
-  border: base.$border-sm solid var(--color-border)
+  background: var(--lb-surface-neutral-normal)
+  border: base.$border-sm solid var(--lb-border-neutral-normal)
   border-radius: base.$radius-md
   padding: base.$space-lg
   max-width: 500px
@@ -2841,11 +2810,11 @@ section
   .date-info
     margin-top: base.$space-md
     padding: base.$space-md
-    background: var(--color-surface-lowered)
+    background: var(--lb-surface-neutral-subtle)
     border-radius: base.$radius-sm
     
     p
       margin: 0
-      color: var(--color-text-secondary)
-      font-size: var(--font-size-label-base)
+      color: var(--lb-text-neutral-contrast-low)
+      font-size: var(--lb-font-size-label-base)
 </style>

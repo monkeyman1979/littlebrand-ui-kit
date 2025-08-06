@@ -44,36 +44,36 @@ defineSlots<{
 .lb-hint-text
   display: flex
   align-items: center
-  gap: var(--space-xs)
-  font-size: var(--font-size-label-small) // 12px
-  line-height: var(--line-height-normal)
-  color: var(--color-text-secondary)
+  gap: var(--lb-space-xs)
+  font-size: var(--lb-font-size-label-small) // 12px
+  line-height: var(--lb-line-height-normal)
+  color: var(--lb-text-neutral-contrast-low)
   
   // State variations
   &.error
-    color: var(--color-error-text)
+    color: var(--lb-text-error-contrast-high)
     
     .icon
-      color: var(--color-error)
+      color: var(--lb-text-error-normal)
   
   &.warning
-    color: var(--color-warning-text)
+    color: var(--lb-text-warning-contrast-high)
     
     .icon
-      color: var(--color-warning)
+      color: var(--lb-text-warning-normal)
   
   &.success
-    color: var(--color-success-text)
+    color: var(--lb-text-success-contrast-high)
     
     .icon
-      color: var(--color-success)
+      color: var(--lb-text-success-normal)
   
   // Icons
   .icon
     display: flex
     align-items: center
-    width: var(--icon-size-xs) // 12px
-    height: var(--icon-size-xs) // 12px
+    width: var(--lb-icon-size-xs) // 12px
+    height: var(--lb-icon-size-xs) // 12px
     color: currentColor
   
   // Message text wrapper

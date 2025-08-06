@@ -169,58 +169,58 @@ defineExpose({
   textarea
     // Default size (medium)
     width: 100%
-    min-height: var(--btn-height-large) // 48px minimum (matches large input)
-    padding: var(--space-xs) var(--space-sm)
-    background: var(--color-input-background)
-    border: var(--border-sm) solid var(--color-input-border)
-    border-radius: var(--radius-md)
-    font-size: var(--font-size-label-base)
+    min-height: var(--lb-btn-height-large) // 48px minimum (matches large input)
+    padding: var(--lb-space-xs) var(--lb-space-sm)
+    background: var(--lb-background-surface)
+    border: var(--lb-border-sm) solid var(--lb-border-neutral-normal)
+    border-radius: var(--lb-radius-md)
+    font-size: var(--lb-font-size-label-base)
     font-family: inherit
-    color: var(--color-text)
-    line-height: var(--line-height-relaxed)
-    transition: border-color var(--transition), box-shadow var(--transition)
+    color: var(--lb-text-neutral-contrast-high)
+    line-height: var(--lb-line-height-relaxed)
+    transition: border-color var(--lb-transition), box-shadow var(--lb-transition)
     
     // Placeholder
     &::placeholder
-      color: var(--color-input-placeholder)
-      opacity: var(--opacity-100) // Firefox fix
+      color: var(--lb-text-neutral-contrast-low)
+      opacity: var(--lb-opacity-100) // Firefox fix
     
     // States
     &:hover:not(:disabled):not(:read-only)
-      border-color: var(--color-input-border-hover)
+      border-color: var(--lb-border-neutral-active)
     
     &:focus
       outline: none
-      border-color: var(--color-input-border-focus)
-      box-shadow: 0 0 0 var(--focus-ring-width) var(--color-primary-a5)
+      border-color: var(--lb-border-primary-normal)
+      box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-primary-active)
     
     // Focus takes precedence over hover
     &:focus:hover:not(:disabled):not(:read-only)
-      border-color: var(--color-input-border-focus)
-      box-shadow: 0 0 0 var(--focus-ring-width) var(--color-primary-a5)
+      border-color: var(--lb-border-primary-normal)
+      box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-primary-active)
     
     // Invalid state when parent has .invalid class
     .invalid &
-      border-color: var(--color-error-border)
+      border-color: var(--lb-border-error-normal)
       
       &:focus
-        border-color: var(--color-error)
-        box-shadow: 0 0 0 var(--focus-ring-width) var(--color-error-a5)
+        border-color: var(--lb-border-error-active)
+        box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-error-active)
     
     // Disabled state
     &:disabled
-      background: var(--color-surface)
-      color: var(--color-text-disabled)
+      background: var(--lb-background-surface)
+      color: var(--lb-text-neutral-disabled)
       cursor: not-allowed
-      opacity: var(--opacity-60)
+      opacity: var(--lb-opacity-60)
     
     // Readonly state
     &:read-only
-      background: var(--color-surface)
+      background: var(--lb-background-surface)
       cursor: default
       
       &:focus
-        border-color: var(--color-input-border)
+        border-color: var(--lb-border-neutral-normal)
         box-shadow: none
   
   // Resize controls
@@ -238,9 +238,9 @@ defineExpose({
   
   // Invalid state for textarea
   &.invalid textarea
-    border-color: var(--color-error-border)
+    border-color: var(--lb-border-error-normal)
     
     &:focus
-      border-color: var(--color-error)
-      box-shadow: 0 0 0 base.$focus-ring-width var(--color-error-a5)
+      border-color: var(--lb-border-error-active)
+      box-shadow: 0 0 0 base.$focus-ring-width var(--lb-surface-error-active)
 </style>

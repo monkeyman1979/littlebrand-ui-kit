@@ -159,23 +159,23 @@ defineOptions({
     .progress-container
       position: relative
       width: 100%
-      border-radius: var(--radius-full)
+      border-radius: var(--lb-radius-full)
       overflow: hidden
       
       .progress-track
         width: 100%
         height: 100%
-        background-color: var(--color-surface-raised)
-        border-radius: var(--radius-full)
+        background-color: var(--lb-surface-neutral-subtle)
+        border-radius: var(--lb-radius-full)
         
       .progress-fill
         position: absolute
         top: 0
         left: 0
         height: 100%
-        background-color: var(--color-primary)
-        border-radius: var(--radius-full)
-        transition: width var(--transition)
+        background-color: var(--lb-fill-primary-normal)
+        border-radius: var(--lb-radius-full)
+        transition: width var(--lb-transition)
     
     // Indeterminate linear animation
     &.indeterminate
@@ -206,20 +206,20 @@ defineOptions({
       transform: rotate(-90deg)
       
       .progress-track-circle
-        stroke: var(--color-surface-raised)
+        stroke: var(--lb-surface-neutral-subtle)
         stroke-linecap: round
         
       .progress-fill-circle
-        stroke: var(--color-primary)
+        stroke: var(--lb-fill-primary-normal)
         stroke-linecap: round
-        transition: stroke-dashoffset var(--transition)
+        transition: stroke-dashoffset var(--lb-transition)
         
       .progress-text
         transform: rotate(90deg)
-        font-family: var(--font-body)
-        font-weight: var(--font-weight-medium)
-        fill: var(--color-text)
-        font-size: var(--font-size-label-sm)
+        font-family: var(--lb-font-body)
+        font-weight: var(--lb-font-weight-medium)
+        fill: var(--lb-text-neutral-contrast-high)
+        font-size: var(--lb-font-size-label-small)
     
     // Circular size variants (dimensions)
     &.circular-size-xs
@@ -227,28 +227,28 @@ defineOptions({
       height: 1.5rem
       
       .progress-text
-        font-size: var(--font-size-label-xs)
+        font-size: var(--lb-font-size-label-small)
         
     &.circular-size-sm
       width: 2rem // 32px
       height: 2rem
       
       .progress-text
-        font-size: var(--font-size-label-xs)
+        font-size: var(--lb-font-size-label-small)
         
     &.circular-size-md
       width: 2.5rem // 40px
       height: 2.5rem
       
       .progress-text
-        font-size: var(--font-size-label-sm)
+        font-size: var(--lb-font-size-label-base)
         
     &.circular-size-lg
       width: 3rem // 48px
       height: 3rem
       
       .progress-text
-        font-size: var(--font-size-label-sm)
+        font-size: var(--lb-font-size-label-base)
     
     // Indeterminate animation for circular
     &.indeterminate

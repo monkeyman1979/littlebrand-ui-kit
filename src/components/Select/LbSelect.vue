@@ -141,20 +141,20 @@ defineExpose({
 .lb-select
   position: relative
   width: 100%
-  height: var(--input-height-medium) // 40px - medium size default
+  height: var(--lb-input-height-medium) // 40px - medium size default
   
   // Select element styles
   select
     width: 100%
     height: 100%
-    padding: 0 var(--space-2xl) 0 var(--space-sm) // Right padding for icon
-    background: var(--color-input-background)
-    border: var(--border-sm) solid var(--color-input-border)
-    border-radius: var(--radius-md)
-    font-size: var(--font-size-label-base)
+    padding: 0 var(--lb-space-2xl) 0 var(--lb-space-sm) // Right padding for icon
+    background: var(--lb-background-surface)
+    border: var(--lb-border-sm) solid var(--lb-border-neutral-normal)
+    border-radius: var(--lb-radius-md)
+    font-size: var(--lb-font-size-label-base)
     font-family: inherit
-    color: var(--color-text)
-    transition: border-color var(--transition), box-shadow var(--transition)
+    color: var(--lb-text-neutral-contrast-high)
+    transition: border-color var(--lb-transition), box-shadow var(--lb-transition)
     box-sizing: border-box
     cursor: pointer
     
@@ -165,51 +165,51 @@ defineExpose({
     
     // States
     &:hover:not(:disabled)
-      border-color: var(--color-input-border-hover)
+      border-color: var(--lb-border-neutral-active)
     
     &:focus
       outline: none
-      border-color: var(--color-input-border-focus)
-      box-shadow: 0 0 0 var(--focus-ring-width) var(--color-primary-a5)
+      border-color: var(--lb-border-primary-normal)
+      box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-primary-active)
     
     // Focus takes precedence over hover
     &:focus:hover:not(:disabled)
-      border-color: var(--color-input-border-focus)
-      box-shadow: 0 0 0 var(--focus-ring-width) var(--color-primary-a5)
+      border-color: var(--lb-border-primary-normal)
+      box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-primary-active)
     
   &.invalid select
-    border-color: var(--color-error-border)
+    border-color: var(--lb-border-error-normal)
     
     &:focus
-      border-color: var(--color-error)
-      box-shadow: 0 0 0 var(--focus-ring-width) var(--color-error-a5)
+      border-color: var(--lb-border-error-active)
+      box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-error-active)
     
     // Disabled state
     &:disabled
-      background: var(--color-surface)
-      color: var(--color-text-disabled)
+      background: var(--lb-background-surface)
+      color: var(--lb-text-neutral-disabled)
       cursor: not-allowed
-      opacity: var(--opacity-60)
+      opacity: var(--lb-opacity-60)
   
   // Placeholder style
   &.has-placeholder select
-    color: var(--color-input-placeholder)
+    color: var(--lb-text-neutral-contrast-low)
   
   // Size variations
   &.size-small
-    height: var(--input-height-small) // 32px
+    height: var(--lb-input-height-small) // 32px
     
     select
-      padding: 0 var(--space-xl) 0 var(--space-sm)
-      font-size: var(--font-size-label-small)
-      border-radius: var(--radius-sm)
+      padding: 0 var(--lb-space-xl) 0 var(--lb-space-sm)
+      font-size: var(--lb-font-size-label-small)
+      border-radius: var(--lb-radius-sm)
     
   &.size-large
-    height: var(--input-height-large) // 48px
+    height: var(--lb-input-height-large) // 48px
     
     select
-      padding: 0 var(--space-4xl) 0 var(--space-md)
-      font-size: var(--font-size-label-large)
+      padding: 0 var(--lb-space-4xl) 0 var(--lb-space-md)
+      font-size: var(--lb-font-size-label-large)
   
   // Disabled state
   &.disabled .select-icon
@@ -219,41 +219,41 @@ defineExpose({
   .select-icon
     position: absolute
     top: 50%
-    right: var(--space-sm)
+    right: var(--lb-space-sm)
     transform: translateY(-50%)
     display: flex
     align-items: center
     justify-content: center
-    color: var(--color-text-tertiary)
+    color: var(--lb-text-neutral-contrast-low)
     pointer-events: none
-    transition: color var(--transition)
+    transition: color var(--lb-transition)
     
     svg
-      width: var(--icon-size-sm) // 18px - medium size
-      height: var(--icon-size-sm) // 18px
+      width: var(--lb-icon-size-sm) // 18px - medium size
+      height: var(--lb-icon-size-sm) // 18px
     
   &.size-small .select-icon
-    right: var(--space-xs)
+    right: var(--lb-space-xs)
     
     svg
-      width: var(--icon-size-sm) // 18px - same as medium for better visibility
-      height: var(--icon-size-sm) // 18px
+      width: var(--lb-icon-size-sm) // 18px - same as medium for better visibility
+      height: var(--lb-icon-size-sm) // 18px
       
   &.size-large .select-icon
-    right: var(--space-md)
+    right: var(--lb-space-md)
     
     svg
-      width: var(--icon-size-md) // 20px - large size
-      height: var(--icon-size-md) // 20px
+      width: var(--lb-icon-size-md) // 20px - large size
+      height: var(--lb-icon-size-md) // 20px
     
   // Icon hover and focus states
   select:hover:not(:disabled) ~ .select-icon
-    color: var(--color-text-secondary)
+    color: var(--lb-text-neutral-contrast-low)
     
   select:focus ~ .select-icon
-    color: var(--color-text-secondary)
+    color: var(--lb-text-neutral-contrast-low)
   
   // Icon states based on parent classes
   &.invalid .select-icon
-    color: var(--color-error)
+    color: var(--lb-text-error-normal)
 </style>

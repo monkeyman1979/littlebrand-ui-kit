@@ -88,7 +88,7 @@ defineExpose({
   // Hidden native checkbox
   input[type="checkbox"]
     position: absolute
-    opacity: var(--opacity-0)
+    opacity: var(--lb-opacity-0)
     width: 100%
     height: 100%
     margin: 0
@@ -101,88 +101,89 @@ defineExpose({
   // Switch track
   .switch-track
     position: relative
-    width: var(--space-6xl) // 56px
-    height: var(--btn-height-small) // 32px
-    background: var(--color-input-background)
-    border: var(--border-md) solid var(--color-input-border)
-    border-radius: var(--radius-full)
-    transition: background-color var(--transition), border-color var(--transition), box-shadow var(--transition)
+    width: var(--lb-space-6xl) // 56px
+    height: var(--lb-btn-height-small) // 32px
+    background: var(--lb-background-surface)
+    border: var(--lb-border-md) solid var(--lb-border-neutral-normal)
+    border-radius: var(--lb-radius-full)
+    transition: background-color var(--lb-transition), border-color var(--lb-transition), box-shadow var(--lb-transition)
   
   // Switch thumb
   .switch-thumb
     position: absolute
     top: 50%
-    left: var(--space-2xs)
+    left: var(--lb-space-2xs)
     transform: translateY(-50%)
-    width: var(--icon-size-lg) // 24px
-    height: var(--icon-size-lg) // 24px
-    background: var(--color-input-border)
-    border-radius: var(--radius-full)
-    transition: transform var(--transition), background-color var(--transition)
+    width: var(--lb-icon-size-lg) // 24px
+    height: var(--lb-icon-size-lg) // 24px
+    background: var(--lb-border-neutral-active)
+    border-radius: var(--lb-radius-full)
+    transition: transform var(--lb-transition), background-color var(--lb-transition)
     will-change: transform
   
   // Checked state
   &.checked
     .switch-track
-      background: var(--color-primary)
-      border-color: var(--color-primary)
+      background: var(--lb-fill-primary-normal)
+      border-color: var(--lb-fill-primary-normal)
       
     .switch-thumb
       background: white
-      transform: translateY(-50%) translateX(calc(var(--space-xl) + var(--space-xs))) // Move 24px to right (20px + 4px)
+      transform: translateY(-50%) translateX(calc(var(--lb-space-xl) + var(--lb-space-xs))) // Move 24px to right (20px + 4px)
       
   // Add smooth spring animation for the toggle
   &:not(.disabled) .switch-thumb
-    transition: transform 200ms cubic-bezier(0.4, 0.0, 0.2, 1), background-color var(--transition)
+    transition: transform 200ms cubic-bezier(0.4, 0.0, 0.2, 1), background-color var(--lb-transition)
   
   // Hover state
   &:not(.checked) input:not(:disabled):hover ~ .switch-track
-    border-color: var(--color-input-border-hover)
+    border-color: var(--lb-border-neutral-active)
     
     .switch-thumb
-      background: var(--color-text-secondary)
+      background: var(--lb-fill-neutral-normal)
     
   &.checked input:not(:disabled):hover ~ .switch-track
-    background: var(--color-primary-hover)
-    border-color: var(--color-primary-hover)
+    background: var(--lb-fill-primary-hover)
+    border-color: var(--lb-fill-primary-hover)
   
   // Focus state
   input:focus-visible ~ .switch-track
     outline: none
-    box-shadow: 0 0 0 var(--focus-ring-width) var(--color-primary-a5)
-    border-color: var(--color-input-border-focus)
+    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-primary-active)
+    border-color: var(--lb-border-primary-normal)
   
   // Invalid state
   &.invalid
     .switch-track
-      border-color: var(--color-error-border)
+      border-color: var(--lb-border-error-normal)
       
     input:focus-visible ~ .switch-track
-      box-shadow: 0 0 0 var(--focus-ring-width) var(--color-error-a5)
-      border-color: var(--color-error)
+      box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-error-active)
+      border-color: var(--lb-border-error-active)
       
     &.checked .switch-track
-      background: var(--color-error)
-      border-color: var(--color-error)
+      background: var(--lb-fill-error-normal)
+      border-color: var(--lb-fill-error-normal)
   
   // Disabled state
   &.disabled
-    opacity: var(--opacity-60)
+    opacity: var(--lb-opacity-80)
     
     .switch-track
-      background: var(--color-surface)
+      background: var(--lb-surface-neutral-disabled)
+      border-color: var(--lb-border-neutral-disabled)
       cursor: not-allowed
       
       .switch-thumb
-        background: var(--color-text-tertiary)
+        background: var(--lb-fill-neutral-disabled)
       
     &.checked .switch-track
-      background: var(--color-text-secondary)
-      border-color: var(--color-text-secondary)
+      background: var(--lb-surface-neutral-disabled)
+      border-color: var(--lb-border-neutral-disabled)
       
       .switch-thumb
-        background: var(--color-surface)
+        background: var(--lb-fill-neutral-disabled)
       
     input:hover ~ .switch-track
-      border-color: var(--color-input-border)
+      border-color: var(--lb-border-neutral-normal)
 </style>

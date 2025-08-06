@@ -34,7 +34,7 @@ const props = withDefaults(defineProps<{
   offset?: string
 }>(), {
   position: 'bottom-center',
-  offset: 'var(--space-lg)'
+  offset: 'var(--lb-space-lg)'
 })
 
 // State
@@ -215,7 +215,7 @@ defineOptions({
   display: flex
   flex-direction: column
   align-items: center
-  gap: var(--space-md)
+  gap: var(--lb-space-md)
   width: 100vw
   pointer-events: none
   
@@ -237,13 +237,13 @@ defineOptions({
   
   // Ensure responsive behavior
   @media (max-width: 640px)
-    padding: 0 var(--space-md)
+    padding: 0 var(--lb-space-md)
     
     // Add extra bottom padding on mobile to account for OS bars
     .position-bottom-center &,
     .position-bottom-left &,
     .position-bottom-right &
-      padding-bottom: calc(var(--space-lg) + env(safe-area-inset-bottom, 0px))
+      padding-bottom: calc(var(--lb-space-lg) + env(safe-area-inset-bottom, 0px))
 
 // Snackbar animations - grow/shrink height with smooth easing
 .lb-snackbar-enter-active,
@@ -300,15 +300,15 @@ defineOptions({
     margin-bottom: 0
   to
     max-height: 12.5rem
-    padding-top: var(--space-md)
-    padding-bottom: var(--space-md)
+    padding-top: var(--lb-space-md)
+    padding-bottom: var(--lb-space-md)
     margin-bottom: 0
 
 @keyframes snackbar-height-collapse
   from
     max-height: 12.5rem
-    padding-top: var(--space-md)
-    padding-bottom: var(--space-md)
+    padding-top: var(--lb-space-md)
+    padding-bottom: var(--lb-space-md)
     margin-bottom: 0
   to
     max-height: 0

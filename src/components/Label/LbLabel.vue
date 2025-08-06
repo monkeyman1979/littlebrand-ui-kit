@@ -39,28 +39,28 @@ defineSlots<{
 label
   display: inline-flex
   align-items: center
-  gap: var(--space-xs)
-  font-family: var(--font-body)
-  font-weight: var(--font-weight-medium)
-  line-height: var(--line-height-normal)
-  color: var(--color-text)
+  gap: var(--lb-space-xs)
+  font-family: var(--lb-font-body)
+  font-weight: var(--lb-font-weight-medium)
+  line-height: var(--lb-line-height-normal)
+  color: var(--lb-text-neutral-contrast-high)
   cursor: pointer
-  font-size: var(--font-size-label-base)
-  letter-spacing: var(--letter-spacing-tight)
+  font-size: var(--lb-font-size-label-base)
+  letter-spacing: var(--lb-letter-spacing-tight)
   
   // Required indicator
   &.required > span::after
     content: ' *'
-    color: var(--color-error)
-    font-weight: var(--font-weight-normal)
+    color: var(--lb-text-error-normal)
+    font-weight: var(--lb-font-weight-normal)
   
   // Icon
   .icon
     display: flex
     align-items: center
-    color: var(--color-text-secondary)
-    width: var(--icon-size-xs) // 12px
-    height: var(--icon-size-xs) // 12px
+    color: var(--lb-text-neutral-contrast-low)
+    width: var(--lb-icon-size-xs) // 12px
+    height: var(--lb-icon-size-xs) // 12px
   
   // Text wrapper
   > span
@@ -68,8 +68,8 @@ label
   
   // Hint text (inline)
   .hint
-    font-weight: var(--font-weight-normal)
-    color: var(--color-text-secondary)
-    margin-left: var(--space-xs)
-    font-size: var(--font-size-label-small)
+    font-weight: var(--lb-font-weight-normal)
+    color: var(--lb-text-neutral-contrast-low)
+    margin-left: var(--lb-space-xs)
+    font-size: var(--lb-font-size-label-small)
 </style>
