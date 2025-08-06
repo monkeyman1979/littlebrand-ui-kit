@@ -125,19 +125,19 @@ defineOptions({
   
   // Add left border divider for non-first items
   &:not(:first-child)
-    border-left: base.$border-sm solid var(--color-border-strong)
+    border-left: base.$border-sm solid var(--lb-border-neutral-active)
   cursor: pointer
   transition: all base.$transition
-  color: var(--color-text-secondary)
-  font-size: var(--font-size-base)
-  font-weight: var(--font-weight-medium)
-  line-height: var(--line-height-compact)
+  color: var(--lb-text-neutral-contrast-low)
+  font-size: var(--lb-font-size-label-base)
+  font-weight: var(--lb-font-weight-medium)
+  line-height: var(--lb-line-height-compact)
   outline: none
   position: relative
   white-space: nowrap
   
   &:focus-visible
-    outline: base.$focus-ring-width solid var(--color-focus-ring)
+    outline: base.$focus-ring-width solid var(--lb-focus-ring-color)
     outline-offset: base.$focus-ring-offset
     z-index: 2
 
@@ -145,11 +145,11 @@ defineOptions({
   @media (hover: hover)
     &:hover:not(.disabled):not(.active)
       &.color-primary
-        background-color: var(--color-primary-3)
+        background-color: var(--lb-surface-primary-subtle)
       &.color-secondary
-        background-color: var(--color-secondary-3)
+        background-color: var(--lb-surface-secondary-subtle)
       &.color-neutral
-        background-color: var(--color-neutral-3)
+        background-color: var(--lb-surface-neutral-subtle)
 
 
   &.disabled
@@ -158,58 +158,46 @@ defineOptions({
 
   // Active state - Primary color variant (default)
   &.color-primary.active
-    background: var(--color-primary-4)
-    color: var(--color-primary-11)
+    background: var(--lb-surface-primary-hover)
+    color: var(--lb-text-primary-contrast-low)
     z-index: 1
 
     @media (hover: hover)
       &:hover:not(.disabled)
-        background: var(--color-primary-5)
+        background: var(--lb-surface-primary-active)
         
   // Active state - Secondary color variant
   &.color-secondary.active
-    background: var(--color-secondary-4)
-    color: var(--color-secondary-11)
+    background: var(--lb-surface-secondary-hover)
+    color: var(--lb-text-secondary-contrast-low)
     z-index: 1
 
     @media (hover: hover)
       &:hover:not(.disabled)
-        background: var(--color-secondary-5)
+        background: var(--lb-surface-secondary-active)
         
   // Active state - Neutral color variant
   &.color-neutral.active
-    background: var(--color-neutral-4)
-    color: var(--color-neutral-11)
+    background: var(--lb-surface-neutral-hover)
+    color: var(--lb-text-neutral-contrast-high)
     z-index: 1
 
     @media (hover: hover)
       &:hover:not(.disabled)
-        background: var(--color-neutral-5)
+        background: var(--lb-surface-neutral-active)
 
-  // Size variants
-  &.size-small
-    padding: 0 base.$space-lg // 16px minimum
-    font-size: var(--font-size-sm)
-    
-    .icon-container
-      width: base.$size-3xl
-      height: base.$size-3xl
-      
-      :deep(svg)
-        width: base.$size-3xl
-        height: base.$size-3xl
-
+  // Size variant (only medium now)
   &.size-medium
     padding: 0 base.$space-lg // 16px minimum
-    font-size: var(--font-size-base)
+    font-size: var(--lb-font-size-label-base)
     
     .icon-container
-      width: base.$size-4xl
-      height: base.$size-4xl
+      width: 20px
+      height: 20px
       
       :deep(svg)
-        width: base.$size-4xl
-        height: base.$size-4xl
+        width: 20px
+        height: 20px
 
 
   // Icon and text layout
@@ -227,10 +215,6 @@ defineOptions({
   // Icon-only styling
   &.icon-only
     gap: 0
-    
-    &.size-small
-      min-width: base.$size-5xl // 32px
-      padding: 0
     
     &.size-medium
       min-width: base.$size-6xl // 40px

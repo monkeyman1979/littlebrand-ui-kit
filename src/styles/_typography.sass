@@ -17,123 +17,100 @@
 // Option 2B: Google Fonts via <link> (add to index.html)
 // <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-// Font Stacks
-$font-heading: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif
-$font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif
-$font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace
+// Note: All typography variables now use CSS custom properties from _theme-tokens.sass
+// This ensures consistency with the new token system
 
-// Font Weights
-$weight-normal: 400
-$weight-medium: 500  
-$weight-semibold: 600
-$weight-bold: 700
-
-// Line Heights
-$line-compact: 1.25
-$line-normal: 1.5
-$line-relaxed: 1.75
-
-// Label Sizes (for buttons, form elements, etc.)
-$label-size-small: 0.75rem    // 12px
-$label-size-base: 0.875rem    // 14px
-$label-size-large: 1rem       // 16px
-
-// Letter Spacing
-$letter-spacing-normal: normal
-$letter-spacing-tight: -0.01em
-$letter-spacing-wide: -0.025em
-
-// Special Display Sizes
+// Special Display Sizes (kept as Sass vars since they're not in tokens)
 $display-1: clamp(3rem, 5vw + 1rem, 5rem)
 $display-2: clamp(2.5rem, 4vw + 1rem, 4rem)
 
 // Typography Styles (applied directly to elements)
 h1
   font-size: clamp(2rem, 3vw + 0.5rem, 3rem)
-  font-family: var(--font-heading)
-  font-weight: var(--font-weight-bold)
-  line-height: var(--line-height-compact)
-  letter-spacing: var(--letter-spacing-tighter)
+  font-family: var(--lb-font-heading)
+  font-weight: var(--lb-font-weight-bold)
+  line-height: var(--lb-line-height-compact)
+  letter-spacing: var(--lb-letter-spacing-tighter)
 
 h2
   font-size: clamp(1.75rem, 2.5vw + 0.5rem, 2.5rem)
-  font-family: var(--font-heading)
-  font-weight: var(--font-weight-semibold)
-  line-height: var(--line-height-compact)
+  font-family: var(--lb-font-heading)
+  font-weight: var(--lb-font-weight-semibold)
+  line-height: var(--lb-line-height-compact)
   letter-spacing: -0.02em
 
 h3
   font-size: clamp(1.5rem, 2vw + 0.5rem, 2rem)
-  font-family: var(--font-heading)
-  font-weight: var(--font-weight-semibold)
-  line-height: var(--line-height-compact)
+  font-family: var(--lb-font-heading)
+  font-weight: var(--lb-font-weight-semibold)
+  line-height: var(--lb-line-height-compact)
   letter-spacing: -0.015em
 
 h4
   font-size: clamp(1.25rem, 1.5vw + 0.5rem, 1.5rem)
-  font-family: var(--font-heading)
-  font-weight: var(--font-weight-semibold)
-  line-height: var(--line-height-normal)
+  font-family: var(--lb-font-heading)
+  font-weight: var(--lb-font-weight-semibold)
+  line-height: var(--lb-line-height-normal)
 
 h5
   font-size: clamp(1.125rem, 1vw + 0.5rem, 1.25rem)
-  font-family: var(--font-heading)
-  font-weight: var(--font-weight-medium)
-  line-height: var(--line-height-normal)
+  font-family: var(--lb-font-heading)
+  font-weight: var(--lb-font-weight-medium)
+  line-height: var(--lb-line-height-normal)
 
 h6
   font-size: 1rem
-  font-family: var(--font-heading)
-  font-weight: var(--font-weight-medium)
-  line-height: var(--line-height-normal)
-  letter-spacing: var(--letter-spacing-wide)
+  font-family: var(--lb-font-heading)
+  font-weight: var(--lb-font-weight-medium)
+  line-height: var(--lb-line-height-normal)
+  letter-spacing: var(--lb-letter-spacing-wide)
 
 p
   font-size: 1rem
-  font-family: var(--font-body)
-  font-weight: var(--font-weight-normal)
-  line-height: var(--line-height-normal)
+  font-family: var(--lb-font-body)
+  font-weight: var(--lb-font-weight-normal)
+  line-height: var(--lb-line-height-normal)
   
   &.body-large
     font-size: clamp(1.125rem, 1vw + 0.25rem, 1.25rem)
-    line-height: var(--line-height-relaxed)
+    line-height: var(--lb-line-height-relaxed)
     
   &.body-small
     font-size: 0.875rem
-    line-height: var(--line-height-normal)
+    line-height: var(--lb-line-height-normal)
 
 // Label styles (for form labels, captions, etc.)
 .label
-  font-size: var(--font-size-label-base)
-  font-family: var(--font-body)
-  font-weight: var(--font-weight-medium)
-  line-height: var(--line-height-normal)
-  letter-spacing: var(--letter-spacing-tight)
+  font-size: var(--lb-font-size-label-base)
+  font-family: var(--lb-font-body)
+  font-weight: var(--lb-font-weight-medium)
+  line-height: var(--lb-line-height-normal)
+  letter-spacing: var(--lb-letter-spacing-tight)
   
   &.label-large
-    font-size: var(--font-size-label-large)
+    font-size: var(--lb-font-size-label-large)
     
   &.label-small
-    font-size: var(--font-size-label-small)
-    letter-spacing: var(--letter-spacing-wide)
+    font-size: var(--lb-font-size-label-small)
+    letter-spacing: var(--lb-letter-spacing-wide)
 
 // Code and preformatted text
 code,
 pre
-  font-family: var(--font-mono)
+  font-family: var(--lb-font-mono)
   font-size: 0.875em
 
 code
   padding: 0.125em 0.25em
-  background: var(--color-surface)
-  border: 1px solid var(--color-border)
-  border-radius: var(--radius-xs)
+  background: var(--lb-background-surface)
+  border: 1px solid var(--lb-border-neutral-line)
+  border-radius: var(--lb-radius-xs)
 
 pre
-  padding: var(--space-4)
-  background: var(--color-surface)
-  border: 1px solid var(--color-border)
-  border-radius: var(--radius-md)
+  padding: var(--lb-space-lg)
+  background: var(--lb-background-surface)
+  border: 1px solid var(--lb-border-neutral-line)
+  border-radius: var(--lb-radius-md)
   overflow-x: auto
   
   code
@@ -143,14 +120,14 @@ pre
 
 // Blockquotes
 blockquote
-  padding-left: var(--space-6)
-  border-left: var(--border-thick) solid var(--color-border)
+  padding-left: var(--lb-space-2xl)
+  border-left: var(--lb-border-lg) solid var(--lb-border-neutral-line)
   font-style: italic
-  color: var(--color-text-secondary)
+  color: var(--lb-text-neutral-contrast-low)
 
 // Strong and emphasis
 strong, b
-  font-weight: var(--font-weight-semibold)
+  font-weight: var(--lb-font-weight-semibold)
 
 em, i
   font-style: italic
@@ -162,12 +139,12 @@ small
 // Display classes for special headings
 .display-1
   font-size: $display-1
-  font-weight: var(--font-weight-bold)
+  font-weight: var(--lb-font-weight-bold)
   line-height: 1.1
   letter-spacing: -0.03em
 
 .display-2
   font-size: $display-2
-  font-weight: var(--font-weight-bold)
+  font-weight: var(--lb-font-weight-bold)
   line-height: 1.15
-  letter-spacing: var(--letter-spacing-tighter)
+  letter-spacing: var(--lb-letter-spacing-tighter)

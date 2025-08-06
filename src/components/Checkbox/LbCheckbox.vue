@@ -186,7 +186,7 @@ defineExpose({
   // Hidden native checkbox
   input[type="checkbox"]
     position: absolute
-    opacity: var(--opacity-0)
+    opacity: var(--lb-opacity-0)
     width: 100%
     height: 100%
     margin: 0
@@ -202,12 +202,12 @@ defineExpose({
     display: flex
     align-items: center
     justify-content: center
-    width: var(--icon-size-sm) // 18px (1.125rem)
-    height: var(--icon-size-sm) // 18px (1.125rem)
-    background: var(--color-input-background)
-    border: var(--border-md) solid var(--color-input-border)
-    border-radius: var(--radius-xs)
-    transition: background-color var(--transition), border-color var(--transition), box-shadow var(--transition)
+    width: var(--lb-icon-size-sm) // 18px (1.125rem)
+    height: var(--lb-icon-size-sm) // 18px (1.125rem)
+    background: var(--lb-background-surface)
+    border: var(--lb-border-md) solid var(--lb-border-neutral-normal)
+    border-radius: var(--lb-radius-xs)
+    transition: background-color var(--lb-transition), border-color var(--lb-transition), box-shadow var(--lb-transition)
     will-change: background-color, border-color
     
   
@@ -217,9 +217,9 @@ defineExpose({
     align-items: center
     justify-content: center
     color: white
-    opacity: var(--opacity-0)
+    opacity: var(--lb-opacity-0)
     transform: scale(0)
-    transition: opacity var(--transition), transform var(--transition)
+    transition: opacity var(--lb-transition), transform var(--lb-transition)
     will-change: opacity, transform
     
     svg
@@ -230,11 +230,11 @@ defineExpose({
   &.checked,
   &.indeterminate
     .checkbox-visual
-      background: var(--color-primary)
-      border-color: var(--color-primary)
+      background: var(--lb-fill-primary-normal)
+      border-color: var(--lb-fill-primary-normal)
       
     .icon
-      opacity: var(--opacity-100)
+      opacity: var(--lb-opacity-100)
       transform: scale(1)
       
     // Animation
@@ -243,48 +243,52 @@ defineExpose({
   
   // Hover state
   input:not(:disabled):hover ~ .checkbox-visual
-    border-color: var(--color-input-border-hover)
+    border-color: var(--lb-border-neutral-active)
     
   &.checked input:not(:disabled):hover ~ .checkbox-visual,
   &.indeterminate input:not(:disabled):hover ~ .checkbox-visual
-    background: var(--color-primary-hover)
-    border-color: var(--color-primary-hover)
+    background: var(--lb-fill-primary-hover)
+    border-color: var(--lb-fill-primary-hover)
   
   // Focus state
   input:focus-visible ~ .checkbox-visual
     outline: none
-    box-shadow: 0 0 0 var(--focus-ring-width) var(--color-primary-a5)
-    border-color: var(--color-input-border-focus)
+    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-primary-active)
+    border-color: var(--lb-border-primary-normal)
   
   // Invalid state
   &.invalid
     .checkbox-visual
-      border-color: var(--color-error-border)
+      border-color: var(--lb-border-error-normal)
       
     input:focus-visible ~ .checkbox-visual
-      box-shadow: 0 0 0 var(--focus-ring-width) var(--color-error-a5)
-      border-color: var(--color-error)
+      box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-error-active)
+      border-color: var(--lb-border-error-active)
       
     &.checked .checkbox-visual,
     &.indeterminate .checkbox-visual
-      background: var(--color-error)
-      border-color: var(--color-error)
+      background: var(--lb-fill-error-normal)
+      border-color: var(--lb-fill-error-normal)
   
   // Disabled state
   &.disabled
-    opacity: var(--opacity-60)
+    opacity: var(--lb-opacity-80)
     
     .checkbox-visual
-      background: var(--color-surface)
+      background: var(--lb-surface-neutral-disabled)
+      border-color: var(--lb-border-neutral-disabled)
       cursor: not-allowed
       
     &.checked .checkbox-visual,
     &.indeterminate .checkbox-visual
-      background: var(--color-text-secondary)
-      border-color: var(--color-text-secondary)
+      background: var(--lb-fill-neutral-disabled)
+      border-color: var(--lb-border-neutral-disabled)
+      
+      .icon
+        color: var(--lb-text-neutral-disabled)
       
     input:hover ~ .checkbox-visual
-      border-color: var(--color-input-border)
+      border-color: var(--lb-border-neutral-normal)
 
 // Animation keyframes
 @keyframes lb-check-bounce

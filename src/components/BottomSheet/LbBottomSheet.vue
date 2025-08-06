@@ -502,7 +502,7 @@ defineExpose({
   inset: 0
   z-index: var(--z-modal-backdrop)
   background: var(--color-modal-backdrop)
-  backdrop-filter: blur(var(--space-xs))
+  backdrop-filter: blur(var(--lb-space-xs))
   overflow: hidden
   
   // Use flexbox to position sheet at bottom
@@ -516,9 +516,9 @@ defineExpose({
 // Bottom sheet container
 .lb-bottom-sheet
   position: relative
-  background: var(--color-surface)
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0
-  box-shadow: var(--shadow-lg)
+  background: var(--lb-background-surface)
+  border-radius: var(--lb-radius-xl) var(--lb-radius-xl) 0 0
+  box-shadow: var(--lb-shadow-lg)
   width: 100%
   max-width: 100vw
   min-height: 0
@@ -526,7 +526,7 @@ defineExpose({
   display: flex
   flex-direction: column
   transform-origin: bottom center
-  transition: transform var(--transition), max-height var(--transition)
+  transition: transform var(--lb-transition), max-height var(--lb-transition)
   
   // Safe area padding for mobile devices
   padding-bottom: env(safe-area-inset-bottom)
@@ -537,7 +537,7 @@ defineExpose({
     border-radius: 0
     
     .sheet-handle
-      opacity: var(--opacity-30)
+      opacity: var(--lb-opacity-30)
   
   &.is-dragging
     transition: none
@@ -549,69 +549,69 @@ defineExpose({
   display: flex
   align-items: center
   justify-content: center
-  height: var(--space-3xl)
+  height: var(--lb-space-3xl)
   cursor: grab
   flex-shrink: 0
   touch-action: pan-y
   
   &:before
     content: ''
-    width: var(--space-5xl)
-    height: var(--space-xs)
-    background: var(--color-border-strong)
-    border-radius: var(--radius-full)
-    opacity: var(--opacity-60)
-    transition: opacity var(--transition)
+    width: var(--lb-space-5xl)
+    height: var(--lb-space-xs)
+    background: var(--lb-border-neutral-active)
+    border-radius: var(--lb-radius-full)
+    opacity: var(--lb-opacity-60)
+    transition: opacity var(--lb-transition)
   
   &:hover:before
-    opacity: var(--opacity-80)
+    opacity: var(--lb-opacity-80)
   
   &:active
     cursor: grabbing
     
     &:before
-      opacity: var(--opacity-100)
+      opacity: var(--lb-opacity-100)
 
 // Header
 .sheet-header
-  padding: 0.5rem var(--space-2xl)
-  border-bottom: var(--border-sm) solid var(--color-border-subtle)
+  padding: 0.5rem var(--lb-space-2xl)
+  border-bottom: var(--lb-border-sm) solid var(--lb-border-neutral-line)
   flex-shrink: 0
 
 // Content area
 .sheet-content
   flex: 1
   overflow-y: auto
-  padding: var(--space-2xl)
-  color: var(--color-text-secondary)
+  padding: var(--lb-space-2xl)
+  color: var(--lb-text-neutral-contrast-low)
   min-height: 0
   
   // Adjust padding when no handle
   .lb-bottom-sheet:not(:has(.sheet-handle)) &
-    padding-top: var(--space-3xl)
+    padding-top: var(--lb-space-3xl)
 
 // Footer
 .sheet-footer
-  padding: var(--space-lg) var(--space-2xl) var(--space-2xl)
-  border-top: var(--border-sm) solid var(--color-border-subtle)
+  padding: var(--lb-space-lg) var(--lb-space-2xl) var(--lb-space-2xl)
+  border-top: var(--lb-border-sm) solid var(--lb-border-neutral-line)
   flex-shrink: 0
   
   // Add safe area padding for mobile
-  padding-bottom: calc(var(--space-2xl) + env(safe-area-inset-bottom))
+  padding-bottom: calc(var(--lb-space-2xl) + env(safe-area-inset-bottom))
 
 // Transitions
 .bottom-sheet-enter-active
-  transition: opacity var(--transition)
+  transition: opacity var(--lb-transition)
 
 .bottom-sheet-leave-active
   transition: opacity 200ms ease
 
 .bottom-sheet-enter-from,
 .bottom-sheet-leave-to
-  opacity: var(--opacity-0)
+  opacity: var(--lb-opacity-0)
   
 .bottom-sheet-enter-active .lb-bottom-sheet
-  transition: transform var(--transition)
+  transition: transform var(--lb-transition)
   
 .bottom-sheet-leave-active .lb-bottom-sheet
   transition: transform 200ms ease
@@ -625,7 +625,7 @@ defineExpose({
 // Responsive adjustments
 @media (max-width: 640px)
   .lb-bottom-sheet
-    border-radius: var(--radius-2xl) var(--radius-2xl) 0 0
+    border-radius: var(--lb-radius-2xl) var(--lb-radius-2xl) 0 0
     
     &.state-expanded
       border-radius: 0
@@ -633,8 +633,8 @@ defineExpose({
   .sheet-header,
   .sheet-content,
   .sheet-footer
-    padding-left: var(--space-lg)
-    padding-right: var(--space-lg)
+    padding-left: var(--lb-space-lg)
+    padding-right: var(--lb-space-lg)
 
 // Reduce motion for accessibility
 @media (prefers-reduced-motion: reduce)

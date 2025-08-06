@@ -258,7 +258,7 @@ defineExpose({
   // Center the dialog using CSS Grid
   display: grid
   place-items: center
-  padding: var(--space-2xl)
+  padding: var(--lb-space-2xl)
   
   // Full-screen variant removes padding
   &.variant-fullscreen
@@ -267,9 +267,9 @@ defineExpose({
 // Dialog container
 .lb-dialog
   position: relative
-  background: var(--color-surface)
-  border-radius: var(--radius-xl)
-  box-shadow: var(--shadow-lg)
+  background: var(--lb-background-surface)
+  border-radius: var(--lb-radius-xl)
+  box-shadow: var(--lb-shadow-lg)
   max-width: min(90vw, 32rem)
   width: 100%
   max-height: min(90vh, 48rem)
@@ -288,8 +288,8 @@ defineExpose({
 .dialog-header
   display: flex
   align-items: center
-  gap: var(--space-lg)
-  padding: var(--space-2xl)
+  gap: var(--lb-space-lg)
+  padding: var(--lb-space-2xl)
   flex-shrink: 0
   
   .header-content
@@ -299,8 +299,8 @@ defineExpose({
 // Close button (ghost icon button style)
 .dialog-close
   position: absolute
-  top: var(--space-sm)
-  right: var(--space-sm)
+  top: var(--lb-space-sm)
+  right: var(--lb-space-sm)
   z-index: 1
   display: flex
   align-items: center
@@ -310,37 +310,37 @@ defineExpose({
   padding: 0
   border: none
   background: transparent
-  color: var(--color-text-tertiary)
+  color: var(--lb-text-neutral-contrast-low)
   cursor: pointer
-  border-radius: var(--radius-md)
-  transition: all var(--transition)
+  border-radius: var(--lb-radius-md)
+  transition: all var(--lb-transition)
   
   &:hover
     background: var(--color-button-ghost-hover)
-    color: var(--color-text)
+    color: var(--lb-text-neutral-contrast-high)
     
   &:active
     background: var(--color-button-ghost-active)
     
   &:focus-visible
     outline: none
-    box-shadow: 0 0 0 var(--focus-ring-width) var(--color-focus-ring)
+    box-shadow: 0 0 0 var(--focus-ring-width) var(--lb-focus-ring-color)
     
   svg
-    width: var(--icon-size-sm)
-    height: var(--icon-size-sm)
+    width: var(--lb-icon-size-sm)
+    height: var(--lb-icon-size-sm)
     
   // Adjust position for fullscreen variant
   .lb-dialog.variant-fullscreen &
-    top: var(--space-lg)
-    right: var(--space-lg)
+    top: var(--lb-space-lg)
+    right: var(--lb-space-lg)
 
 // Dialog content
 .dialog-content
   flex: 1
   overflow-y: auto
-  padding: var(--space-2xl)
-  color: var(--color-text-secondary)
+  padding: var(--lb-space-2xl)
+  color: var(--lb-text-neutral-contrast-low)
   
   // Adjust padding when fullscreen with header
   .lb-dialog.variant-fullscreen:has(.dialog-header) &
@@ -351,44 +351,44 @@ defineExpose({
   display: flex
   align-items: center
   justify-content: flex-end
-  gap: var(--space-sm)
-  padding: var(--space-lg)
+  gap: var(--lb-space-sm)
+  padding: var(--lb-space-lg)
   padding-top: 0
   flex-shrink: 0
   
   // Add top spacing if there's content
   .dialog-content + &
-    padding-top: var(--space-lg)
+    padding-top: var(--lb-space-lg)
 
 // Transitions
 .dialog-enter-active
-  transition: opacity var(--transition)
+  transition: opacity var(--lb-transition)
 
 .dialog-leave-active
   transition: opacity 200ms ease
 
 .dialog-enter-from,
 .dialog-leave-to
-  opacity: var(--opacity-0)
+  opacity: var(--lb-opacity-0)
   
 .dialog-enter-active .lb-dialog
-  transition: transform var(--transition), opacity var(--transition)
+  transition: transform var(--lb-transition), opacity var(--lb-transition)
   
 .dialog-leave-active .lb-dialog
   transition: transform 200ms ease, opacity 200ms ease
 
 .dialog-enter-from .lb-dialog
-  opacity: var(--opacity-0)
-  transform: scale(0.95) translateY(var(--space-sm))
+  opacity: var(--lb-opacity-0)
+  transform: scale(0.95) translateY(var(--lb-space-sm))
   
 .dialog-leave-to .lb-dialog
-  opacity: var(--opacity-0)
-  transform: scale(0.95) translateY(var(--space-sm))
+  opacity: var(--lb-opacity-0)
+  transform: scale(0.95) translateY(var(--lb-space-sm))
 
 // Responsive adjustments
 @media (max-width: 640px)
   .lb-dialog-overlay
-    padding: var(--space-lg)
+    padding: var(--lb-space-lg)
     
   .lb-dialog
     max-width: 100%
@@ -396,6 +396,6 @@ defineExpose({
   .dialog-header,
   .dialog-content,
   .dialog-footer
-    padding-left: var(--space-lg)
-    padding-right: var(--space-lg)
+    padding-left: var(--lb-space-lg)
+    padding-right: var(--lb-space-lg)
 </style>

@@ -7,7 +7,7 @@ nav.lb-navigation-bar(:class="navigationBarClasses")
 import { computed, provide, ref, watch } from 'vue'
 
 // Types
-type ActiveColor = 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'
+type ActiveColor = 'primary' | 'secondary' | 'neutral' | 'success' | 'warning' | 'error' | 'info'
 
 // Props
 const props = withDefaults(defineProps<{
@@ -15,12 +15,10 @@ const props = withDefaults(defineProps<{
   showLabels?: boolean
   activeColor?: ActiveColor
   fixed?: boolean
-  noActiveBackground?: boolean
 }>(), {
   showLabels: true,
   activeColor: 'primary',
-  fixed: true,
-  noActiveBackground: false
+  fixed: true
 })
 
 // Emits
@@ -41,8 +39,7 @@ const navigationBarClasses = computed(() => [
   `active-${props.activeColor}`,
   {
     'fixed': props.fixed,
-    'show-labels': props.showLabels,
-    'no-active-background': props.noActiveBackground
+    'show-labels': props.showLabels
   }
 ])
 
@@ -51,7 +48,6 @@ provide('navigationBar', {
   activeValue,
   showLabels: computed(() => props.showLabels),
   activeColor: computed(() => props.activeColor),
-  noActiveBackground: computed(() => props.noActiveBackground),
   updateActive: (value: string | number) => {
     activeValue.value = value
     emit('update:modelValue', value)
@@ -74,9 +70,9 @@ defineOptions({
   grid-auto-columns: 1fr
   align-items: stretch
   height: 4rem // 64px fixed height
-  background-color: var(--color-surface)
-  border-top: var(--border-sm) solid var(--color-border-subtle)
-  box-shadow: var(--shadow-sm)
+  background-color: var(--lb-background-surface)
+  border-top: var(--lb-border-sm) solid var(--lb-border-neutral-line)
+  box-shadow: var(--lb-shadow-sm)
   z-index: var(--z-dropdown)
   
   // Account for safe area on mobile devices by increasing height

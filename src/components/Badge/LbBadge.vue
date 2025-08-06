@@ -11,7 +11,7 @@ span.lb-badge(
 import { computed } from 'vue'
 
 // Types
-type Variant = 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'
+type Variant = 'default' | 'neutral' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'
 type Size = 'small' | 'medium' | 'large'
 type Position = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'inline'
 
@@ -103,16 +103,16 @@ defineOptions({
   display: inline-flex
   align-items: center
   justify-content: center
-  font-family: var(--font-body)
-  font-weight: var(--font-weight-semibold)
+  font-family: var(--lb-font-body)
+  font-weight: var(--lb-font-weight-semibold)
   line-height: 1
-  letter-spacing: var(--letter-spacing-tight)
-  border-radius: var(--radius-lg)
+  letter-spacing: var(--lb-letter-spacing-tight)
+  border-radius: var(--lb-radius-lg)
   white-space: nowrap
   user-select: none
   vertical-align: top
   animation: lb-badge-appear 0.2s ease-out
-  box-shadow: var(--shadow-sm)
+  box-shadow: var(--lb-shadow-sm)
   
   // Base sizing for medium (default)
   min-width: 1.25rem // 20px
@@ -167,7 +167,7 @@ defineOptions({
     width: 0.5rem // 8px
     height: 0.5rem // 8px
     padding: 0
-    border-radius: var(--radius-full)
+    border-radius: var(--lb-radius-full)
     
     &.size-small
       width: 0.375rem // 6px
@@ -181,39 +181,43 @@ defineOptions({
 
 // Variant styles - notification bubble appearance
 .lb-badge.variant-default
-  background-color: var(--color-text-secondary)
-  color: white
+  background-color: var(--lb-fill-neutral-normal)
+  color: var(--lb-text-on-variant-light)
+
+.lb-badge.variant-neutral
+  background-color: var(--lb-fill-neutral-normal)
+  color: var(--lb-text-on-variant-light)
 
 .lb-badge.variant-primary
-  background-color: var(--color-primary)
-  color: white
+  background-color: var(--lb-fill-primary-normal)
+  color: var(--lb-text-on-variant-light)
 
 .lb-badge.variant-secondary
-  background-color: var(--color-secondary)
-  color: white
+  background-color: var(--lb-fill-secondary-normal)
+  color: var(--lb-text-on-variant-light)
 
 .lb-badge.variant-success
-  background-color: var(--color-success)
-  color: white
+  background-color: var(--lb-fill-success-normal)
+  color: var(--lb-text-on-variant-light)
 
 .lb-badge.variant-warning
-  background-color: var(--color-warning)
-  color: var(--color-warning-contrast-text)
+  background-color: var(--lb-fill-warning-normal)
+  color: var(--lb-text-neutral-contrast-high)
 
 .lb-badge.variant-error
-  background-color: var(--color-error)
-  color: white
+  background-color: var(--lb-fill-error-normal)
+  color: var(--lb-text-on-variant-light)
 
 .lb-badge.variant-info
-  background-color: var(--color-info)
-  color: white
+  background-color: var(--lb-fill-info-normal)
+  color: var(--lb-text-on-variant-light)
 
 // Appearance animation
 @keyframes lb-badge-appear
   from
-    opacity: var(--opacity-0)
+    opacity: var(--lb-opacity-0)
     transform: scale(0.8)
   to
-    opacity: var(--opacity-100)
+    opacity: var(--lb-opacity-100)
     transform: scale(1)
 </style>

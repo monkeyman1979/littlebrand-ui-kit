@@ -55,11 +55,13 @@ import { computed, ref, useSlots } from 'vue'
 
 // Types
 type Variant = 'assist' | 'filter' | 'input' | 'suggestion'
+type Color = 'primary' | 'secondary' | 'neutral' | 'success' | 'warning' | 'error' | 'info'
 type Size = 'small' | 'medium' | 'large'
 
 // Props
 const props = withDefaults(defineProps<{
   variant?: Variant
+  color?: Color
   selected?: boolean
   disabled?: boolean
   clickable?: boolean
@@ -68,6 +70,7 @@ const props = withDefaults(defineProps<{
   hasDropdown?: boolean
 }>(), {
   variant: 'assist',
+  color: 'primary',
   selected: false,
   disabled: false,
   clickable: true,
@@ -92,6 +95,7 @@ const internalSelected = ref(props.selected)
 // Computed
 const chipClasses = computed(() => [
   `variant-${props.variant}`,
+  `color-${props.color}`,
   `size-${props.size}`,
   {
     'selected': props.variant === 'filter' && props.selected,
@@ -136,38 +140,38 @@ defineOptions({
   position: relative
   display: inline-flex
   align-items: center
-  gap: var(--space-xs)
-  border: var(--border-sm) solid var(--color-border)
-  border-radius: var(--radius-sm)
-  font-family: var(--font-body)
-  font-weight: var(--font-weight-medium)
-  line-height: var(--line-height-compact)
-  letter-spacing: var(--letter-spacing-tight)
+  gap: var(--lb-space-xs)
+  border: var(--lb-border-sm) solid var(--lb-border-neutral-line)
+  border-radius: var(--lb-radius-sm)
+  font-family: var(--lb-font-body)
+  font-weight: var(--lb-font-weight-medium)
+  line-height: var(--lb-line-height-compact)
+  letter-spacing: var(--lb-letter-spacing-tight)
   cursor: pointer
-  transition: all var(--transition)
+  transition: all var(--lb-transition)
   text-decoration: none
   white-space: nowrap
   user-select: none
   outline: none
-  background-color: var(--color-surface)
-  color: var(--color-text)
+  background-color: var(--lb-background-surface)
+  color: var(--lb-text-neutral-contrast-high)
   
   &:focus-visible
-    outline: var(--focus-ring-width) solid var(--color-focus-ring)
-    outline-offset: var(--focus-ring-offset)
+    outline: var(--lb-focus-ring-width) solid var(--lb-focus-ring-color)
+    outline-offset: var(--lb-focus-ring-offset)
     transition: none
   
   // Fixed height of 32px for all chips
   height: 2rem
-  padding: 0 var(--space-md)
-  font-size: var(--font-size-label-base)
-  gap: var(--space-xs)
+  padding: 0 var(--lb-space-md)
+  font-size: var(--lb-font-size-label-base)
+  gap: var(--lb-space-xs)
   
   &.has-leading-icon
-    padding-left: var(--space-sm)
+    padding-left: var(--lb-space-sm)
     
   &.has-trailing-icon
-    padding-right: var(--space-sm)
+    padding-right: var(--lb-space-sm)
   
   // Icon sizes - 18x18px
   .icon-leading,
@@ -195,75 +199,75 @@ defineOptions({
   
   // Variant styles
   &.variant-assist
-    border-color: var(--color-border)
-    background-color: var(--color-surface)
-    color: var(--color-text)
+    border-color: var(--lb-border-neutral-line)
+    background-color: var(--lb-background-surface)
+    color: var(--lb-text-neutral-contrast-high)
     
     &:hover:not(.disabled)
-      background-color: var(--color-primary-a3)
-      border-color: var(--color-primary)
-      color: var(--color-primary)
-      box-shadow: var(--shadow-sm)
+      background-color: var(--lb-surface-primary-normal)
+      border-color: var(--lb-border-primary-normal)
+      color: var(--lb-text-primary-normal)
+      box-shadow: var(--lb-shadow-sm)
       
     &:active:not(.disabled)
-      background-color: var(--color-primary-a4)
+      background-color: var(--lb-surface-primary-hover)
       transform: translateY(1px)
   
   &.variant-filter
-    border-color: var(--color-border)
-    background-color: var(--color-surface)
-    color: var(--color-text)
+    border-color: var(--lb-border-neutral-line)
+    background-color: var(--lb-background-surface)
+    color: var(--lb-text-neutral-contrast-high)
     
     &:hover:not(.disabled)
-      background-color: var(--color-primary-a3)
-      border-color: var(--color-primary)
-      color: var(--color-primary)
+      background-color: var(--lb-surface-primary-normal)
+      border-color: var(--lb-border-primary-normal)
+      color: var(--lb-text-primary-normal)
       
     &.selected
-      background-color: var(--color-primary-a4)
-      border-color: var(--color-primary)
-      color: var(--color-primary)
+      background-color: var(--lb-surface-primary-hover)
+      border-color: var(--lb-border-primary-normal)
+      color: var(--lb-text-primary-normal)
       
       &:hover:not(.disabled)
-        background-color: var(--color-primary-a5)
+        background-color: var(--lb-surface-primary-active)
   
   &.variant-input
-    background-color: var(--color-primary-a3)
-    border-color: var(--color-primary)
-    color: var(--color-primary)
+    background-color: var(--lb-fill-primary-normal)
+    border-color: var(--lb-border-primary-normal)
+    color: var(--lb-text-on-variant-light)
     
     &:hover:not(.disabled)
-      background-color: var(--color-primary-a4)
-      box-shadow: var(--shadow-sm)
+      background-color: var(--lb-fill-primary-hover)
+      box-shadow: var(--lb-shadow-sm)
       
     &:active:not(.disabled)
-      background-color: var(--color-primary-a5)
+      background-color: var(--lb-fill-primary-active)
   
   &.variant-suggestion
-    border-color: var(--color-border-subtle)
-    background-color: var(--color-surface)
-    color: var(--color-text-secondary)
+    border-color: var(--lb-border-neutral-line)
+    background-color: var(--lb-background-surface)
+    color: var(--lb-text-neutral-contrast-low)
     
     &:hover:not(.disabled)
-      background-color: var(--color-surface-raised)
-      border-color: var(--color-border)
-      color: var(--color-text)
-      box-shadow: var(--shadow-sm)
+      background-color: var(--lb-background-surface-raised)
+      border-color: var(--lb-border-neutral-normal)
+      color: var(--lb-text-neutral-contrast-high)
+      box-shadow: var(--lb-shadow-sm)
       
     &:active:not(.disabled)
-      background-color: var(--color-primary-a3)
-      border-color: var(--color-primary)
-      color: var(--color-primary)
+      background-color: var(--lb-surface-primary-normal)
+      border-color: var(--lb-border-primary-normal)
+      color: var(--lb-text-primary-normal)
   
   // Disabled state
   &.disabled
     cursor: not-allowed
-    opacity: var(--opacity-60)
+    opacity: var(--lb-opacity-60)
     
     &:hover
-      background-color: var(--color-surface)
-      border-color: var(--color-border)
-      color: var(--color-text-disabled)
+      background-color: var(--lb-background-surface)
+      border-color: var(--lb-border-neutral-line)
+      color: var(--lb-text-neutral-disabled)
       box-shadow: none
       transform: none
   
@@ -272,7 +276,7 @@ defineOptions({
     cursor: default
     
     &:hover
-      background-color: var(--color-surface)
+      background-color: var(--lb-background-surface)
       box-shadow: none
       transform: none
   
@@ -291,13 +295,13 @@ defineOptions({
       fill: currentColor
   
   .icon-selected
-    color: var(--color-primary)
+    color: var(--lb-text-primary-normal)
   
   .icon-dropdown
-    opacity: var(--opacity-70)
+    opacity: var(--lb-opacity-70)
     
     .lb-chip:hover:not(.disabled) &
-      opacity: var(--opacity-100)
+      opacity: var(--lb-opacity-100)
   
   // Content
   .content
@@ -307,7 +311,7 @@ defineOptions({
     min-width: 0
     overflow: hidden
     text-overflow: ellipsis
-    padding: 0 var(--space-xs)
+    padding: 0 var(--lb-space-xs)
   
   // Delete button
   .delete-button
@@ -319,26 +323,111 @@ defineOptions({
     background: none
     color: currentColor
     cursor: pointer
-    padding: var(--space-2xs)
-    margin: calc(var(--space-2xs) * -1)
-    border-radius: var(--radius-full)
-    transition: all var(--transition-fast)
-    opacity: var(--opacity-70)
+    padding: var(--lb-space-2xs)
+    margin: calc(var(--lb-space-2xs) * -1)
+    border-radius: var(--lb-radius-full)
+    transition: all var(--lb-transition-fast)
+    opacity: var(--lb-opacity-70)
     
     &:hover:not(:disabled)
-      opacity: var(--opacity-100)
-      background-color: var(--color-error-a3)
-      color: var(--color-error)
+      opacity: var(--lb-opacity-100)
+      background-color: var(--lb-surface-error-normal)
+      color: var(--lb-text-error-normal)
       
     &:active:not(:disabled)
-      background-color: var(--color-error-a4)
+      background-color: var(--lb-surface-error-hover)
       transform: scale(0.95)
       
     &:disabled
       cursor: not-allowed
-      opacity: var(--opacity-40)
+      opacity: var(--lb-opacity-40)
     
     svg
       display: block
       fill: currentColor
+
+// Chip variant color mixin
+@mixin chip-variant($variant, $color)
+  @if $variant == 'assist'
+    &.color-#{$color}
+      border-color: var(--lb-border-neutral-line)
+      background-color: var(--lb-background-surface)
+      color: var(--lb-text-neutral-contrast-high)
+      
+      &:hover:not(.disabled)
+        background-color: var(--lb-surface-#{$color}-normal)
+        border-color: var(--lb-border-#{$color}-normal)
+        color: var(--lb-text-#{$color}-normal)
+        box-shadow: var(--lb-shadow-sm)
+        
+      &:active:not(.disabled)
+        background-color: var(--lb-surface-#{$color}-hover)
+        transform: translateY(1px)
+  
+  @if $variant == 'filter'
+    &.color-#{$color}
+      border-color: var(--lb-border-neutral-line)
+      background-color: var(--lb-background-surface)
+      color: var(--lb-text-neutral-contrast-high)
+      
+      &:hover:not(.disabled)
+        background-color: var(--lb-surface-#{$color}-normal)
+        border-color: var(--lb-border-#{$color}-normal)
+        color: var(--lb-text-#{$color}-normal)
+        
+      &.selected
+        background-color: var(--lb-surface-#{$color}-hover)
+        border-color: var(--lb-border-#{$color}-normal)
+        color: var(--lb-text-#{$color}-normal)
+        
+        &:hover:not(.disabled)
+          background-color: var(--lb-surface-#{$color}-active)
+  
+  @if $variant == 'input'
+    &.color-#{$color}
+      background-color: var(--lb-fill-#{$color}-normal)
+      border-color: var(--lb-border-#{$color}-normal)
+      color: if($color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-on-variant-light))
+      
+      &:hover:not(.disabled)
+        background-color: var(--lb-fill-#{$color}-hover)
+        box-shadow: var(--lb-shadow-sm)
+        
+      &:active:not(.disabled)
+        background-color: var(--lb-fill-#{$color}-active)
+  
+  @if $variant == 'suggestion'
+    &.color-#{$color}
+      border-color: var(--lb-border-neutral-line)
+      background-color: var(--lb-background-surface)
+      color: var(--lb-text-neutral-contrast-low)
+      
+      &:hover:not(.disabled)
+        background-color: var(--lb-background-surface-raised)
+        border-color: var(--lb-border-neutral-normal)
+        color: var(--lb-text-neutral-contrast-high)
+        box-shadow: var(--lb-shadow-sm)
+        
+      &:active:not(.disabled)
+        background-color: var(--lb-surface-#{$color}-normal)
+        border-color: var(--lb-border-#{$color}-normal)
+        color: var(--lb-text-#{$color}-normal)
+
+// Generate all variant × color combinations
+$variants: ('assist', 'filter', 'input', 'suggestion')
+$colors: ('primary', 'secondary', 'neutral', 'success', 'warning', 'error', 'info')
+
+@each $variant in $variants
+  @each $color in $colors
+    .lb-chip.variant-#{$variant}
+      @include chip-variant($variant, $color)
+
+// Update icon-selected color to use the current color variant
+.lb-chip
+  .icon-selected
+    color: var(--lb-text-primary-normal)
+    
+  @each $color in $colors
+    &.color-#{$color} .icon-selected
+      color: var(--lb-text-#{$color}-normal)
 </style>

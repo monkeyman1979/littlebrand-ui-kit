@@ -1,7 +1,7 @@
 import type { ComputedRef, Ref } from 'vue'
 
 // SegmentButton shared types
-export type Size = 'small' | 'medium'
+export type Size = 'medium'
 export type Width = 'full' | 'auto'
 export type Color = 'primary' | 'secondary' | 'neutral'
 

@@ -204,7 +204,7 @@ defineOptions({
   grid-auto-flow: column
   gap: 0
   position: relative
-  border: base.$border-sm solid var(--color-border-strong)
+  border: base.$border-sm solid var(--lb-border-neutral-active)
   border-radius: base.$radius-full
   overflow: hidden
   

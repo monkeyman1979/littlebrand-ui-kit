@@ -130,18 +130,18 @@ defineOptions({
   display: inline-grid
   grid-auto-flow: column
   align-items: center
-  gap: var(--space-2xs)
-  padding: 0 var(--btn-padding-x-medium)
-  height: var(--btn-height-medium)
+  gap: var(--lb-space-2xs)
+  padding: 0 var(--lb-btn-padding-x-medium)
+  height: var(--lb-btn-height-medium)
   border: none
-  border-radius: var(--radius-md)
-  font-family: var(--font-body)
-  font-size: var(--btn-font-size-medium)
-  font-weight: var(--font-weight-medium)
-  line-height: var(--line-height-normal)
-  letter-spacing: var(--letter-spacing-tight)
+  border-radius: var(--lb-radius-md)
+  font-family: var(--lb-font-body)
+  font-size: var(--lb-btn-font-size-medium)
+  font-weight: var(--lb-font-weight-medium)
+  line-height: var(--lb-line-height-normal)
+  letter-spacing: var(--lb-letter-spacing-tight)
   cursor: pointer
-  transition: all var(--transition)
+  transition: all var(--lb-transition)
   text-decoration: none
   white-space: nowrap
   user-select: none
@@ -154,40 +154,40 @@ defineOptions({
     color: inherit
   
   &:focus-visible
-    outline: var(--focus-ring-width) solid var(--color-focus-ring)
-    outline-offset: var(--focus-ring-offset)
+    outline: var(--lb-focus-ring-width) solid var(--lb-focus-ring-color)
+    outline-offset: var(--lb-focus-ring-offset)
     transition: none
   
   // Size modifiers
   &.small
-    height: var(--btn-height-small)
-    padding: 0 var(--btn-padding-x-small)
-    font-size: var(--btn-font-size-small)
-    letter-spacing: var(--letter-spacing-normal)
-    border-radius: var(--radius-sm)
+    height: var(--lb-btn-height-small)
+    padding: 0 var(--lb-btn-padding-x-small)
+    font-size: var(--lb-btn-font-size-small)
+    letter-spacing: var(--lb-letter-spacing-normal)
+    border-radius: var(--lb-radius-sm)
     svg
-      width: var(--icon-size-sm)
-      height: var(--icon-size-sm)
+      width: var(--lb-icon-size-sm)
+      height: var(--lb-icon-size-sm)
     
   &.medium
-    height: var(--btn-height-medium)
-    padding: 0 var(--btn-padding-x-medium)
-    font-size: var(--btn-font-size-medium)
-    letter-spacing: var(--letter-spacing-tight)
-    border-radius: var(--radius-md)
+    height: var(--lb-btn-height-medium)
+    padding: 0 var(--lb-btn-padding-x-medium)
+    font-size: var(--lb-btn-font-size-medium)
+    letter-spacing: var(--lb-letter-spacing-tight)
+    border-radius: var(--lb-radius-md)
     svg
-      width: var(--icon-size-md)
-      height: var(--icon-size-md)
+      width: var(--lb-icon-size-md)
+      height: var(--lb-icon-size-md)
     
   &.large
-    height: var(--btn-height-large)
-    padding: 0 var(--btn-padding-x-large)
-    font-size: var(--btn-font-size-large)
-    letter-spacing: var(--letter-spacing-wide)
-    border-radius: var(--radius-md)
+    height: var(--lb-btn-height-large)
+    padding: 0 var(--lb-btn-padding-x-large)
+    font-size: var(--lb-btn-font-size-large)
+    letter-spacing: var(--lb-letter-spacing-wide)
+    border-radius: var(--lb-radius-md)
     svg
-      width: var(--icon-size-lg)
-      height: var(--icon-size-lg)
+      width: var(--lb-icon-size-lg)
+      height: var(--lb-icon-size-lg)
     
   &.full-width
     width: 100%
@@ -200,16 +200,16 @@ defineOptions({
     justify-content: center
     
     &.small
-      width: var(--btn-height-small)
-      height: var(--btn-height-small)
+      width: var(--lb-btn-height-small)
+      height: var(--lb-btn-height-small)
     
     &.medium
-      width: var(--btn-height-medium)
-      height: var(--btn-height-medium)
+      width: var(--lb-btn-height-medium)
+      height: var(--lb-btn-height-medium)
     
     &.large
-      width: var(--btn-height-large)
-      height: var(--btn-height-large)
+      width: var(--lb-btn-height-large)
+      height: var(--lb-btn-height-large)
     
   // Link variant overrides
   &[class*="link-"]
@@ -237,13 +237,13 @@ defineOptions({
   &.loading
     &.disabled
       .spinner circle
-        stroke: var(--color-text)
-        opacity: var(--opacity-40)
+        stroke: var(--lb-text-neutral-contrast-high)
+        opacity: var(--lb-opacity-40)
     
   .content
     display: flex
     align-items: center
-    padding: 0 var(--space-xs)
+    padding: 0 var(--lb-space-xs)
     
   .icon-leading,
   .icon-trailing
@@ -262,7 +262,7 @@ defineOptions({
       stroke-dasharray: 62.83
       stroke-dashoffset: 47.12
       animation: lb-spinner-dash 1.5s ease-in-out infinite
-      opacity: var(--opacity-80)
+      opacity: var(--lb-opacity-80)
 
 // Variant styles
 @mixin button-variant($variant, $color, $color-name)
@@ -271,52 +271,58 @@ defineOptions({
   
   // Base colors for each variant
   @if $variant == 'filled'
-    background-color: var(--color-#{$color})
-    color: if($color == 'warning', var(--color-warning-contrast-text), white)
+    background-color: var(--lb-fill-#{$color}-normal)
+    color: if($color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-on-variant-light))
     &:hover:not(.disabled):not(.loading)
-      background-color: var(--color-#{$color}-hover)
+      background-color: var(--lb-fill-#{$color}-hover)
+    &:active:not(.disabled):not(.loading)
+      background-color: var(--lb-fill-#{$color}-active)
     &.disabled
-      background-color: var(--color-border-subtle)
-      color: var(--color-text-disabled)
+      background-color: var(--lb-surface-neutral-subtle)
+      color: var(--lb-text-neutral-disabled)
       
   @else if $variant == 'tonal'
-    background-color: var(--color-#{$color}-a3)
-    color: var(--color-#{$color})
+    background-color: var(--lb-surface-#{$color}-normal)
+    color: if($color == 'neutral', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-normal))
     &:hover:not(.disabled):not(.loading)
-      background-color: var(--color-#{$color}-a4)
-      color: if($color == 'warning', var(--color-warning-text), var(--color-#{$color}))
+      background-color: var(--lb-surface-#{$color}-hover)
+      color: if($color == 'warning' or $color == 'neutral', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-normal))
     &:active:not(.disabled):not(.loading)
-      background-color: var(--color-#{$color}-a5)
+      background-color: var(--lb-surface-#{$color}-active)
     &.disabled
-      background-color: var(--color-surface)
-      color: var(--color-text-disabled)
+      background-color: var(--lb-background-surface)
+      color: var(--lb-text-neutral-disabled)
       
   @else if $variant == 'outline'
     background-color: transparent
-    color: var(--color-#{$color})
-    box-shadow: inset 0 0 0 var(--border-md) var(--color-#{$color})
+    color: if($color == 'neutral', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-normal))
+    box-shadow: inset 0 0 0 var(--lb-border-sm) var(--lb-border-#{$color}-normal)
     &:hover:not(.disabled):not(.loading)
-      background-color: var(--color-#{$color})
-      color: if($color == 'warning', var(--color-warning-contrast-text), white)
+      background-color: var(--lb-fill-#{$color}-normal)
+      color: if($color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-on-variant-light))
+      box-shadow: none
+    &:active:not(.disabled):not(.loading)
+      background-color: var(--lb-fill-#{$color}-active)
+      box-shadow: none
     &.disabled
-      color: var(--color-text-disabled)
-      box-shadow: inset 0 0 0 var(--border-md) var(--color-border)
+      color: var(--lb-text-neutral-disabled)
+      box-shadow: inset 0 0 0 var(--lb-border-md) var(--lb-border-neutral-line)
       
   @else if $variant == 'ghost'
     background-color: transparent
-    color: var(--color-#{$color})
+    color: if($color == 'neutral', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-normal))
     &:hover:not(.disabled):not(.loading)
-      background-color: var(--color-#{$color}-a3)
-      color: if($color == 'warning', var(--color-warning-text), var(--color-#{$color}))
+      background-color: var(--lb-surface-#{$color}-normal)
+      color: if($color == 'warning' or $color == 'neutral', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-normal))
     &:active:not(.disabled):not(.loading)
-      background-color: var(--color-#{$color}-a4)
+      background-color: var(--lb-surface-#{$color}-hover)
       transform: translateY(1px)
     &.disabled
-      color: var(--color-text-disabled)
+      color: var(--lb-text-neutral-disabled)
       
   @else if $variant == 'link'
     background-color: transparent
-    color: var(--color-#{$color})
+    color: var(--lb-text-#{$color}-normal)
     padding: 0
     height: auto
     border: none
@@ -324,19 +330,19 @@ defineOptions({
     text-decoration: none
     display: inline-flex
     align-items: baseline
-    gap: var(--space-2xs)
+    gap: var(--lb-space-2xs)
     &:hover:not(.disabled):not(.loading)
       text-decoration: underline
-      color: if($color == 'warning', var(--color-warning-text), var(--color-#{$color}))
+      color: if($color == 'warning', var(--lb-text-warning-contrast-high), var(--lb-text-#{$color}-normal))
     &:active:not(.disabled):not(.loading)
-      opacity: var(--opacity-80)
+      opacity: var(--lb-opacity-80)
     &.disabled
-      color: var(--color-text-disabled)
+      color: var(--lb-text-neutral-disabled)
       cursor: not-allowed
 
 // Generate all variant × color combinations
 $variants: ('filled', 'tonal', 'outline', 'ghost', 'link')
-$color-map: ('primary': 'orange', 'secondary': 'teal', 'success': 'green', 'warning': 'yellow', 'error': 'red', 'info': 'blue')
+$color-map: ('primary': 'orange', 'secondary': 'teal', 'neutral': 'neutral', 'success': 'green', 'warning': 'yellow', 'error': 'red', 'info': 'blue')
 
 @each $variant in $variants
   @each $color, $color-name in $color-map
@@ -349,7 +355,7 @@ $color-map: ('primary': 'orange', 'secondary': 'teal', 'success': 'green', 'warn
   .lb-button.outline-warning,
   .lb-button.ghost-warning,
   .lb-button.link-warning
-    color: var(--color-warning-text)
+    color: var(--lb-text-warning-contrast-high)
 
 // Animations
 @keyframes lb-spin
@@ -372,5 +378,5 @@ $color-map: ('primary': 'orange', 'secondary': 'teal', 'success': 'green', 'warn
   
 .lb-fade-enter-from,
 .lb-fade-leave-to
-  opacity: var(--opacity-0)
+  opacity: var(--lb-opacity-0)
 </style>

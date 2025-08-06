@@ -42,7 +42,7 @@ defineOptions({
 
 .lb-divider
   border: none
-  background-color: var(--color-border)
+  background-color: var(--lb-border-neutral-line)
   margin: 0
   --divider-size: #{base.$border-sm} // Default size
   
