@@ -220,7 +220,7 @@ defineOptions({
   // Success variant
   &.variant-success
     background-color: var(--lb-surface-success-subtle)
-    border-color: var(--lb-border-success-normal)
+    border-color: var(--lb-border-success-line)
     
     .snackbar-message
       color: var(--lb-text-success-normal)
@@ -228,7 +228,7 @@ defineOptions({
   // Error variant
   &.variant-error
     background-color: var(--lb-surface-error-subtle)
-    border-color: var(--lb-border-error-normal)
+    border-color: var(--lb-border-error-line)
     
     .snackbar-message
       color: var(--lb-text-error-normal)
@@ -236,7 +236,7 @@ defineOptions({
   // Warning variant
   &.variant-warning
     background-color: var(--lb-surface-warning-subtle)
-    border-color: var(--lb-border-warning-normal)
+    border-color: var(--lb-border-warning-line)
     
     .snackbar-message
       color: var(--lb-text-warning-normal)
@@ -244,7 +244,7 @@ defineOptions({
   // Info variant
   &.variant-info
     background-color: var(--lb-surface-info-subtle)
-    border-color: var(--lb-border-info-normal)
+    border-color: var(--lb-border-info-line)
     
     .snackbar-message
       color: var(--lb-text-info-normal)

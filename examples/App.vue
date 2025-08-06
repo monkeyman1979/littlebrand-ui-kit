@@ -2172,6 +2172,7 @@ const resetForm = () => {
 const colors = [
   { name: 'Primary', var: '--lb-fill-primary-normal' },
   { name: 'Secondary', var: '--lb-fill-secondary-normal' },
+  { name: 'Neutral', var: '--lb-fill-neutral-normal' },
   { name: 'Error', var: '--lb-fill-error-normal' },
   { name: 'Success', var: '--lb-fill-success-normal' },
   { name: 'Warning', var: '--lb-fill-warning-normal' },
@@ -2530,6 +2531,12 @@ section
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))
   gap: base.$space-md
 
+// Global form-field styles
+.form-field
+  display: flex
+  flex-direction: column
+  gap: base.$space-xs  // 4px gap between label, input, and hint
+
 .example-form
   display: flex
   flex-direction: column
@@ -2626,10 +2633,6 @@ section
   gap: base.$space-md
   
   .form-field
-    display: flex
-    flex-direction: column
-    gap: base.$space-xs
-    
     &.checkbox-field
       flex-direction: row
       align-items: center

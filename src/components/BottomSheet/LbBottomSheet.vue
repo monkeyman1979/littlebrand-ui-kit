@@ -500,9 +500,9 @@ defineExpose({
 .lb-bottom-sheet-overlay
   position: fixed
   inset: 0
-  z-index: var(--z-modal-backdrop)
-  background: var(--color-modal-backdrop)
-  backdrop-filter: blur(var(--lb-space-xs))
+  z-index: var(--lb-z-modal-backdrop)
+  background: var(--lb-background-overlay)
+  backdrop-filter: blur(2px)
   overflow: hidden
   
   // Use flexbox to position sheet at bottom
@@ -517,7 +517,7 @@ defineExpose({
 .lb-bottom-sheet
   position: relative
   background: var(--lb-background-surface)
-  border-radius: var(--lb-radius-xl) var(--lb-radius-xl) 0 0
+  border-radius: var(--lb-radius-lg) var(--lb-radius-lg) 0 0
   box-shadow: var(--lb-shadow-lg)
   width: 100%
   max-width: 100vw
@@ -625,8 +625,6 @@ defineExpose({
 // Responsive adjustments
 @media (max-width: 640px)
   .lb-bottom-sheet
-    border-radius: var(--lb-radius-2xl) var(--lb-radius-2xl) 0 0
-    
     &.state-expanded
       border-radius: 0
     
