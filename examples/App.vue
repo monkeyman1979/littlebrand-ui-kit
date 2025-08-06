@@ -1631,24 +1631,84 @@
             p.demo-note Colors provide subtle tonal variations for different contexts
         
         .demo-group
-          h4 With Icons
+          h4 With Icons (Full Width)
           .segment-demo
             LbSegmentButton(v-model="selectedView")
               LbSegmentButtonItem(value="grid")
                 template(#icon)
-                  svg(width="18" height="18" viewBox="0 0 24 24" fill="currentColor")
-                    path(d="M3 3h8v8H3zm0 10h8v8H3zm10-10h8v8h-8zm0 10h8v8h-8z")
+                  svg(width="18" height="18" viewBox="0 0 18 18" fill="currentColor")
+                    path(d="M2 2h6v6H2zm0 8h6v6H2zm8-8h6v6h-6zm0 8h6v6h-6z")
                 Grid
               LbSegmentButtonItem(value="list")
                 template(#icon)
-                  svg(width="18" height="18" viewBox="0 0 24 24" fill="currentColor")
-                    path(d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z")
+                  svg(width="18" height="18" viewBox="0 0 18 18" fill="currentColor")
+                    path(d="M2 10h2v-2H2v2zm0 3h2v-2H2v2zm0-6h2V5H2v2zm4 3h10v-2H6v2zm0 3h10v-2H6v2zM6 5v2h10V5H6z")
                 List
               LbSegmentButtonItem(value="calendar")
                 template(#icon)
-                  svg(width="18" height="18" viewBox="0 0 24 24" fill="currentColor")
-                    path(d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z")
+                  svg(width="18" height="18" viewBox="0 0 18 18" fill="currentColor")
+                    path(d="M14 2h-1V1h-1v1H6V1H5v1H4c-.83 0-1.5.67-1.5 1.5v11c0 .83.67 1.5 1.5 1.5h10c.83 0 1.5-.67 1.5-1.5v-11c0-.83-.67-1.5-1.5-1.5zm0 12H4V6h10v8zM5 8h4v4H5z")
                 Calendar
+        
+        .demo-group
+          h4 With Icons (Auto Width - Fits Content)
+          .segment-demo
+            LbSegmentButton(v-model="selectedViewAuto" width="auto")
+              LbSegmentButtonItem(value="grid")
+                template(#icon)
+                  svg(width="18" height="18" viewBox="0 0 18 18" fill="currentColor")
+                    path(d="M2 2h6v6H2zm0 8h6v6H2zm8-8h6v6h-6zm0 8h6v6h-6z")
+                Grid
+              LbSegmentButtonItem(value="list")
+                template(#icon)
+                  svg(width="18" height="18" viewBox="0 0 18 18" fill="currentColor")
+                    path(d="M2 10h2v-2H2v2zm0 3h2v-2H2v2zm0-6h2V5H2v2zm4 3h10v-2H6v2zm0 3h10v-2H6v2zM6 5v2h10V5H6z")
+                List
+              LbSegmentButtonItem(value="calendar")
+                template(#icon)
+                  svg(width="18" height="18" viewBox="0 0 18 18" fill="currentColor")
+                    path(d="M14 2h-1V1h-1v1H6V1H5v1H4c-.83 0-1.5.67-1.5 1.5v11c0 .83.67 1.5 1.5 1.5h10c.83 0 1.5-.67 1.5-1.5v-11c0-.83-.67-1.5-1.5-1.5zm0 12H4V6h10v8zM5 8h4v4H5z")
+                Calendar
+            p.demo-note Auto width segments only take up the space they need
+        
+        .demo-group
+          h4 Icons with Labels (Auto Width)
+          .segment-demo
+            LbSegmentButton(v-model="selectedViewWithLabels" width="auto")
+              LbSegmentButtonItem(value="grid")
+                template(#icon)
+                  svg(width="18" height="18" viewBox="0 0 18 18" fill="currentColor")
+                    path(d="M2 2h6v6H2zm0 8h6v6H2zm8-8h6v6h-6zm0 8h6v6h-6z")
+                | Grid
+              LbSegmentButtonItem(value="list")
+                template(#icon)
+                  svg(width="18" height="18" viewBox="0 0 18 18" fill="currentColor")
+                    path(d="M2 10h2v-2H2v2zm0 3h2v-2H2v2zm0-6h2V5H2v2zm4 3h10v-2H6v2zm0 3h10v-2H6v2zM6 5v2h10V5H6z")
+                | List
+              LbSegmentButtonItem(value="calendar")
+                template(#icon)
+                  svg(width="18" height="18" viewBox="0 0 18 18" fill="currentColor")
+                    path(d="M14 2h-1V1h-1v1H6V1H5v1H4c-.83 0-1.5.67-1.5 1.5v11c0 .83.67 1.5 1.5 1.5h10c.83 0 1.5-.67 1.5-1.5v-11c0-.83-.67-1.5-1.5-1.5zm0 12H4V6h10v8zM5 8h4v4H5z")
+                | Calendar
+            p.demo-note Auto width with icons and labels fits content naturally
+        
+        .demo-group
+          h4 Icon-Only Buttons
+          .segment-demo
+            LbSegmentButton(v-model="selectedIconOnly" width="auto")
+              LbSegmentButtonItem(value="grid" aria-label="Grid view")
+                template(#icon)
+                  svg(width="18" height="18" viewBox="0 0 18 18" fill="currentColor")
+                    path(d="M2 2h6v6H2zm0 8h6v6H2zm8-8h6v6h-6zm0 8h6v6h-6z")
+              LbSegmentButtonItem(value="list" aria-label="List view")
+                template(#icon)
+                  svg(width="18" height="18" viewBox="0 0 18 18" fill="currentColor")
+                    path(d="M2 10h2v-2H2v2zm0 3h2v-2H2v2zm0-6h2V5H2v2zm4 3h10v-2H6v2zm0 3h10v-2H6v2zM6 5v2h10V5H6z")
+              LbSegmentButtonItem(value="calendar" aria-label="Calendar view")
+                template(#icon)
+                  svg(width="18" height="18" viewBox="0 0 18 18" fill="currentColor")
+                    path(d="M14 2h-1V1h-1v1H6V1H5v1H4c-.83 0-1.5.67-1.5 1.5v11c0 .83.67 1.5 1.5 1.5h10c.83 0 1.5-.67 1.5-1.5v-11c0-.83-.67-1.5-1.5-1.5zm0 12H4V6h10v8zM5 8h4v4H5z")
+            p.demo-note Icon-only buttons for compact view switchers
         
         .demo-group
           h4 Disabled States
@@ -2157,6 +2217,9 @@ const toggleValue = ref(undefined) // Toggle mode
 const widthExample = ref('medium-length')
 const colorExample = ref('option2')
 const selectedView = ref('grid')
+const selectedViewAuto = ref('grid')
+const selectedViewWithLabels = ref('grid')
+const selectedIconOnly = ref('grid')
 const selectedDisabled = ref('option1')
 const contentFilter = ref('all')
 const dateRange = ref('month')
