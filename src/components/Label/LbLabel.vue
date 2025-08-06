@@ -41,11 +41,11 @@ label
   align-items: center
   gap: var(--lb-space-xs)
   font-family: var(--lb-font-body)
+  font-size: var(--lb-font-size-label-base) // 14px (0.875rem)
   font-weight: var(--lb-font-weight-medium)
   line-height: var(--lb-line-height-normal)
   color: var(--lb-text-neutral-contrast-high)
   cursor: pointer
-  font-size: var(--lb-font-size-label-base)
   letter-spacing: var(--lb-letter-spacing-tight)
   
   // Required indicator
