@@ -9,7 +9,6 @@ div.lb-progress(
 )
   //- Linear progress bar
   div.progress-container(v-if="type === 'linear'")
-    div.progress-track
     div.progress-fill(:style="progressFillStyle")
   
   //- Circular progress indicator
@@ -159,19 +158,11 @@ defineOptions({
     .progress-container
       position: relative
       width: 100%
+      background-color: var(--lb-surface-neutral-normal)
       border-radius: var(--lb-radius-full)
       overflow: hidden
-      
-      .progress-track
-        width: 100%
-        height: 100%
-        background-color: var(--lb-surface-neutral-subtle)
-        border-radius: var(--lb-radius-full)
         
       .progress-fill
-        position: absolute
-        top: 0
-        left: 0
         height: 100%
         background-color: var(--lb-fill-primary-normal)
         border-radius: var(--lb-radius-full)
@@ -180,8 +171,8 @@ defineOptions({
     // Indeterminate linear animation
     &.indeterminate
       .progress-fill
-        animation: lb-linear-indeterminate 2s ease-in-out infinite
-        animation-fill-mode: both
+        width: 25%
+        animation: lb-linear-indeterminate 1.5s linear infinite
     
     // Size variants for linear (heights match stroke widths)
     &.size-thin
@@ -206,7 +197,7 @@ defineOptions({
       transform: rotate(-90deg)
       
       .progress-track-circle
-        stroke: var(--lb-surface-neutral-subtle)
+        stroke: var(--lb-surface-neutral-normal)
         stroke-linecap: round
         
       .progress-fill-circle
@@ -258,17 +249,9 @@ defineOptions({
 // Linear indeterminate animation
 @keyframes lb-linear-indeterminate
   0%
-    left: -30%
-    width: 30%
-  25%
-    left: 0%
-    width: 100%
-  75%
-    left: 100%
-    width: 30%
+    transform: translateX(-100%)
   100%
-    left: 130%
-    width: 0%
+    transform: translateX(400%)
 
 // Circular indeterminate animation
 @keyframes lb-circular-indeterminate
