@@ -30,7 +30,7 @@ import { computed, useAttrs } from 'vue'
 
 // Types
 type Variant = 'filled' | 'tonal' | 'outline' | 'ghost' | 'link'
-type Color = 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'
+type Color = 'primary' | 'secondary' | 'neutral' | 'success' | 'warning' | 'error' | 'info'
 type Size = 'small' | 'medium' | 'large'
 type ButtonType = 'button' | 'submit' | 'reset'
 
