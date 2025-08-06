@@ -6,7 +6,7 @@ import './styles/index.sass'
 // Import all components
 import LbAvatar from './components/Avatar'
 import LbBadge from './components/Badge'
-import LbButton from './components/Button'
+import LbButton from './components/Buttons/Button'
 import LbChip from './components/Chip'
 import LbInput from './components/Input'
 import LbLabel from './components/Label'

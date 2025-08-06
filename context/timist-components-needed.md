@@ -3,16 +3,19 @@
 ## Overview
 These components need to be built in LittleBrand UI Kit to support the Timist application migration. Components are organized by development day with complexity ratings.
 
-## Day 1: Simple Components (4 components)
+Total components to build: 7 (3 simple, 3 medium, 1 complex)
+Completed: 4 (Badge ✅, Progress ✅, Avatar ✅, Snackbar ✅)
+Remaining: 3
 
-### 1. Badge
+## Day 1: Simple Components (3 components)
+
+### 1. Badge ✅ (Completed)
 - **Purpose**: Status indicators, counts, labels
 - **Complexity**: ⭐ (Simple)
 - **API Requirements**:
-  ```vue
-  <LbBadge variant="default|secondary|success|warning|error" size="small|medium">
-    Content
-  </LbBadge>
+  ```pug
+  lb-badge(variant="default|secondary|success|warning|error" size="small|medium")
+    | Content
   ```
 - **Key Features**:
   - Text/number content
@@ -20,24 +23,25 @@ These components need to be built in LittleBrand UI Kit to support the Timist ap
   - Size options
   - Inline-block display
 
-### 2. Separator
+### 2. Divider ❌ (Not Started)
 - **Purpose**: Visual divider between sections
 - **Complexity**: ⭐ (Simple)
 - **API Requirements**:
-  ```vue
-  <LbSeparator orientation="horizontal|vertical" />
+  ```pug
+  lb-divider(orientation="horizontal|vertical")
   ```
 - **Key Features**:
   - Horizontal/vertical orientation
   - Theme-aware coloring
   - Proper ARIA role
+  - Replaces 23+ uses of Separator in Timist
 
-### 3. Progress
+### 3. Progress ✅ (Completed)
 - **Purpose**: Upload progress, loading states
 - **Complexity**: ⭐⭐ (Simple-Medium)
 - **API Requirements**:
-  ```vue
-  <LbProgress :value="50" :max="100" size="small|medium|large" />
+  ```pug
+  lb-progress(:value="50" :max="100" size="small|medium|large")
   ```
 - **Key Features**:
   - Percentage-based progress
@@ -45,38 +49,90 @@ These components need to be built in LittleBrand UI Kit to support the Timist ap
   - Accessible progress role
   - Size variants
 
-### 4. Alert
-- **Purpose**: Inline notifications, warnings, errors
-- **Complexity**: ⭐⭐ (Simple-Medium)
+### 4. Snackbar ✅ (Completed)
+- **Purpose**: Notifications, alerts, and toast messages
+- **Complexity**: ⭐⭐⭐ (Medium)
 - **API Requirements**:
-  ```vue
-  <LbAlert variant="default|success|warning|error|info">
-    <template #icon><!-- optional icon --></template>
-    <template #title>Alert Title</template>
-    <template #description>Alert description</template>
-  </LbAlert>
+  ```typescript
+  // Composable
+  const { showSnackbar } = useSnackbar()
+  
+  showSnackbar({
+    message: 'Action completed',
+    variant: 'success|error|warning|info',
+    duration: 5000,
+    action: {
+      label: 'Undo',
+      handler: () => {}
+    }
+  })
+  ```
+  ```pug
+  //- Provider Component (add to root)
+  lb-snackbar-provider(
+    position="top|bottom"
+    max-visible="3"
+  )
   ```
 - **Key Features**:
-  - Icon slot support
-  - Title and description slots
-  - Color variants
-  - Semantic HTML (role="alert")
+  - Queue management
+  - Auto-dismiss with progress
+  - Swipe to dismiss
+  - Action buttons
+  - Multiple variants
+  - Stacking behavior
+  - Replaces Alert and Toast components
 
 ## Day 2: Medium Complexity (3 components)
 
-### 5. Card
+### 5. Popover ❌ (Not Started)
+- **Purpose**: Generic floating container for any content
+- **Complexity**: ⭐⭐⭐ (Medium)
+- **API Requirements**:
+  ```pug
+  .lb-popover(v-model:open="isOpen" :placement="'top|bottom|left|right|start|end'")
+    .trigger Click me
+    .content
+      | Any content here
+  ```
+- **Key Features**:
+  - Flexible positioning options
+  - Click outside to close
+  - Focus management
+  - Works for calendars, custom dropdowns, etc.
+  - Can be used as base for other floating components
+  - Arrow/pointer support
+  - Auto-positioning to stay in viewport
+
+### 6. SegmentButton ❌ (Not Started)
+- **Purpose**: For filtering/switching between content views
+- **Complexity**: ⭐⭐⭐ (Medium)
+- **API Requirements**:
+  ```pug
+  .lb-segment-button(v-model="selectedValue")
+    .item(value="option1") Option 1
+    .item(value="option2") Option 2
+    .item(value="option3") Option 3
+  ```
+- **Key Features**:
+  - Single selection model
+  - Smooth transition between segments
+  - Keyboard navigation
+  - Can replace Tabs for media types, biography/media views
+  - Mobile-friendly touch targets
+  - Visual indicator for active segment
+
+### 7. Card ❌ (Not Started)
 - **Purpose**: Container for grouped content
 - **Complexity**: ⭐⭐ (Medium)
 - **API Requirements**:
-  ```vue
-  <LbCard>
-    <LbCardHeader>
-      <LbCardTitle>Title</LbCardTitle>
-      <LbCardDescription>Description</LbCardDescription>
-    </LbCardHeader>
-    <LbCardContent>Content</LbCardContent>
-    <LbCardFooter>Footer</LbCardFooter>
-  </LbCard>
+  ```pug
+  .lb-card
+    .header
+      .title Title
+      .description Description
+    .content Content
+    .footer Footer
   ```
 - **Key Features**:
   - Composable sub-components
@@ -84,15 +140,14 @@ These components need to be built in LittleBrand UI Kit to support the Timist ap
   - Theme-aware borders/shadows
   - Grid-based internal spacing
 
-### 6. Avatar
+### 8. Avatar ✅ (Completed)
 - **Purpose**: User/timeline profile images
 - **Complexity**: ⭐⭐⭐ (Medium)
 - **API Requirements**:
-  ```vue
-  <LbAvatar size="small|medium|large">
-    <LbAvatarImage :src="url" :alt="alt" />
-    <LbAvatarFallback>JD</LbAvatarFallback>
-  </LbAvatar>
+  ```pug
+  .lb-avatar(size="small|medium|large")
+    .image(:src="url" :alt="alt")
+    .fallback JD
   ```
 - **Key Features**:
   - Image with fallback
@@ -101,116 +156,49 @@ These components need to be built in LittleBrand UI Kit to support the Timist ap
   - Circle/square options
   - Error handling
 
-### 7. Tabs
-- **Purpose**: Navigation between views
-- **Complexity**: ⭐⭐⭐ (Medium)
-- **API Requirements**:
-  ```vue
-  <LbTabs v-model="activeTab">
-    <LbTabsList>
-      <LbTabsTrigger value="tab1">Tab 1</LbTabsTrigger>
-      <LbTabsTrigger value="tab2">Tab 2</LbTabsTrigger>
-    </LbTabsList>
-    <LbTabsContent value="tab1">Content 1</LbTabsContent>
-    <LbTabsContent value="tab2">Content 2</LbTabsContent>
-  </LbTabs>
-  ```
-- **Key Features**:
-  - Keyboard navigation
-  - ARIA compliant
-  - Flexible styling
-  - Animation support
+## Day 3: Complex Components (1 component)
 
-## Day 3: Complex Components (3 components)
-
-### 8. Drawer
-- **Purpose**: Mobile navigation, side panels
+### 9. DatePicker ❌ (Not Started)
+- **Purpose**: Complete date selection component
 - **Complexity**: ⭐⭐⭐⭐ (Complex)
 - **API Requirements**:
-  ```vue
-  <LbDrawer v-model:open="isOpen" side="left|right|top|bottom">
-    <LbDrawerTrigger>Open</LbDrawerTrigger>
-    <LbDrawerContent>
-      <LbDrawerHeader>
-        <LbDrawerTitle>Title</LbDrawerTitle>
-        <LbDrawerDescription>Description</LbDrawerDescription>
-      </LbDrawerHeader>
-      <LbDrawerBody>Content</LbDrawerBody>
-      <LbDrawerFooter>Footer</LbDrawerFooter>
-    </LbDrawerContent>
-  </LbDrawer>
+  ```pug
+  .lb-date-picker(v-model="selectedDate" :format="'MM/DD/YYYY'")
+    .trigger
+      lb-input(:value="formattedDate" readonly)
+    .content
+      .calendar
   ```
 - **Key Features**:
-  - Touch gestures support
-  - Focus trap
-  - Backdrop overlay
-  - Smooth animations
-  - Body scroll lock
-  - Escape key handling
+  - Calendar view with month/year navigation
+  - Handles year navigation issues
+  - Keyboard navigation (arrow keys, tab)
+  - Min/max date constraints
+  - Date formatting options
+  - Can use LbPopover internally or custom dropdown
+  - Localization support
+  - Mobile-friendly date input
+  - Range selection option
 
-### 9. AlertDialog
-- **Purpose**: Confirmation dialogs, destructive actions
-- **Complexity**: ⭐⭐⭐ (Medium-Complex)
-- **API Requirements**:
-  ```vue
-  <LbAlertDialog v-model:open="isOpen">
-    <LbAlertDialogTrigger>Delete</LbAlertDialogTrigger>
-    <LbAlertDialogContent>
-      <LbAlertDialogHeader>
-        <LbAlertDialogTitle>Are you sure?</LbAlertDialogTitle>
-        <LbAlertDialogDescription>This action cannot be undone.</LbAlertDialogDescription>
-      </LbAlertDialogHeader>
-      <LbAlertDialogFooter>
-        <LbAlertDialogCancel>Cancel</LbAlertDialogCancel>
-        <LbAlertDialogAction>Continue</LbAlertDialogAction>
-      </LbAlertDialogFooter>
-    </LbAlertDialogContent>
-  </LbAlertDialog>
-  ```
-- **Key Features**:
-  - Focus management
-  - Backdrop click handling
-  - Animation support
-  - Accessible (ARIA)
+## Notes on Existing Components Used Instead
 
-### 10. Toast (Sonner replacement)
-- **Purpose**: Temporary notifications
-- **Complexity**: ⭐⭐⭐⭐ (Complex)
-- **API Requirements**:
-  ```typescript
-  // Composable
-  const { toast } = useToast()
-  
-  toast({
-    title: 'Success',
-    description: 'Action completed',
-    variant: 'success',
-    duration: 5000
-  })
-  ```
-  ```vue
-  <!-- Component -->
-  <LbToaster position="top-right|top-left|bottom-right|bottom-left" />
-  ```
-- **Key Features**:
-  - Queue management
-  - Auto-dismiss
-  - Swipe to dismiss
-  - Progress indicator
-  - Action buttons
-  - Stacking behavior
+- **NavigationBar**: Used instead of Tabs for navigation between views
+- **BottomSheet**: Used instead of Drawer for mobile panels
+- **Dialog**: Used instead of AlertDialog for confirmations
+- **Snackbar**: Used for both Alert and Toast functionality
 
 ## Implementation Notes
 
 ### General Requirements for All Components:
 1. **NO utility classes** - Use semantic class names only
-2. **CSS Grid/Flexbox** for spacing (no margins)
-3. **CSS Variables** for all customizable values
-4. **Pug templates** following LittleBrand patterns
-5. **SASS styles** (not SCSS syntax)
-6. **TypeScript** for props/emits
-7. **Slots** for icon integration
-8. **ARIA compliance** for accessibility
+2. **NO BEM naming** - Parent gets `lb-component-name` class, children get simple descriptive names
+3. **CSS Grid/Flexbox** for spacing (no margins)
+4. **CSS Variables** for all customizable values
+5. **Pug templates** following LittleBrand patterns
+6. **SASS styles** (not SCSS syntax) with scoped styles
+7. **TypeScript** for props/emits
+8. **Slots** for icon integration
+9. **ARIA compliance** for accessibility
 
 ### Testing Checklist:
 - [ ] Keyboard navigation works

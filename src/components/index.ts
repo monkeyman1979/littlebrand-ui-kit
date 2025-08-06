@@ -1,6 +1,6 @@
 export { default as LbAvatar } from './Avatar'
 export { default as LbBadge } from './Badge'
-export { default as LbButton } from './Button'
+export { default as LbButton } from './Buttons/Button'
 export { default as LbChip } from './Chip'
 export { default as LbInput } from './Input'
 export { default as LbLabel } from './Label'

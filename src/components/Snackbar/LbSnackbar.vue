@@ -42,7 +42,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import LbButton from '../Button/LbButton.vue'
+import LbButton from '../Buttons/Button/LbButton.vue'
 import type { SnackbarVariant, SnackbarAction } from './types'
 
 // Props
