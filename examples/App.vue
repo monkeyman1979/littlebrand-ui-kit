@@ -2530,6 +2530,12 @@ section
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))
   gap: base.$space-md
 
+// Global form-field styles
+.form-field
+  display: flex
+  flex-direction: column
+  gap: base.$space-xs  // 4px gap between label, input, and hint
+
 .example-form
   display: flex
   flex-direction: column
@@ -2626,10 +2632,6 @@ section
   gap: base.$space-md
   
   .form-field
-    display: flex
-    flex-direction: column
-    gap: base.$space-xs
-    
     &.checkbox-field
       flex-direction: row
       align-items: center
