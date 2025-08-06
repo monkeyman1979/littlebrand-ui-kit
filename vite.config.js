@@ -17,6 +17,10 @@ export default defineConfig({
           pug: {
             doctype: 'html'
           }
+        },
+        compilerOptions: {
+          // Tell Vue to treat these as custom elements and not try to resolve them as components
+          isCustomElement: (tag) => ['Calendar', 'Grid', 'List'].includes(tag)
         }
       }
     })

@@ -1558,13 +1558,181 @@
             .list-item
               h5 Notifications
               p Choose what updates you receive
+      
+      .component-demo
+        h3 Segment Button
+        p Single-select buttons for filtering and content switching
+        
+        .demo-group
+          h4 Basic Segment Buttons
+          .segment-demo
+            LbSegmentButton(v-model="selectedSegment1")
+              LbSegmentButtonItem(value="all") All
+              LbSegmentButtonItem(value="active") Active
+              LbSegmentButtonItem(value="completed") Completed
+            p.demo-note Selected: {{ selectedSegment1 }}
+        
+        .demo-group
+          h4 Size Variants
+          .segment-demo
+            .segment-row
+              h5 Small
+              LbSegmentButton(v-model="selectedSize" size="small")
+                LbSegmentButtonItem(value="small") Small
+                LbSegmentButtonItem(value="medium") Medium
+                LbSegmentButtonItem(value="large") Large
+            
+            .segment-row
+              h5 Medium (Default)
+              LbSegmentButton(v-model="selectedSize")
+                LbSegmentButtonItem(value="small") Small
+                LbSegmentButtonItem(value="medium") Medium
+                LbSegmentButtonItem(value="large") Large
+            
+        
+        .demo-group
+          h4 Multi-Select Mode
+          .segment-demo
+            .segment-row
+              h5 Filter by Tags (Multi-select)
+              LbSegmentButton(v-model="selectedTags" :multiSelect="true")
+                LbSegmentButtonItem(value="vue") Vue.js
+                LbSegmentButtonItem(value="react") React
+                LbSegmentButtonItem(value="angular") Angular
+                LbSegmentButtonItem(value="svelte") Svelte
+              p.demo-note Selected: {{ selectedTags?.length ? selectedTags.join(', ') : 'None' }}
+            
+            .segment-row
+              h5 Toggle Mode (Single-select with deselect)
+              LbSegmentButton(v-model="toggleValue" :allowEmpty="true")
+                LbSegmentButtonItem(value="bold") Bold
+                LbSegmentButtonItem(value="italic") Italic
+                LbSegmentButtonItem(value="underline") Underline
+              p.demo-note Active: {{ toggleValue || 'None' }}
+        
+        .demo-group
+          h4 Width Variants
+          .segment-demo
+            .segment-row
+              h5 Full Width (Default - stretches to fill container)
+              LbSegmentButton(v-model="widthExample" width="full")
+                LbSegmentButtonItem(value="short") Short
+                LbSegmentButtonItem(value="medium-length") Medium Length
+                LbSegmentButtonItem(value="very-long-label") Very Long Label
+            
+            .segment-row
+              h5 Auto Width (Fits content)
+              LbSegmentButton(v-model="widthExample" width="auto")
+                LbSegmentButtonItem(value="short") Short
+                LbSegmentButtonItem(value="medium-length") Medium Length
+                LbSegmentButtonItem(value="very-long-label") Very Long Label
+            p.demo-note Auto width makes segments fit their content naturally
+        
+        .demo-group
+          h4 Color Variants
+          .segment-demo
+            .segment-row
+              h5 Primary (Default)
+              LbSegmentButton(v-model="colorExample" color="primary")
+                LbSegmentButtonItem(value="option1") Option 1
+                LbSegmentButtonItem(value="option2") Option 2
+                LbSegmentButtonItem(value="option3") Option 3
+            
+            .segment-row
+              h5 Secondary
+              LbSegmentButton(v-model="colorExample" color="secondary")
+                LbSegmentButtonItem(value="option1") Option 1
+                LbSegmentButtonItem(value="option2") Option 2
+                LbSegmentButtonItem(value="option3") Option 3
+                
+            .segment-row
+              h5 Neutral
+              LbSegmentButton(v-model="colorExample" color="neutral")
+                LbSegmentButtonItem(value="option1") Option 1
+                LbSegmentButtonItem(value="option2") Option 2
+                LbSegmentButtonItem(value="option3") Option 3
+            p.demo-note Colors provide subtle tonal variations for different contexts
+        
+        .demo-group
+          h4 With Icons
+          .segment-demo
+            LbSegmentButton(v-model="selectedView")
+              LbSegmentButtonItem(value="grid")
+                template(#icon)
+                  svg(width="18" height="18" viewBox="0 0 24 24" fill="currentColor")
+                    path(d="M3 3h8v8H3zm0 10h8v8H3zm10-10h8v8h-8zm0 10h8v8h-8z")
+                Grid
+              LbSegmentButtonItem(value="list")
+                template(#icon)
+                  svg(width="18" height="18" viewBox="0 0 24 24" fill="currentColor")
+                    path(d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z")
+                List
+              LbSegmentButtonItem(value="calendar")
+                template(#icon)
+                  svg(width="18" height="18" viewBox="0 0 24 24" fill="currentColor")
+                    path(d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z")
+                Calendar
+        
+        .demo-group
+          h4 Disabled States
+          .segment-demo
+            .segment-row
+              p Individual items disabled
+              LbSegmentButton(v-model="selectedDisabled")
+                LbSegmentButtonItem(value="option1") Option 1
+                LbSegmentButtonItem(value="option2" :disabled="true") Option 2
+                LbSegmentButtonItem(value="option3") Option 3
+                LbSegmentButtonItem(value="option4" :disabled="true") Option 4
+        
+        .demo-group
+          h4 Real-world Examples
+          .segment-demo
+            .example-card
+              h5 Content Filter
+              LbSegmentButton(v-model="contentFilter")
+                LbSegmentButtonItem(value="all") All
+                LbSegmentButtonItem(value="photos") Photos
+                LbSegmentButtonItem(value="videos") Videos
+                LbSegmentButtonItem(value="docs") Docs
+              
+              .content-preview
+                p(v-if="contentFilter === 'all'") Showing all 245 items
+                p(v-else-if="contentFilter === 'photos'") Showing 142 photos
+                p(v-else-if="contentFilter === 'videos'") Showing 67 videos
+                p(v-else-if="contentFilter === 'docs'") Showing 36 documents
+            
+            .example-card
+              h5 Date Range Selector
+              LbSegmentButton(v-model="dateRange" size="small")
+                LbSegmentButtonItem(value="today") Today
+                LbSegmentButtonItem(value="week") This Week
+                LbSegmentButtonItem(value="month") This Month
+                LbSegmentButtonItem(value="year") This Year
+              
+              .date-info
+                p(v-if="dateRange === 'today'") {{ new Date().toLocaleDateString() }}
+                p(v-else-if="dateRange === 'week'") Last 7 days
+                p(v-else-if="dateRange === 'month'") {{ new Date().toLocaleString('default', { month: 'long', year: 'numeric' }) }}
+                p(v-else-if="dateRange === 'year'") {{ new Date().getFullYear() }}
+                
+            .example-card
+              h5 Filter Options (Multi-select)
+              LbSegmentButton(v-model="statusFilters" :multiSelect="true" size="small" color="neutral")
+                LbSegmentButtonItem(value="active") Active
+                LbSegmentButtonItem(value="archived") Archived
+                LbSegmentButtonItem(value="starred") Starred
+              
+              .filter-info
+                p(v-if="!statusFilters || statusFilters.length === 0") Showing all items
+                p(v-else) Filters: {{ statusFilters.join(' + ') }}
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { 
   LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog,
-  LbBadge, LbNavigationBar, LbNavigationBarItem, LbBottomSheet, LbChip, LbAvatar, LbProgress, LbDivider, useSnackbar
+  LbBadge, LbNavigationBar, LbNavigationBarItem, LbBottomSheet, LbChip, LbAvatar, LbProgress, LbDivider, 
+  LbSegmentButton, LbSegmentButtonItem, useSnackbar
 } from '../src'
 
 const isDark = ref(false)
@@ -2005,6 +2173,19 @@ const circularProgress2 = ref(85)
 const circularProgress3 = ref(60)
 const circularProgress4 = ref(75)
 const interactiveProgress = ref(50)
+
+// SegmentButton demo data
+const selectedSegment1 = ref(undefined) // Start with no selection
+const selectedSize = ref('medium')
+const selectedTags = ref([]) // Multi-select
+const toggleValue = ref(undefined) // Toggle mode
+const widthExample = ref('medium-length')
+const colorExample = ref('option2')
+const selectedView = ref('grid')
+const selectedDisabled = ref('option1')
+const contentFilter = ref('all')
+const dateRange = ref('month')
+const statusFilters = ref([])
 const tags = ref(['Vue.js', 'TypeScript', 'UI Kit', 'Component Library'])
 
 const activeFilters = computed(() => {
@@ -2614,6 +2795,55 @@ section
     h5
       margin: 0 0 base.$space-xs 0
       
+    p
+      margin: 0
+      color: var(--color-text-secondary)
+      font-size: var(--font-size-label-base)
+
+// SegmentButton demo styles
+.segment-demo
+  display: flex
+  flex-direction: column
+  gap: base.$space-lg
+  
+  .demo-note
+    margin-top: base.$space-sm
+    font-size: var(--font-size-label-base)
+    color: var(--color-text-secondary)
+
+.segment-row
+  display: flex
+  flex-direction: column
+  gap: base.$space-sm
+  
+  h5
+    margin: 0
+    color: var(--color-text-secondary)
+    font-size: var(--font-size-label-base)
+    text-transform: uppercase
+    letter-spacing: 0.05em
+
+.example-card
+  background: var(--color-surface)
+  border: base.$border-sm solid var(--color-border)
+  border-radius: base.$radius-md
+  padding: base.$space-lg
+  max-width: 500px
+  margin-bottom: base.$space-lg
+  
+  &:last-child
+    margin-bottom: 0
+  
+  h5
+    margin: 0 0 base.$space-md 0
+    
+  .content-preview,
+  .date-info
+    margin-top: base.$space-md
+    padding: base.$space-md
+    background: var(--color-surface-lowered)
+    border-radius: base.$radius-sm
+    
     p
       margin: 0
       color: var(--color-text-secondary)

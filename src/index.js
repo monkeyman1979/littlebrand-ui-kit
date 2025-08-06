@@ -7,6 +7,7 @@ import './styles/index.sass'
 import LbAvatar from './components/Avatar'
 import LbBadge from './components/Badge'
 import LbButton from './components/Buttons/Button'
+import { LbSegmentButton, LbSegmentButtonItem } from './components/Buttons/SegmentButton'
 import LbChip from './components/Chip'
 import LbDivider from './components/Divider'
 import LbInput from './components/Input'
@@ -25,7 +26,7 @@ import LbProgress from './components/Progress'
 import { LbSnackbar, LbSnackbarProvider, useSnackbar, createSnackbarHelpers } from './components/Snackbar'
 
 // Export individual components for tree-shaking
-export { LbAvatar, LbBadge, LbButton, LbChip, LbDivider, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog, LbBottomSheet, LbNavigationBar, LbNavigationBarItem, LbProgress, LbSnackbar, LbSnackbarProvider, useSnackbar, createSnackbarHelpers }
+export { LbAvatar, LbBadge, LbButton, LbSegmentButton, LbSegmentButtonItem, LbChip, LbDivider, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog, LbBottomSheet, LbNavigationBar, LbNavigationBarItem, LbProgress, LbSnackbar, LbSnackbarProvider, useSnackbar, createSnackbarHelpers }
 
 // Plugin install function for Vue.use()
 const LittleBrandUI = {
@@ -34,6 +35,8 @@ const LittleBrandUI = {
     app.component('LbAvatar', LbAvatar)
     app.component('LbBadge', LbBadge)
     app.component('LbButton', LbButton)
+    app.component('LbSegmentButton', LbSegmentButton)
+    app.component('LbSegmentButtonItem', LbSegmentButtonItem)
     app.component('LbChip', LbChip)
     app.component('LbDivider', LbDivider)
     app.component('LbInput', LbInput)
