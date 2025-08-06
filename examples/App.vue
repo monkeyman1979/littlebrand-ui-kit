@@ -1743,9 +1743,9 @@
               h5 Date Range Selector
               LbSegmentButton(v-model="dateRange")
                 LbSegmentButtonItem(value="today") Today
-                LbSegmentButtonItem(value="week") This Week
-                LbSegmentButtonItem(value="month") This Month
-                LbSegmentButtonItem(value="year") This Year
+                LbSegmentButtonItem(value="week") Week
+                LbSegmentButtonItem(value="month") Month
+                LbSegmentButtonItem(value="year") Year
               
               .date-info
                 p(v-if="dateRange === 'today'") {{ new Date().toLocaleDateString() }}
