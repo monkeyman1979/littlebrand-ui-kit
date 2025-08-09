@@ -48,7 +48,7 @@ export interface PopoverContext {
 const props = withDefaults(defineProps<LbPopoverProps>(), {
   open: false,
   placement: 'bottom',
-  offset: 8, // Matches --lb-space-sm (8px)
+  offset: 8, // Matches var(--lb-space-sm)
   showArrow: true,
   closeOnClickOutside: true,
   closeOnEscape: true,
@@ -163,23 +163,23 @@ const updatePosition = () => {
   if (props.placement.includes('-start')) {
     if (props.placement.startsWith('top') || props.placement.startsWith('bottom')) {
       x = triggerRect.left
-      arrowX = Math.min(triggerRect.width / 2, contentRect.width - (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--lb-space-lg')) || 16))
+      arrowX = Math.min(triggerRect.width / 2, contentRect.width - (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--lb-space-lg')) || parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--lb-space-lg'))))
     } else {
       y = triggerRect.top
-      arrowY = Math.min(triggerRect.height / 2, contentRect.height - (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--lb-space-lg')) || 16))
+      arrowY = Math.min(triggerRect.height / 2, contentRect.height - (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--lb-space-lg')) || parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--lb-space-lg'))))
     }
   } else if (props.placement.includes('-end')) {
     if (props.placement.startsWith('top') || props.placement.startsWith('bottom')) {
       x = triggerRect.right - contentRect.width
-      arrowX = Math.max(contentRect.width - triggerRect.width / 2, (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--lb-space-lg')) || 16))
+      arrowX = Math.max(contentRect.width - triggerRect.width / 2, (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--lb-space-lg')) || parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--lb-space-lg'))))
     } else {
       y = triggerRect.bottom - contentRect.height
-      arrowY = Math.max(contentRect.height - triggerRect.height / 2, (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--lb-space-lg')) || 16))
+      arrowY = Math.max(contentRect.height - triggerRect.height / 2, (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--lb-space-lg')) || parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--lb-space-lg'))))
     }
   }
 
   // Viewport collision detection and adjustment
-  const padding = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--lb-space-sm')) || 8
+  const padding = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--lb-space-sm')) || parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--lb-space-sm'))
   
   // Horizontal bounds checking
   if (x < padding) {

@@ -89,7 +89,7 @@ const updatePosition = () => {
   }
   
   // Collision detection - flip if needed
-  const padding = 8
+  const padding = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--lb-space-sm')) || 8
   let flipped = false
   
   // Check if we need to flip vertically
@@ -266,12 +266,12 @@ onBeforeUnmount(() => {
   
   // Ensure content doesn't overflow
   overflow: auto
-  max-height: calc(100vh - var(--lb-space-xl))
+  max-height: calc(100vh - calc(var(--lb-space-xl) * 2))
 
 // Transition classes for fade animation
 .popover-fade-enter-active,
 .popover-fade-leave-active
-  transition: opacity 0.3s ease
+  transition: opacity var(--lb-transition)
 
 .popover-fade-enter-from,
 .popover-fade-leave-to

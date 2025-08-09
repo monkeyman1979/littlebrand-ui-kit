@@ -27,8 +27,8 @@ export interface LbPopoverArrowProps {
 }
 
 const props = withDefaults(defineProps<LbPopoverArrowProps>(), {
-  width: 8, // Matches --lb-space-sm (8px)
-  height: 8 // Matches --lb-space-sm (8px)
+  width: 8, // Matches var(--lb-space-sm)
+  height: 8 // Matches var(--lb-space-sm)
 })
 
 // Inject popover context
@@ -56,22 +56,24 @@ const arrowStyles = computed(() => ({
 const arrowPath = computed(() => {
   // Create SVG path for arrow pointing toward trigger based on placement
   const side = context.placement.split('-')[0]
+  const halfWidth = props.width / 2
+  const halfHeight = props.height / 2
   
   switch (side) {
     case 'top':
       // Arrow pointing down
-      return 'M0,0 L4,4 L8,0 Z'
+      return `M0,0 L${halfWidth},${halfHeight} L${props.width},0 Z`
     case 'bottom':
       // Arrow pointing up
-      return 'M0,8 L4,4 L8,8 Z'
+      return `M0,${props.height} L${halfWidth},${halfHeight} L${props.width},${props.height} Z`
     case 'left':
       // Arrow pointing right
-      return 'M8,0 L4,4 L8,8 Z'
+      return `M${props.width},0 L${halfWidth},${halfHeight} L${props.width},${props.height} Z`
     case 'right':
       // Arrow pointing left
-      return 'M0,0 L4,4 L0,8 Z'
+      return `M0,0 L${halfWidth},${halfHeight} L0,${props.height} Z`
     default:
-      return 'M0,0 L4,4 L8,0 Z'
+      return `M0,0 L${halfWidth},${halfHeight} L${props.width},0 Z`
   }
 })
 
@@ -108,32 +110,34 @@ defineExpose({
   position: absolute
   pointer-events: none
   z-index: var(--lb-z-dropdown)
+  width: var(--lb-space-sm)
+  height: var(--lb-space-sm)
   
   // Arrow positioning based on placement
   &.placement-top,
   &.placement-top-start,
   &.placement-top-end
-    bottom: calc(-1 * var(--lb-space-xs))
+    bottom: calc(var(--lb-space-xs) * -1)
     
   &.placement-bottom,
   &.placement-bottom-start,
   &.placement-bottom-end
-    top: calc(-1 * var(--lb-space-xs))
+    top: calc(var(--lb-space-xs) * -1)
     
   &.placement-left,
   &.placement-left-start,
   &.placement-left-end
-    right: calc(-1 * var(--lb-space-xs))
+    right: calc(var(--lb-space-xs) * -1)
     
   &.placement-right,
   &.placement-right-start,
   &.placement-right-end
-    left: calc(-1 * var(--lb-space-xs))
+    left: calc(var(--lb-space-xs) * -1)
 
 .arrow-svg
   display: block
-  width: var(--lb-space-sm)
-  height: var(--lb-space-sm)
+  width: 100%
+  height: 100%
 
 .arrow-path
   fill: var(--lb-background-surface)
