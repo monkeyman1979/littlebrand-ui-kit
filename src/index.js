@@ -18,6 +18,7 @@ import LbCheckbox from './components/Checkbox'
 import LbRadio from './components/Radio'
 import LbSwitch from './components/Switch'
 import LbSelect from './components/Select'
+import LbCustomSelect from './components/CustomSelect'
 import LbFormField from './components/FormField'
 import LbDialog from './components/Dialog'
 import LbBottomSheet from './components/BottomSheet'
@@ -29,7 +30,7 @@ import LbMenu from './components/Menu'
 import LbDropdown from './components/Dropdown'
 
 // Export individual components for tree-shaking
-export { LbAvatar, LbBadge, LbButton, LbSegmentButton, LbSegmentButtonItem, LbChip, LbDivider, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog, LbBottomSheet, LbNavigationBar, LbNavigationBarItem, LbProgress, LbSnackbar, LbSnackbarProvider, useSnackbar, createSnackbarHelpers, LbPopover, LbPopoverTrigger, LbPopoverContent, LbPopoverArrow, LbMenu, LbDropdown }
+export { LbAvatar, LbBadge, LbButton, LbSegmentButton, LbSegmentButtonItem, LbChip, LbDivider, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbCustomSelect, LbFormField, LbDialog, LbBottomSheet, LbNavigationBar, LbNavigationBarItem, LbProgress, LbSnackbar, LbSnackbarProvider, useSnackbar, createSnackbarHelpers, LbPopover, LbPopoverTrigger, LbPopoverContent, LbPopoverArrow, LbMenu, LbDropdown }
 
 // Plugin install function for Vue.use()
 const LittleBrandUI = {
@@ -50,6 +51,7 @@ const LittleBrandUI = {
     app.component('LbRadio', LbRadio)
     app.component('LbSwitch', LbSwitch)
     app.component('LbSelect', LbSelect)
+    app.component('LbCustomSelect', LbCustomSelect)
     app.component('LbFormField', LbFormField)
     app.component('LbDialog', LbDialog)
     app.component('LbBottomSheet', LbBottomSheet)

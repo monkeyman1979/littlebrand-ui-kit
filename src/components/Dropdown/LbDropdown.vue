@@ -233,10 +233,9 @@ defineOptions({
   overflow-y: auto
   overflow-x: hidden
   max-height: 20rem // 320px
-  // Ensure content determines width unless matchWidth is true
+  // Width is either matched to trigger or content-based
   width: max-content
   min-width: 12.5rem // 200px
-  max-width: min(90vw, 25rem) // 400px
 
 // Transition
 .dropdown-fade-enter-active,
