@@ -25,9 +25,11 @@ import LbNavigationBar, { LbNavigationBarItem } from './components/NavigationBar
 import LbProgress from './components/Progress'
 import { LbSnackbar, LbSnackbarProvider, useSnackbar, createSnackbarHelpers } from './components/Snackbar'
 import LbPopover, { LbPopoverTrigger, LbPopoverContent, LbPopoverArrow } from './components/Popover'
+import LbMenu from './components/Menu'
+import LbDropdown from './components/Dropdown'
 
 // Export individual components for tree-shaking
-export { LbAvatar, LbBadge, LbButton, LbSegmentButton, LbSegmentButtonItem, LbChip, LbDivider, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog, LbBottomSheet, LbNavigationBar, LbNavigationBarItem, LbProgress, LbSnackbar, LbSnackbarProvider, useSnackbar, createSnackbarHelpers, LbPopover, LbPopoverTrigger, LbPopoverContent, LbPopoverArrow }
+export { LbAvatar, LbBadge, LbButton, LbSegmentButton, LbSegmentButtonItem, LbChip, LbDivider, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog, LbBottomSheet, LbNavigationBar, LbNavigationBarItem, LbProgress, LbSnackbar, LbSnackbarProvider, useSnackbar, createSnackbarHelpers, LbPopover, LbPopoverTrigger, LbPopoverContent, LbPopoverArrow, LbMenu, LbDropdown }
 
 // Plugin install function for Vue.use()
 const LittleBrandUI = {
@@ -60,6 +62,8 @@ const LittleBrandUI = {
     app.component('LbPopoverTrigger', LbPopoverTrigger)
     app.component('LbPopoverContent', LbPopoverContent)
     app.component('LbPopoverArrow', LbPopoverArrow)
+    app.component('LbMenu', LbMenu)
+    app.component('LbDropdown', LbDropdown)
     
     // Apply any global configuration
     if (options.theme) {

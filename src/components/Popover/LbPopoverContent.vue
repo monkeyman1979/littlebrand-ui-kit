@@ -251,20 +251,20 @@ onBeforeUnmount(() => {
 
 .lb-popover-content
   // Layout
-  max-width: min(90vw, 512px)
-  // min-width removed to allow natural content width
+  width: max-content
+  min-width: 12.5rem // 200px
+  max-width: min(90vw, 32rem) // 512px
   padding: var(--lb-space-md)
   
   // Visual
   background: var(--lb-background-surface)
-  border: var(--lb-border-sm) solid var(--lb-border-neutral-line)
+  border: var(--lb-border-sm) solid var(--lb-border-neutral-normal)
   border-radius: var(--lb-radius-md)
   box-shadow: var(--lb-shadow-lg)
   
   // Positioning
   z-index: var(--lb-z-dropdown)
   
-  // Ensure content doesn't overflow
   overflow: auto
   max-height: calc(100vh - calc(var(--lb-space-xl) * 2))
 

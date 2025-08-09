@@ -1155,18 +1155,18 @@
               | Jane Smith
         
         .demo-group
-          h4 With Dropdown
+          h4 With Dropdown (Visual Only)
           .button-row
             LbChip(variant="filter" :has-dropdown="true" @click="handleChipClick") 
               template(#leadingIcon)
                 svg(viewBox="0 0 24 24" fill="currentColor" width="18" height="18")
                   path(d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z")
                   path(d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z")
-              | Filter chip
+              | Edit filters
             
-            LbChip(variant="assist" :has-dropdown="true" @click="handleChipClick") More options
+            LbChip(variant="assist" :has-dropdown="true" @click="handleChipClick") View options
             
-            LbChip(variant="suggestion" :has-dropdown="true" @click="handleChipClick") Choose date
+            LbChip(variant="suggestion" :has-dropdown="true" @click="handleChipClick") Pick date
         
         .demo-group
           h4 Filter Chips Example
@@ -1177,6 +1177,71 @@
               variant="filter"
               v-model:selected="filter.selected"
             ) {{ filter.label }}
+        
+        .demo-group
+          h4 Chips with Functional Dropdown
+          .button-row
+            //- Filter chip with dropdown menu
+            LbDropdown
+              template(#trigger)
+                LbChip(variant="filter" :has-dropdown="true") 
+                  | Sort: {{ selectedSort || 'Default' }}
+              
+              template(#content)
+                .dropdown-menu-content
+                  .menu-item(
+                    v-for="option in ['Default', 'Name', 'Date', 'Size']"
+                    :key="option"
+                    @click="selectedSort = option"
+                    :class="{ 'menu-item-selected': selectedSort === option }"
+                  ) {{ option }}
+            
+            //- Assist chip with dropdown for more actions
+            LbDropdown
+              template(#trigger)
+                LbChip(variant="assist" :has-dropdown="true")
+                  template(#leadingIcon)
+                    svg(viewBox="0 0 24 24" fill="currentColor" width="18" height="18")
+                      path(d="M10.5 6a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm0 6a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm0 6a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z")
+                  | More actions
+              
+              template(#content)
+                .dropdown-menu-content
+                  .menu-item(@click="handleChipAction('edit')")
+                    svg(width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="margin-right: 8px")
+                      path(d="M11.013 2.513a1.75 1.75 0 012.475 2.474L6.226 12.25a2.751 2.751 0 01-.892.596l-2.047.848a.75.75 0 01-.98-.98l.848-2.047a2.751 2.751 0 01.596-.892l7.262-7.262z")
+                    | Edit
+                  .menu-item(@click="handleChipAction('duplicate')")
+                    svg(width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="margin-right: 8px")
+                      path(d="M10.5 3A1.5 1.5 0 0112 4.5v7a1.5 1.5 0 01-1.5 1.5h-5A1.5 1.5 0 014 11.5v-7A1.5 1.5 0 015.5 3h5zm1.5 8.5v-7a3 3 0 00-3-3h-5a3 3 0 00-3 3v7a3 3 0 003 3h5a3 3 0 003-3z")
+                    | Duplicate
+                  .menu-item(@click="handleChipAction('share')")
+                    svg(width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="margin-right: 8px")
+                      path(d="M5.75 7.5a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zm2.5 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zm3.25.75a.75.75 0 00-1.5 0v1.5a.75.75 0 001.5 0v-1.5z")
+                    | Share
+                  .menu-divider
+                  .menu-item.menu-item-danger(@click="handleChipAction('delete')")
+                    svg(width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="margin-right: 8px")
+                      path(d="M5 5.5A.5.5 0 015.5 5h5a.5.5 0 01.5.5V6h-6v-.5zM4.5 7.5a.5.5 0 00-.5.5v5a2 2 0 002 2h4a2 2 0 002-2V8a.5.5 0 00-.5-.5h-7z")
+                    | Delete
+            
+            //- Date picker chip with dropdown
+            LbDropdown
+              template(#trigger)
+                LbChip(variant="suggestion" :has-dropdown="true")
+                  template(#leadingIcon)
+                    svg(viewBox="0 0 24 24" fill="currentColor" width="18" height="18")
+                      path(d="M17 3h4a1 1 0 011 1v16a1 1 0 01-1 1H3a1 1 0 01-1-1V4a1 1 0 011-1h4V1h2v2h6V1h2v2zm3 8H4v8h16v-8zm-5-6h-2v1h-2V5H9v1H7V5H4v4h16V5h-3v1h-2V5z")
+                  | {{ selectedChipDate || 'Pick date' }}
+              
+              template(#content)
+                .dropdown-menu-content
+                  .menu-item(@click="selectedChipDate = 'Today'") Today
+                  .menu-item(@click="selectedChipDate = 'Tomorrow'") Tomorrow
+                  .menu-item(@click="selectedChipDate = 'This week'") This week
+                  .menu-item(@click="selectedChipDate = 'This month'") This month
+                  .menu-divider
+                  .menu-item(@click="selectedChipDate = 'Custom range'") Custom range...
           .demo-note Active filters: {{ activeFilters }}
         
         .demo-group
@@ -1888,6 +1953,133 @@
                   .form-actions
                     LbButton(@click="formPopoverOpen = false" variant="ghost" size="small") Cancel
                     LbButton(@click="handleQuickAdd" variant="filled" color="primary" size="small") Add Item
+      
+      .component-demo
+        h3 Dropdown
+        p Base dropdown component for menus, selects, and other floating content
+        
+        .demo-group
+          h4 Basic Dropdown
+          .button-row
+            LbDropdown(v-model="dropdownOpen1")
+              template(#trigger)
+                LbButton(variant="outline") Click for Dropdown
+              template(#content)
+                .dropdown-demo-content
+                  p This is dropdown content
+                  p It can contain anything
+        
+        .demo-group
+          h4 Match Trigger Width
+          .button-row
+            LbDropdown(v-model="dropdownOpen2" :match-width="true")
+              template(#trigger)
+                LbButton(variant="filled" style="width: 200px") Wide Button
+              template(#content)
+                .dropdown-demo-content
+                  p Content matches button width
+        
+        .demo-group  
+          h4 Placement Options
+          .button-row
+            LbDropdown(v-model="dropdownOpen3" placement="top")
+              template(#trigger)
+                LbButton(variant="outline") Top Placement
+              template(#content)
+                .dropdown-demo-content
+                  p Opens above the trigger
+            
+            LbDropdown(v-model="dropdownOpen4" placement="bottom")
+              template(#trigger)
+                LbButton(variant="outline") Bottom Placement
+              template(#content)
+                .dropdown-demo-content
+                  p Opens below the trigger
+
+      .component-demo
+        h3 Menu
+        p Flexible dropdown menu for lists with search, virtual scrolling, and custom content support.
+        
+        .demo-group
+          h4 Basic Menu
+          .button-row
+            LbMenu(v-model="selectedMenuItem" :options="basicMenuOptions")
+              template(#trigger)
+                LbButton(variant="outline") {{ selectedMenuItem || 'Select Option' }}
+            
+            LbMenu(v-model="selectedColor" :options="colorMenuOptions")
+              template(#trigger)
+                LbButton(variant="filled" :color="selectedColor || 'primary'") 
+                  | {{ selectedColorLabel }}
+                  template(#icon-trailing)
+                    svg(width="16" height="16" viewBox="0 0 16 16" fill="currentColor" stroke="none")
+                      path(d="M5 6l3 3 3-3z")
+        
+        .demo-group
+          h4 Month Selection Menu
+          .button-row
+            LbMenu(v-model="selectedMonth" :options="monthOptions")
+              template(#trigger)
+                LbButton(variant="tonal" color="secondary") 
+                  | {{ selectedMonthLabel }}
+                  template(#icon-trailing)
+                    svg(width="16" height="16" viewBox="0 0 16 16" fill="currentColor" stroke="none")
+                      path(d="M5 6l3 3 3-3z")
+        
+        .demo-group
+          h4 Long List with Virtual Scrolling (Year Selection)
+          .button-row
+            LbMenu(
+              v-model="selectedYear" 
+              :options="yearOptions" 
+              searchable 
+              placeholder="Type year..."
+              :visible-items="8"
+            )
+              template(#trigger)
+                LbButton(variant="outline") 
+                  template(#icon-leading)
+                    svg(width="16" height="16" viewBox="0 0 16 16" fill="currentColor")
+                      path(d="M11 0H3a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V2a2 2 0 00-2-2zM5 3h6v2H5V3zm0 3h6v2H5V6zm0 3h6v2H5V9zm0 3h4v2H5v-2z")
+                  | Year: {{ selectedYear }}
+        
+        .demo-group
+          h4 Custom Item Template
+          .button-row
+            LbMenu(v-model="selectedUser" :options="userOptions" searchable placeholder="Search users...")
+              template(#trigger)
+                LbButton(variant="ghost") 
+                  template(v-if="selectedUser" #icon-leading)
+                    LbAvatar(:name="selectedUserData.label" size="xs")
+                  | {{ selectedUser ? selectedUserData.label : 'Select User' }}
+              template(#item="{ item }")
+                .custom-menu-item
+                  LbAvatar(:name="item.label" :status="item.status" size="xs")
+                  .item-info
+                    .item-name {{ item.label }}
+                    .item-email {{ item.email }}
+        
+        .demo-group
+          h4 Menu with Dividers
+          .button-row
+            LbMenu(v-model="selectedAction" :options="actionMenuOptions" @select="handleActionSelect")
+              template(#trigger)
+                LbButton(variant="outline")
+                  template(#icon-trailing)
+                    svg(width="16" height="16" viewBox="0 0 16 16" fill="currentColor")
+                      path(d="M8 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM1.5 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM14.5 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3z")
+                  | Actions
+        
+        .demo-group
+          h4 Disabled State
+          .button-row
+            LbMenu(disabled :options="basicMenuOptions")
+              template(#trigger)
+                LbButton(disabled) Disabled Menu
+            
+            LbMenu(v-model="selectedWithDisabled" :options="optionsWithDisabled")
+              template(#trigger)
+                LbButton(variant="outline") {{ selectedWithDisabled || 'Some Disabled' }}
 </template>
 
 <script setup>
@@ -1895,7 +2087,8 @@ import { ref, onMounted, computed, watch } from 'vue'
 import { 
   LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog,
   LbBadge, LbNavigationBar, LbNavigationBarItem, LbBottomSheet, LbChip, LbAvatar, LbProgress, LbDivider, 
-  LbSegmentButton, LbSegmentButtonItem, useSnackbar, LbPopover, LbPopoverTrigger, LbPopoverContent, LbPopoverArrow
+  LbSegmentButton, LbSegmentButtonItem, useSnackbar, LbPopover, LbPopoverTrigger, LbPopoverContent, LbPopoverArrow,
+  LbDropdown, LbMenu
 } from '../src'
 
 const isDark = ref(false)
@@ -2360,12 +2553,34 @@ const activeFilters = computed(() => {
     .join(', ')
 })
 
+const selectedSort = ref('')
+const selectedChipDate = ref('')
+
 const handleChipClick = () => {
   console.log('Chip clicked')
 }
 
 const handleChipDelete = () => {
   console.log('Chip deleted')
+}
+
+const handleChipAction = (action) => {
+  console.log('Chip action:', action)
+  // You could handle different actions here
+  switch(action) {
+    case 'edit':
+      console.log('Edit action')
+      break
+    case 'duplicate':
+      console.log('Duplicate action')
+      break
+    case 'share':
+      console.log('Share action')
+      break
+    case 'delete':
+      console.log('Delete action')
+      break
+  }
 }
 
 const removeTag = (index) => {
@@ -2497,6 +2712,12 @@ const arrowPopoverOpen = ref(false)
 const richPopoverOpen = ref(false)
 const formPopoverOpen = ref(false)
 
+// Dropdown demo data  
+const dropdownOpen1 = ref(false)
+const dropdownOpen2 = ref(false)
+const dropdownOpen3 = ref(false)
+const dropdownOpen4 = ref(false)
+
 
 const popoverPlacements = [
   'top', 'top-start', 'top-end',
@@ -2511,6 +2732,102 @@ const popoverStates = ref(
     return acc
   }, {})
 )
+
+// Menu demo data
+const selectedMenuItem = ref('')
+const selectedColor = ref('primary')
+const selectedMonth = ref(new Date().getMonth())
+const selectedYear = ref(new Date().getFullYear())
+const selectedUser = ref('')
+const selectedAction = ref('')
+const selectedWithDisabled = ref('')
+
+// Basic menu options
+const basicMenuOptions = [
+  'Option 1',
+  'Option 2',
+  'Option 3',
+  'Option 4',
+  'Option 5'
+]
+
+// Color menu options
+const colorMenuOptions = [
+  { value: 'primary', label: 'Primary' },
+  { value: 'secondary', label: 'Secondary' },
+  { value: 'neutral', label: 'Neutral' },
+  { value: 'success', label: 'Success' },
+  { value: 'warning', label: 'Warning' },
+  { value: 'error', label: 'Error' },
+  { value: 'info', label: 'Info' }
+]
+
+// Month options
+const monthOptions = [
+  { value: 0, label: 'January' },
+  { value: 1, label: 'February' },
+  { value: 2, label: 'March' },
+  { value: 3, label: 'April' },
+  { value: 4, label: 'May' },
+  { value: 5, label: 'June' },
+  { value: 6, label: 'July' },
+  { value: 7, label: 'August' },
+  { value: 8, label: 'September' },
+  { value: 9, label: 'October' },
+  { value: 10, label: 'November' },
+  { value: 11, label: 'December' }
+]
+
+// Year options (100+ years for virtual scrolling demo)
+const currentYear = new Date().getFullYear()
+const yearOptions = Array.from({ length: 125 }, (_, i) => ({
+  value: currentYear - i,
+  label: (currentYear - i).toString()
+}))
+
+// User options with custom data
+const userOptions = [
+  { value: 'john', label: 'John Doe', email: 'john@example.com', status: 'online' },
+  { value: 'jane', label: 'Jane Smith', email: 'jane@example.com', status: 'away' },
+  { value: 'alice', label: 'Alice Johnson', email: 'alice@example.com', status: 'busy' },
+  { value: 'bob', label: 'Bob Wilson', email: 'bob@example.com', status: 'offline' },
+  { value: 'carol', label: 'Carol Davis', email: 'carol@example.com', status: 'online' }
+]
+
+// Action menu with dividers
+const actionMenuOptions = [
+  { value: 'edit', label: 'Edit' },
+  { value: 'duplicate', label: 'Duplicate' },
+  { type: 'divider' },
+  { value: 'archive', label: 'Archive' },
+  { value: 'move', label: 'Move to...' },
+  { type: 'divider' },
+  { value: 'delete', label: 'Delete', disabled: false }
+]
+
+// Computed properties for labels
+const selectedColorLabel = computed(() => {
+  const option = colorMenuOptions.find(opt => opt.value === selectedColor.value)
+  return option ? option.label : 'Select Color'
+})
+
+const selectedMonthLabel = computed(() => {
+  const option = monthOptions.find(opt => opt.value === selectedMonth.value)
+  return option ? option.label : 'Select Month'
+})
+
+const selectedUserData = computed(() => {
+  return userOptions.find(opt => opt.value === selectedUser.value) || {}
+})
+
+// Menu handlers
+const handleActionSelect = (value) => {
+  console.log('Action selected:', value)
+  // Reset after action
+  setTimeout(() => {
+    selectedAction.value = ''
+  }, 100)
+}
 
 const quickFormData = ref({
   title: '',
@@ -3124,11 +3441,73 @@ section
         height: var(--lb-icon-size-sm)
         flex-shrink: 0
 
+// Dropdown menu content styles for chip examples
+.dropdown-menu-content
+  padding: var(--lb-space-xs)
+  min-width: 10rem // 160px
+
+  .menu-item
+    padding: var(--lb-space-sm) var(--lb-space-md)
+    cursor: pointer
+    border-radius: var(--lb-radius-sm)
+    color: var(--lb-text-neutral-contrast-high)
+    transition: background-color var(--lb-transition)
+    display: flex
+    align-items: center
+    
+    &:hover
+      background-color: var(--lb-surface-neutral-hover)
+    
+    &.menu-item-selected
+      background-color: var(--lb-surface-primary-subtle)
+      color: var(--lb-text-primary-contrast-high)
+    
+    &.menu-item-danger
+      color: var(--lb-text-error-normal)
+      
+      &:hover
+        background-color: var(--lb-surface-error-normal)
+  
+  .menu-divider
+    height: 1px
+    background-color: var(--lb-border-neutral-line)
+    margin: var(--lb-space-xs) 0
+
 .form-demo
   min-width: 300px
   
   h4
     margin: 0 0 var(--lb-space-lg) 0
+
+// Dropdown demo styles
+.dropdown-demo-content
+  padding: var(--lb-space-md)
+  min-width: 200px
+  
+  p
+    margin: 0 0 var(--lb-space-sm) 0
+    &:last-child
+      margin-bottom: 0
+
+// Menu demo styles
+.custom-menu-item
+  display: flex
+  align-items: center
+  gap: var(--lb-space-md)
+  width: 100%
+  
+  .item-info
+    flex: 1
+    min-width: 0
+    
+    .item-name
+      font-size: var(--lb-font-size-label-base)
+      color: var(--lb-text-neutral-contrast-high)
+      margin-bottom: var(--lb-space-2xs)
+    
+    .item-email
+      font-size: var(--lb-font-size-label-small)
+      color: var(--lb-text-neutral-contrast-low)
     font-size: var(--lb-font-size-label-large)
     color: var(--lb-text-neutral-contrast-high)
   

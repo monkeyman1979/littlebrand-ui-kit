@@ -3,9 +3,9 @@
 ## Overview
 These components need to be built in LittleBrand UI Kit to support the Timist application migration. Components are organized by development day with complexity ratings.
 
-Total components to build: 7 (3 simple, 3 medium, 1 complex)
-Completed: 5 (Badge ✅, Progress ✅, Avatar ✅, Snackbar ✅, Divider ✅)
-Remaining: 2
+Total components to build: 11 (3 simple, 5 medium, 3 complex)
+Completed: 7 (Badge ✅, Progress ✅, Avatar ✅, Snackbar ✅, Divider ✅, Popover ✅, SegmentButton ✅)
+Remaining: 4 (Card, Menu, Calendar, DatePicker)
 
 ## Day 1: Simple Components (3 components)
 
@@ -85,7 +85,7 @@ Remaining: 2
 
 ## Day 2: Medium Complexity (3 components)
 
-### 5. Popover ❌ (Not Started)
+### 5. Popover ✅ (Completed)
 - **Purpose**: Generic floating container for any content
 - **Complexity**: ⭐⭐⭐ (Medium)
 - **API Requirements**:
@@ -104,7 +104,7 @@ Remaining: 2
   - Arrow/pointer support
   - Auto-positioning to stay in viewport
 
-### 6. SegmentButton ❌ (Not Started)
+### 6. SegmentButton ✅ (Completed)
 - **Purpose**: For filtering/switching between content views
 - **Complexity**: ⭐⭐⭐ (Medium)
 - **API Requirements**:
@@ -156,29 +156,82 @@ Remaining: 2
   - Circle/square options
   - Error handling
 
-## Day 3: Complex Components (1 component)
+## Day 3: Additional Components for DatePicker (2 components)
 
-### 9. DatePicker ❌ (Not Started)
-- **Purpose**: Complete date selection component
+### 9. Menu ❌ (Not Started)
+- **Purpose**: Flexible dropdown menu for custom selections
+- **Complexity**: ⭐⭐⭐ (Medium)
+- **API Requirements**:
+  ```pug
+  lb-menu(v-model="selectedValue" :options="menuOptions" searchable)
+    template(#trigger)
+      button {{ triggerText }}
+  ```
+- **Key Features**:
+  - Scrollable list of options
+  - Virtual scrolling for long lists (100+ items)
+  - Optional search/filter capability
+  - Keyboard navigation (arrows, Home/End, type to search)
+  - Auto-scroll to selected item on open
+  - Hover and focus states
+  - Uses LbPopover internally
+  - Custom item templates via slots
+  - Divider support
+  - Better than Select for long lists like years (1900-2025+)
+
+### 10. Calendar ❌ (Not Started)
+- **Purpose**: Calendar grid component for date selection
 - **Complexity**: ⭐⭐⭐⭐ (Complex)
 - **API Requirements**:
   ```pug
-  .lb-date-picker(v-model="selectedDate" :format="'MM/DD/YYYY'")
-    .trigger
-      lb-input(:value="formattedDate" readonly)
-    .content
-      .calendar
+  lb-calendar(
+    v-model="selectedDate"
+    :min-date="minDate"
+    :max-date="maxDate"
+    :disabled-dates="disabledDates"
+  )
   ```
 - **Key Features**:
-  - Calendar view with month/year navigation
-  - Handles year navigation issues
-  - Keyboard navigation (arrow keys, tab)
+  - Month/year header with LbMenu dropdowns
+  - Day grid with proper week layout
+  - Previous/next month navigation buttons
+  - Today highlight
+  - Selected date highlight
+  - Disabled dates support
   - Min/max date constraints
-  - Date formatting options
-  - Can use LbPopover internally or custom dropdown
-  - Localization support
-  - Mobile-friendly date input
-  - Range selection option
+  - Keyboard navigation (arrow keys for days, PageUp/PageDown for months)
+  - First day of week configuration
+  - Month names and weekday names localization ready
+
+## Day 4: Complex Components (1 component)
+
+### 11. DatePicker ❌ (Not Started)
+- **Purpose**: Complete date selection component with easy year navigation for birthdates
+- **Complexity**: ⭐⭐⭐⭐⭐ (Complex - Integration)
+- **API Requirements**:
+  ```pug
+  lb-date-picker(
+    v-model="selectedDate" 
+    :format="'MM/DD/YYYY'"
+    :min-date="minDate"
+    :max-date="maxDate"
+    placeholder="Select date"
+  )
+  ```
+- **Key Features**:
+  - Combines LbInput + calendar icon trigger + LbPopover + LbCalendar
+  - Input field shows formatted date
+  - Calendar icon button as trigger
+  - Uses LbMenu for month/year selection (solves birthdate year navigation)
+  - Date formatting options (MM/DD/YYYY, DD/MM/YYYY, etc.)
+  - Keyboard shortcuts (today, clear)
+  - Min/max date constraints
+  - Clear button
+  - Today button for quick selection
+  - Mobile-friendly with native date input fallback option
+  - Form integration with v-model
+  - Validation states (invalid, disabled, required)
+  - Range selection mode (optional future enhancement)
 
 ## Notes on Existing Components Used Instead
 
@@ -186,6 +239,20 @@ Remaining: 2
 - **BottomSheet**: Used instead of Drawer for mobile panels
 - **Dialog**: Used instead of AlertDialog for confirmations
 - **Snackbar**: Used for both Alert and Toast functionality
+
+## Component Dependencies
+
+### DatePicker Build Order:
+1. **LbMenu** - Prerequisite for Calendar month/year dropdowns
+2. **LbCalendar** - Core calendar grid component  
+3. **LbDatePicker** - Integration wrapper combining all pieces
+
+### Why Menu Instead of Select for DatePicker:
+- **Better UX for year selection**: Scrollable list with 100+ years
+- **Search capability**: Users can type "1985" to jump to year
+- **Visual consistency**: Both month and year use same component style
+- **Performance**: Virtual scrolling for large lists
+- **Flexibility**: Can add decade grouping, dividers, etc.
 
 ## Implementation Notes
 
