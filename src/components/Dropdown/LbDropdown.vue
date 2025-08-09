@@ -230,7 +230,8 @@ defineOptions({
   border: var(--lb-border-sm) solid var(--lb-border-neutral-normal)
   border-radius: var(--lb-radius-lg)
   box-shadow: var(--lb-shadow-lg)
-  overflow: auto
+  overflow-y: auto
+  overflow-x: hidden
   max-height: 20rem // 320px
   // Ensure content determines width unless matchWidth is true
   width: max-content
