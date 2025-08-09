@@ -23,6 +23,7 @@ if (!context) {
 // Refs
 const contentElement = ref<HTMLElement>()
 const position = ref({ x: 0, y: 0 })
+const previousActiveElement = ref<HTMLElement | null>(null)
 
 // Position styles only - visual styles in CSS
 const contentStyles = computed(() => ({
@@ -89,7 +90,8 @@ const updatePosition = () => {
   }
   
   // Collision detection - flip if needed
-  const padding = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--lb-space-sm')) || 8
+  const defaultPadding = 8 // Default to 8px (--lb-space-sm equivalent)
+  const padding = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--lb-space-sm')) || defaultPadding
   let flipped = false
   
   // Check if we need to flip vertically
@@ -188,9 +190,91 @@ const handleResize = () => {
   }
 }
 
+// Focus trapping utilities
+const getFocusableElements = (): HTMLElement[] => {
+  if (!contentElement.value) return []
+  
+  const focusableSelectors = [
+    'button:not([disabled])',
+    'input:not([disabled])',
+    'select:not([disabled])',
+    'textarea:not([disabled])',
+    '[tabindex]:not([tabindex="-1"])',
+    'a[href]',
+    'area[href]',
+    'iframe',
+    'object',
+    'embed',
+    '[contenteditable]',
+    '[tabindex="0"]',
+    '.select-trigger:not([aria-disabled="true"])',
+    '.day:not([disabled])'
+  ].join(',')
+  
+  return Array.from(contentElement.value.querySelectorAll(focusableSelectors))
+}
+
+const handleKeydownForFocusTrap = (event: KeyboardEvent) => {
+  if (event.key !== 'Tab' || !context.open || !context.trapFocus) return
+  
+  const focusableElements = getFocusableElements()
+  if (focusableElements.length === 0) return
+  
+  const firstElement = focusableElements[0]
+  const lastElement = focusableElements[focusableElements.length - 1]
+  const activeElement = document.activeElement as HTMLElement
+  
+  if (event.shiftKey) {
+    // Shift+Tab: Move focus backward
+    if (activeElement === firstElement || !contentElement.value?.contains(activeElement)) {
+      event.preventDefault()
+      lastElement.focus()
+    }
+  } else {
+    // Tab: Move focus forward
+    if (activeElement === lastElement || !contentElement.value?.contains(activeElement)) {
+      event.preventDefault()
+      firstElement.focus()
+    }
+  }
+}
+
+const setInitialFocus = () => {
+  if (!contentElement.value) return
+  
+  // Look for an element with autofocus or the first focusable element
+  const autofocusElement = contentElement.value.querySelector('[autofocus]') as HTMLElement
+  if (autofocusElement) {
+    autofocusElement.focus()
+    return
+  }
+  
+  const focusableElements = getFocusableElements()
+  if (focusableElements.length > 0) {
+    // For DatePicker, try to focus the first navigation button or select
+    const firstButton = contentElement.value.querySelector('button:not([disabled])') as HTMLElement
+    if (firstButton) {
+      firstButton.focus()
+    } else {
+      focusableElements[0].focus()
+    }
+  }
+}
+
+const restoreFocus = () => {
+  if (previousActiveElement.value && 'focus' in previousActiveElement.value) {
+    previousActiveElement.value.focus()
+  }
+}
+
 // Simple position update
 watch(() => context.open, async (isOpen) => {
   if (isOpen) {
+    // Store the currently focused element if focus trapping is enabled
+    if (context.trapFocus) {
+      previousActiveElement.value = document.activeElement as HTMLElement
+    }
+    
     await nextTick()
     updatePosition()
     // Register content element after it's positioned
@@ -198,13 +282,29 @@ watch(() => context.open, async (isOpen) => {
       context.contentRef.value = contentElement.value
     }
     
-    // Add scroll and resize listeners
+    // Set initial focus after a small delay to ensure DOM is ready (only if focus trapping is enabled)
+    if (context.trapFocus) {
+      setTimeout(() => {
+        setInitialFocus()
+      }, 50)
+    }
+    
+    // Add event listeners
     window.addEventListener('scroll', handleScroll, true)
     window.addEventListener('resize', handleResize)
+    if (context.trapFocus) {
+      document.addEventListener('keydown', handleKeydownForFocusTrap)
+    }
   } else {
-    // Remove scroll and resize listeners
+    // Remove event listeners
     window.removeEventListener('scroll', handleScroll, true)
     window.removeEventListener('resize', handleResize)
+    document.removeEventListener('keydown', handleKeydownForFocusTrap)
+    
+    // Restore focus to the trigger element (only if focus trapping was enabled)
+    if (context.trapFocus) {
+      restoreFocus()
+    }
   }
 })
 
@@ -213,6 +313,16 @@ const handleClickOutside = (event: MouseEvent) => {
   if (!context.open || !contentElement.value) return
   
   const target = event.target as Node
+  const targetElement = target as HTMLElement
+  
+  // Check if click is on a dropdown element (Select dropdowns are teleported to body)
+  // or on a select trigger (month/year selects in calendar)
+  const isDropdownClick = targetElement.closest('.dropdown-content') !== null
+  const isSelectClick = targetElement.closest('.lb-select') !== null
+  
+  if (isDropdownClick || isSelectClick) {
+    return // Don't close popover for dropdown/select clicks
+  }
   
   // Check if click is outside the content element
   if (!contentElement.value.contains(target)) {
@@ -238,6 +348,7 @@ watch(() => context.open, (isOpen) => {
 // Cleanup
 onBeforeUnmount(() => {
   document.removeEventListener('click', handleClickOutside, true)
+  document.removeEventListener('keydown', handleKeydownForFocusTrap)
   window.removeEventListener('scroll', handleScroll, true)
   window.removeEventListener('resize', handleResize)
   if (context.contentRef && context.contentRef.value === contentElement.value) {

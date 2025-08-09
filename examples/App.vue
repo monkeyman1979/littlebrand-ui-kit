@@ -2067,7 +2067,7 @@
             LbMenu(
               v-model="selectedYear" 
               :options="yearOptions" 
-              searchable 
+              searchable
               placeholder="Type year..."
               :visible-items="8"
             )
@@ -2153,6 +2153,132 @@
               v-model="selectedCalendarDate4"
               :first-day-of-week="1"
             )
+      
+      .component-demo
+        h3 Date Picker
+        p Complete date selection with input field and calendar popover
+        
+        .demo-group
+          h4 Basic Date Picker
+          .date-picker-demo
+            LbDatePicker(
+              v-model="selectedDate1"
+              placeholder="Select date"
+              placement="bottom-start"
+              @change="handleDateChange"
+            )
+            .demo-note Selected: {{ selectedDate1 ? selectedDate1.toLocaleDateString() : 'None' }}
+        
+        .demo-group
+          h4 Date Mode Variants
+          .date-picker-demo
+            LbDatePicker(
+              v-model="selectedBirthdate"
+              date-mode="past"
+              placeholder="Select birthdate"
+              placement="bottom-start"
+            )
+            LbDatePicker(
+              v-model="selectedAppointment"
+              date-mode="future"
+              placeholder="Schedule appointment"
+              placement="bottom-start"
+            )
+            .demo-note 
+              p Past mode: Years range from {{ new Date().getFullYear() - 100 }} to {{ new Date().getFullYear() }}
+              p Future mode: Years range from {{ new Date().getFullYear() }} to {{ new Date().getFullYear() + 50 }}
+        
+        .demo-group
+          h4 With Action Buttons
+          .date-picker-demo
+            LbDatePicker(
+              v-model="selectedDate5"
+              :clearable="true"
+              :show-today="true"
+              placeholder="With Today & Clear buttons"
+              placement="bottom-start"
+            )
+        
+        .demo-group
+          h4 Date Constraints
+          .date-picker-demo
+            LbDatePicker(
+              v-model="selectedDate6"
+              :min-date="datePickerMinDate"
+              :max-date="datePickerMaxDate"
+              placeholder="With min/max dates"
+              placement="bottom-start"
+            )
+            .demo-note
+              p Min: {{ datePickerMinDate.toLocaleDateString() }}
+              p Max: {{ datePickerMaxDate.toLocaleDateString() }}
+        
+        .demo-group
+          h4 With Form Field Label and Hints
+          .date-picker-demo
+            LbFormField(
+              label="Event Date"
+              :hint="`Select a date between ${datePickerMinDate.toLocaleDateString()} and ${datePickerMaxDate.toLocaleDateString()}`"
+              required
+            )
+              LbDatePicker(
+                v-model="selectedEventDate"
+                :min-date="datePickerMinDate"
+                :max-date="datePickerMaxDate"
+                placeholder="Choose event date"
+                placement="bottom-start"
+              )
+            
+            LbFormField(
+              label="Date of Birth"
+              hint="Must be 18 years or older"
+              required
+            )
+              LbDatePicker(
+                v-model="selectedBirthdate2"
+                date-mode="past"
+                :max-date="eighteenYearsAgo"
+                placeholder="Enter your birthdate"
+                placement="bottom-start"
+              )
+        
+        .demo-group
+          h4 Sizes and States
+          .date-picker-demo
+            LbDatePicker(
+              v-model="selectedDate7"
+              size="medium"
+              placeholder="Medium size (default)"
+              placement="bottom-start"
+            )
+            LbDatePicker(
+              v-model="selectedDate8"
+              size="large"
+              placeholder="Large size"
+              placement="bottom-start"
+            )
+            LbDatePicker(
+              v-model="selectedDate9"
+              :disabled="true"
+              placeholder="Disabled"
+              placement="bottom-start"
+            )
+            LbDatePicker(
+              v-model="selectedDate10"
+              :invalid="true"
+              placeholder="Invalid state"
+              placement="bottom-start"
+            )
+        
+        .demo-group
+          h4 With Disabled Dates (Weekends)
+          .date-picker-demo
+            LbDatePicker(
+              v-model="selectedDate11"
+              :disabled-dates="disabledWeekends"
+              placeholder="Select weekday"
+              placement="bottom-start"
+            )
 </template>
 
 <script setup>
@@ -2161,7 +2287,7 @@ import {
   LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog,
   LbBadge, LbNavigationBar, LbNavigationBarItem, LbBottomSheet, LbChip, LbAvatar, LbProgress, LbDivider, 
   LbSegmentButton, LbSegmentButtonItem, useSnackbar, LbPopover, LbPopoverTrigger, LbPopoverContent, LbPopoverArrow,
-  LbDropdown, LbMenu, LbCalendar
+  LbDropdown, LbMenu, LbCalendar, LbDatePicker
 } from '../src'
 
 const isDark = ref(false)
@@ -2940,6 +3066,46 @@ const handleCalendarChange = (date) => {
   console.log('Calendar date changed:', date)
 }
 
+// DatePicker demo data
+const selectedDate1 = ref(null)
+const selectedBirthdate = ref(null)
+const selectedAppointment = ref(null)
+const selectedDate5 = ref(null)
+const selectedDate6 = ref(null)
+const selectedDate7 = ref(null)
+const selectedDate8 = ref(null)
+const selectedDate9 = ref(new Date())
+const selectedDate10 = ref(null)
+const selectedDate11 = ref(null)
+const selectedDateImmediate = ref(null)
+const selectedEventDate = ref(null)
+const selectedBirthdate2 = ref(null)
+
+// Date constraints for DatePicker
+const datePickerMinDate = new Date()
+datePickerMinDate.setMonth(datePickerMinDate.getMonth() - 1) // 1 month ago
+
+const datePickerMaxDate = new Date()
+datePickerMaxDate.setMonth(datePickerMaxDate.getMonth() + 3) // 3 months from now
+
+// Compute date that's 18 years ago for birthdate validation
+const eighteenYearsAgo = computed(() => {
+  const date = new Date()
+  date.setFullYear(date.getFullYear() - 18)
+  return date
+})
+
+// Disabled weekends function for DatePicker
+const disabledWeekends = (date) => {
+  const day = date.getDay()
+  return day === 0 || day === 6
+}
+
+// DatePicker handler
+const handleDateChange = (date) => {
+  console.log('DatePicker date changed:', date)
+}
+
 const categoryOptions = [
   { value: 'work', label: 'Work' },
   { value: 'personal', label: 'Personal' },
@@ -3584,6 +3750,34 @@ section
     
     p
       margin: 0
+      &:not(:last-child)
+        margin-bottom: var(--lb-space-xs)
+
+// DatePicker demo styles
+.date-picker-demo
+  display: flex
+  flex-direction: column
+  gap: var(--lb-space-md)
+  align-items: flex-start
+  
+  .lb-date-picker
+    min-width: 15rem
+  
+  .demo-note
+    padding: var(--lb-space-sm)
+    background: var(--lb-surface-neutral-subtle)
+    border-radius: var(--lb-radius-md)
+    font-size: var(--lb-font-size-body-small)
+    color: var(--lb-text-neutral-contrast-high)
+    
+    p
+      margin: 0
+      
+      &.hint-text
+        margin-top: var(--lb-space-xs)
+        color: var(--lb-text-neutral-contrast-low)
+        font-size: var(--lb-font-size-label-small)
+      
       &:not(:last-child)
         margin-bottom: var(--lb-space-xs)
     

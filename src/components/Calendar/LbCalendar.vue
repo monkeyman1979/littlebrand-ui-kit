@@ -8,7 +8,7 @@
     .calendar-navigation
       LbButton(
         icon-only
-        size="medium"
+        :size="size"
         variant="ghost"
         color="neutral"
         :disabled="!canNavigatePrevious"
@@ -23,7 +23,7 @@
         LbSelect.month-select(
           v-model="selectedMonth"
           :options="monthOptions"
-          size="medium"
+          :size="size"
           :aria-label="monthSelectAriaLabel"
           @change="handleMonthChange"
         )
@@ -31,16 +31,15 @@
           v-model="selectedYear"
           :options="yearOptions"
           searchable
-          search-input-type="number"
           search-placeholder="Enter year..."
-          size="medium"
+          :size="size"
           :aria-label="yearSelectAriaLabel"
           @change="handleYearChange"
         )
       
       LbButton(
         icon-only
-        size="medium"
+        :size="size"
         variant="ghost"
         color="neutral"
         :disabled="!canNavigateNext"
@@ -112,6 +111,9 @@ export interface LbCalendarProps {
   disabledDates?: Date[] | ((date: Date) => boolean)
   firstDayOfWeek?: 0 | 1  // 0 = Sunday, 1 = Monday
   locale?: string
+  variant?: 'standalone' | 'embedded'  // standalone has border/padding, embedded doesn't
+  size?: 'medium' | 'large'  // Controls sizing of all interactive elements
+  dateMode?: 'past' | 'future' | 'both'  // Controls year range: past (history), future (appointments), both (default)
 }
 
 // Props
@@ -121,7 +123,10 @@ const props = withDefaults(defineProps<LbCalendarProps>(), {
   maxDate: undefined,
   disabledDates: undefined,
   firstDayOfWeek: 0,
-  locale: 'en-US'
+  locale: 'en-US',
+  variant: 'standalone',
+  size: 'medium',
+  dateMode: 'both'
 })
 
 // Emits
@@ -173,7 +178,9 @@ if (props.maxDate && selectedYear.value === props.maxDate.getFullYear()) {
 
 // Computed
 const calendarClasses = computed(() => ({
-  'lb-calendar': true
+  'lb-calendar': true,
+  [`variant-${props.variant}`]: true,
+  [`size-${props.size}`]: true
 }))
 
 // Date utilities
@@ -213,18 +220,46 @@ const monthOptions = computed(() => {
   return months
 })
 
-// Year options for dropdown (filtered by min/max dates)
+// Year options for dropdown (filtered by min/max dates and dateMode)
 const yearOptions = computed(() => {
   const currentYear = new Date().getFullYear()
   
-  // Determine year range based on min/max dates
-  let startYear = props.minDate ? props.minDate.getFullYear() : Math.min(1900, currentYear - 100)
-  let endYear = props.maxDate ? props.maxDate.getFullYear() : Math.max(2100, currentYear + 100)
+  let startYear: number
+  let endYear: number
+  let ascending = false
   
-  return Array.from({ length: endYear - startYear + 1 }, (_, i) => ({
-    value: startYear + i,
-    label: String(startYear + i)
-  }))
+  // Determine year range based on dateMode
+  if (props.dateMode === 'past') {
+    // For past dates: current year is the max, go back 100 years (descending)
+    startYear = props.minDate ? props.minDate.getFullYear() : currentYear - 100
+    endYear = props.maxDate ? Math.min(props.maxDate.getFullYear(), currentYear) : currentYear
+    ascending = false
+  } else if (props.dateMode === 'future') {
+    // For future dates: current year is the min, go forward 50 years (ascending)
+    startYear = props.minDate ? Math.max(props.minDate.getFullYear(), currentYear) : currentYear
+    endYear = props.maxDate ? props.maxDate.getFullYear() : currentYear + 50
+    ascending = true
+  } else {
+    // Both: standard range (descending)
+    startYear = props.minDate ? props.minDate.getFullYear() : Math.min(1900, currentYear - 100)
+    endYear = props.maxDate ? props.maxDate.getFullYear() : Math.max(2100, currentYear + 100)
+    ascending = false
+  }
+  
+  // Generate years based on order preference
+  if (ascending) {
+    // Ascending order for future dates
+    return Array.from({ length: endYear - startYear + 1 }, (_, i) => ({
+      value: startYear + i,
+      label: String(startYear + i)
+    }))
+  } else {
+    // Descending order for past dates and general use
+    return Array.from({ length: endYear - startYear + 1 }, (_, i) => ({
+      value: endYear - i,
+      label: String(endYear - i)
+    }))
+  }
 })
 
 // Weekday labels
@@ -350,12 +385,8 @@ const getDayClasses = (day: CalendarDay) => ({
 const getTabIndex = (day: CalendarDay): number => {
   if (day.disabled) return -1
   
-  // Focus on selected date, today, or first day of current month
-  if (day.selected) return 0
-  if (!props.modelValue && day.isToday && day.isCurrentMonth) return 0
-  if (!props.modelValue && !hasToday() && isFirstDayOfMonth(day)) return 0
-  
-  return -1
+  // Make all non-disabled days tabbable for better keyboard navigation
+  return 0
 }
 
 const hasToday = (): boolean => {
@@ -615,10 +646,19 @@ defineOptions({
   display: inline-block
   width: min(24rem, 100%)
   background: var(--lb-background-surface)
-  border: var(--lb-border-sm) solid var(--lb-border-neutral-line)
-  border-radius: var(--lb-radius-lg)
-  padding: var(--lb-space-md)
   font-family: var(--lb-font-body)
+  
+  // Standalone variant - with border and padding
+  &.variant-standalone
+    border: var(--lb-border-sm) solid var(--lb-border-neutral-line)
+    border-radius: var(--lb-radius-lg)
+    padding: var(--lb-space-md)
+  
+  // Embedded variant - no border or padding
+  &.variant-embedded
+    border: none
+    border-radius: 0
+    padding: 0
 
 .calendar-header
   display: flex
@@ -653,23 +693,28 @@ defineOptions({
   display: grid
   grid-template-columns: repeat(7, 1fr)
   gap: 0
-  margin-bottom: 2px
+  margin-bottom: var(--lb-space-2xs)
 
 .weekday
   display: flex
   align-items: center
   justify-content: center
-  min-width: base.$size-7xl // 48px to match day cells
-  height: base.$size-6xl // Keep weekday labels at 40px height
+  min-width: var(--lb-input-height-medium) // 40px to match day cells
+  height: var(--lb-space-4xl) // 32px height for weekday labels
   font-size: var(--lb-font-size-label-small)
   font-weight: var(--lb-font-weight-medium)
   color: var(--lb-text-neutral-contrast-low)
   text-align: center
+  
+  // Large size variant
+  .size-large &
+    min-width: var(--lb-input-height-large) // 48px to match day cells
+    height: var(--lb-space-5xl) // 40px height for large
 
 .days-grid
   display: flex
   flex-direction: column
-  row-gap: 2px
+  row-gap: var(--lb-space-2xs)
 
 .calendar-week
   display: grid
@@ -681,18 +726,25 @@ defineOptions({
   align-items: center
   justify-content: center
   width: 100%
-  min-width: base.$size-7xl // 48px
-  height: base.$size-7xl // 48px
+  min-width: var(--lb-input-height-medium) // 40px for medium
+  height: var(--lb-input-height-medium) // 40px for medium
   padding: 0
   background: transparent
   border: none
-  border-radius: var(--lb-radius-lg)
-  font-size: var(--lb-font-size-body-large) // Larger font for better readability
+  border-radius: var(--lb-radius-md)
+  font-size: var(--lb-font-size-body-base) // Medium font by default
   font-weight: var(--lb-font-weight-normal)
   color: var(--lb-text-neutral-contrast-high)
   cursor: pointer
   transition: all var(--lb-transition)
   position: relative
+  
+  // Large size variant
+  .size-large &
+    min-width: var(--lb-input-height-large) // 48px for large
+    height: var(--lb-input-height-large) // 48px for large
+    border-radius: var(--lb-radius-lg)
+    font-size: var(--lb-font-size-body-large)
   
   &:focus-visible
     outline: var(--lb-focus-ring-width) solid var(--lb-focus-ring-color)

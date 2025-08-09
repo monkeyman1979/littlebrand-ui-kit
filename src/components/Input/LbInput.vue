@@ -266,12 +266,12 @@ const handleInput = (event: Event) => {
     &:focus
       outline: none
       border-color: var(--lb-border-primary-normal)
-      box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-primary-active)
+      box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
     
     // Focus takes precedence over hover
     &:focus:hover:not(:disabled):not(:read-only)
       border-color: var(--lb-border-primary-normal)
-      box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-primary-active)
+      box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
     
     // Invalid state when parent has .invalid class
     .invalid &

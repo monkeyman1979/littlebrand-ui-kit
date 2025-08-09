@@ -27,6 +27,7 @@ export interface LbPopoverProps {
   closeOnClickOutside?: boolean
   closeOnEscape?: boolean
   disabled?: boolean
+  trapFocus?: boolean
 }
 
 export interface PopoverContext {
@@ -35,6 +36,7 @@ export interface PopoverContext {
   offset: number
   showArrow: boolean
   disabled: boolean
+  trapFocus: boolean
   triggerRef: Ref<HTMLElement | null>
   contentRef: Ref<HTMLElement | null>
   arrowRef: Ref<HTMLElement | null>
@@ -52,7 +54,8 @@ const props = withDefaults(defineProps<LbPopoverProps>(), {
   showArrow: true,
   closeOnClickOutside: true,
   closeOnEscape: true,
-  disabled: false
+  disabled: false,
+  trapFocus: false
 })
 
 // Emits
@@ -213,8 +216,17 @@ const handleClickOutside = (event: MouseEvent) => {
   if (!props.closeOnClickOutside || !props.open) return
   
   const target = event.target as Node
+  const targetElement = target as HTMLElement
   const trigger = triggerRef.value
   const content = contentRef.value
+  
+  // Check if click is on a dropdown element (Select dropdowns are teleported to body)
+  const isDropdownClick = targetElement.closest('.dropdown-content') !== null
+  const isSelectClick = targetElement.closest('.lb-select') !== null
+  
+  if (isDropdownClick || isSelectClick) {
+    return // Don't close popover for dropdown/select interactions
+  }
   
   // Check if click is outside both trigger and content
   const isOutsideTrigger = !trigger || !trigger.contains(target)
@@ -240,6 +252,7 @@ const popoverContext = {
   get offset() { return props.offset },
   get showArrow() { return props.showArrow },
   get disabled() { return props.disabled },
+  get trapFocus() { return props.trapFocus },
   triggerRef,
   contentRef,
   arrowRef,

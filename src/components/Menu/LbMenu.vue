@@ -18,13 +18,14 @@ LbDropdown.lb-menu(
       @keydown="handleKeydown"
     )
       .menu-search(v-if="searchable")
-        input.search-input(
-          ref="searchInputRef"
-          v-model="searchQuery"
-          :placeholder="placeholder"
-          @input="handleSearch"
-          @keydown.stop
-        )
+        form(@submit.prevent="handleFormSubmit")
+          input.search-input(
+            ref="searchInputRef"
+            v-model="searchQuery"
+            :placeholder="placeholder"
+            @input="handleSearch"
+            @keydown.stop
+          )
       
       .menu-items-container(
         ref="menuContainerRef"
@@ -114,7 +115,7 @@ const props = withDefaults(defineProps<LbMenuProps>(), {
   closeOnSelect: true,
   placement: 'bottom-start',
   virtualScrolling: true,
-  itemHeight: 40, // 2.5rem - used for virtual scrolling calculations
+  itemHeight: 40, // 40px (--lb-input-height-medium) - used for virtual scrolling calculations
 })
 
 // Emits
@@ -356,6 +357,12 @@ const selectHighlighted = () => {
   }
 }
 
+const handleFormSubmit = () => {
+  // Called when mobile number pad's "Go/Done" button is pressed
+  // Select the highlighted option if there is one
+  selectHighlighted()
+}
+
 const scrollToHighlighted = () => {
   if (!menuContainerRef.value || highlightedIndex.value === -1) return
   
@@ -485,13 +492,17 @@ onUnmounted(() => {
   display: flex
   flex-direction: column
   width: max-content
-  min-width: 12.5rem // 200px
+  min-width: 14rem // 224px - increased for better search input visibility
   max-width: 25rem // 400px
   outline: none
 
 .menu-search
   padding: var(--lb-space-sm) var(--lb-space-sm) var(--lb-space-xs)
   border-bottom: var(--lb-border-sm) solid var(--lb-border-neutral-normal)
+  
+  form
+    margin: 0
+    padding: 0
 
 .search-input
   width: 100%
@@ -512,7 +523,7 @@ onUnmounted(() => {
   &:focus
     outline: none
     border-color: var(--lb-border-primary-normal)
-    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-primary-active)
+    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
 
 .menu-items-container
   position: relative

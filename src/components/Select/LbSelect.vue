@@ -10,6 +10,7 @@ LbDropdown.lb-select(
 )
   template(#trigger)
     .select-trigger(
+      ref="triggerRef"
       :class="triggerClasses"
       :tabindex="disabled ? -1 : 0"
       :aria-expanded="isOpen"
@@ -35,26 +36,27 @@ LbDropdown.lb-select(
       //- Dropdown icon
       span.select-icon
         slot(name="icon")
-          svg(width="16" height="16" viewBox="0 0 16 16" fill="currentColor" stroke="none")
+          svg(:width="size === 'large' ? '20' : '16'" :height="size === 'large' ? '20' : '16'" viewBox="0 0 16 16" fill="currentColor" stroke="none")
             path(d="M5 6l3 3 3-3z")
   
   template(#content)
     .select-content(
+      ref="contentRef"
+      :class="`select-content-${size}`"
       role="listbox"
       :aria-label="ariaLabel"
+      :tabindex="!searchable ? 0 : -1"
       @keydown="handleKeydown"
     )
       .select-search(v-if="searchable")
-        input.search-input(
-          ref="searchInputRef"
-          v-model="searchQuery"
-          :type="searchInputType"
-          :inputmode="searchInputType === 'number' ? 'numeric' : 'text'"
-          :pattern="searchInputType === 'number' ? '[0-9]*' : undefined"
-          :placeholder="searchPlaceholder"
-          @input="handleSearch"
-          @keydown="handleSearchKeydown"
-        )
+        form(@submit.prevent="handleFormSubmit")
+          input.search-input(
+            ref="searchInputRef"
+            v-model="searchQuery"
+            :placeholder="searchPlaceholder"
+            @input="handleSearch"
+            @keydown="handleSearchKeydown"
+          )
       
       .select-options(ref="optionsRef")
         .select-option(
@@ -64,7 +66,7 @@ LbDropdown.lb-select(
           :role="option.type === 'divider' ? 'separator' : 'option'"
           :aria-selected="isSelected(option)"
           :aria-disabled="option.disabled"
-          @click="handleOptionClick(option, index)"
+          @click.stop="handleOptionClick(option, index)"
           @mouseenter="highlightedIndex = index"
         )
           template(v-if="option.type !== 'divider'")
@@ -99,7 +101,6 @@ export interface LbSelectProps {
   clearable?: boolean
   searchable?: boolean
   searchPlaceholder?: string
-  searchInputType?: string  // Allow setting input type (e.g., 'number', 'text')
   size?: 'medium' | 'large'
   placement?: 'bottom' | 'top' | 'auto'
   ariaLabel?: string
@@ -116,7 +117,6 @@ const props = withDefaults(defineProps<LbSelectProps>(), {
   clearable: false,
   searchable: false,
   searchPlaceholder: 'Search...',
-  searchInputType: 'text',
   size: 'medium',
   placement: 'bottom',
 })
@@ -133,8 +133,10 @@ const emit = defineEmits<{
 
 // Refs
 const dropdownRef = ref<InstanceType<typeof LbDropdown>>()
+const triggerRef = ref<HTMLElement>()
 const searchInputRef = ref<HTMLInputElement>()
 const optionsRef = ref<HTMLElement>()
+const contentRef = ref<HTMLElement>()
 
 // State
 const isOpen = ref(false)
@@ -210,6 +212,7 @@ const handleOptionClick = (option: SelectOption, index: number) => {
   
   emit('update:modelValue', option.value)
   emit('change', option.value)
+  searchQuery.value = '' // Clear search after selection
   isOpen.value = false
 }
 
@@ -233,19 +236,53 @@ const handleSearch = () => {
   })
 }
 
+const handleFormSubmit = () => {
+  // Called when mobile number pad's "Go/Done" button is pressed
+  // First try to find exact match if search query is present
+  if (searchQuery.value.trim()) {
+    const exactMatch = filteredOptions.value.find(
+      option => option.type !== 'divider' && !option.disabled && 
+                option.label === searchQuery.value.trim()
+    )
+    
+    if (exactMatch) {
+      // Exact match found - select it directly
+      const index = filteredOptions.value.indexOf(exactMatch)
+      handleOptionClick(exactMatch, index)
+      return
+    }
+  }
+  
+  // No exact match or no search query - select the highlighted option if there is one
+  if (highlightedIndex.value >= 0 && highlightedIndex.value < filteredOptions.value.length) {
+    const option = filteredOptions.value[highlightedIndex.value]
+    if (option.type !== 'divider' && !option.disabled) {
+      handleOptionClick(option, highlightedIndex.value)
+    }
+  }
+}
+
 const handleOpen = () => {
   emit('open')
   
   nextTick(() => {
     if (props.searchable) {
       searchInputRef.value?.focus()
+    } else {
+      // Focus the content div when not searchable so it can receive keyboard events
+      contentRef.value?.focus()
     }
     
     // Highlight selected option or first option
     const selectedIndex = filteredOptions.value.findIndex(option => isSelected(option))
     if (selectedIndex >= 0) {
       highlightedIndex.value = selectedIndex
-      scrollToHighlighted()
+      // Use requestAnimationFrame to ensure DOM is ready and use multiple frames for reliability
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          scrollToHighlighted()
+        })
+      })
     } else {
       const firstSelectableIndex = filteredOptions.value.findIndex(
         option => option.type !== 'divider' && !option.disabled
@@ -261,6 +298,11 @@ const handleClose = () => {
   emit('close')
   searchQuery.value = ''
   highlightedIndex.value = -1
+  
+  // Return focus to the trigger element after closing
+  nextTick(() => {
+    triggerRef.value?.focus()
+  })
 }
 
 const handleTriggerKeydown = (event: KeyboardEvent) => {
@@ -268,7 +310,10 @@ const handleTriggerKeydown = (event: KeyboardEvent) => {
   
   const { key } = event
   
-  if (key === 'Enter' || key === ' ' || key === 'ArrowDown' || key === 'ArrowUp') {
+  if (key === 'Enter' || key === ' ') {
+    event.preventDefault()
+    isOpen.value = !isOpen.value
+  } else if ((key === 'ArrowDown' || key === 'ArrowUp') && !isOpen.value) {
     event.preventDefault()
     isOpen.value = true
   }
@@ -359,15 +404,23 @@ const scrollToHighlighted = () => {
   const highlightedItem = items[highlightedIndex.value] as HTMLElement
   
   if (highlightedItem) {
-    const containerTop = container.scrollTop
-    const containerBottom = containerTop + container.clientHeight
-    const itemTop = highlightedItem.offsetTop
-    const itemBottom = itemTop + highlightedItem.offsetHeight
+    // Try to use scrollIntoView for better browser support
+    highlightedItem.scrollIntoView({
+      behavior: 'auto',
+      block: 'center'
+    })
     
-    if (itemTop < containerTop) {
-      container.scrollTop = itemTop
-    } else if (itemBottom > containerBottom) {
-      container.scrollTop = itemBottom - container.clientHeight
+    // Fallback: manually calculate and set scroll position
+    if (container.scrollTop === 0 || container.scrollTop === container.scrollHeight - container.clientHeight) {
+      const containerHeight = container.clientHeight
+      const itemTop = highlightedItem.offsetTop
+      const itemHeight = highlightedItem.offsetHeight
+      
+      // Calculate position to center the item
+      const idealScrollTop = itemTop - (containerHeight / 2) + (itemHeight / 2)
+      
+      // Set scroll position
+      container.scrollTop = Math.max(0, idealScrollTop)
     }
   }
 }
@@ -394,7 +447,6 @@ defineOptions({
   background: var(--lb-background-surface)
   border: var(--lb-border-sm) solid var(--lb-border-neutral-normal)
   border-radius: var(--lb-radius-md)
-  font-size: var(--lb-font-size-label-base)
   color: var(--lb-text-neutral-contrast-high)
   cursor: pointer
   transition: border-color var(--lb-transition), box-shadow var(--lb-transition)
@@ -403,16 +455,18 @@ defineOptions({
   &:focus-visible
     outline: none
     border-color: var(--lb-border-primary-normal)
-    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-primary-active)
+    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
   
   &:hover:not(.select-trigger-disabled)
     border-color: var(--lb-border-neutral-active)
   
   &.select-trigger-medium
     height: var(--lb-input-height-medium)
+    font-size: var(--lb-font-size-label-base)
   
   &.select-trigger-large
     height: var(--lb-input-height-large)
+    font-size: var(--lb-font-size-label-large)
   
   &.select-trigger-disabled
     background: var(--lb-surface-neutral-subtle)
@@ -469,6 +523,14 @@ defineOptions({
   flex-shrink: 0
   transition: transform var(--lb-transition)
   
+  svg
+    width: var(--lb-icon-size-sm) // 16px default
+    height: var(--lb-icon-size-sm)
+    
+    .select-trigger-large &
+      width: var(--lb-icon-size-md) // 20px for large
+      height: var(--lb-icon-size-md)
+  
   .lb-select[aria-expanded="true"] &
     transform: rotate(180deg)
 
@@ -481,6 +543,10 @@ defineOptions({
 .select-search
   padding: var(--lb-space-sm)
   border-bottom: var(--lb-border-sm) solid var(--lb-border-neutral-normal)
+  
+  form
+    margin: 0
+    padding: 0
 
 .search-input
   width: 100%
@@ -489,7 +555,6 @@ defineOptions({
   background: var(--lb-background-surface)
   border: var(--lb-border-sm) solid var(--lb-border-neutral-normal)
   border-radius: var(--lb-radius-md)
-  font-size: var(--lb-font-size-label-base)
   color: var(--lb-text-neutral-contrast-high)
   transition: border-color var(--lb-transition)
   box-sizing: border-box
@@ -501,12 +566,10 @@ defineOptions({
   &:focus
     outline: none
     border-color: var(--lb-border-primary-normal)
-    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-primary-active)
+    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
 
 .select-options
   padding: var(--lb-space-xs)
-  max-height: 15rem
-  overflow-y: auto
 
 .select-option
   display: flex
@@ -514,10 +577,16 @@ defineOptions({
   justify-content: space-between
   padding: var(--lb-space-sm) var(--lb-space-md)
   border-radius: var(--lb-radius-sm)
-  font-size: var(--lb-font-size-label-base)
   color: var(--lb-text-neutral-contrast-high)
   cursor: pointer
   transition: background-color var(--lb-transition)
+  
+  .select-content-medium &
+    font-size: var(--lb-font-size-label-base)
+  
+  .select-content-large &
+    font-size: var(--lb-font-size-label-large)
+    padding: var(--lb-space-md) var(--lb-space-lg)
   
   &:hover:not(.select-option-disabled)
     background: var(--lb-surface-neutral-hover)
