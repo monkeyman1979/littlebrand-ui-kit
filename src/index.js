@@ -24,9 +24,10 @@ import LbBottomSheet from './components/BottomSheet'
 import LbNavigationBar, { LbNavigationBarItem } from './components/NavigationBar'
 import LbProgress from './components/Progress'
 import { LbSnackbar, LbSnackbarProvider, useSnackbar, createSnackbarHelpers } from './components/Snackbar'
+import LbPopover, { LbPopoverTrigger, LbPopoverContent, LbPopoverArrow } from './components/Popover'
 
 // Export individual components for tree-shaking
-export { LbAvatar, LbBadge, LbButton, LbSegmentButton, LbSegmentButtonItem, LbChip, LbDivider, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog, LbBottomSheet, LbNavigationBar, LbNavigationBarItem, LbProgress, LbSnackbar, LbSnackbarProvider, useSnackbar, createSnackbarHelpers }
+export { LbAvatar, LbBadge, LbButton, LbSegmentButton, LbSegmentButtonItem, LbChip, LbDivider, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog, LbBottomSheet, LbNavigationBar, LbNavigationBarItem, LbProgress, LbSnackbar, LbSnackbarProvider, useSnackbar, createSnackbarHelpers, LbPopover, LbPopoverTrigger, LbPopoverContent, LbPopoverArrow }
 
 // Plugin install function for Vue.use()
 const LittleBrandUI = {
@@ -55,6 +56,10 @@ const LittleBrandUI = {
     app.component('LbProgress', LbProgress)
     app.component('LbSnackbar', LbSnackbar)
     app.component('LbSnackbarProvider', LbSnackbarProvider)
+    app.component('LbPopover', LbPopover)
+    app.component('LbPopoverTrigger', LbPopoverTrigger)
+    app.component('LbPopoverContent', LbPopoverContent)
+    app.component('LbPopoverArrow', LbPopoverArrow)
     
     // Apply any global configuration
     if (options.theme) {
