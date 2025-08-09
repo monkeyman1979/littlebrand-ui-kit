@@ -2067,7 +2067,7 @@
             LbMenu(
               v-model="selectedYear" 
               :options="yearOptions" 
-              searchable 
+              searchable
               placeholder="Type year..."
               :visible-items="8"
             )
@@ -2212,6 +2212,35 @@
             .demo-note
               p Min: {{ datePickerMinDate.toLocaleDateString() }}
               p Max: {{ datePickerMaxDate.toLocaleDateString() }}
+        
+        .demo-group
+          h4 With Form Field Label and Hints
+          .date-picker-demo
+            LbFormField(
+              label="Event Date"
+              :hint="`Select a date between ${datePickerMinDate.toLocaleDateString()} and ${datePickerMaxDate.toLocaleDateString()}`"
+              required
+            )
+              LbDatePicker(
+                v-model="selectedEventDate"
+                :min-date="datePickerMinDate"
+                :max-date="datePickerMaxDate"
+                placeholder="Choose event date"
+                placement="bottom-start"
+              )
+            
+            LbFormField(
+              label="Date of Birth"
+              hint="Must be 18 years or older"
+              required
+            )
+              LbDatePicker(
+                v-model="selectedBirthdate2"
+                date-mode="past"
+                :max-date="eighteenYearsAgo"
+                placeholder="Enter your birthdate"
+                placement="bottom-start"
+              )
         
         .demo-group
           h4 Sizes and States
@@ -3049,6 +3078,8 @@ const selectedDate9 = ref(new Date())
 const selectedDate10 = ref(null)
 const selectedDate11 = ref(null)
 const selectedDateImmediate = ref(null)
+const selectedEventDate = ref(null)
+const selectedBirthdate2 = ref(null)
 
 // Date constraints for DatePicker
 const datePickerMinDate = new Date()
@@ -3056,6 +3087,13 @@ datePickerMinDate.setMonth(datePickerMinDate.getMonth() - 1) // 1 month ago
 
 const datePickerMaxDate = new Date()
 datePickerMaxDate.setMonth(datePickerMaxDate.getMonth() + 3) // 3 months from now
+
+// Compute date that's 18 years ago for birthdate validation
+const eighteenYearsAgo = computed(() => {
+  const date = new Date()
+  date.setFullYear(date.getFullYear() - 18)
+  return date
+})
 
 // Disabled weekends function for DatePicker
 const disabledWeekends = (date) => {

@@ -276,9 +276,8 @@ defineOptions({
     height: var(--lb-input-height-large)
     font-size: var(--lb-font-size-label-large)
   
-  &:focus
+  &:focus-visible
     outline: none
-    border-color: var(--lb-border-neutral-focus)
     box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
   
   &:hover:not(:disabled)
@@ -288,8 +287,7 @@ defineOptions({
   &.invalid
     border-color: var(--lb-border-error-normal)
     
-    &:focus
-      border-color: var(--lb-border-error-focus)
+    &:focus-visible
       box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-border-error-focus)
   
   &:disabled

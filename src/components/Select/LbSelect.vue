@@ -40,22 +40,22 @@ LbDropdown.lb-select(
   
   template(#content)
     .select-content(
+      ref="contentRef"
       :class="`select-content-${size}`"
       role="listbox"
       :aria-label="ariaLabel"
+      :tabindex="!searchable ? 0 : -1"
       @keydown="handleKeydown"
     )
       .select-search(v-if="searchable")
-        input.search-input(
-          ref="searchInputRef"
-          v-model="searchQuery"
-          :type="searchInputType"
-          :inputmode="searchInputType === 'number' ? 'numeric' : 'text'"
-          :pattern="searchInputType === 'number' ? '[0-9]*' : undefined"
-          :placeholder="searchPlaceholder"
-          @input="handleSearch"
-          @keydown="handleSearchKeydown"
-        )
+        form(@submit.prevent="handleFormSubmit")
+          input.search-input(
+            ref="searchInputRef"
+            v-model="searchQuery"
+            :placeholder="searchPlaceholder"
+            @input="handleSearch"
+            @keydown="handleSearchKeydown"
+          )
       
       .select-options(ref="optionsRef")
         .select-option(
@@ -100,7 +100,6 @@ export interface LbSelectProps {
   clearable?: boolean
   searchable?: boolean
   searchPlaceholder?: string
-  searchInputType?: string  // Allow setting input type (e.g., 'number', 'text')
   size?: 'medium' | 'large'
   placement?: 'bottom' | 'top' | 'auto'
   ariaLabel?: string
@@ -117,7 +116,6 @@ const props = withDefaults(defineProps<LbSelectProps>(), {
   clearable: false,
   searchable: false,
   searchPlaceholder: 'Search...',
-  searchInputType: 'text',
   size: 'medium',
   placement: 'bottom',
 })
@@ -136,6 +134,7 @@ const emit = defineEmits<{
 const dropdownRef = ref<InstanceType<typeof LbDropdown>>()
 const searchInputRef = ref<HTMLInputElement>()
 const optionsRef = ref<HTMLElement>()
+const contentRef = ref<HTMLElement>()
 
 // State
 const isOpen = ref(false)
@@ -211,6 +210,7 @@ const handleOptionClick = (option: SelectOption, index: number) => {
   
   emit('update:modelValue', option.value)
   emit('change', option.value)
+  searchQuery.value = '' // Clear search after selection
   isOpen.value = false
 }
 
@@ -234,12 +234,41 @@ const handleSearch = () => {
   })
 }
 
+const handleFormSubmit = () => {
+  // Called when mobile number pad's "Go/Done" button is pressed
+  // First try to find exact match if search query is present
+  if (searchQuery.value.trim()) {
+    const exactMatch = filteredOptions.value.find(
+      option => option.type !== 'divider' && !option.disabled && 
+                option.label === searchQuery.value.trim()
+    )
+    
+    if (exactMatch) {
+      // Exact match found - select it directly
+      const index = filteredOptions.value.indexOf(exactMatch)
+      handleOptionClick(exactMatch, index)
+      return
+    }
+  }
+  
+  // No exact match or no search query - select the highlighted option if there is one
+  if (highlightedIndex.value >= 0 && highlightedIndex.value < filteredOptions.value.length) {
+    const option = filteredOptions.value[highlightedIndex.value]
+    if (option.type !== 'divider' && !option.disabled) {
+      handleOptionClick(option, highlightedIndex.value)
+    }
+  }
+}
+
 const handleOpen = () => {
   emit('open')
   
   nextTick(() => {
     if (props.searchable) {
       searchInputRef.value?.focus()
+    } else {
+      // Focus the content div when not searchable so it can receive keyboard events
+      contentRef.value?.focus()
     }
     
     // Highlight selected option or first option
@@ -274,7 +303,10 @@ const handleTriggerKeydown = (event: KeyboardEvent) => {
   
   const { key } = event
   
-  if (key === 'Enter' || key === ' ' || key === 'ArrowDown' || key === 'ArrowUp') {
+  if (key === 'Enter' || key === ' ') {
+    event.preventDefault()
+    isOpen.value = !isOpen.value
+  } else if ((key === 'ArrowDown' || key === 'ArrowUp') && !isOpen.value) {
     event.preventDefault()
     isOpen.value = true
   }
@@ -416,7 +448,7 @@ defineOptions({
   &:focus-visible
     outline: none
     border-color: var(--lb-border-primary-normal)
-    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-primary-active)
+    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
   
   &:hover:not(.select-trigger-disabled)
     border-color: var(--lb-border-neutral-active)
@@ -504,6 +536,10 @@ defineOptions({
 .select-search
   padding: var(--lb-space-sm)
   border-bottom: var(--lb-border-sm) solid var(--lb-border-neutral-normal)
+  
+  form
+    margin: 0
+    padding: 0
 
 .search-input
   width: 100%
@@ -523,7 +559,7 @@ defineOptions({
   &:focus
     outline: none
     border-color: var(--lb-border-primary-normal)
-    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-primary-active)
+    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
 
 .select-options
   padding: var(--lb-space-xs)

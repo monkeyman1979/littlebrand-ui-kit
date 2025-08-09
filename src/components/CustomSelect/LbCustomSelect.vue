@@ -534,12 +534,12 @@ defineExpose({
   
   &:focus
     border-color: var(--lb-border-primary-normal)
-    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-primary-active)
+    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
   
   // Focus takes precedence over hover
   &:focus:hover:not([aria-disabled="true"])
     border-color: var(--lb-border-primary-normal)
-    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-primary-active)
+    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
 
 // Size variations
 .size-large .select-trigger

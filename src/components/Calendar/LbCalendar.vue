@@ -31,7 +31,6 @@
           v-model="selectedYear"
           :options="yearOptions"
           searchable
-          search-input-type="number"
           search-placeholder="Enter year..."
           :size="size"
           :aria-label="yearSelectAriaLabel"

@@ -237,7 +237,8 @@ defineOptions({
   max-height: 17rem // 272px
   // Width is either matched to trigger or content-based
   width: max-content
-  min-width: 12.5rem // 200px
+  min-width: min-content // Allow content to determine minimum width
+  max-width: min(90vw, 30rem) // Prevent overflow on small screens
 
 // Transition
 .dropdown-fade-enter-active,

@@ -253,7 +253,7 @@ defineExpose({
   // Focus state
   input:focus-visible ~ .checkbox-visual
     outline: none
-    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-primary-active)
+    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
     border-color: var(--lb-border-primary-normal)
   
   // Invalid state
