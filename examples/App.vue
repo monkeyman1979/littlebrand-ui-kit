@@ -2159,61 +2159,38 @@
         p Complete date selection with input field and calendar popover
         
         .demo-group
-          h4 Basic Date Picker (Type or Select)
+          h4 Basic Date Picker
           .date-picker-demo
             LbDatePicker(
               v-model="selectedDate1"
-              placeholder="MM/DD/YYYY"
+              placeholder="Select date"
               placement="bottom-start"
               @change="handleDateChange"
             )
-            .demo-note 
-              p Selected: {{ selectedDate1 ? selectedDate1.toLocaleDateString() : 'None' }}
-              p.hint-text You can type dates directly (e.g., 12/25/2024) or use the calendar
+            .demo-note Selected: {{ selectedDate1 ? selectedDate1.toLocaleDateString() : 'None' }}
         
         .demo-group
-          h4 With Format Options
+          h4 Multiple Date Pickers
           .date-picker-demo
             LbDatePicker(
               v-model="selectedDate2"
-              format="MM/DD/YYYY"
-              placeholder="MM/DD/YYYY"
+              placeholder="Start date"
               placement="bottom-start"
             )
             LbDatePicker(
               v-model="selectedDate3"
-              format="DD/MM/YYYY"
-              placeholder="DD/MM/YYYY"
-              placement="bottom-start"
-            )
-            LbDatePicker(
-              v-model="selectedDate4"
-              format="YYYY-MM-DD"
-              placeholder="YYYY-MM-DD"
+              placeholder="End date"
               placement="bottom-start"
             )
         
         .demo-group
-          h4 With Confirm Buttons (Default)
+          h4 With Action Buttons
           .date-picker-demo
             LbDatePicker(
               v-model="selectedDate5"
               :clearable="true"
               :show-today="true"
-              :show-confirm-buttons="true"
-              placeholder="With all buttons"
-              placement="bottom-start"
-            )
-            
-        .demo-group
-          h4 Without Confirm Buttons (Immediate selection)
-          .date-picker-demo
-            LbDatePicker(
-              v-model="selectedDateImmediate"
-              :clearable="true"
-              :show-today="true"
-              :show-confirm-buttons="false"
-              placeholder="Immediate selection"
+              placeholder="With Today & Clear buttons"
               placement="bottom-start"
             )
         
@@ -2265,7 +2242,7 @@
             LbDatePicker(
               v-model="selectedDate11"
               :disabled-dates="disabledWeekends"
-              placeholder="Weekends disabled"
+              placeholder="Select weekday"
               placement="bottom-start"
             )
 </template>
@@ -3057,9 +3034,8 @@ const handleCalendarChange = (date) => {
 
 // DatePicker demo data
 const selectedDate1 = ref(null)
-const selectedDate2 = ref(new Date())
-const selectedDate3 = ref(new Date())
-const selectedDate4 = ref(new Date())
+const selectedDate2 = ref(null)
+const selectedDate3 = ref(null)
 const selectedDate5 = ref(null)
 const selectedDate6 = ref(null)
 const selectedDate7 = ref(null)
