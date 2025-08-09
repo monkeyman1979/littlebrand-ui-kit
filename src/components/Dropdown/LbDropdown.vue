@@ -77,7 +77,8 @@ const updatePosition = () => {
   const viewportWidth = window.innerWidth
   const viewportHeight = window.innerHeight
   
-  let top = triggerRect.bottom + 8 // 0.5rem gap
+  const dropdownOffset = 8 // Using 8px for dropdown offset (--lb-space-sm)
+  let top = triggerRect.bottom + dropdownOffset
   let left = triggerRect.left
   let placement = props.placement
   
@@ -90,10 +91,10 @@ const updatePosition = () => {
   
   // Calculate position
   if (placement === 'top') {
-    top = triggerRect.top - contentRect.height - 8
+    top = triggerRect.top - contentRect.height - dropdownOffset
   } else if (placement === 'bottom' && top + contentRect.height > viewportHeight) {
     // Flip to top if not enough space
-    top = triggerRect.top - contentRect.height - 8
+    top = triggerRect.top - contentRect.height - dropdownOffset
   }
   
   // Check if trigger scrolled out of view OR dropdown can't stay in view

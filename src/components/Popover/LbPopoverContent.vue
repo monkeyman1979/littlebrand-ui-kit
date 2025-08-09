@@ -89,7 +89,8 @@ const updatePosition = () => {
   }
   
   // Collision detection - flip if needed
-  const padding = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--lb-space-sm')) || 8
+  const defaultPadding = 8 // Default to 8px (--lb-space-sm equivalent)
+  const padding = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--lb-space-sm')) || defaultPadding
   let flipped = false
   
   // Check if we need to flip vertically

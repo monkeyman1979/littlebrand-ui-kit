@@ -114,7 +114,7 @@ const props = withDefaults(defineProps<LbMenuProps>(), {
   closeOnSelect: true,
   placement: 'bottom-start',
   virtualScrolling: true,
-  itemHeight: 40, // 2.5rem - used for virtual scrolling calculations
+  itemHeight: 40, // 40px (--lb-input-height-medium) - used for virtual scrolling calculations
 })
 
 // Emits
@@ -485,7 +485,7 @@ onUnmounted(() => {
   display: flex
   flex-direction: column
   width: max-content
-  min-width: 12.5rem // 200px
+  min-width: 200px // Using fixed min-width for menu readability
   max-width: 25rem // 400px
   outline: none
 

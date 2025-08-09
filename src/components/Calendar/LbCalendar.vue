@@ -698,14 +698,14 @@ defineOptions({
   display: grid
   grid-template-columns: repeat(7, 1fr)
   gap: 0
-  margin-bottom: 2px
+  margin-bottom: var(--lb-space-2xs)
 
 .weekday
   display: flex
   align-items: center
   justify-content: center
   min-width: var(--lb-input-height-medium) // 40px to match day cells
-  height: base.$size-4xl // 32px height for weekday labels
+  height: var(--lb-space-4xl) // 32px height for weekday labels
   font-size: var(--lb-font-size-label-small)
   font-weight: var(--lb-font-weight-medium)
   color: var(--lb-text-neutral-contrast-low)
@@ -714,12 +714,12 @@ defineOptions({
   // Large size variant
   .size-large &
     min-width: var(--lb-input-height-large) // 48px to match day cells
-    height: base.$size-5xl // 40px height for large
+    height: var(--lb-space-5xl) // 40px height for large
 
 .days-grid
   display: flex
   flex-direction: column
-  row-gap: 2px
+  row-gap: var(--lb-space-2xs)
 
 .calendar-week
   display: grid
