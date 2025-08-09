@@ -793,6 +793,41 @@
             LbSelect(v-model="selectWithDisabledOptions" :options="optionsWithDisabled" placeholder="Some options are disabled")
         
         .demo-group
+          h4 Searchable Select
+          .input-row
+            LbSelect(
+              v-model="selectSearchable1" 
+              :options="countryOptions" 
+              placeholder="Search countries..."
+              :searchable="true"
+              search-placeholder="Type to search..."
+            )
+            LbSelect(
+              v-model="selectSearchable2" 
+              :options="colorOptions" 
+              placeholder="Search colors..."
+              :searchable="true"
+            )
+        
+        .demo-group
+          h4 Clearable Select
+          .input-row
+            LbSelect(
+              v-model="selectClearable1" 
+              :options="countryOptions" 
+              placeholder="Select a country (clearable)"
+              :clearable="true"
+            )
+            LbSelect(
+              v-model="selectClearable2" 
+              :options="colorOptions" 
+              placeholder="Select a color (clearable)"
+              :clearable="true"
+              :searchable="true"
+              search-placeholder="Search and clear..."
+            )
+        
+        .demo-group
           h4 Custom Icon Slot
           .input-row
             LbSelect(v-model="selectCustomIcon" :options="iconOptions" placeholder="Custom dropdown icon")
@@ -2376,6 +2411,14 @@ const selectInvalid = ref('')
 const selectWithValue = ref('green')
 const selectWithDisabledOptions = ref('')
 const selectCustomIcon = ref('')
+
+// Searchable selects
+const selectSearchable1 = ref('')
+const selectSearchable2 = ref('')
+
+// Clearable selects
+const selectClearable1 = ref('canada')
+const selectClearable2 = ref('blue')
 
 // Select size variants
 const selectSizeMedium = ref('')
