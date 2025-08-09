@@ -48,6 +48,18 @@ export interface LbCalendarProps {
    * @default 'en-US'
    */
   locale?: string
+  
+  /**
+   * Calendar variant - standalone has border/padding, embedded doesn't
+   * @default 'standalone'
+   */
+  variant?: 'standalone' | 'embedded'
+  
+  /**
+   * Size variant for all interactive elements
+   * @default 'medium'
+   */
+  size?: 'medium' | 'large'
 }
 
 export interface LbCalendarEmits {

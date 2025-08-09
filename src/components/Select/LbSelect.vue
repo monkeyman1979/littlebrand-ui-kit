@@ -35,7 +35,7 @@ LbDropdown.lb-select(
       //- Dropdown icon
       span.select-icon
         slot(name="icon")
-          svg(width="16" height="16" viewBox="0 0 16 16" fill="currentColor" stroke="none")
+          svg(:width="size === 'large' ? '20' : '16'" :height="size === 'large' ? '20' : '16'" viewBox="0 0 16 16" fill="currentColor" stroke="none")
             path(d="M5 6l3 3 3-3z")
   
   template(#content)
@@ -394,7 +394,6 @@ defineOptions({
   background: var(--lb-background-surface)
   border: var(--lb-border-sm) solid var(--lb-border-neutral-normal)
   border-radius: var(--lb-radius-md)
-  font-size: var(--lb-font-size-label-base)
   color: var(--lb-text-neutral-contrast-high)
   cursor: pointer
   transition: border-color var(--lb-transition), box-shadow var(--lb-transition)
@@ -410,9 +409,11 @@ defineOptions({
   
   &.select-trigger-medium
     height: var(--lb-input-height-medium)
+    font-size: var(--lb-font-size-label-base)
   
   &.select-trigger-large
     height: var(--lb-input-height-large)
+    font-size: var(--lb-font-size-label-large)
   
   &.select-trigger-disabled
     background: var(--lb-surface-neutral-subtle)
@@ -469,6 +470,14 @@ defineOptions({
   flex-shrink: 0
   transition: transform var(--lb-transition)
   
+  svg
+    width: var(--lb-icon-size-sm) // 16px default
+    height: var(--lb-icon-size-sm)
+    
+    .select-trigger-large &
+      width: var(--lb-icon-size-md) // 20px for large
+      height: var(--lb-icon-size-md)
+  
   .lb-select[aria-expanded="true"] &
     transform: rotate(180deg)
 
@@ -489,7 +498,6 @@ defineOptions({
   background: var(--lb-background-surface)
   border: var(--lb-border-sm) solid var(--lb-border-neutral-normal)
   border-radius: var(--lb-radius-md)
-  font-size: var(--lb-font-size-label-base)
   color: var(--lb-text-neutral-contrast-high)
   transition: border-color var(--lb-transition)
   box-sizing: border-box
@@ -514,10 +522,16 @@ defineOptions({
   justify-content: space-between
   padding: var(--lb-space-sm) var(--lb-space-md)
   border-radius: var(--lb-radius-sm)
-  font-size: var(--lb-font-size-label-base)
   color: var(--lb-text-neutral-contrast-high)
   cursor: pointer
   transition: background-color var(--lb-transition)
+  
+  .select-content-medium &
+    font-size: var(--lb-font-size-label-base)
+  
+  .select-content-large &
+    font-size: var(--lb-font-size-label-large)
+    padding: var(--lb-space-md) var(--lb-space-lg)
   
   &:hover:not(.select-option-disabled)
     background: var(--lb-surface-neutral-hover)

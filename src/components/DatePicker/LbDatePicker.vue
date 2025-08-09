@@ -34,6 +34,7 @@
             :first-day-of-week="firstDayOfWeek"
             :locale="locale"
             variant="embedded"
+            :size="size"
             @change="handleDateSelect"
           )
           

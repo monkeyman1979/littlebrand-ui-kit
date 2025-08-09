@@ -8,7 +8,7 @@
     .calendar-navigation
       LbButton(
         icon-only
-        size="medium"
+        :size="size"
         variant="ghost"
         color="neutral"
         :disabled="!canNavigatePrevious"
@@ -23,7 +23,7 @@
         LbSelect.month-select(
           v-model="selectedMonth"
           :options="monthOptions"
-          size="medium"
+          :size="size"
           :aria-label="monthSelectAriaLabel"
           @change="handleMonthChange"
         )
@@ -33,14 +33,14 @@
           searchable
           search-input-type="number"
           search-placeholder="Enter year..."
-          size="medium"
+          :size="size"
           :aria-label="yearSelectAriaLabel"
           @change="handleYearChange"
         )
       
       LbButton(
         icon-only
-        size="medium"
+        :size="size"
         variant="ghost"
         color="neutral"
         :disabled="!canNavigateNext"
@@ -113,6 +113,7 @@ export interface LbCalendarProps {
   firstDayOfWeek?: 0 | 1  // 0 = Sunday, 1 = Monday
   locale?: string
   variant?: 'standalone' | 'embedded'  // standalone has border/padding, embedded doesn't
+  size?: 'medium' | 'large'  // Controls sizing of all interactive elements
 }
 
 // Props
@@ -123,7 +124,8 @@ const props = withDefaults(defineProps<LbCalendarProps>(), {
   disabledDates: undefined,
   firstDayOfWeek: 0,
   locale: 'en-US',
-  variant: 'standalone'
+  variant: 'standalone',
+  size: 'medium'
 })
 
 // Emits
@@ -176,7 +178,8 @@ if (props.maxDate && selectedYear.value === props.maxDate.getFullYear()) {
 // Computed
 const calendarClasses = computed(() => ({
   'lb-calendar': true,
-  [`variant-${props.variant}`]: true
+  [`variant-${props.variant}`]: true,
+  [`size-${props.size}`]: true
 }))
 
 // Date utilities
@@ -671,12 +674,17 @@ defineOptions({
   display: flex
   align-items: center
   justify-content: center
-  min-width: base.$size-7xl // 48px to match day cells
-  height: base.$size-6xl // Keep weekday labels at 40px height
+  min-width: var(--lb-input-height-medium) // 40px to match day cells
+  height: base.$size-4xl // 32px height for weekday labels
   font-size: var(--lb-font-size-label-small)
   font-weight: var(--lb-font-weight-medium)
   color: var(--lb-text-neutral-contrast-low)
   text-align: center
+  
+  // Large size variant
+  .size-large &
+    min-width: var(--lb-input-height-large) // 48px to match day cells
+    height: base.$size-5xl // 40px height for large
 
 .days-grid
   display: flex
@@ -693,18 +701,25 @@ defineOptions({
   align-items: center
   justify-content: center
   width: 100%
-  min-width: base.$size-7xl // 48px
-  height: base.$size-7xl // 48px
+  min-width: var(--lb-input-height-medium) // 40px for medium
+  height: var(--lb-input-height-medium) // 40px for medium
   padding: 0
   background: transparent
   border: none
-  border-radius: var(--lb-radius-lg)
-  font-size: var(--lb-font-size-body-large) // Larger font for better readability
+  border-radius: var(--lb-radius-md)
+  font-size: var(--lb-font-size-body-base) // Medium font by default
   font-weight: var(--lb-font-weight-normal)
   color: var(--lb-text-neutral-contrast-high)
   cursor: pointer
   transition: all var(--lb-transition)
   position: relative
+  
+  // Large size variant
+  .size-large &
+    min-width: var(--lb-input-height-large) // 48px for large
+    height: var(--lb-input-height-large) // 48px for large
+    border-radius: var(--lb-radius-lg)
+    font-size: var(--lb-font-size-body-large)
   
   &:focus-visible
     outline: var(--lb-focus-ring-width) solid var(--lb-focus-ring-color)
