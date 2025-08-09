@@ -112,6 +112,7 @@ export interface LbCalendarProps {
   disabledDates?: Date[] | ((date: Date) => boolean)
   firstDayOfWeek?: 0 | 1  // 0 = Sunday, 1 = Monday
   locale?: string
+  variant?: 'standalone' | 'embedded'  // standalone has border/padding, embedded doesn't
 }
 
 // Props
@@ -121,7 +122,8 @@ const props = withDefaults(defineProps<LbCalendarProps>(), {
   maxDate: undefined,
   disabledDates: undefined,
   firstDayOfWeek: 0,
-  locale: 'en-US'
+  locale: 'en-US',
+  variant: 'standalone'
 })
 
 // Emits
@@ -173,7 +175,8 @@ if (props.maxDate && selectedYear.value === props.maxDate.getFullYear()) {
 
 // Computed
 const calendarClasses = computed(() => ({
-  'lb-calendar': true
+  'lb-calendar': true,
+  [`variant-${props.variant}`]: true
 }))
 
 // Date utilities
@@ -615,10 +618,19 @@ defineOptions({
   display: inline-block
   width: min(24rem, 100%)
   background: var(--lb-background-surface)
-  border: var(--lb-border-sm) solid var(--lb-border-neutral-line)
-  border-radius: var(--lb-radius-lg)
-  padding: var(--lb-space-md)
   font-family: var(--lb-font-body)
+  
+  // Standalone variant - with border and padding
+  &.variant-standalone
+    border: var(--lb-border-sm) solid var(--lb-border-neutral-line)
+    border-radius: var(--lb-radius-lg)
+    padding: var(--lb-space-md)
+  
+  // Embedded variant - no border or padding
+  &.variant-embedded
+    border: none
+    border-radius: 0
+    padding: 0
 
 .calendar-header
   display: flex

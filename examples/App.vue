@@ -2153,6 +2153,121 @@
               v-model="selectedCalendarDate4"
               :first-day-of-week="1"
             )
+      
+      .component-demo
+        h3 Date Picker
+        p Complete date selection with input field and calendar popover
+        
+        .demo-group
+          h4 Basic Date Picker (Type or Select)
+          .date-picker-demo
+            LbDatePicker(
+              v-model="selectedDate1"
+              placeholder="MM/DD/YYYY"
+              placement="bottom-start"
+              @change="handleDateChange"
+            )
+            .demo-note 
+              p Selected: {{ selectedDate1 ? selectedDate1.toLocaleDateString() : 'None' }}
+              p.hint-text You can type dates directly (e.g., 12/25/2024) or use the calendar
+        
+        .demo-group
+          h4 With Format Options
+          .date-picker-demo
+            LbDatePicker(
+              v-model="selectedDate2"
+              format="MM/DD/YYYY"
+              placeholder="MM/DD/YYYY"
+              placement="bottom-start"
+            )
+            LbDatePicker(
+              v-model="selectedDate3"
+              format="DD/MM/YYYY"
+              placeholder="DD/MM/YYYY"
+              placement="bottom-start"
+            )
+            LbDatePicker(
+              v-model="selectedDate4"
+              format="YYYY-MM-DD"
+              placeholder="YYYY-MM-DD"
+              placement="bottom-start"
+            )
+        
+        .demo-group
+          h4 With Confirm Buttons (Default)
+          .date-picker-demo
+            LbDatePicker(
+              v-model="selectedDate5"
+              :clearable="true"
+              :show-today="true"
+              :show-confirm-buttons="true"
+              placeholder="With all buttons"
+              placement="bottom-start"
+            )
+            
+        .demo-group
+          h4 Without Confirm Buttons (Immediate selection)
+          .date-picker-demo
+            LbDatePicker(
+              v-model="selectedDateImmediate"
+              :clearable="true"
+              :show-today="true"
+              :show-confirm-buttons="false"
+              placeholder="Immediate selection"
+              placement="bottom-start"
+            )
+        
+        .demo-group
+          h4 Date Constraints
+          .date-picker-demo
+            LbDatePicker(
+              v-model="selectedDate6"
+              :min-date="datePickerMinDate"
+              :max-date="datePickerMaxDate"
+              placeholder="With min/max dates"
+              placement="bottom-start"
+            )
+            .demo-note
+              p Min: {{ datePickerMinDate.toLocaleDateString() }}
+              p Max: {{ datePickerMaxDate.toLocaleDateString() }}
+        
+        .demo-group
+          h4 Sizes and States
+          .date-picker-demo
+            LbDatePicker(
+              v-model="selectedDate7"
+              size="medium"
+              placeholder="Medium size (default)"
+              placement="bottom-start"
+            )
+            LbDatePicker(
+              v-model="selectedDate8"
+              size="large"
+              placeholder="Large size"
+              placement="bottom-start"
+            )
+            LbDatePicker(
+              v-model="selectedDate9"
+              :disabled="true"
+              placeholder="Disabled"
+              placement="bottom-start"
+            )
+            LbDatePicker(
+              v-model="selectedDate10"
+              :invalid="true"
+              placeholder="Invalid state"
+              placement="bottom-start"
+            )
+        
+        .demo-group
+          h4 With Disabled Dates (Weekends)
+          .date-picker-demo
+            LbDatePicker(
+              v-model="selectedDate11"
+              :disabled-dates="disabledWeekends"
+              placeholder="Weekends disabled"
+              placement="bottom-start"
+            )
 </template>
 
 <script setup>
@@ -2161,7 +2276,7 @@ import {
   LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog,
   LbBadge, LbNavigationBar, LbNavigationBarItem, LbBottomSheet, LbChip, LbAvatar, LbProgress, LbDivider, 
   LbSegmentButton, LbSegmentButtonItem, useSnackbar, LbPopover, LbPopoverTrigger, LbPopoverContent, LbPopoverArrow,
-  LbDropdown, LbMenu, LbCalendar
+  LbDropdown, LbMenu, LbCalendar, LbDatePicker
 } from '../src'
 
 const isDark = ref(false)
@@ -2940,6 +3055,38 @@ const handleCalendarChange = (date) => {
   console.log('Calendar date changed:', date)
 }
 
+// DatePicker demo data
+const selectedDate1 = ref(null)
+const selectedDate2 = ref(new Date())
+const selectedDate3 = ref(new Date())
+const selectedDate4 = ref(new Date())
+const selectedDate5 = ref(null)
+const selectedDate6 = ref(null)
+const selectedDate7 = ref(null)
+const selectedDate8 = ref(null)
+const selectedDate9 = ref(new Date())
+const selectedDate10 = ref(null)
+const selectedDate11 = ref(null)
+const selectedDateImmediate = ref(null)
+
+// Date constraints for DatePicker
+const datePickerMinDate = new Date()
+datePickerMinDate.setMonth(datePickerMinDate.getMonth() - 1) // 1 month ago
+
+const datePickerMaxDate = new Date()
+datePickerMaxDate.setMonth(datePickerMaxDate.getMonth() + 3) // 3 months from now
+
+// Disabled weekends function for DatePicker
+const disabledWeekends = (date) => {
+  const day = date.getDay()
+  return day === 0 || day === 6
+}
+
+// DatePicker handler
+const handleDateChange = (date) => {
+  console.log('DatePicker date changed:', date)
+}
+
 const categoryOptions = [
   { value: 'work', label: 'Work' },
   { value: 'personal', label: 'Personal' },
@@ -3584,6 +3731,34 @@ section
     
     p
       margin: 0
+      &:not(:last-child)
+        margin-bottom: var(--lb-space-xs)
+
+// DatePicker demo styles
+.date-picker-demo
+  display: flex
+  flex-direction: column
+  gap: var(--lb-space-md)
+  align-items: flex-start
+  
+  .lb-date-picker
+    min-width: 15rem
+  
+  .demo-note
+    padding: var(--lb-space-sm)
+    background: var(--lb-surface-neutral-subtle)
+    border-radius: var(--lb-radius-md)
+    font-size: var(--lb-font-size-body-small)
+    color: var(--lb-text-neutral-contrast-high)
+    
+    p
+      margin: 0
+      
+      &.hint-text
+        margin-top: var(--lb-space-xs)
+        color: var(--lb-text-neutral-contrast-low)
+        font-size: var(--lb-font-size-label-small)
+      
       &:not(:last-child)
         margin-bottom: var(--lb-space-xs)
     

@@ -4,8 +4,8 @@
 These components need to be built in LittleBrand UI Kit to support the Timist application migration. Components are organized by development day with complexity ratings.
 
 Total components to build: 11 (3 simple, 5 medium, 3 complex)
-Completed: 8 (Badge ✅, Progress ✅, Avatar ✅, Snackbar ✅, Divider ✅, Popover ✅, SegmentButton ✅, Menu/Select ✅)
-Remaining: 3 (Card, Calendar, DatePicker)
+Completed: 9 (Badge ✅, Progress ✅, Avatar ✅, Snackbar ✅, Divider ✅, Popover ✅, SegmentButton ✅, Menu/Select ✅, Calendar ✅)
+Remaining: 2 (Card, DatePicker)
 
 ## Day 1: Simple Components (3 components)
 
@@ -179,7 +179,7 @@ Remaining: 3 (Card, Calendar, DatePicker)
   - ✅ Size variants (medium, large)
   - Perfect for long lists like years (1900-2025+)
 
-### 10. Calendar ❌ (Not Started)
+### 10. Calendar ✅ (Completed)
 - **Purpose**: Calendar grid component for date selection
 - **Complexity**: ⭐⭐⭐⭐ (Complex)
 - **API Requirements**:
@@ -243,9 +243,9 @@ Remaining: 3 (Card, Calendar, DatePicker)
 ## Component Dependencies
 
 ### DatePicker Build Order:
-1. **LbSelect** ✅ - Completed! Can be used for Calendar month/year dropdowns
-2. **LbCalendar** - Core calendar grid component (next to build)
-3. **LbDatePicker** - Integration wrapper combining all pieces
+1. **LbSelect** ✅ - Completed! Used for month/year dropdowns
+2. **LbCalendar** ✅ - Completed! Core calendar grid with all features
+3. **LbDatePicker** - Integration wrapper combining all pieces (ready to build)
 
 ### Why Select Component Works for DatePicker:
 - **Better UX for year selection**: Scrollable list with 100+ years
