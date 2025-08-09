@@ -76,6 +76,23 @@ svg
   max-width: 100%
   height: auto
 
+// SVG color inheritance fix
+svg
+  // Ensure proper color inheritance
+  color: inherit
+  
+  // Prevent stroke on filled icons
+  &[fill="currentColor"]
+    stroke: none
+    
+    path
+      stroke: none
+      
+  // Also ensure path elements with fill don't have stroke
+  path[fill="currentColor"]
+    stroke: none
+    fill: currentColor
+
 // Tables
 table
   border-collapse: collapse
