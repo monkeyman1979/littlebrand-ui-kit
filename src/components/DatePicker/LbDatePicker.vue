@@ -6,6 +6,7 @@
     :offset="12"
     :close-on-click-outside="true"
     :close-on-escape="true"
+    :trap-focus="true"
   )
     LbPopoverTrigger(:disabled="disabled")
       button.date-picker-trigger(

@@ -385,12 +385,8 @@ const getDayClasses = (day: CalendarDay) => ({
 const getTabIndex = (day: CalendarDay): number => {
   if (day.disabled) return -1
   
-  // Focus on selected date, today, or first day of current month
-  if (day.selected) return 0
-  if (!props.modelValue && day.isToday && day.isCurrentMonth) return 0
-  if (!props.modelValue && !hasToday() && isFirstDayOfMonth(day)) return 0
-  
-  return -1
+  // Make all non-disabled days tabbable for better keyboard navigation
+  return 0
 }
 
 const hasToday = (): boolean => {

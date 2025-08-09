@@ -10,6 +10,7 @@ LbDropdown.lb-select(
 )
   template(#trigger)
     .select-trigger(
+      ref="triggerRef"
       :class="triggerClasses"
       :tabindex="disabled ? -1 : 0"
       :aria-expanded="isOpen"
@@ -132,6 +133,7 @@ const emit = defineEmits<{
 
 // Refs
 const dropdownRef = ref<InstanceType<typeof LbDropdown>>()
+const triggerRef = ref<HTMLElement>()
 const searchInputRef = ref<HTMLInputElement>()
 const optionsRef = ref<HTMLElement>()
 const contentRef = ref<HTMLElement>()
@@ -296,6 +298,11 @@ const handleClose = () => {
   emit('close')
   searchQuery.value = ''
   highlightedIndex.value = -1
+  
+  // Return focus to the trigger element after closing
+  nextTick(() => {
+    triggerRef.value?.focus()
+  })
 }
 
 const handleTriggerKeydown = (event: KeyboardEvent) => {

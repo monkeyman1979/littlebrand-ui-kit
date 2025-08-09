@@ -27,6 +27,7 @@ export interface LbPopoverProps {
   closeOnClickOutside?: boolean
   closeOnEscape?: boolean
   disabled?: boolean
+  trapFocus?: boolean
 }
 
 export interface PopoverContext {
@@ -35,6 +36,7 @@ export interface PopoverContext {
   offset: number
   showArrow: boolean
   disabled: boolean
+  trapFocus: boolean
   triggerRef: Ref<HTMLElement | null>
   contentRef: Ref<HTMLElement | null>
   arrowRef: Ref<HTMLElement | null>
@@ -52,7 +54,8 @@ const props = withDefaults(defineProps<LbPopoverProps>(), {
   showArrow: true,
   closeOnClickOutside: true,
   closeOnEscape: true,
-  disabled: false
+  disabled: false,
+  trapFocus: false
 })
 
 // Emits
@@ -249,6 +252,7 @@ const popoverContext = {
   get offset() { return props.offset },
   get showArrow() { return props.showArrow },
   get disabled() { return props.disabled },
+  get trapFocus() { return props.trapFocus },
   triggerRef,
   contentRef,
   arrowRef,
