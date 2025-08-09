@@ -14,7 +14,7 @@
               path(d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z")
             svg(v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
               path(d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z")
-          | {{ isDark ? 'Light Mode' : 'Dark Mode' }}
+          | {{ isDark ? 'Dark Mode' : 'Light Mode' }}
       
     section.typography-section
         h2 Typography
@@ -1763,14 +1763,139 @@
               .filter-info
                 p(v-if="!statusFilters || statusFilters.length === 0") Showing all items
                 p(v-else) | Filters: {{ statusFilters.join(' + ') }}
+      
+      .component-demo
+        h3 Popover
+        p Floating content container that can hold any Vue component with proper positioning and portal rendering.
+        
+        .demo-group
+          h4 Basic Usage
+          .popover-demo
+            LbPopover(v-model:open="basicPopoverOpen" placement="bottom-start")
+              LbPopoverTrigger
+                LbButton Basic Popover
+              LbPopoverContent
+                .popover-content-demo
+                  h4 Popover Title
+                  p This is a basic popover with some content.
+                  LbButton(@click="basicPopoverOpen = false" size="small" variant="outline") Close
+        
+        .demo-group
+          h4 Placement Options
+          .popover-demo
+            .popover-grid
+              template(v-for="placement in popoverPlacements" :key="placement")
+                LbPopover(v-model:open="popoverStates[placement]" :placement="placement")
+                  LbPopoverTrigger
+                    LbButton(size="small" variant="outline") {{ placement }}
+                  LbPopoverContent
+                    .popover-content-demo
+                      p Content positioned {{ placement }}
+        
+        .demo-group
+          h4 With Arrow
+          .popover-demo
+            LbPopover(v-model:open="arrowPopoverOpen" :show-arrow="true")
+              LbPopoverTrigger
+                LbButton(variant="filled" color="primary") Popover with Arrow
+              LbPopoverContent
+                LbPopoverArrow
+                .popover-content-demo
+                  h4 With Arrow
+                  p This popover includes an arrow pointing to the trigger.
+                  p The arrow automatically positions itself based on the popover placement.
+        
+        .demo-group
+          h4 Rich Content
+          .popover-demo
+            LbPopover(v-model:open="richPopoverOpen" placement="bottom-start")
+              LbPopoverTrigger
+                LbButton(variant="tonal" color="secondary") User Menu
+                  template(#icon-trailing)
+                    svg(width="16" height="16" viewBox="0 0 16 16" fill="currentColor")
+                      path(d="M8 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM1.5 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM14.5 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3z")
+              LbPopoverContent
+                .user-menu-demo
+                  header.user-header
+                    .user-avatar
+                      LbAvatar(name="John Doe")
+                    .user-info
+                      h4.user-name John Doe
+                      p.user-email john.doe@example.com
+                  
+                  LbDivider
+                  
+                  nav.user-menu
+                    .menu-item
+                      svg.menu-icon(width="16" height="16" viewBox="0 0 16 16" fill="currentColor")
+                        path(d="M8 8a3 3 0 100-6 3 3 0 000 6zM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 00-11.215 0c-.22.578.254 1.139.872 1.139h9.47z")
+                      | Profile
+                    .menu-item
+                      svg.menu-icon(width="16" height="16" viewBox="0 0 16 16" fill="currentColor")
+                        path(d="M8 15A7 7 0 118 1a7 7 0 010 14zm0 1A8 8 0 108 0a8 8 0 000 16z")
+                      | Settings
+                    .menu-item
+                      svg.menu-icon(width="16" height="16" viewBox="0 0 16 16" fill="currentColor")
+                        path(d="M6 10.5a.5.5 0 01.5-.5h3a.5.5 0 010 1h-3a.5.5 0 01-.5-.5zm-2-3a.5.5 0 01.5-.5h7a.5.5 0 010 1h-7a.5.5 0 01-.5-.5zm-2-3a.5.5 0 01.5-.5h11a.5.5 0 010 1h-11a.5.5 0 01-.5-.5z")
+                      | Help & Support
+                  
+                  LbDivider
+                  
+                  .menu-item(@click="richPopoverOpen = false")
+                    svg.menu-icon(width="16" height="16" viewBox="0 0 16 16" fill="currentColor")
+                      path(d="M6 14a.5.5 0 01-.5-.5v-9a.5.5 0 01.146-.354L10.146 1.146A.5.5 0 0110.5 1a.5.5 0 01.5.5v9a.5.5 0 01-.146.354L6.354 14.854A.5.5 0 016 14z")
+                    | Sign Out
+        
+        .demo-group
+          h4 Form Content
+          .popover-demo
+            LbPopover(v-model:open="formPopoverOpen" placement="bottom-end")
+              LbPopoverTrigger
+                LbButton(variant="ghost" color="neutral")
+                  template(#icon-leading)
+                    svg(width="16" height="16" viewBox="0 0 16 16" fill="currentColor")
+                      path(d="M11.5 2a1.5 1.5 0 011.5 1.5v9a1.5 1.5 0 01-1.5 1.5h-7A1.5 1.5 0 013 12.5v-9A1.5 1.5 0 014.5 2h7zm-4 1.5v1a.5.5 0 001 0v-1h1.5v1a.5.5 0 001 0v-1H11a.5.5 0 01.5.5v1.5H4V4a.5.5 0 01.5-.5h1v1a.5.5 0 001 0v-1h1z")
+                  | Quick Add
+              LbPopoverContent
+                .form-demo
+                  h4 Add New Item
+                  .form-field
+                    LbLabel(for="quick-title" required) Title
+                    LbInput(
+                      id="quick-title"
+                      v-model="quickFormData.title"
+                      placeholder="Enter title"
+                    )
+                  
+                  .form-field
+                    LbLabel(for="quick-category") Category
+                    LbSelect(
+                      id="quick-category"
+                      v-model="quickFormData.category"
+                      :options="categoryOptions"
+                      placeholder="Select category"
+                    )
+                  
+                  .form-field
+                    LbLabel(for="quick-description") Description
+                    LbTextarea(
+                      id="quick-description"
+                      v-model="quickFormData.description"
+                      placeholder="Add description..."
+                      :rows="3"
+                    )
+                  
+                  .form-actions
+                    LbButton(@click="formPopoverOpen = false" variant="ghost" size="small") Cancel
+                    LbButton(@click="handleQuickAdd" variant="filled" color="primary" size="small") Add Item
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { 
   LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog,
   LbBadge, LbNavigationBar, LbNavigationBarItem, LbBottomSheet, LbChip, LbAvatar, LbProgress, LbDivider, 
-  LbSegmentButton, LbSegmentButtonItem, useSnackbar
+  LbSegmentButton, LbSegmentButtonItem, useSnackbar, LbPopover, LbPopoverTrigger, LbPopoverContent, LbPopoverArrow
 } from '../src'
 
 const isDark = ref(false)
@@ -2366,6 +2491,53 @@ const showMultipleSnackbars = () => {
   }, 1000)
 }
 
+// Popover demo data
+const basicPopoverOpen = ref(false)
+const arrowPopoverOpen = ref(false)
+const richPopoverOpen = ref(false)
+const formPopoverOpen = ref(false)
+
+
+const popoverPlacements = [
+  'top', 'top-start', 'top-end',
+  'bottom', 'bottom-start', 'bottom-end',
+  'left', 'left-start', 'left-end',
+  'right', 'right-start', 'right-end'
+]
+
+const popoverStates = ref(
+  popoverPlacements.reduce((acc, placement) => {
+    acc[placement] = false
+    return acc
+  }, {})
+)
+
+const quickFormData = ref({
+  title: '',
+  category: '',
+  description: ''
+})
+
+const categoryOptions = [
+  { value: 'work', label: 'Work' },
+  { value: 'personal', label: 'Personal' },
+  { value: 'project', label: 'Project' },
+  { value: 'idea', label: 'Idea' }
+]
+
+const handleQuickAdd = () => {
+  if (quickFormData.value.title.trim()) {
+    alert(`Added: ${quickFormData.value.title}`)
+    // Reset form
+    quickFormData.value = {
+      title: '',
+      category: '',
+      description: ''
+    }
+    formPopoverOpen.value = false
+  }
+}
+
 onMounted(() => {
   // Check for user's theme preference
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -2875,4 +3047,102 @@ section
       margin: 0
       color: var(--lb-text-neutral-contrast-low)
       font-size: var(--lb-font-size-label-base)
+
+// Popover demo styles
+.popover-demo
+  display: flex
+  flex-direction: column
+  gap: var(--lb-space-lg)
+
+.popover-grid
+  display: grid
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr))
+  gap: var(--lb-space-md)
+  
+  @media (max-width: 768px)
+    grid-template-columns: repeat(2, 1fr)
+
+.popover-content-demo
+  padding: var(--lb-space-md)
+  
+  h4
+    margin: 0 0 var(--lb-space-sm) 0
+    font-size: var(--lb-font-size-label-large)
+    color: var(--lb-text-neutral-contrast-high)
+  
+  p
+    margin: 0 0 var(--lb-space-md) 0
+    color: var(--lb-text-neutral-contrast-low)
+    font-size: var(--lb-font-size-label-base)
+    
+    &:last-child
+      margin-bottom: 0
+
+.user-menu-demo
+  min-width: 280px
+  
+  .user-header
+    display: flex
+    align-items: center
+    gap: var(--lb-space-md)
+    padding: var(--lb-space-md)
+    
+    .user-info
+      flex: 1
+      min-width: 0
+      
+      .user-name
+        margin: 0 0 var(--lb-space-2xs) 0
+        font-size: var(--lb-font-size-label-base)
+        font-weight: var(--lb-font-weight-medium)
+        color: var(--lb-text-neutral-contrast-high)
+      
+      .user-email
+        margin: 0
+        font-size: var(--lb-font-size-label-small)
+        color: var(--lb-text-neutral-contrast-low)
+  
+  .user-menu
+    padding: var(--lb-space-xs) 0
+    
+    .menu-item
+      display: flex
+      align-items: center
+      gap: var(--lb-space-md)
+      padding: var(--lb-space-sm) var(--lb-space-md)
+      cursor: pointer
+      transition: background-color var(--lb-transition)
+      color: var(--lb-text-neutral-contrast-low)
+      font-size: var(--lb-font-size-label-base)
+      
+      &:hover
+        background: var(--lb-surface-neutral-hover)
+        color: var(--lb-text-neutral-contrast-high)
+      
+      .menu-icon
+        width: var(--lb-icon-size-sm)
+        height: var(--lb-icon-size-sm)
+        flex-shrink: 0
+
+.form-demo
+  min-width: 300px
+  
+  h4
+    margin: 0 0 var(--lb-space-lg) 0
+    font-size: var(--lb-font-size-label-large)
+    color: var(--lb-text-neutral-contrast-high)
+  
+  .form-field
+    display: flex
+    flex-direction: column
+    gap: var(--lb-form-field-gap)
+    margin-bottom: var(--lb-form-field-margin)
+    
+    &:last-of-type
+      margin-bottom: var(--lb-space-lg)
+  
+  .form-actions
+    display: flex
+    justify-content: flex-end
+    gap: var(--lb-space-sm)
 </style>

@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## General Development Guidelines
+
+- Do not prompt to try to build (npm run build). Only build when I ask you to.
+
 ## CSS Rules and Conventions
 
 - Never use "!important" on any css
