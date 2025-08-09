@@ -131,6 +131,61 @@ const updatePosition = () => {
   y = Math.max(padding, Math.min(y, viewportHeight - contentRect.height - padding))
   
   position.value = { x, y }
+  
+  // After positioning, check if either trigger or popover is out of view
+  // This happens during scrolling
+  const triggerInView = (
+    triggerRect.bottom > 0 &&
+    triggerRect.top < viewportHeight &&
+    triggerRect.right > 0 &&
+    triggerRect.left < viewportWidth
+  )
+  
+  const popoverWouldBeInView = (
+    y + contentRect.height > 0 &&
+    y < viewportHeight &&
+    x + contentRect.width > 0 &&
+    x < viewportWidth
+  )
+  
+  // Close if trigger scrolled out of view OR popover can't stay in view
+  if (!triggerInView || !popoverWouldBeInView) {
+    context.handleClose()
+    return
+  }
+}
+
+// Throttle helper for performance
+let scrollRafId: number | null = null
+let resizeRafId: number | null = null
+
+// Handle scroll and resize events
+const handleScroll = () => {
+  if (context.open && contentElement.value) {
+    // Cancel any pending update
+    if (scrollRafId) {
+      cancelAnimationFrame(scrollRafId)
+    }
+    // Schedule update on next animation frame
+    scrollRafId = requestAnimationFrame(() => {
+      updatePosition()
+      scrollRafId = null
+    })
+  }
+}
+
+const handleResize = () => {
+  if (context.open && contentElement.value) {
+    // Cancel any pending update
+    if (resizeRafId) {
+      cancelAnimationFrame(resizeRafId)
+    }
+    // Schedule update on next animation frame
+    resizeRafId = requestAnimationFrame(() => {
+      updatePosition()
+      resizeRafId = null
+    })
+  }
 }
 
 // Simple position update
@@ -142,6 +197,14 @@ watch(() => context.open, async (isOpen) => {
     if (contentElement.value && context.contentRef) {
       context.contentRef.value = contentElement.value
     }
+    
+    // Add scroll and resize listeners
+    window.addEventListener('scroll', handleScroll, true)
+    window.addEventListener('resize', handleResize)
+  } else {
+    // Remove scroll and resize listeners
+    window.removeEventListener('scroll', handleScroll, true)
+    window.removeEventListener('resize', handleResize)
   }
 })
 
@@ -175,6 +238,8 @@ watch(() => context.open, (isOpen) => {
 // Cleanup
 onBeforeUnmount(() => {
   document.removeEventListener('click', handleClickOutside, true)
+  window.removeEventListener('scroll', handleScroll, true)
+  window.removeEventListener('resize', handleResize)
   if (context.contentRef && context.contentRef.value === contentElement.value) {
     context.contentRef.value = null
   }
