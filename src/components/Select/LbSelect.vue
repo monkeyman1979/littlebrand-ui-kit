@@ -40,6 +40,7 @@ LbDropdown.lb-select(
   
   template(#content)
     .select-content(
+      :class="`select-content-${size}`"
       role="listbox"
       :aria-label="ariaLabel"
       @keydown="handleKeydown"
@@ -56,7 +57,7 @@ LbDropdown.lb-select(
           @keydown="handleSearchKeydown"
         )
       
-      .select-options(ref="optionsRef")
+      .select-options(ref="optionsRef" :style="optionsStyle")
         .select-option(
           v-for="(option, index) in filteredOptions"
           :key="getOptionKey(option, index)"
@@ -102,6 +103,7 @@ export interface LbSelectProps {
   searchInputType?: string  // Allow setting input type (e.g., 'number', 'text')
   size?: 'medium' | 'large'
   placement?: 'bottom' | 'top' | 'auto'
+  maxHeight?: string  // Custom max-height for dropdown options
   ariaLabel?: string
   ariaDescribedby?: string
 }
@@ -119,6 +121,7 @@ const props = withDefaults(defineProps<LbSelectProps>(), {
   searchInputType: 'text',
   size: 'medium',
   placement: 'bottom',
+  maxHeight: undefined,
 })
 
 // Emits
@@ -182,6 +185,11 @@ const selectedLabel = computed(() => {
   // Use displayLabel if available, otherwise fall back to label
   return selectedOption.value?.displayLabel || selectedOption.value?.label || ''
 })
+
+// Computed style for options container
+const optionsStyle = computed(() => ({
+  maxHeight: props.maxHeight || '15rem'
+}))
 
 const triggerClasses = computed(() => ({
   'select-trigger-disabled': props.disabled,
@@ -513,7 +521,6 @@ defineOptions({
 
 .select-options
   padding: var(--lb-space-xs)
-  max-height: 15rem
   overflow-y: auto
 
 .select-option

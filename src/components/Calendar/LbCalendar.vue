@@ -24,6 +24,7 @@
           v-model="selectedMonth"
           :options="monthOptions"
           :size="size"
+          max-height="10rem"
           :aria-label="monthSelectAriaLabel"
           @change="handleMonthChange"
         )
@@ -34,6 +35,7 @@
           search-input-type="number"
           search-placeholder="Enter year..."
           :size="size"
+          max-height="10rem"
           :aria-label="yearSelectAriaLabel"
           @change="handleYearChange"
         )
