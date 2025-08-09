@@ -34,8 +34,9 @@ LbDropdown.lb-select(
       
       //- Dropdown icon
       span.select-icon
-        svg(width="16" height="16" viewBox="0 0 16 16" fill="currentColor" stroke="none")
-          path(d="M5 6l3 3 3-3z")
+        slot(name="icon")
+          svg(width="16" height="16" viewBox="0 0 16 16" fill="currentColor" stroke="none")
+            path(d="M5 6l3 3 3-3z")
   
   template(#content)
     .select-content(
@@ -49,7 +50,7 @@ LbDropdown.lb-select(
           v-model="searchQuery"
           :placeholder="searchPlaceholder"
           @input="handleSearch"
-          @keydown.stop
+          @keydown="handleSearchKeydown"
         )
       
       .select-options(ref="optionsRef")
@@ -264,6 +265,20 @@ const handleTriggerKeydown = (event: KeyboardEvent) => {
     event.preventDefault()
     isOpen.value = true
   }
+}
+
+const handleSearchKeydown = (event: KeyboardEvent) => {
+  const { key } = event
+  
+  // Only stop propagation for actual typing keys
+  // Let navigation keys bubble up to the parent handler
+  if (key === 'ArrowDown' || key === 'ArrowUp' || key === 'Enter' || key === 'Escape') {
+    // Don't stop propagation - let these bubble up to handleKeydown
+    return
+  }
+  
+  // Stop propagation for all other keys (typing characters)
+  event.stopPropagation()
 }
 
 const handleKeydown = (event: KeyboardEvent) => {
