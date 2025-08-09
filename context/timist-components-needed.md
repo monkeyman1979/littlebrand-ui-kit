@@ -4,8 +4,8 @@
 These components need to be built in LittleBrand UI Kit to support the Timist application migration. Components are organized by development day with complexity ratings.
 
 Total components to build: 11 (3 simple, 5 medium, 3 complex)
-Completed: 7 (Badge ✅, Progress ✅, Avatar ✅, Snackbar ✅, Divider ✅, Popover ✅, SegmentButton ✅)
-Remaining: 4 (Card, Menu, Calendar, DatePicker)
+Completed: 8 (Badge ✅, Progress ✅, Avatar ✅, Snackbar ✅, Divider ✅, Popover ✅, SegmentButton ✅, Menu/Select ✅)
+Remaining: 3 (Card, Calendar, DatePicker)
 
 ## Day 1: Simple Components (3 components)
 
@@ -158,26 +158,26 @@ Remaining: 4 (Card, Menu, Calendar, DatePicker)
 
 ## Day 3: Additional Components for DatePicker (2 components)
 
-### 9. Menu ❌ (Not Started)
+### 9. Menu ✅ (Completed as LbSelect)
 - **Purpose**: Flexible dropdown menu for custom selections
 - **Complexity**: ⭐⭐⭐ (Medium)
+- **Implementation**: The LbSelect component provides all Menu functionality
 - **API Requirements**:
   ```pug
-  lb-menu(v-model="selectedValue" :options="menuOptions" searchable)
-    template(#trigger)
-      button {{ triggerText }}
+  lb-select(v-model="selectedValue" :options="selectOptions" searchable clearable)
   ```
-- **Key Features**:
-  - Scrollable list of options
-  - Virtual scrolling for long lists (100+ items)
-  - Optional search/filter capability
-  - Keyboard navigation (arrows, Home/End, type to search)
-  - Auto-scroll to selected item on open
-  - Hover and focus states
-  - Uses LbPopover internally
-  - Custom item templates via slots
-  - Divider support
-  - Better than Select for long lists like years (1900-2025+)
+- **Key Features Implemented**:
+  - ✅ Scrollable list of options
+  - ✅ Optional search/filter capability (`:searchable="true"`)
+  - ✅ Keyboard navigation (arrows, Enter, Escape)
+  - ✅ Auto-scroll to selected item on open
+  - ✅ Hover and focus states
+  - ✅ Uses LbDropdown internally (similar to Popover)
+  - ✅ Divider support (via option type)
+  - ✅ Clearable option for removing selection
+  - ✅ Custom icon slot for flexibility
+  - ✅ Size variants (medium, large)
+  - Perfect for long lists like years (1900-2025+)
 
 ### 10. Calendar ❌ (Not Started)
 - **Purpose**: Calendar grid component for date selection
@@ -243,16 +243,16 @@ Remaining: 4 (Card, Menu, Calendar, DatePicker)
 ## Component Dependencies
 
 ### DatePicker Build Order:
-1. **LbMenu** - Prerequisite for Calendar month/year dropdowns
-2. **LbCalendar** - Core calendar grid component  
+1. **LbSelect** ✅ - Completed! Can be used for Calendar month/year dropdowns
+2. **LbCalendar** - Core calendar grid component (next to build)
 3. **LbDatePicker** - Integration wrapper combining all pieces
 
-### Why Menu Instead of Select for DatePicker:
+### Why Select Component Works for DatePicker:
 - **Better UX for year selection**: Scrollable list with 100+ years
-- **Search capability**: Users can type "1985" to jump to year
+- **Search capability**: Users can type "1985" to jump to year with `:searchable="true"`
 - **Visual consistency**: Both month and year use same component style
-- **Performance**: Virtual scrolling for large lists
-- **Flexibility**: Can add decade grouping, dividers, etc.
+- **Performance**: Efficient filtering and scrolling for large lists
+- **Flexibility**: Supports dividers, disabled options, custom icons
 
 ## Implementation Notes
 
