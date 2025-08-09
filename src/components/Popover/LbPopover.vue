@@ -213,8 +213,17 @@ const handleClickOutside = (event: MouseEvent) => {
   if (!props.closeOnClickOutside || !props.open) return
   
   const target = event.target as Node
+  const targetElement = target as HTMLElement
   const trigger = triggerRef.value
   const content = contentRef.value
+  
+  // Check if click is on a dropdown element (Select dropdowns are teleported to body)
+  const isDropdownClick = targetElement.closest('.dropdown-content') !== null
+  const isSelectClick = targetElement.closest('.lb-select') !== null
+  
+  if (isDropdownClick || isSelectClick) {
+    return // Don't close popover for dropdown/select interactions
+  }
   
   // Check if click is outside both trigger and content
   const isOutsideTrigger = !trigger || !trigger.contains(target)

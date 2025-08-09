@@ -14,6 +14,7 @@
         v-if="isOpen"
         ref="contentRef"
         :style="contentStyles"
+        @click.stop
         @keydown="handleKeyDown"
       )
         slot(name="content")
@@ -232,7 +233,7 @@ defineOptions({
   box-shadow: var(--lb-shadow-lg)
   overflow-y: auto
   overflow-x: hidden
-  max-height: 20rem // 320px
+  max-height: 17rem // 272px
   // Width is either matched to trigger or content-based
   width: max-content
   min-width: 12.5rem // 200px

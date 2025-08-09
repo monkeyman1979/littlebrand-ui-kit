@@ -35,6 +35,7 @@
             :locale="locale"
             variant="embedded"
             :size="size"
+            :date-mode="dateMode"
             @change="handleDateSelect"
           )
           
@@ -100,6 +101,7 @@ export interface LbDatePickerProps {
   offset?: number
   id?: string
   ariaDescribedby?: string
+  dateMode?: 'past' | 'future' | 'both'  // Controls year range in calendar
 }
 
 // Props
@@ -115,7 +117,8 @@ const props = withDefaults(defineProps<LbDatePickerProps>(), {
   firstDayOfWeek: 0,
   locale: 'en-US',
   placement: 'bottom-start',
-  offset: 4
+  offset: 4,
+  dateMode: 'both'
 })
 
 // Emits
@@ -262,7 +265,7 @@ defineOptions({
   border: var(--lb-border-sm) solid var(--lb-border-neutral-line)
   border-radius: var(--lb-radius-md)
   font-family: var(--lb-font-body)
-  font-size: var(--lb-font-size-body-base)
+  font-size: var(--lb-font-size-label-base)
   color: var(--lb-text-neutral-contrast-high)
   transition: all var(--lb-transition)
   height: var(--lb-input-height-medium)
@@ -271,7 +274,7 @@ defineOptions({
   
   &.size-large
     height: var(--lb-input-height-large)
-    font-size: var(--lb-font-size-body-large)
+    font-size: var(--lb-font-size-label-large)
   
   &:focus
     outline: none

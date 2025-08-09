@@ -24,7 +24,6 @@
           v-model="selectedMonth"
           :options="monthOptions"
           :size="size"
-          max-height="10rem"
           :aria-label="monthSelectAriaLabel"
           @change="handleMonthChange"
         )
@@ -35,7 +34,6 @@
           search-input-type="number"
           search-placeholder="Enter year..."
           :size="size"
-          max-height="10rem"
           :aria-label="yearSelectAriaLabel"
           @change="handleYearChange"
         )
@@ -116,6 +114,7 @@ export interface LbCalendarProps {
   locale?: string
   variant?: 'standalone' | 'embedded'  // standalone has border/padding, embedded doesn't
   size?: 'medium' | 'large'  // Controls sizing of all interactive elements
+  dateMode?: 'past' | 'future' | 'both'  // Controls year range: past (history), future (appointments), both (default)
 }
 
 // Props
@@ -127,7 +126,8 @@ const props = withDefaults(defineProps<LbCalendarProps>(), {
   firstDayOfWeek: 0,
   locale: 'en-US',
   variant: 'standalone',
-  size: 'medium'
+  size: 'medium',
+  dateMode: 'both'
 })
 
 // Emits
@@ -221,18 +221,46 @@ const monthOptions = computed(() => {
   return months
 })
 
-// Year options for dropdown (filtered by min/max dates)
+// Year options for dropdown (filtered by min/max dates and dateMode)
 const yearOptions = computed(() => {
   const currentYear = new Date().getFullYear()
   
-  // Determine year range based on min/max dates
-  let startYear = props.minDate ? props.minDate.getFullYear() : Math.min(1900, currentYear - 100)
-  let endYear = props.maxDate ? props.maxDate.getFullYear() : Math.max(2100, currentYear + 100)
+  let startYear: number
+  let endYear: number
+  let ascending = false
   
-  return Array.from({ length: endYear - startYear + 1 }, (_, i) => ({
-    value: startYear + i,
-    label: String(startYear + i)
-  }))
+  // Determine year range based on dateMode
+  if (props.dateMode === 'past') {
+    // For past dates: current year is the max, go back 100 years (descending)
+    startYear = props.minDate ? props.minDate.getFullYear() : currentYear - 100
+    endYear = props.maxDate ? Math.min(props.maxDate.getFullYear(), currentYear) : currentYear
+    ascending = false
+  } else if (props.dateMode === 'future') {
+    // For future dates: current year is the min, go forward 50 years (ascending)
+    startYear = props.minDate ? Math.max(props.minDate.getFullYear(), currentYear) : currentYear
+    endYear = props.maxDate ? props.maxDate.getFullYear() : currentYear + 50
+    ascending = true
+  } else {
+    // Both: standard range (descending)
+    startYear = props.minDate ? props.minDate.getFullYear() : Math.min(1900, currentYear - 100)
+    endYear = props.maxDate ? props.maxDate.getFullYear() : Math.max(2100, currentYear + 100)
+    ascending = false
+  }
+  
+  // Generate years based on order preference
+  if (ascending) {
+    // Ascending order for future dates
+    return Array.from({ length: endYear - startYear + 1 }, (_, i) => ({
+      value: startYear + i,
+      label: String(startYear + i)
+    }))
+  } else {
+    // Descending order for past dates and general use
+    return Array.from({ length: endYear - startYear + 1 }, (_, i) => ({
+      value: endYear - i,
+      label: String(endYear - i)
+    }))
+  }
 })
 
 // Weekday labels

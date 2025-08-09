@@ -2170,18 +2170,23 @@
             .demo-note Selected: {{ selectedDate1 ? selectedDate1.toLocaleDateString() : 'None' }}
         
         .demo-group
-          h4 Multiple Date Pickers
+          h4 Date Mode Variants
           .date-picker-demo
             LbDatePicker(
-              v-model="selectedDate2"
-              placeholder="Start date"
+              v-model="selectedBirthdate"
+              date-mode="past"
+              placeholder="Select birthdate"
               placement="bottom-start"
             )
             LbDatePicker(
-              v-model="selectedDate3"
-              placeholder="End date"
+              v-model="selectedAppointment"
+              date-mode="future"
+              placeholder="Schedule appointment"
               placement="bottom-start"
             )
+            .demo-note 
+              p Past mode: Years range from {{ new Date().getFullYear() - 100 }} to {{ new Date().getFullYear() }}
+              p Future mode: Years range from {{ new Date().getFullYear() }} to {{ new Date().getFullYear() + 50 }}
         
         .demo-group
           h4 With Action Buttons
@@ -3034,8 +3039,8 @@ const handleCalendarChange = (date) => {
 
 // DatePicker demo data
 const selectedDate1 = ref(null)
-const selectedDate2 = ref(null)
-const selectedDate3 = ref(null)
+const selectedBirthdate = ref(null)
+const selectedAppointment = ref(null)
 const selectedDate5 = ref(null)
 const selectedDate6 = ref(null)
 const selectedDate7 = ref(null)

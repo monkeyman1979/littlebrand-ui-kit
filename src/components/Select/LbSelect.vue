@@ -57,7 +57,7 @@ LbDropdown.lb-select(
           @keydown="handleSearchKeydown"
         )
       
-      .select-options(ref="optionsRef" :style="optionsStyle")
+      .select-options(ref="optionsRef")
         .select-option(
           v-for="(option, index) in filteredOptions"
           :key="getOptionKey(option, index)"
@@ -65,7 +65,7 @@ LbDropdown.lb-select(
           :role="option.type === 'divider' ? 'separator' : 'option'"
           :aria-selected="isSelected(option)"
           :aria-disabled="option.disabled"
-          @click="handleOptionClick(option, index)"
+          @click.stop="handleOptionClick(option, index)"
           @mouseenter="highlightedIndex = index"
         )
           template(v-if="option.type !== 'divider'")
@@ -103,7 +103,6 @@ export interface LbSelectProps {
   searchInputType?: string  // Allow setting input type (e.g., 'number', 'text')
   size?: 'medium' | 'large'
   placement?: 'bottom' | 'top' | 'auto'
-  maxHeight?: string  // Custom max-height for dropdown options
   ariaLabel?: string
   ariaDescribedby?: string
 }
@@ -121,7 +120,6 @@ const props = withDefaults(defineProps<LbSelectProps>(), {
   searchInputType: 'text',
   size: 'medium',
   placement: 'bottom',
-  maxHeight: undefined,
 })
 
 // Emits
@@ -186,11 +184,6 @@ const selectedLabel = computed(() => {
   return selectedOption.value?.displayLabel || selectedOption.value?.label || ''
 })
 
-// Computed style for options container
-const optionsStyle = computed(() => ({
-  maxHeight: props.maxHeight || '15rem'
-}))
-
 const triggerClasses = computed(() => ({
   'select-trigger-disabled': props.disabled,
   'select-trigger-invalid': props.invalid,
@@ -253,7 +246,12 @@ const handleOpen = () => {
     const selectedIndex = filteredOptions.value.findIndex(option => isSelected(option))
     if (selectedIndex >= 0) {
       highlightedIndex.value = selectedIndex
-      scrollToHighlighted()
+      // Use requestAnimationFrame to ensure DOM is ready and use multiple frames for reliability
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          scrollToHighlighted()
+        })
+      })
     } else {
       const firstSelectableIndex = filteredOptions.value.findIndex(
         option => option.type !== 'divider' && !option.disabled
@@ -367,15 +365,23 @@ const scrollToHighlighted = () => {
   const highlightedItem = items[highlightedIndex.value] as HTMLElement
   
   if (highlightedItem) {
-    const containerTop = container.scrollTop
-    const containerBottom = containerTop + container.clientHeight
-    const itemTop = highlightedItem.offsetTop
-    const itemBottom = itemTop + highlightedItem.offsetHeight
+    // Try to use scrollIntoView for better browser support
+    highlightedItem.scrollIntoView({
+      behavior: 'auto',
+      block: 'center'
+    })
     
-    if (itemTop < containerTop) {
-      container.scrollTop = itemTop
-    } else if (itemBottom > containerBottom) {
-      container.scrollTop = itemBottom - container.clientHeight
+    // Fallback: manually calculate and set scroll position
+    if (container.scrollTop === 0 || container.scrollTop === container.scrollHeight - container.clientHeight) {
+      const containerHeight = container.clientHeight
+      const itemTop = highlightedItem.offsetTop
+      const itemHeight = highlightedItem.offsetHeight
+      
+      // Calculate position to center the item
+      const idealScrollTop = itemTop - (containerHeight / 2) + (itemHeight / 2)
+      
+      // Set scroll position
+      container.scrollTop = Math.max(0, idealScrollTop)
     }
   }
 }
@@ -521,7 +527,6 @@ defineOptions({
 
 .select-options
   padding: var(--lb-space-xs)
-  overflow-y: auto
 
 .select-option
   display: flex

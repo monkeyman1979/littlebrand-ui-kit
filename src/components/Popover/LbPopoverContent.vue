@@ -213,6 +213,16 @@ const handleClickOutside = (event: MouseEvent) => {
   if (!context.open || !contentElement.value) return
   
   const target = event.target as Node
+  const targetElement = target as HTMLElement
+  
+  // Check if click is on a dropdown element (Select dropdowns are teleported to body)
+  // or on a select trigger (month/year selects in calendar)
+  const isDropdownClick = targetElement.closest('.dropdown-content') !== null
+  const isSelectClick = targetElement.closest('.lb-select') !== null
+  
+  if (isDropdownClick || isSelectClick) {
+    return // Don't close popover for dropdown/select clicks
+  }
   
   // Check if click is outside the content element
   if (!contentElement.value.contains(target)) {
