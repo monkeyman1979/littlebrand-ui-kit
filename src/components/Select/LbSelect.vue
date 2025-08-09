@@ -48,6 +48,9 @@ LbDropdown.lb-select(
         input.search-input(
           ref="searchInputRef"
           v-model="searchQuery"
+          :type="searchInputType"
+          :inputmode="searchInputType === 'number' ? 'numeric' : 'text'"
+          :pattern="searchInputType === 'number' ? '[0-9]*' : undefined"
           :placeholder="searchPlaceholder"
           @input="handleSearch"
           @keydown="handleSearchKeydown"
@@ -81,6 +84,7 @@ import LbDropdown from '../Dropdown/LbDropdown.vue'
 export interface SelectOption {
   value: any
   label: string
+  displayLabel?: string  // Optional abbreviated label for trigger display
   disabled?: boolean
   type?: 'option' | 'divider'
 }
@@ -95,6 +99,7 @@ export interface LbSelectProps {
   clearable?: boolean
   searchable?: boolean
   searchPlaceholder?: string
+  searchInputType?: string  // Allow setting input type (e.g., 'number', 'text')
   size?: 'medium' | 'large'
   placement?: 'bottom' | 'top' | 'auto'
   ariaLabel?: string
@@ -111,6 +116,7 @@ const props = withDefaults(defineProps<LbSelectProps>(), {
   clearable: false,
   searchable: false,
   searchPlaceholder: 'Search...',
+  searchInputType: 'text',
   size: 'medium',
   placement: 'bottom',
 })
@@ -173,7 +179,8 @@ const selectedOption = computed(() => {
 })
 
 const selectedLabel = computed(() => {
-  return selectedOption.value?.label || ''
+  // Use displayLabel if available, otherwise fall back to label
+  return selectedOption.value?.displayLabel || selectedOption.value?.label || ''
 })
 
 const triggerClasses = computed(() => ({

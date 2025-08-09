@@ -2115,6 +2115,44 @@
             LbMenu(v-model="selectedWithDisabled" :options="optionsWithDisabled")
               template(#trigger)
                 LbButton(variant="outline") {{ selectedWithDisabled || 'Some Disabled' }}
+      
+      .component-demo
+        h3 Calendar
+        p Date selection component with month/year navigation and keyboard support
+        
+        .demo-group
+          h4 Basic Calendar
+          .calendar-demo
+            LbCalendar(v-model="selectedCalendarDate" @change="handleCalendarChange")
+        
+        .demo-group
+          h4 With Min/Max Dates
+          .calendar-demo
+            LbCalendar(
+              v-model="selectedCalendarDate2"
+              :min-date="calendarMinDate"
+              :max-date="calendarMaxDate"
+            )
+            .demo-note
+              p Min date: {{ calendarMinDate.toLocaleDateString() }}
+              p Max date: {{ calendarMaxDate.toLocaleDateString() }}
+        
+        .demo-group
+          h4 With Disabled Dates
+          .calendar-demo
+            LbCalendar(
+              v-model="selectedCalendarDate3"
+              :disabled-dates="disabledCalendarDates"
+            )
+            .demo-note Weekends are disabled
+        
+        .demo-group
+          h4 Monday as First Day of Week
+          .calendar-demo
+            LbCalendar(
+              v-model="selectedCalendarDate4"
+              :first-day-of-week="1"
+            )
 </template>
 
 <script setup>
@@ -2123,7 +2161,7 @@ import {
   LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog,
   LbBadge, LbNavigationBar, LbNavigationBarItem, LbBottomSheet, LbChip, LbAvatar, LbProgress, LbDivider, 
   LbSegmentButton, LbSegmentButtonItem, useSnackbar, LbPopover, LbPopoverTrigger, LbPopoverContent, LbPopoverArrow,
-  LbDropdown, LbMenu
+  LbDropdown, LbMenu, LbCalendar
 } from '../src'
 
 const isDark = ref(false)
@@ -2878,6 +2916,30 @@ const quickFormData = ref({
   description: ''
 })
 
+// Calendar demo data
+const selectedCalendarDate = ref(new Date())
+const selectedCalendarDate2 = ref(new Date())
+const selectedCalendarDate3 = ref(new Date())
+const selectedCalendarDate4 = ref(new Date())
+
+// Min/Max dates for calendar
+const calendarMinDate = new Date()
+calendarMinDate.setMonth(calendarMinDate.getMonth() - 3) // 3 months ago
+
+const calendarMaxDate = new Date()
+calendarMaxDate.setMonth(calendarMaxDate.getMonth() + 3) // 3 months from now
+
+// Disabled dates function (disable weekends)
+const disabledCalendarDates = (date) => {
+  const day = date.getDay()
+  return day === 0 || day === 6 // Sunday = 0, Saturday = 6
+}
+
+// Calendar handlers
+const handleCalendarChange = (date) => {
+  console.log('Calendar date changed:', date)
+}
+
 const categoryOptions = [
   { value: 'work', label: 'Work' },
   { value: 'personal', label: 'Personal' },
@@ -3504,6 +3566,26 @@ section
     &.menu-item-selected
       background-color: var(--lb-surface-primary-subtle)
       color: var(--lb-text-primary-contrast-high)
+
+// Calendar demo styles
+.calendar-demo
+  display: flex
+  flex-direction: column
+  gap: var(--lb-space-md)
+  align-items: flex-start
+  
+  .demo-note
+    margin-top: var(--lb-space-md)
+    padding: var(--lb-space-sm)
+    background: var(--lb-surface-neutral-subtle)
+    border-radius: var(--lb-radius-md)
+    font-size: var(--lb-font-size-body-small)
+    color: var(--lb-text-neutral-contrast-high)
+    
+    p
+      margin: 0
+      &:not(:last-child)
+        margin-bottom: var(--lb-space-xs)
     
     &.menu-item-danger
       color: var(--lb-text-error-normal)
