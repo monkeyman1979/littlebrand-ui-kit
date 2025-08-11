@@ -164,6 +164,7 @@ defineOptions({
     padding: 0 base.$button-padding-x-small
     font-size: var(--lb-button-font-size-small)
     letter-spacing: var(--lb-letter-spacing-normal)
+    border-radius: var(--lb-button-radius-small)
     svg
       width: base.$button-icon-size-small
       height: base.$button-icon-size-small
@@ -173,6 +174,7 @@ defineOptions({
     padding: 0 base.$button-padding-x-medium
     font-size: var(--lb-button-font-size-medium)
     letter-spacing: var(--lb-letter-spacing-tight)
+    border-radius: var(--lb-button-radius-medium)
     svg
       width: base.$button-icon-size-medium
       height: base.$button-icon-size-medium
@@ -182,6 +184,7 @@ defineOptions({
     padding: 0 base.$button-padding-x-large
     font-size: var(--lb-button-font-size-large)
     letter-spacing: var(--lb-letter-spacing-wide)
+    border-radius: var(--lb-button-radius-large)
     svg
       width: base.$button-icon-size-large
       height: base.$button-icon-size-large
@@ -199,14 +202,17 @@ defineOptions({
     &.small
       width: base.$button-height-small
       height: base.$button-height-small
+      border-radius: var(--lb-button-radius-small)
     
     &.medium
       width: base.$button-height-medium
       height: base.$button-height-medium
+      border-radius: var(--lb-button-radius-medium)
     
     &.large
       width: base.$button-height-large
       height: base.$button-height-large
+      border-radius: var(--lb-button-radius-large)
     
   // Link variant overrides
   &[class*="link-"]

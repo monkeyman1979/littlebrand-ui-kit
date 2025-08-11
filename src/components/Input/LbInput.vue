@@ -348,15 +348,15 @@ const handleInput = (event: Event) => {
       background: none
       border: none
       padding: 0
+      border-radius: var(--lb-radius-xs)  // Set border-radius on the element itself
       transition: color var(--lb-transition), opacity var(--lb-transition)
       
       &:hover
         color: var(--lb-text-neutral-contrast-high)
       
-      &:focus
-        outline: var(--lb-focus-ring-width) solid var(--lb-focus-ring-color)
-        outline-offset: calc(var(--lb-space-2xs) * -1)
-        border-radius: var(--lb-radius-md)
+      &:focus-visible
+        outline: none
+        box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
       
       &:active
         opacity: var(--lb-opacity-80)
