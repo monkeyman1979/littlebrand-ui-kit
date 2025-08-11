@@ -7,6 +7,7 @@ export interface LbSwitchProps {
   required?: boolean
   invalid?: boolean
   ariaDescribedby?: string
+  size?: 'small' | 'medium'
 }
 
 export interface LbSwitchEmits {

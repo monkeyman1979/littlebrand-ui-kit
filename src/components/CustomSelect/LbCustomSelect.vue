@@ -79,6 +79,7 @@
     template(#content)
       .select-content(
         ref="contentRef"
+        :class="`select-content-${effectiveSize}`"
         role="listbox"
         :aria-labelledby="computedAriaDescribedby"
         @keydown="handleContentKeydown"
@@ -122,7 +123,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, nextTick, inject, watch, type ComputedRef } from 'vue'
+import { computed, ref, nextTick, inject, watch, onMounted, onUnmounted, type ComputedRef } from 'vue'
 import LbDropdown from '../Dropdown/LbDropdown.vue'
 
 // Types
@@ -151,8 +152,7 @@ const props = withDefaults(defineProps<LbCustomSelectProps>(), {
   disabled: false,
   invalid: false,
   required: false,
-  clearable: false,
-  size: 'medium'
+  clearable: false
 })
 
 // Emits
@@ -171,12 +171,26 @@ const triggerRef = ref<HTMLElement>()
 const contentRef = ref<HTMLElement>()
 const isOpen = ref(false)
 const highlightedIndex = ref(-1)
+const isKeyboardFocus = ref(false)
 
 // Inject form field context if available
 const injectedId = inject<ComputedRef<string> | undefined>('formFieldId', undefined)
 const injectedAriaDescribedby = inject<ComputedRef<string | undefined> | undefined>('formFieldAriaDescribedby', undefined)
 
+// Inject density context if available
+const injectedDensitySize = inject<ComputedRef<'medium' | 'large'> | undefined>('densitySize', undefined)
+
 // Computed
+// Compute effective size: explicit prop > density > default
+const effectiveSize = computed(() => {
+  // If size is explicitly set, use it
+  if (props.size) return props.size
+  // Otherwise use density-based size if available
+  if (injectedDensitySize?.value) return injectedDensitySize.value
+  // Fall back to default
+  return 'medium'
+})
+
 const normalizedOptions = computed(() => {
   return props.options.map((option, index) => {
     if (typeof option === 'string' || typeof option === 'number') {
@@ -217,7 +231,8 @@ const rootClasses = computed(() => ({
   'invalid': props.invalid,
   'is-open': isOpen.value,
   'has-value': hasValue.value,
-  [`size-${props.size}`]: true
+  'keyboard-focus': isKeyboardFocus.value,
+  [`size-${effectiveSize.value}`]: true
 }))
 
 // Methods
@@ -472,6 +487,40 @@ watch(() => isOpen.value, (open) => {
   }
 })
 
+// Track keyboard vs mouse focus
+let lastInteractionWasKeyboard = false
+
+const handleKeyDown = () => {
+  lastInteractionWasKeyboard = true
+}
+
+const handleMouseDown = () => {
+  lastInteractionWasKeyboard = false
+}
+
+const handleTriggerFocus = () => {
+  isKeyboardFocus.value = lastInteractionWasKeyboard
+}
+
+const handleTriggerBlur = () => {
+  isKeyboardFocus.value = false
+}
+
+// Set up global listeners
+onMounted(() => {
+  document.addEventListener('keydown', handleKeyDown, true)
+  document.addEventListener('mousedown', handleMouseDown, true)
+  triggerRef.value?.addEventListener('focus', handleTriggerFocus)
+  triggerRef.value?.addEventListener('blur', handleTriggerBlur)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('keydown', handleKeyDown, true)
+  document.removeEventListener('mousedown', handleMouseDown, true)
+  triggerRef.value?.removeEventListener('focus', handleTriggerFocus)
+  triggerRef.value?.removeEventListener('blur', handleTriggerBlur)
+})
+
 // Slots
 defineSlots<{
   selected?: (props: { 
@@ -515,37 +564,48 @@ defineExpose({
   align-items: center
   justify-content: space-between
   width: 100%
-  height: var(--lb-input-height-medium)
-  padding: 0 var(--lb-space-sm)
   background: var(--lb-background-surface)
-  border: var(--lb-border-sm) solid var(--lb-border-neutral-normal)
-  border-radius: var(--lb-radius-md)
-  font-size: var(--lb-font-size-label-base)
+  border: base.$select-border-width solid var(--lb-border-neutral-normal)
+  border-radius: var(--lb-select-radius)
   font-family: inherit
   color: var(--lb-text-neutral-contrast-high)
   cursor: pointer
   transition: border-color var(--lb-transition), box-shadow var(--lb-transition)
   box-sizing: border-box
-  gap: var(--lb-space-sm)
+  gap: base.$space-sm
   outline: none
   
   &:hover:not([aria-disabled="true"])
     border-color: var(--lb-border-neutral-active)
   
   &:focus
+    outline: none
     border-color: var(--lb-border-primary-normal)
-    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
+    box-shadow: none  // No ring by default
+  
+  // Active state (when clicking/interacting)
+  &:active:not([aria-disabled="true"])
+    border-color: var(--lb-border-primary-active)
+    box-shadow: none  // Remove focus ring on click
+  
+// Keyboard focus state (only shows ring when focused via keyboard)
+.keyboard-focus .select-trigger:focus:not(:active)
+  box-shadow: 0 0 0 calc(var(--lb-focus-ring-width) + var(--lb-focus-ring-offset)) var(--lb-focus-ring-color)
   
   // Focus takes precedence over hover
   &:focus:hover:not([aria-disabled="true"])
     border-color: var(--lb-border-primary-normal)
-    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
 
 // Size variations
+.size-medium .select-trigger
+  height: base.$select-height-medium  // 40px
+  padding: 0 base.$select-padding-x-medium
+  font-size: var(--lb-select-font-size-medium)  // 14px - matches input
+
 .size-large .select-trigger
-  height: var(--lb-input-height-large)
-  padding: 0 var(--lb-space-md)
-  font-size: var(--lb-font-size-label-large)
+  height: base.$select-height-large  // 48px
+  padding: 0 base.$select-padding-x-large
+  font-size: var(--lb-select-font-size-large)  // 16px - matches input
 
 // State classes
 .invalid .select-trigger
@@ -553,7 +613,10 @@ defineExpose({
   
   &:focus
     border-color: var(--lb-border-error-active)
-    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-error-active)
+  
+
+.invalid.keyboard-focus .select-trigger:focus:not(:active)
+  box-shadow: 0 0 0 calc(var(--lb-focus-ring-width) + var(--lb-focus-ring-offset)) var(--lb-surface-error-active)
 
 .disabled .select-trigger
   background: var(--lb-surface-neutral-subtle)
@@ -576,20 +639,20 @@ defineExpose({
 .select-icons
   display: flex
   align-items: center
-  gap: var(--lb-space-xs)
+  gap: base.$space-xs
   flex-shrink: 0
 
 .icon-clear
   display: flex
   align-items: center
   justify-content: center
-  width: var(--lb-space-md)
-  height: var(--lb-space-md)
+  width: base.$space-md  // 12px
+  height: base.$space-md  // 12px
   background: none
   border: none
   color: var(--lb-text-neutral-contrast-low)
   cursor: pointer
-  border-radius: var(--lb-radius-xs)
+  border-radius: base.$radius-xs
   transition: color var(--lb-transition), opacity var(--lb-transition)
   padding: 0
   
@@ -598,7 +661,7 @@ defineExpose({
   
   &:focus-visible
     outline: var(--lb-focus-ring-width) solid var(--lb-focus-ring-color)
-    outline-offset: calc(var(--lb-space-2xs) * -1)
+    outline-offset: calc(base.$space-2xs * -1)
   
   &:active
     opacity: var(--lb-opacity-80)
@@ -627,8 +690,8 @@ defineExpose({
 .select-content
   display: flex
   flex-direction: column
-  padding: var(--lb-space-xs)
-  gap: var(--lb-space-2xs)
+  padding: base.$space-xs
+  gap: base.$space-2xs
   outline: none
   max-height: 20rem
   overflow-y: auto
@@ -638,17 +701,25 @@ defineExpose({
   align-items: center
   justify-content: space-between
   width: 100%
-  min-height: var(--lb-input-height-medium)
-  padding: 0 var(--lb-space-sm)
+  min-height: base.$select-height-medium  // 40px
+  padding: 0 base.$space-sm
   background: transparent
   border: none
-  border-radius: var(--lb-radius-md)
-  font-size: var(--lb-font-size-label-base)
+  border-radius: base.$radius-md
   color: var(--lb-text-neutral-contrast-high)
   cursor: pointer
   transition: background-color var(--lb-transition), color var(--lb-transition)
   box-sizing: border-box
-  gap: var(--lb-space-sm)
+  gap: base.$space-sm
+  
+  // Font size based on parent content size
+  .select-content-medium &
+    font-size: var(--lb-select-font-size-medium)
+  
+  .select-content-large &
+    font-size: var(--lb-select-font-size-large)
+    min-height: base.$select-height-large  // 48px
+    padding: 0 base.$space-md
   
   &:hover:not(.select-option-disabled)
     background: var(--lb-surface-neutral-hover)
@@ -673,7 +744,7 @@ defineExpose({
   align-items: center
   justify-content: space-between
   width: 100%
-  gap: var(--lb-space-sm)
+  gap: base.$space-sm
 
 .option-label
   flex: 1
@@ -686,8 +757,8 @@ defineExpose({
   display: flex
   align-items: center
   justify-content: center
-  width: var(--lb-icon-size-sm)
-  height: var(--lb-icon-size-sm)
+  width: base.$unit-18  // 18px
+  height: base.$unit-18  // 18px
   color: var(--lb-text-primary-normal)
   flex-shrink: 0
 </style>

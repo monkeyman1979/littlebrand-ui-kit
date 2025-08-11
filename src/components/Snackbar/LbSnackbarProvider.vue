@@ -300,15 +300,15 @@ defineOptions({
     margin-bottom: 0
   to
     max-height: 12.5rem
-    padding-top: var(--lb-space-md)
-    padding-bottom: var(--lb-space-md)
+    padding-top: var(--lb-space-sm)
+    padding-bottom: var(--lb-space-sm)
     margin-bottom: 0
 
 @keyframes snackbar-height-collapse
   from
     max-height: 12.5rem
-    padding-top: var(--lb-space-md)
-    padding-bottom: var(--lb-space-md)
+    padding-top: var(--lb-space-sm)
+    padding-bottom: var(--lb-space-sm)
     margin-bottom: 0
   to
     max-height: 0

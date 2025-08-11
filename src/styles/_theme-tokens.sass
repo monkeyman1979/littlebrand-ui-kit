@@ -280,7 +280,12 @@
   --lb-line-height-normal: 1.5
   --lb-line-height-relaxed: 1.75
   
-  // Font sizes - Labels
+  // Font sizes - Body text (for content)
+  --lb-font-size-body-small: 0.875rem  // 14px
+  --lb-font-size-body-base: 1rem       // 16px  
+  --lb-font-size-body-large: 1.125rem  // 18px
+  
+  // Font sizes - Labels (for UI elements with heavier weight)
   --lb-font-size-label-small: 0.75rem
   --lb-font-size-label-base: 0.875rem
   --lb-font-size-label-large: 1rem
@@ -353,30 +358,53 @@
   --lb-opacity-90: #{base.$opacity-90}
   --lb-opacity-100: #{base.$opacity-100}
   
-  // === COMPONENT SIZING ===
-  // Button sizes
-  --lb-btn-height-small: #{base.$size-5xl}
-  --lb-btn-height-medium: #{base.$size-6xl}
-  --lb-btn-height-large: #{base.$size-7xl}
-  --lb-btn-padding-x-small: #{base.$space-md}
-  --lb-btn-padding-x-medium: #{base.$space-lg}
-  --lb-btn-padding-x-large: #{base.$space-xl}
-  --lb-btn-font-size-small: var(--lb-font-size-label-small)
-  --lb-btn-font-size-medium: var(--lb-font-size-label-base)
-  --lb-btn-font-size-large: var(--lb-font-size-label-large)
+  // === COMPONENT THEMING ===
+  // Visual aspects that can be themed at runtime
   
-  // Input sizes
-  --lb-input-height-small: #{base.$size-5xl}
-  --lb-input-height-medium: #{base.$size-6xl}
-  --lb-input-height-large: #{base.$size-7xl}
-  --lb-input-padding-x: #{base.$space-md}
-  --lb-input-padding-y: #{base.$space-sm}
+  // Button theming
+  --lb-button-radius: #{base.$button-border-radius}
+  --lb-button-radius-small: #{base.$button-border-radius-small}
+  --lb-button-radius-medium: #{base.$button-border-radius-medium}
+  --lb-button-radius-large: #{base.$button-border-radius-large}
+  --lb-button-font-size-small: #{base.$button-font-size-small}
+  --lb-button-font-size-medium: #{base.$button-font-size-medium}
+  --lb-button-font-size-large: #{base.$button-font-size-large}
   
-  // Icon sizes
-  --lb-icon-size-xs: #{base.$size-md}
-  --lb-icon-size-sm: #{base.$size-2xl}
-  --lb-icon-size-md: #{base.$size-3xl}
-  --lb-icon-size-lg: #{base.$size-4xl}
+  // Input theming
+  --lb-input-radius: #{base.$input-border-radius}
+  --lb-input-font-size-medium: #{base.$input-font-size-medium}
+  --lb-input-font-size-large: #{base.$input-font-size-large}
+  
+  // Select theming
+  --lb-select-radius: #{base.$select-border-radius}
+  --lb-select-font-size-medium: #{base.$select-font-size-medium}
+  --lb-select-font-size-large: #{base.$select-font-size-large}
+  
+  // Textarea theming
+  --lb-textarea-radius: #{base.$textarea-border-radius}
+  --lb-textarea-font-size-medium: #{base.$textarea-font-size-medium}
+  --lb-textarea-font-size-large: #{base.$textarea-font-size-large}
+  
+  // Badge theming
+  --lb-badge-radius: #{base.$badge-border-radius}
+  
+  // Chip theming
+  --lb-chip-radius: #{base.$chip-border-radius}
+  
+  // Checkbox theming
+  --lb-checkbox-radius: #{base.$checkbox-border-radius}
+  
+  // Switch theming
+  --lb-switch-radius: #{base.$switch-border-radius}
+  
+  // Avatar theming
+  --lb-avatar-radius: #{base.$avatar-border-radius}
+  
+  // Dialog theming
+  --lb-dialog-radius: #{base.$dialog-border-radius}
+  
+  // Snackbar theming
+  --lb-snackbar-radius: #{base.$snackbar-border-radius}
   
   // Form field
   --lb-form-field-gap: #{base.$space-sm}

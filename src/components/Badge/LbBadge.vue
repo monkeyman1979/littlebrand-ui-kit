@@ -107,7 +107,7 @@ defineOptions({
   font-weight: var(--lb-font-weight-semibold)
   line-height: 1
   letter-spacing: var(--lb-letter-spacing-tight)
-  border-radius: var(--lb-radius-lg)
+  border-radius: var(--lb-badge-radius)
   white-space: nowrap
   user-select: none
   vertical-align: top
@@ -115,10 +115,10 @@ defineOptions({
   box-shadow: var(--lb-shadow-sm)
   
   // Base sizing for medium (default)
-  min-width: 1.25rem // 20px
-  height: 1.25rem // 20px
-  padding: 0 0.375rem // 6px
-  font-size: 0.75rem // 12px
+  min-width: base.$badge-height-medium  // 20px
+  height: base.$badge-height-medium  // 20px
+  padding: 0 base.$badge-padding-x-medium  // 0 8px
+  font-size: base.$badge-font-size-medium  // 12px
   
   // Position variants
   &.position-top-right
@@ -150,34 +150,34 @@ defineOptions({
   
   // Size variants
   &.size-small
-    min-width: 1rem // 16px
-    height: 1rem // 16px
-    padding: 0 0.25rem // 4px
-    font-size: 0.625rem // 10px
+    min-width: base.$badge-height-small  // 18px
+    height: base.$badge-height-small  // 18px
+    padding: 0 base.$badge-padding-x-small  // 0 4px
+    font-size: base.$badge-font-size-small  // 10px
     
   &.size-large
-    min-width: 1.5rem // 24px
-    height: 1.5rem // 24px
-    padding: 0 0.5rem // 8px
-    font-size: 0.875rem // 14px
+    min-width: base.$badge-height-large  // 24px
+    height: base.$badge-height-large  // 24px
+    padding: 0 base.$badge-padding-x-large  // 0 8px
+    font-size: base.$badge-font-size-large  // 14px
   
   // Dot variant overrides
   &.is-dot
-    min-width: 0.5rem // 8px
-    width: 0.5rem // 8px
-    height: 0.5rem // 8px
+    min-width: base.$unit-8  // 8px
+    width: base.$unit-8  // 8px
+    height: base.$unit-8  // 8px
     padding: 0
-    border-radius: var(--lb-radius-full)
+    border-radius: base.$radius-full
     
     &.size-small
-      width: 0.375rem // 6px
-      height: 0.375rem // 6px
-      min-width: 0.375rem
+      width: base.$unit-6  // 6px
+      height: base.$unit-6  // 6px
+      min-width: base.$unit-6
       
     &.size-large
-      width: 0.625rem // 10px
-      height: 0.625rem // 10px
-      min-width: 0.625rem
+      width: base.$unit-10  // 10px
+      height: base.$unit-10  // 10px
+      min-width: base.$unit-10
 
 // Variant styles - notification bubble appearance
 .lb-badge.variant-default

@@ -1,5 +1,5 @@
 <template lang="pug">
-.lb-textarea(:class="rootClasses")
+.lb-textarea(:class="rootClasses" :data-size="effectiveSize")
   textarea(
     ref="textareaRef"
     :id="computedId"
@@ -18,13 +18,13 @@
     :spellcheck="spellcheck"
     @input="handleInput"
     @change="$emit('change', $event)"
-    @focus="$emit('focus', $event)"
-    @blur="$emit('blur', $event)"
+    @focus="handleFocus"
+    @blur="handleBlur"
   )
 </template>
 
 <script setup lang="ts">
-import { computed, ref, inject, watch, nextTick, onMounted, type ComputedRef } from 'vue'
+import { computed, ref, inject, watch, nextTick, onMounted, onUnmounted, type ComputedRef } from 'vue'
 
 // Props
 interface Props {
@@ -45,6 +45,7 @@ interface Props {
   resize?: 'none' | 'vertical' | 'horizontal' | 'both'
   autoResize?: boolean
   maxRows?: number
+  size?: 'medium' | 'large'
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -72,17 +73,33 @@ const emit = defineEmits<{
 // Refs
 const textareaRef = ref<HTMLTextAreaElement>()
 const lineHeight = ref<number>(0)
+const isKeyboardFocus = ref(false)
 
 // Inject form field context if available
 const injectedId = inject<ComputedRef<string> | undefined>('formFieldId', undefined)
 const injectedAriaDescribedby = inject<ComputedRef<string | undefined> | undefined>('formFieldAriaDescribedby', undefined)
 
+// Inject density context if available
+const injectedDensitySize = inject<ComputedRef<'medium' | 'large'> | undefined>('densitySize', undefined)
+
 // Computed
+// Compute effective size: explicit prop > density > default
+const effectiveSize = computed(() => {
+  // If size is explicitly set, use it
+  if (props.size) return props.size
+  // Otherwise use density-based size if available
+  if (injectedDensitySize?.value) return injectedDensitySize.value
+  // Fall back to default
+  return 'medium'
+})
+
 const rootClasses = computed(() => ({
   'disabled': props.disabled,
   'readonly': props.readonly,
   'invalid': props.invalid,
-  [`resize-${props.resize}`]: true
+  'keyboard-focus': isKeyboardFocus.value,
+  [`resize-${props.resize}`]: true,
+  [`size-${effectiveSize.value}`]: true
 }))
 
 const computedId = computed(() => {
@@ -98,6 +115,27 @@ const handleInput = (event: Event) => {
   const target = event.target as HTMLTextAreaElement
   emit('update:modelValue', target.value)
   emit('input', event)
+}
+
+// Track keyboard vs mouse focus
+let lastInteractionWasKeyboard = false
+
+const handleKeyDown = () => {
+  lastInteractionWasKeyboard = true
+}
+
+const handleMouseDown = () => {
+  lastInteractionWasKeyboard = false
+}
+
+const handleFocus = (event: FocusEvent) => {
+  isKeyboardFocus.value = lastInteractionWasKeyboard
+  emit('focus', event)
+}
+
+const handleBlur = (event: FocusEvent) => {
+  isKeyboardFocus.value = false
+  emit('blur', event)
 }
 
 // Auto-resize functionality
@@ -149,6 +187,15 @@ onMounted(() => {
     // Initial height adjustment
     adjustHeight()
   }
+  
+  // Set up global listeners for keyboard/mouse detection
+  document.addEventListener('keydown', handleKeyDown, true)
+  document.addEventListener('mousedown', handleMouseDown, true)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('keydown', handleKeyDown, true)
+  document.removeEventListener('mousedown', handleMouseDown, true)
 })
 
 // Expose refs for parent access
@@ -167,19 +214,17 @@ defineExpose({
   
   // Textarea styles
   textarea
-    // Default size (medium)
     width: 100%
-    min-height: var(--lb-btn-height-large) // 48px minimum (matches large input)
-    padding: var(--lb-space-xs) var(--lb-space-sm)
+    min-height: base.$textarea-min-height-medium // 96px minimum
     background: var(--lb-background-surface)
-    border: var(--lb-border-sm) solid var(--lb-border-neutral-normal)
-    border-radius: var(--lb-radius-md)
-    font-size: var(--lb-font-size-label-base)
+    border: base.$textarea-border-width solid var(--lb-border-neutral-normal)
+    border-radius: var(--lb-textarea-radius)
     font-family: inherit
+    font-size: var(--lb-textarea-font-size-medium)  // Default to 14px
     color: var(--lb-text-neutral-contrast-high)
     line-height: var(--lb-line-height-relaxed)
     transition: border-color var(--lb-transition), box-shadow var(--lb-transition)
-    
+
     // Placeholder
     &::placeholder
       color: var(--lb-text-neutral-contrast-low)
@@ -190,38 +235,43 @@ defineExpose({
       border-color: var(--lb-border-neutral-active)
     
     &:focus
-      outline: none
-      border-color: var(--lb-border-primary-normal)
-      box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
+      outline: base.$textarea-border-width solid var(--lb-border-primary-active)
+  
+  // Invalid state
+  &.invalid textarea
+    border-color: var(--lb-border-error-normal)
     
-    // Focus takes precedence over hover
-    &:focus:hover:not(:disabled):not(:read-only)
-      border-color: var(--lb-border-primary-normal)
-      box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
-    
-    // Invalid state when parent has .invalid class
-    .invalid &
+    // Maintain error border on hover
+    &:hover:not(:disabled):not(:read-only)
       border-color: var(--lb-border-error-normal)
-      
-      &:focus
-        border-color: var(--lb-border-error-active)
-        box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-error-active)
+    
+    &:focus
+      outline: base.$textarea-border-width solid var(--lb-border-error-active)
     
     // Disabled state
     &:disabled
-      background: var(--lb-background-surface)
+      background: var(--lb-surface-neutral-subtle)
       color: var(--lb-text-neutral-disabled)
       cursor: not-allowed
       opacity: var(--lb-opacity-60)
+      border-color: var(--lb-border-neutral-disabled)
     
     // Readonly state
     &:read-only
-      background: var(--lb-background-surface)
+      background: var(--lb-surface-neutral-subtle)
       cursor: default
-      
-      &:focus
-        border-color: var(--lb-border-neutral-normal)
-        box-shadow: none
+  
+  // Size variants - moved outside of textarea to increase specificity
+  &.size-medium textarea
+    min-height: base.$textarea-min-height-medium  // 96px
+    font-size: var(--lb-textarea-font-size-medium)  // 14px
+    padding: base.$textarea-padding-y base.$textarea-padding-x
+  
+  &.size-large textarea
+    min-height: base.$textarea-min-height-large  // 120px
+    font-size: var(--lb-textarea-font-size-large)  // 16px
+    padding: base.$textarea-padding-y base.$textarea-padding-x  // 8px 12px
+  
   
   // Resize controls
   &.resize-none textarea
@@ -242,5 +292,5 @@ defineExpose({
     
     &:focus
       border-color: var(--lb-border-error-active)
-      box-shadow: 0 0 0 base.$focus-ring-width var(--lb-surface-error-active)
+  
 </style>

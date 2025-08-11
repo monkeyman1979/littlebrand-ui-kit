@@ -213,12 +213,12 @@ defineOptions({
     font-size: var(--lb-font-size-label-base)
     
     .icon-container
-      width: var(--lb-icon-size-sm) // 18px
-      height: var(--lb-icon-size-sm) // 18px
+      width: var(--lb-size-2xl) // 18px
+      height: var(--lb-size-2xl) // 18px
       
       :deep(svg)
-        width: var(--lb-icon-size-sm) // 18px
-        height: var(--lb-icon-size-sm) // 18px
+        width: var(--lb-size-2xl) // 18px
+        height: var(--lb-size-2xl) // 18px
 
 
   // Icon and text layout

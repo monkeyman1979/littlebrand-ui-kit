@@ -36,13 +36,13 @@ LbDropdown.lb-select(
       //- Dropdown icon
       span.select-icon
         slot(name="icon")
-          svg(:width="size === 'large' ? '20' : '16'" :height="size === 'large' ? '20' : '16'" viewBox="0 0 16 16" fill="currentColor" stroke="none")
+          svg(:width="effectiveSize === 'large' ? '20' : '16'" :height="effectiveSize === 'large' ? '20' : '16'" viewBox="0 0 16 16" fill="currentColor" stroke="none")
             path(d="M5 6l3 3 3-3z")
   
   template(#content)
     .select-content(
       ref="contentRef"
-      :class="`select-content-${size}`"
+      :class="`select-content-${effectiveSize}`"
       role="listbox"
       :aria-label="ariaLabel"
       :tabindex="!searchable ? 0 : -1"
@@ -79,7 +79,7 @@ LbDropdown.lb-select(
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, nextTick } from 'vue'
+import { ref, computed, watch, nextTick, inject, onMounted, onUnmounted, type ComputedRef } from 'vue'
 import LbDropdown from '../Dropdown/LbDropdown.vue'
 
 // Types
@@ -117,7 +117,6 @@ const props = withDefaults(defineProps<LbSelectProps>(), {
   clearable: false,
   searchable: false,
   searchPlaceholder: 'Search...',
-  size: 'medium',
   placement: 'bottom',
 })
 
@@ -138,12 +137,26 @@ const searchInputRef = ref<HTMLInputElement>()
 const optionsRef = ref<HTMLElement>()
 const contentRef = ref<HTMLElement>()
 
+// Inject density context if available
+const injectedDensitySize = inject<ComputedRef<'medium' | 'large'> | undefined>('densitySize', undefined)
+
 // State
 const isOpen = ref(false)
 const searchQuery = ref('')
 const highlightedIndex = ref(-1)
+const isKeyboardFocus = ref(false)
 
 // Computed
+// Compute effective size: explicit prop > density > default
+const effectiveSize = computed(() => {
+  // If size is explicitly set, use it
+  if (props.size) return props.size
+  // Otherwise use density-based size if available
+  if (injectedDensitySize?.value) return injectedDensitySize.value
+  // Fall back to default
+  return 'medium'
+})
+
 const normalizedOptions = computed<SelectOption[]>(() => {
   return props.options.map(option => {
     if (typeof option === 'string' || typeof option === 'number') {
@@ -189,7 +202,8 @@ const triggerClasses = computed(() => ({
   'select-trigger-disabled': props.disabled,
   'select-trigger-invalid': props.invalid,
   'select-trigger-clearable': props.clearable,
-  [`select-trigger-${props.size}`]: true,
+  'select-trigger-keyboard-focus': isKeyboardFocus.value,
+  [`select-trigger-${effectiveSize.value}`]: true,
 }))
 
 // Methods
@@ -201,6 +215,7 @@ const getOptionClasses = (option: SelectOption, index: number) => ({
   'select-option-selected': isSelected(option),
   'select-option-highlighted': highlightedIndex.value === index,
   'select-option-disabled': option.disabled,
+  [`select-content-${effectiveSize.value}`]: true,
 })
 
 const isSelected = (option: SelectOption) => {
@@ -425,6 +440,40 @@ const scrollToHighlighted = () => {
   }
 }
 
+// Track keyboard vs mouse focus
+let lastInteractionWasKeyboard = false
+
+const handleKeyDown = () => {
+  lastInteractionWasKeyboard = true
+}
+
+const handleMouseDown = () => {
+  lastInteractionWasKeyboard = false
+}
+
+const handleTriggerFocus = () => {
+  isKeyboardFocus.value = lastInteractionWasKeyboard
+}
+
+const handleTriggerBlur = () => {
+  isKeyboardFocus.value = false
+}
+
+// Set up global listeners
+onMounted(() => {
+  document.addEventListener('keydown', handleKeyDown, true)
+  document.addEventListener('mousedown', handleMouseDown, true)
+  triggerRef.value?.addEventListener('focus', handleTriggerFocus)
+  triggerRef.value?.addEventListener('blur', handleTriggerBlur)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('keydown', handleKeyDown, true)
+  document.removeEventListener('mousedown', handleMouseDown, true)
+  triggerRef.value?.removeEventListener('focus', handleTriggerFocus)
+  triggerRef.value?.removeEventListener('blur', handleTriggerBlur)
+})
+
 // Component options
 defineOptions({
   name: 'LbSelect',
@@ -443,30 +492,42 @@ defineOptions({
   display: flex
   align-items: center
   width: 100%
-  padding: 0 var(--lb-space-md)
+  padding: 0 base.$select-padding-x-medium
   background: var(--lb-background-surface)
-  border: var(--lb-border-sm) solid var(--lb-border-neutral-normal)
-  border-radius: var(--lb-radius-md)
+  border: base.$select-border-width solid var(--lb-border-neutral-normal)
+  border-radius: var(--lb-select-radius)
   color: var(--lb-text-neutral-contrast-high)
   cursor: pointer
   transition: border-color var(--lb-transition), box-shadow var(--lb-transition)
   box-sizing: border-box
   
-  &:focus-visible
-    outline: none
-    border-color: var(--lb-border-primary-normal)
-    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
-  
-  &:hover:not(.select-trigger-disabled)
+  // Hover state (only when not focused and not invalid)
+  &:hover:not(.select-trigger-disabled):not(:focus):not(.select-trigger-invalid)
     border-color: var(--lb-border-neutral-active)
   
+  &:focus
+    outline: none
+    border-color: var(--lb-border-primary-normal)
+    box-shadow: none  // No ring by default
+  
+  // Active state (when clicking/interacting)
+  &:active:not(.select-trigger-disabled)
+    border-color: var(--lb-border-primary-active)
+    box-shadow: none  // Remove focus ring on click
+  
+  // Keyboard focus state (only shows ring when focused via keyboard)
+  &.select-trigger-keyboard-focus:focus:not(:active)
+    outline: var(--lb-focus-ring-width) solid var(--lb-focus-ring-color)
+    outline-offset: var(--lb-focus-ring-offset)
+  
   &.select-trigger-medium
-    height: var(--lb-input-height-medium)
-    font-size: var(--lb-font-size-label-base)
+    height: base.$select-height-medium  // 40px
+    font-size: var(--lb-select-font-size-medium)  // 14px - matches input
   
   &.select-trigger-large
-    height: var(--lb-input-height-large)
-    font-size: var(--lb-font-size-label-large)
+    height: base.$select-height-large  // 48px
+    padding: 0 base.$select-padding-x-large
+    font-size: var(--lb-select-font-size-large)  // 16px - matches input
   
   &.select-trigger-disabled
     background: var(--lb-surface-neutral-subtle)
@@ -477,9 +538,12 @@ defineOptions({
   &.select-trigger-invalid
     border-color: var(--lb-border-error-normal)
     
-    &:focus-visible
-      border-color: var(--lb-border-error-active)
-      box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-error-active)
+    // Maintain error border on hover
+    &:hover:not(.select-trigger-disabled)
+      border-color: var(--lb-border-error-normal)
+    
+    &.select-trigger-keyboard-focus:focus:not(:active)
+      box-shadow: 0 0 0 calc(var(--lb-focus-ring-width) + var(--lb-focus-ring-offset)) var(--lb-surface-error-active)
 
 .select-value
   flex: 1
@@ -495,13 +559,13 @@ defineOptions({
   display: inline-flex
   align-items: center
   justify-content: center
-  width: 1.25rem
-  height: 1.25rem
+  width: base.$unit-20  // 20px
+  height: base.$unit-20  // 20px
   padding: 0
-  margin-right: var(--lb-space-xs)
+  margin-right: base.$space-xs
   background: none
   border: none
-  border-radius: var(--lb-radius-full)
+  border-radius: base.$radius-full
   color: var(--lb-text-neutral-contrast-low)
   cursor: pointer
   transition: all var(--lb-transition)
@@ -518,20 +582,16 @@ defineOptions({
   display: inline-flex
   align-items: center
   justify-content: center
-  margin-left: var(--lb-space-xs)
+  margin-left: base.$space-xs
   color: var(--lb-text-neutral-contrast-low)
   flex-shrink: 0
   transition: transform var(--lb-transition)
   
   svg
-    width: var(--lb-icon-size-sm) // 16px default
-    height: var(--lb-icon-size-sm)
-    
-    .select-trigger-large &
-      width: var(--lb-icon-size-md) // 20px for large
-      height: var(--lb-icon-size-md)
+    width: base.$select-icon-size  // 16px default
+    height: base.$select-icon-size
   
-  .lb-select[aria-expanded="true"] &
+  &.lb-select[aria-expanded="true"]
     transform: rotate(180deg)
 
 .select-content
@@ -541,8 +601,8 @@ defineOptions({
   outline: none
 
 .select-search
-  padding: var(--lb-space-sm)
-  border-bottom: var(--lb-border-sm) solid var(--lb-border-neutral-normal)
+  padding: base.$space-sm
+  border-bottom: base.$select-border-width solid var(--lb-border-neutral-normal)
   
   form
     margin: 0
@@ -550,11 +610,11 @@ defineOptions({
 
 .search-input
   width: 100%
-  height: 2rem
-  padding: 0 var(--lb-space-sm)
+  height: base.$unit-32  // 32px
+  padding: 0 base.$space-sm
   background: var(--lb-background-surface)
-  border: var(--lb-border-sm) solid var(--lb-border-neutral-normal)
-  border-radius: var(--lb-radius-md)
+  border: base.$select-border-width solid var(--lb-border-neutral-normal)
+  border-radius: var(--lb-select-radius)
   color: var(--lb-text-neutral-contrast-high)
   transition: border-color var(--lb-transition)
   box-sizing: border-box
@@ -566,27 +626,31 @@ defineOptions({
   &:focus
     outline: none
     border-color: var(--lb-border-primary-normal)
-    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
+    box-shadow: none  // No ring by default
+  
+  &:active
+    border-color: var(--lb-border-primary-active)
+    box-shadow: none  // Remove focus ring on click
 
 .select-options
-  padding: var(--lb-space-xs)
+  padding: base.$space-xs
 
 .select-option
   display: flex
   align-items: center
   justify-content: space-between
-  padding: var(--lb-space-sm) var(--lb-space-md)
-  border-radius: var(--lb-radius-sm)
+  padding: base.$space-sm base.$space-md
+  border-radius: base.$radius-sm
   color: var(--lb-text-neutral-contrast-high)
   cursor: pointer
   transition: background-color var(--lb-transition)
   
-  .select-content-medium &
-    font-size: var(--lb-font-size-label-base)
+  &.select-content-medium
+    font-size: var(--lb-select-font-size-medium)
   
-  .select-content-large &
-    font-size: var(--lb-font-size-label-large)
-    padding: var(--lb-space-md) var(--lb-space-lg)
+  &.select-content-large
+    font-size: var(--lb-select-font-size-large)
+    padding: base.$space-md base.$space-lg
   
   &:hover:not(.select-option-disabled)
     background: var(--lb-surface-neutral-hover)
@@ -616,12 +680,12 @@ defineOptions({
   display: inline-flex
   align-items: center
   justify-content: center
-  margin-left: var(--lb-space-sm)
+  margin-left: base.$space-sm
   color: var(--lb-text-primary-normal)
   flex-shrink: 0
 
 .select-divider
-  height: 1px
-  margin: var(--lb-space-xs) 0
+  height: base.$border-sm
+  margin: base.$space-xs 0
   background: var(--lb-border-neutral-normal)
 </style>

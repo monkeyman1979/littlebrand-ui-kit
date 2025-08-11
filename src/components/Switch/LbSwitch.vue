@@ -30,6 +30,7 @@ export interface LbSwitchProps {
   required?: boolean
   invalid?: boolean
   ariaDescribedby?: string
+  size?: 'small' | 'medium'
 }
 
 // Props
@@ -38,6 +39,7 @@ const props = withDefaults(defineProps<LbSwitchProps>(), {
   disabled: false,
   required: false,
   invalid: false,
+  size: 'small'
 })
 
 // Emits
@@ -55,7 +57,8 @@ const inputRef = ref<HTMLInputElement>()
 const rootClasses = computed(() => ({
   'checked': props.modelValue,
   'disabled': props.disabled,
-  'invalid': props.invalid
+  'invalid': props.invalid,
+  [`size-${props.size}`]: true
 }))
 
 // Methods
@@ -101,25 +104,49 @@ defineExpose({
   // Switch track
   .switch-track
     position: relative
-    width: var(--lb-space-6xl) // 56px
-    height: var(--lb-btn-height-small) // 32px
     background: var(--lb-background-surface)
-    border: var(--lb-border-md) solid var(--lb-border-neutral-normal)
-    border-radius: var(--lb-radius-full)
+    border: base.$border-md solid var(--lb-border-neutral-normal)
+    border-radius: base.$switch-border-radius
     transition: background-color var(--lb-transition), border-color var(--lb-transition), box-shadow var(--lb-transition)
   
   // Switch thumb
   .switch-thumb
     position: absolute
     top: 50%
-    left: var(--lb-space-2xs)
     transform: translateY(-50%)
-    width: var(--lb-icon-size-lg) // 24px
-    height: var(--lb-icon-size-lg) // 24px
     background: var(--lb-border-neutral-active)
-    border-radius: var(--lb-radius-full)
+    border-radius: base.$radius-full
     transition: transform var(--lb-transition), background-color var(--lb-transition)
     will-change: transform
+  
+  // Size variations
+  &.size-small
+    .switch-track
+      width: base.$switch-width-small  // 44px
+      height: base.$switch-height-small  // 24px
+    
+    .switch-thumb
+      left: base.$space-2xs  // 2px from left edge
+      width: base.$switch-thumb-size-small  // 18px
+      height: base.$switch-thumb-size-small  // 18px
+    
+    &.checked .switch-thumb
+      // 44px - 18px - 2px (left) - 6px (right) = 18px translation
+      transform: translateY(-50%) translateX(calc(base.$switch-width-small - base.$switch-thumb-size-small - base.$space-2xs - 6px))
+  
+  &.size-medium
+    .switch-track
+      width: base.$switch-width-medium  // 56px
+      height: base.$switch-height-medium  // 32px
+    
+    .switch-thumb
+      left: 3px  // 3px from left edge (moved closer to the left)
+      width: base.$switch-thumb-size-medium  // 24px
+      height: base.$switch-thumb-size-medium  // 24px
+    
+    &.checked .switch-thumb
+      // 56px - 24px - 3px (left) - 7px (right) = 22px translation
+      transform: translateY(-50%) translateX(calc(base.$switch-width-medium - base.$switch-thumb-size-medium - 3px - 7px))
   
   // Checked state
   &.checked
@@ -129,7 +156,6 @@ defineExpose({
       
     .switch-thumb
       background: white
-      transform: translateY(-50%) translateX(calc(var(--lb-space-xl) + var(--lb-space-xs))) // Move 24px to right (20px + 4px)
       
   // Add smooth spring animation for the toggle
   &:not(.disabled) .switch-thumb
@@ -148,9 +174,8 @@ defineExpose({
   
   // Focus state
   input:focus-visible ~ .switch-track
-    outline: none
-    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
-    border-color: var(--lb-border-primary-normal)
+    outline: var(--lb-focus-ring-width) solid var(--lb-focus-ring-color)
+    outline-offset: base.$focus-ring-offset
   
   // Invalid state
   &.invalid
@@ -158,7 +183,7 @@ defineExpose({
       border-color: var(--lb-border-error-normal)
       
     input:focus-visible ~ .switch-track
-      box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-error-active)
+      box-shadow: 0 0 0 calc(var(--lb-focus-ring-width) + var(--lb-focus-ring-offset)) var(--lb-surface-error-active)
       border-color: var(--lb-border-error-active)
       
     &.checked .switch-track

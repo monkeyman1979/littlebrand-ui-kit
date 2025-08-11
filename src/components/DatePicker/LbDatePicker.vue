@@ -12,18 +12,40 @@
       button.date-picker-trigger(
         type="button"
         :disabled="disabled"
-        :class="{ invalid: invalid, [`size-${size}`]: true }"
+        :class="{ invalid: invalid, [`size-${effectiveSize}`]: true }"
         :id="computedId"
         :aria-describedby="computedAriaDescribedby"
         :aria-invalid="invalid || undefined"
         :aria-label="ariaLabel"
         :tabindex="-1"
       )
-        .date-display
-          span.date-text(:class="{ placeholder: !modelValue }") {{ displayText }}
+        //- Calendar icon (leading)
         .calendar-icon
           svg(viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2")
             path(d="M6 2V6M14 2V6M3 10H17M5 4H15C16.1046 4 17 4.89543 17 6V16C17 17.1046 16.1046 18 15 18H5C3.89543 18 3 17.1046 3 16V6C3 4.89543 3.89543 4 5 4Z" stroke-linecap="round" stroke-linejoin="round")
+        .date-display
+          span.date-text(:class="{ placeholder: !modelValue }") {{ displayText }}
+        //- Clear button (trailing)
+        button.icon-clear(
+          v-if="clearable && modelValue && !disabled"
+          type="button"
+          @click.stop="clearDate"
+          aria-label="Clear date"
+        )
+          svg(
+            width="16" 
+            height="16" 
+            viewBox="0 0 16 16" 
+            fill="none" 
+            xmlns="http://www.w3.org/2000/svg"
+          )
+            circle(cx="8" cy="8" r="8" fill="currentColor" opacity="0.2")
+            path(
+              d="M10.5 5.5L5.5 10.5M5.5 5.5l5 5" 
+              stroke="currentColor" 
+              stroke-width="1.5" 
+              stroke-linecap="round"
+            )
     
     LbPopoverContent
       .date-picker-content
@@ -35,7 +57,7 @@
             :first-day-of-week="firstDayOfWeek"
             :locale="locale"
             variant="embedded"
-            :size="size"
+            :size="effectiveSize"
             :date-mode="dateMode"
             :mode="mode"
             @change="handleDateSelect"
@@ -43,13 +65,6 @@
           
           .date-picker-actions
             .action-group-left
-              LbButton(
-                v-if="clearable"
-                variant="ghost" 
-                color="neutral"
-                size="medium"
-                @click="clearDate"
-              ) Clear
               LbButton(
                 v-if="showToday"
                 variant="ghost"
@@ -116,7 +131,6 @@ const props = withDefaults(defineProps<LbDatePickerProps>(), {
   required: false,
   clearable: false,
   showToday: false,
-  size: 'medium',
   firstDayOfWeek: 0,
   locale: 'en-US',
   placement: 'bottom-start',
@@ -142,7 +156,20 @@ const internalDate = ref<Date | null>(props.modelValue)
 const injectedId = inject<ComputedRef<string> | undefined>('formFieldId', undefined)
 const injectedAriaDescribedby = inject<ComputedRef<string | undefined> | undefined>('formFieldAriaDescribedby', undefined)
 
+// Inject density context if available
+const injectedDensitySize = inject<ComputedRef<'medium' | 'large'> | undefined>('densitySize', undefined)
+
 // Computed
+// Compute effective size: explicit prop > density > default
+const effectiveSize = computed(() => {
+  // If size is explicitly set, use it
+  if (props.size) return props.size
+  // Otherwise use density-based size if available
+  if (injectedDensitySize?.value) return injectedDensitySize.value
+  // Fall back to default
+  return 'medium'
+})
+
 const computedId = computed(() => {
   return props.id || injectedId?.value
 })
@@ -154,7 +181,7 @@ const computedAriaDescribedby = computed(() => {
 const datePickerClasses = computed(() => ({
   'disabled': props.disabled,
   'invalid': props.invalid,
-  [`size-${props.size}`]: true
+  [`size-${effectiveSize.value}`]: true
 }))
 
 const displayText = computed(() => {
@@ -201,6 +228,7 @@ const selectToday = () => {
 
 const clearDate = () => {
   internalDate.value = null
+  emit('update:modelValue', null)
   emit('clear')
 }
 
@@ -264,6 +292,7 @@ defineOptions({
   display: flex
   align-items: center
   justify-content: space-between
+  gap: 0.5rem
   gap: var(--lb-space-md)
   padding: 0 var(--lb-space-md)
   background: var(--lb-background-surface)
@@ -273,39 +302,54 @@ defineOptions({
   font-size: var(--lb-font-size-label-base)
   color: var(--lb-text-neutral-contrast-high)
   transition: all var(--lb-transition)
-  height: var(--lb-input-height-medium)
+  height: base.$unit-40  // 40px
   cursor: pointer
   text-align: left
   
+  // Size variants
+  &.size-medium
+    height: base.$unit-40  // 40px
+    font-size: var(--lb-font-size-label-base)
+  
   &.size-large
-    height: var(--lb-input-height-large)
+    height: base.$unit-48  // 48px
     font-size: var(--lb-font-size-label-large)
+  
+  &:focus
+    outline: none
+    border-color: var(--lb-border-primary-normal)
+  
+  &:active:not(:disabled)
+    border-color: var(--lb-border-primary-active)
   
   &:focus-visible
     outline: none
-    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
+    box-shadow: 0 0 0 calc(var(--lb-focus-ring-width) + var(--lb-focus-ring-offset)) var(--lb-focus-ring-color)
   
-  &:hover:not(:disabled)
+  &:active
+    box-shadow: none  // Remove focus ring on click
+  
+  &:hover:not(:disabled):not(.invalid)
     border-color: var(--lb-border-neutral-active)
     background: var(--lb-surface-neutral-hover)
   
   &.invalid
     border-color: var(--lb-border-error-normal)
     
-    &:focus-visible
-      box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-border-error-focus)
+    &:hover:not(:disabled)
+      border-color: var(--lb-border-error-normal)
+      background: var(--lb-surface-neutral-hover)
+    
+    &:focus
+      border-color: var(--lb-border-error-active)
+    
+    &:focus-visible:not(:active)
+      box-shadow: 0 0 0 calc(var(--lb-focus-ring-width) + var(--lb-focus-ring-offset)) var(--lb-surface-error-active)
   
   &:disabled
     cursor: not-allowed
     opacity: var(--lb-opacity-60)
     background: var(--lb-surface-neutral-subtle)
-
-.date-display
-  flex: 1
-  
-  .date-text
-    &.placeholder
-      color: var(--lb-text-neutral-contrast-low)
 
 .calendar-icon
   display: flex
@@ -314,16 +358,43 @@ defineOptions({
   color: var(--lb-text-neutral-contrast-low)
   
   svg
-    width: var(--lb-icon-size-md)
-    height: var(--lb-icon-size-md)
+    width: base.$unit-20  // 20px
+    height: base.$unit-20  // 20px
     flex-shrink: 0
+
+.date-display
+  flex: 1
+  
+  .date-text
+    &.placeholder
+      color: var(--lb-text-neutral-contrast-low)
+
+.icon-clear
+  display: flex
+  align-items: center
+  justify-content: center
+  padding: 0
+  margin: 0
+  margin-left: auto  // Push to the right
+  background: none
+  border: none
+  color: var(--lb-text-neutral-contrast-low)
+  cursor: pointer
+  transition: color var(--lb-transition)
+  
+  &:hover
+    color: var(--lb-text-neutral-contrast-high)
+  
+  svg
+    width: base.$unit-16  // 16px
+    height: base.$unit-16  // 16px
 
 
 .date-picker-content
   display: flex
   flex-direction: column
   gap: var(--lb-space-md)
-  min-width: 20rem // 320px using rem units
+  width: fit-content  // Size to calendar content
 
 .date-picker-actions
   display: flex

@@ -5,7 +5,7 @@ button.lb-chip(
   :role="clickable ? 'button' : null"
   :aria-pressed="variant === 'filter' ? selected.toString() : null"
   :aria-expanded="hasDropdown ? 'false' : null"
-  :tabindex="disabled ? -1 : 0"
+  :tabindex="disabled || !clickable ? -1 : 0"
   @click="handleClick"
   @keydown.enter="handleClick"
   @keydown.space.prevent="handleClick"
@@ -56,7 +56,6 @@ import { computed, ref, useSlots } from 'vue'
 // Types
 type Variant = 'assist' | 'filter' | 'input' | 'suggestion'
 type Color = 'primary' | 'secondary' | 'neutral' | 'success' | 'warning' | 'error' | 'info'
-type Size = 'small' | 'medium' | 'large'
 
 // Props
 const props = withDefaults(defineProps<{
@@ -66,7 +65,6 @@ const props = withDefaults(defineProps<{
   disabled?: boolean
   clickable?: boolean
   deletable?: boolean
-  size?: Size
   hasDropdown?: boolean
 }>(), {
   variant: 'assist',
@@ -75,7 +73,6 @@ const props = withDefaults(defineProps<{
   disabled: false,
   clickable: true,
   deletable: false,
-  size: 'medium',
   hasDropdown: false
 })
 
@@ -96,7 +93,6 @@ const internalSelected = ref(props.selected)
 const chipClasses = computed(() => [
   `variant-${props.variant}`,
   `color-${props.color}`,
-  `size-${props.size}`,
   {
     'selected': props.variant === 'filter' && props.selected,
     'disabled': props.disabled,
@@ -140,9 +136,9 @@ defineOptions({
   position: relative
   display: inline-flex
   align-items: center
-  gap: var(--lb-space-xs)
-  border: var(--lb-border-sm) solid var(--lb-border-neutral-line)
-  border-radius: var(--lb-radius-sm)
+  gap: base.$space-xs
+  border: base.$border-sm solid var(--lb-border-neutral-line)
+  border-radius: var(--lb-chip-radius)
   font-family: var(--lb-font-body)
   font-weight: var(--lb-font-weight-medium)
   line-height: var(--lb-line-height-compact)
@@ -161,41 +157,41 @@ defineOptions({
     outline-offset: var(--lb-focus-ring-offset)
     transition: none
   
-  // Fixed height of 32px for all chips
-  height: 2rem
-  padding: 0 var(--lb-space-md)
-  font-size: var(--lb-font-size-label-base)
-  gap: var(--lb-space-xs)
+  // Fixed size (32px height)
+  height: base.$chip-height  // 32px
+  padding: 0 base.$chip-padding-x  // 12px
+  font-size: base.$chip-font-size  // 14px
+  gap: base.$space-xs
   
   &.has-leading-icon
-    padding-left: var(--lb-space-sm)
-    
-  &.has-trailing-icon
-    padding-right: var(--lb-space-sm)
+    padding-left: base.$space-sm  // 8px
   
-  // Icon sizes - 18x18px
+  &.has-trailing-icon
+    padding-right: base.$space-sm  // 8px
+  
+  // Icon sizes - fixed for single chip size
   .icon-leading,
   .icon-trailing,
   .icon-selected,
   .icon-dropdown,
   .delete-button
     svg
-      width: 1.125rem
-      height: 1.125rem
+      width: base.$chip-icon-size  // 16px
+      height: base.$chip-icon-size  // 16px
   
-  // Avatar container - 24x24px
+  // Avatar container - fixed size
   .avatar-container
     display: inline-flex
     align-items: center
     justify-content: center
     flex-shrink: 0
-    width: 1.5rem
-    height: 1.5rem
-    margin: -0.25rem 0
+    width: base.$unit-24  // 24px
+    height: base.$unit-24  // 24px
+    margin: calc(base.$space-xs * -1) 0
     
     :deep(.lb-avatar)
-      width: 1.5rem
-      height: 1.5rem
+      width: base.$unit-24
+      height: base.$unit-24
   
   // Variant styles
   &.variant-assist
@@ -271,9 +267,15 @@ defineOptions({
       box-shadow: none
       transform: none
   
-  // Non-clickable chips
+  // Non-clickable chips - no interactive states
   &:not(.clickable)
     cursor: default
+    pointer-events: none
+    
+    // Re-enable pointer events for deletable chips
+    .delete-button
+      pointer-events: auto
+      cursor: pointer
     
     &:hover
       background-color: var(--lb-background-surface)
@@ -310,7 +312,7 @@ defineOptions({
     min-width: 0
     overflow: hidden
     text-overflow: ellipsis
-    padding: 0 var(--lb-space-xs)
+    padding: 0 base.$space-xs
   
   // Delete button
   .delete-button
@@ -322,9 +324,9 @@ defineOptions({
     background: none
     color: currentColor
     cursor: pointer
-    padding: var(--lb-space-2xs)
-    margin: calc(var(--lb-space-2xs) * -1)
-    border-radius: var(--lb-radius-full)
+    padding: base.$space-2xs
+    margin: calc(base.$space-2xs * -1)
+    border-radius: base.$radius-full
     transition: all var(--lb-transition-fast)
     opacity: var(--lb-opacity-70)
     

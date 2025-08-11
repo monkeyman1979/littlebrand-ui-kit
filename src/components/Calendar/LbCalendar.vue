@@ -8,7 +8,7 @@
     .calendar-navigation
       LbButton(
         icon-only
-        :size="size"
+        :size="effectiveSize"
         variant="ghost"
         color="neutral"
         :disabled="!canNavigatePrevious"
@@ -23,7 +23,7 @@
         LbSelect.month-select(
           v-model="selectedMonth"
           :options="monthOptions"
-          :size="size"
+          :size="effectiveSize"
           :aria-label="monthSelectAriaLabel"
           @change="handleMonthChange"
         )
@@ -32,14 +32,14 @@
           :options="yearOptions"
           searchable
           search-placeholder="Enter year..."
-          :size="size"
+          :size="effectiveSize"
           :aria-label="yearSelectAriaLabel"
           @change="handleYearChange"
         )
       
       LbButton(
         icon-only
-        :size="size"
+        :size="effectiveSize"
         variant="ghost"
         color="neutral"
         :disabled="!canNavigateNext"
@@ -87,7 +87,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, nextTick } from 'vue'
+import { ref, computed, watch, nextTick, inject, type ComputedRef } from 'vue'
 import LbButton from '../Buttons/Button/LbButton.vue'
 import LbSelect from '../Select/LbSelect.vue'
 
@@ -126,7 +126,6 @@ const props = withDefaults(defineProps<LbCalendarProps>(), {
   firstDayOfWeek: 0,
   locale: 'en-US',
   variant: 'standalone',
-  size: 'medium',
   dateMode: 'both',
   mode: 'all'
 })
@@ -137,6 +136,9 @@ const emit = defineEmits<{
   'change': [value: Date | null]
   'navigate': [value: { month: number, year: number }]
 }>()
+
+// Inject density context if available
+const injectedDensitySize = inject<ComputedRef<'medium' | 'large'> | undefined>('densitySize', undefined)
 
 // Refs
 const focusedDate = ref<Date | null>(null)
@@ -179,10 +181,20 @@ if (props.maxDate && selectedYear.value === props.maxDate.getFullYear()) {
 }
 
 // Computed
+// Compute effective size: explicit prop > density > default
+const effectiveSize = computed(() => {
+  // If size is explicitly set, use it
+  if (props.size) return props.size
+  // Otherwise use density-based size if available
+  if (injectedDensitySize?.value) return injectedDensitySize.value
+  // Fall back to default
+  return 'medium'
+})
+
 const calendarClasses = computed(() => ({
   'lb-calendar': true,
   [`variant-${props.variant}`]: true,
-  [`size-${props.size}`]: true
+  [`size-${effectiveSize.value}`]: true
 }))
 
 // Date utilities
@@ -675,8 +687,11 @@ defineOptions({
 @use '@/styles/base' as base
 
 .lb-calendar
-  display: inline-block
-  width: min(24rem, 100%)
+  display: inline-flex
+  flex-direction: column
+  gap: var(--lb-space-lg)  // Gap between header and grid
+  width: fit-content  // Size to content
+  max-width: 100%  // But don't overflow container
   background: var(--lb-background-surface)
   font-family: var(--lb-font-body)
   
@@ -696,7 +711,6 @@ defineOptions({
   display: flex
   align-items: center
   justify-content: space-between
-  margin-bottom: var(--lb-space-lg)
   gap: var(--lb-space-md)
 
 .calendar-navigation
@@ -719,20 +733,22 @@ defineOptions({
     width: auto
 
 .calendar-grid
-  width: 100%
+  display: flex
+  flex-direction: column
+  gap: var(--lb-space-2xs)  // Gap between weekday labels and days grid
+  width: fit-content
 
 .weekday-labels
   display: grid
   grid-template-columns: repeat(7, 1fr)
   gap: 0
-  margin-bottom: var(--lb-space-2xs)
 
 .weekday
   display: flex
   align-items: center
   justify-content: center
-  min-width: var(--lb-input-height-medium) // 40px to match day cells
-  height: var(--lb-space-4xl) // 32px height for weekday labels
+  min-width: base.$unit-40  // 40px to match day cells
+  height: base.$unit-32  // 32px height for weekday labels
   font-size: var(--lb-font-size-label-small)
   font-weight: var(--lb-font-weight-medium)
   color: var(--lb-text-neutral-contrast-low)
@@ -740,8 +756,8 @@ defineOptions({
   
   // Large size variant
   .size-large &
-    min-width: var(--lb-input-height-large) // 48px to match day cells
-    height: var(--lb-space-5xl) // 40px height for large
+    min-width: base.$unit-48  // 48px to match day cells
+    height: base.$unit-40  // 40px height for large
 
 .days-grid
   display: flex
@@ -757,12 +773,14 @@ defineOptions({
   display: flex
   align-items: center
   justify-content: center
-  width: 100%
-  min-width: var(--lb-input-height-medium) // 40px for medium
-  height: var(--lb-input-height-medium) // 40px for medium
+  width: base.$unit-40  // 40px square for medium
+  min-width: base.$unit-40  // 40px for medium
+  min-height: base.$unit-40  // 40px for medium - using min-height to ensure full height
+  height: base.$unit-40  // 40px for medium
   padding: 0
   background: transparent
   border: none
+  box-sizing: border-box  // Ensure box-sizing is set
   border-radius: var(--lb-radius-md)
   font-size: var(--lb-font-size-body-base) // Medium font by default
   font-weight: var(--lb-font-weight-normal)
@@ -773,8 +791,10 @@ defineOptions({
   
   // Large size variant
   .size-large &
-    min-width: var(--lb-input-height-large) // 48px for large
-    height: var(--lb-input-height-large) // 48px for large
+    width: base.$unit-48  // 48px square for large
+    min-width: base.$unit-48  // 48px for large
+    min-height: base.$unit-48  // 48px for large - using min-height to ensure full height
+    height: base.$unit-48  // 48px for large
     border-radius: var(--lb-radius-lg)
     font-size: var(--lb-font-size-body-large)
   

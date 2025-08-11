@@ -168,6 +168,73 @@
               | External Link
               
       .component-demo
+        h3 Density System
+        
+        .demo-group
+          h4 Global Density Control
+          p Switch between Compact and Default density modes to see how all components below adapt their sizing.
+          .button-row
+            LbSegmentButton(v-model="currentDensity" :allow-empty="false")
+              LbSegmentButtonItem(value="compact") Compact
+              LbSegmentButtonItem(value="default") Default
+        
+        .demo-group
+          h4 Components with Global Density
+          p These components automatically adapt to the selected density mode above.
+          LbDensityProvider(:density="currentDensity")
+            .density-demo-content
+              .input-row
+                LbInput(placeholder="Text input")
+                LbSelect(:options="colorOptions" placeholder="Select an option")
+                LbDatePicker(placeholder="Pick a date")
+              
+              .input-row(style="margin-top: 12px")
+                LbTextarea(placeholder="Enter your message here..." :rows="4" style="width: 100%")
+              
+              .calendar-demo(style="margin-top: 24px")
+                h5 Calendar Component
+                LbCalendar
+        
+        .demo-group
+          h4 Size Override Examples
+          p Components can override the global density by explicitly setting their size prop.
+          LbDensityProvider(:density="currentDensity")
+            .override-examples
+              .override-row
+                span.label Current global density: {{ currentDensity }}
+              .override-row
+                LbInput(placeholder="Uses global density (no size prop)")
+              .override-row
+                LbInput(placeholder="Always medium (size='medium')" size="medium")
+              .override-row
+                LbInput(placeholder="Always large (size='large')" size="large")
+        
+        .demo-group
+          h4 Side-by-Side Comparison
+          .density-comparison
+            .density-example
+              h5 Compact Density
+              LbDensityProvider(density="compact")
+                .input-row
+                  LbInput(placeholder="Compact input")
+                  LbSelect(:options="priorityOptions" placeholder="Compact select")
+                .input-row(style="margin-top: 12px")
+                  LbDatePicker(placeholder="Select date")
+                .input-row(style="margin-top: 12px")
+                  LbTextarea(placeholder="Compact textarea..." :rows="3" style="width: 100%")
+            
+            .density-example
+              h5 Default Density
+              LbDensityProvider(density="default")
+                .input-row
+                  LbInput(placeholder="Default input")
+                  LbSelect(:options="priorityOptions" placeholder="Default select")
+                .input-row(style="margin-top: 12px")
+                  LbDatePicker(placeholder="Select date")
+                .input-row(style="margin-top: 12px")
+                  LbTextarea(placeholder="Default textarea..." :rows="3" style="width: 100%")
+      
+      .component-demo
         h3 Input
         
         .demo-group
@@ -543,6 +610,16 @@
       
       .component-demo
         h3 Switch
+        
+        .demo-group
+          h4 Switch Sizes
+          .switch-row
+            .switch-item
+              LbSwitch(v-model="switchSmall" size="small" id="switch-small")
+              LbLabel(for="switch-small") Small (24px)
+            .switch-item
+              LbSwitch(v-model="switchMedium" size="medium" id="switch-medium")
+              LbLabel(for="switch-medium") Medium (32px)
         
         .demo-group
           h4 Switch States
@@ -1164,6 +1241,8 @@
             LbChip(variant="input" deletable @delete="handleChipDelete") Input
             
             LbChip(variant="suggestion" @click="handleChipClick") Suggestion
+            
+            LbChip(variant="assist" :clickable="false" color="neutral") Category Label
         
         .demo-group
           h4 Chip Colors
@@ -1364,7 +1443,7 @@
               placeholder="Active Color"
             )
             .switch-field
-              LbSwitch(v-model="navShowLabels" id="nav-labels")
+              LbSwitch(v-model="navShowLabels" id="nav-labels" size="medium")
               LbLabel(for="nav-labels") Show Labels
           .navigation-demo
             LbNavigationBar(
@@ -1649,13 +1728,23 @@
         p Single-select buttons for filtering and content switching
         
         .demo-group
-          h4 Basic Segment Buttons
+          h4 Selection Behavior
           .segment-demo
-            LbSegmentButton(v-model="selectedSegment1")
-              LbSegmentButtonItem(value="all") All
-              LbSegmentButtonItem(value="active") Active
-              LbSegmentButtonItem(value="completed") Completed
-            p.demo-note Selected: {{ selectedSegment1 }}
+            .segment-row
+              h5 Required Selection (Radio Group)
+              LbSegmentButton(v-model="selectedSegment1" :allow-empty="false")
+                LbSegmentButtonItem(value="all") All
+                LbSegmentButtonItem(value="active") Active
+                LbSegmentButtonItem(value="completed") Completed
+              p.demo-note Selected: {{ selectedSegment1 || 'none' }} (one must always be selected)
+            
+            .segment-row(style="margin-top: 24px")
+              h5 Optional Selection (Toggle)
+              LbSegmentButton(v-model="selectedSegment2" :allow-empty="true")
+                LbSegmentButtonItem(value="draft") Draft
+                LbSegmentButtonItem(value="published") Published
+                LbSegmentButtonItem(value="archived") Archived
+              p.demo-note Selected: {{ selectedSegment2 || 'none' }} (can deselect all)
         
         .demo-group
           h4 Size Variant
@@ -2306,10 +2395,13 @@ import {
   LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog,
   LbBadge, LbNavigationBar, LbNavigationBarItem, LbBottomSheet, LbChip, LbAvatar, LbProgress, LbDivider, 
   LbSegmentButton, LbSegmentButtonItem, useSnackbar, LbPopover, LbPopoverTrigger, LbPopoverContent, LbPopoverArrow,
-  LbDropdown, LbMenu, LbCalendar, LbDatePicker
+  LbDropdown, LbMenu, LbCalendar, LbDatePicker, LbDensityProvider
 } from '../src'
 
 const isDark = ref(false)
+
+// Density control
+const currentDensity = ref('default')
 
 // Input demo values
 const inputValue1 = ref('')
@@ -2426,6 +2518,8 @@ const termsAccepted = ref(false)
 const showTermsError = ref(false)
 
 // Switch demo values
+const switchSmall = ref(false)
+const switchMedium = ref(true)
 const switchOff = ref(false)
 const switchOn = ref(true)
 const switchDisabled = ref(false)
@@ -2756,7 +2850,8 @@ const circularProgress4 = ref(75)
 const interactiveProgress = ref(50)
 
 // SegmentButton demo data
-const selectedSegment1 = ref(undefined) // Start with no selection
+const selectedSegment1 = ref('all') // Start with 'all' selected for required mode
+const selectedSegment2 = ref(undefined) // Start with no selection for optional mode
 const selectedSize = ref('medium')
 const selectedTags = ref([]) // Multi-select
 const toggleValue = ref(undefined) // Toggle mode
@@ -3739,10 +3834,13 @@ section
   min-width: 10rem // 160px
 
   .menu-item
+    min-height: 40px // Match medium dropdown item height
     padding: var(--lb-space-sm) var(--lb-space-md)
     cursor: pointer
     border-radius: var(--lb-radius-sm)
     color: var(--lb-text-neutral-contrast-high)
+    font-size: var(--lb-font-size-label-base) // 14px - base label font
+    line-height: var(--lb-line-height-normal)
     transition: background-color var(--lb-transition)
     display: flex
     align-items: center
@@ -3864,4 +3962,71 @@ section
     display: flex
     justify-content: flex-end
     gap: var(--lb-space-sm)
+
+// Density system demo styles
+.density-demo-content
+  display: flex
+  flex-direction: column
+  gap: base.$space-lg
+  
+  .calendar-demo
+    h5
+      margin: 0 0 base.$space-md 0
+      color: var(--lb-text-neutral-contrast-high)
+      font-size: var(--lb-font-size-label-large)
+    
+    .lb-calendar
+      max-width: 100%
+
+.override-examples
+  display: flex
+  flex-direction: column
+  gap: base.$space-md
+  max-width: 600px
+  
+  .override-row
+    display: flex
+    align-items: center
+    
+    .label
+      font-weight: 500
+      color: var(--lb-text-neutral-contrast-high)
+      padding: base.$space-sm base.$space-md
+      background: var(--lb-surface-neutral-subtle)
+      border-radius: base.$radius-md
+      font-size: var(--lb-font-size-label-base)
+    
+    .lb-input
+      width: 100%
+
+// Density comparison styles
+.density-comparison
+  display: grid
+  grid-template-columns: 1fr 1fr
+  gap: base.$space-xl
+  
+  @media (max-width: 1024px)
+    grid-template-columns: 1fr
+  
+  .density-example
+    padding: base.$space-lg
+    background: var(--lb-surface-neutral-subtle)
+    border-radius: base.$radius-md
+    
+    h5
+      margin: 0 0 base.$space-md 0
+      color: var(--lb-text-neutral-contrast-high)
+      font-size: var(--lb-font-size-label-large)
+    
+    .input-row
+      display: flex
+      gap: base.$space-md
+      flex-wrap: wrap
+      
+      > *
+        flex: 1
+        min-width: 150px
+        
+      .lb-date-picker
+        max-width: 200px
 </style>

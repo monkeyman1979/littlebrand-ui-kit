@@ -16,6 +16,9 @@ export interface LbTextareaProps {
   maxlength?: number
   spellcheck?: boolean
   resize?: 'none' | 'vertical' | 'horizontal' | 'both'
+  autoResize?: boolean
+  maxRows?: number
+  size?: 'medium' | 'large'
 }
 
 export interface LbTextareaEmits {

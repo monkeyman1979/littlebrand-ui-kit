@@ -72,8 +72,8 @@ defineSlots<{
   .icon
     display: flex
     align-items: center
-    width: var(--lb-icon-size-sm) // 18px
-    height: var(--lb-icon-size-sm) // 18px
+    width: var(--lb-size-2xl) // 18px
+    height: var(--lb-size-2xl) // 18px
     color: currentColor
   
   // Message text wrapper

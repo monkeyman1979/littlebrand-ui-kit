@@ -202,11 +202,11 @@ defineExpose({
     display: flex
     align-items: center
     justify-content: center
-    width: var(--lb-icon-size-sm) // 18px (1.125rem)
-    height: var(--lb-icon-size-sm) // 18px (1.125rem)
+    width: base.$checkbox-size  // 20px
+    height: base.$checkbox-size  // 20px
     background: var(--lb-background-surface)
-    border: var(--lb-border-md) solid var(--lb-border-neutral-normal)
-    border-radius: var(--lb-radius-xs)
+    border: base.$checkbox-border-width solid var(--lb-border-neutral-normal)
+    border-radius: var(--lb-checkbox-radius)
     transition: background-color var(--lb-transition), border-color var(--lb-transition), box-shadow var(--lb-transition)
     will-change: background-color, border-color
     
@@ -252,9 +252,8 @@ defineExpose({
   
   // Focus state
   input:focus-visible ~ .checkbox-visual
-    outline: none
-    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
-    border-color: var(--lb-border-primary-normal)
+    outline: var(--lb-focus-ring-width) solid var(--lb-focus-ring-color)
+    outline-offset: base.$focus-ring-offset
   
   // Invalid state
   &.invalid
@@ -262,7 +261,7 @@ defineExpose({
       border-color: var(--lb-border-error-normal)
       
     input:focus-visible ~ .checkbox-visual
-      box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-error-active)
+      box-shadow: 0 0 0 calc(var(--lb-focus-ring-width) + var(--lb-focus-ring-offset)) var(--lb-surface-error-active)
       border-color: var(--lb-border-error-active)
       
     &.checked .checkbox-visual,

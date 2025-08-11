@@ -130,13 +130,13 @@ defineOptions({
   display: inline-grid
   grid-auto-flow: column
   align-items: center
-  gap: var(--lb-space-2xs)
-  padding: 0 var(--lb-btn-padding-x-medium)
-  height: var(--lb-btn-height-medium)
+  gap: base.$space-2xs
+  padding: 0 base.$button-padding-x-medium
+  height: base.$button-height-medium  // Default to medium
   border: none
-  border-radius: var(--lb-radius-md)
+  border-radius: var(--lb-button-radius)
   font-family: var(--lb-font-body)
-  font-size: var(--lb-btn-font-size-medium)
+  font-size: var(--lb-button-font-size-medium)
   font-weight: var(--lb-font-weight-medium)
   line-height: var(--lb-line-height-normal)
   letter-spacing: var(--lb-letter-spacing-tight)
@@ -160,34 +160,34 @@ defineOptions({
   
   // Size modifiers
   &.small
-    height: var(--lb-btn-height-small)
-    padding: 0 var(--lb-btn-padding-x-small)
-    font-size: var(--lb-btn-font-size-small)
+    height: base.$button-height-small
+    padding: 0 base.$button-padding-x-small
+    font-size: var(--lb-button-font-size-small)
     letter-spacing: var(--lb-letter-spacing-normal)
-    border-radius: var(--lb-radius-sm)
+    border-radius: var(--lb-button-radius-small)
     svg
-      width: var(--lb-icon-size-sm)
-      height: var(--lb-icon-size-sm)
+      width: base.$button-icon-size-small
+      height: base.$button-icon-size-small
     
   &.medium
-    height: var(--lb-btn-height-medium)
-    padding: 0 var(--lb-btn-padding-x-medium)
-    font-size: var(--lb-btn-font-size-medium)
+    height: base.$button-height-medium
+    padding: 0 base.$button-padding-x-medium
+    font-size: var(--lb-button-font-size-medium)
     letter-spacing: var(--lb-letter-spacing-tight)
-    border-radius: var(--lb-radius-md)
+    border-radius: var(--lb-button-radius-medium)
     svg
-      width: var(--lb-icon-size-md)
-      height: var(--lb-icon-size-md)
+      width: base.$button-icon-size-medium
+      height: base.$button-icon-size-medium
     
   &.large
-    height: var(--lb-btn-height-large)
-    padding: 0 var(--lb-btn-padding-x-large)
-    font-size: var(--lb-btn-font-size-large)
+    height: base.$button-height-large
+    padding: 0 base.$button-padding-x-large
+    font-size: var(--lb-button-font-size-large)
     letter-spacing: var(--lb-letter-spacing-wide)
-    border-radius: var(--lb-radius-md)
+    border-radius: var(--lb-button-radius-large)
     svg
-      width: var(--lb-icon-size-lg)
-      height: var(--lb-icon-size-lg)
+      width: base.$button-icon-size-large
+      height: base.$button-icon-size-large
     
   &.full-width
     width: 100%
@@ -200,16 +200,19 @@ defineOptions({
     justify-content: center
     
     &.small
-      width: var(--lb-btn-height-small)
-      height: var(--lb-btn-height-small)
+      width: base.$button-height-small
+      height: base.$button-height-small
+      border-radius: var(--lb-button-radius-small)
     
     &.medium
-      width: var(--lb-btn-height-medium)
-      height: var(--lb-btn-height-medium)
+      width: base.$button-height-medium
+      height: base.$button-height-medium
+      border-radius: var(--lb-button-radius-medium)
     
     &.large
-      width: var(--lb-btn-height-large)
-      height: var(--lb-btn-height-large)
+      width: base.$button-height-large
+      height: base.$button-height-large
+      border-radius: var(--lb-button-radius-large)
     
   // Link variant overrides
   &[class*="link-"]
