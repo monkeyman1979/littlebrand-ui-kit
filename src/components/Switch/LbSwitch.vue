@@ -112,7 +112,7 @@ defineExpose({
   .switch-thumb
     position: absolute
     top: 50%
-    left: base.$space-2xs
+    left: base.$space-2xs  // 2px from left edge
     transform: translateY(-50%)
     width: base.$switch-thumb-size  // 18px
     height: base.$switch-thumb-size  // 18px
@@ -129,8 +129,9 @@ defineExpose({
       
     .switch-thumb
       background: white
-      // Calculate exact position: track width - thumb width - (2 * padding)
-      transform: translateY(-50%) translateX(calc(base.$switch-width - base.$switch-thumb-size - (2 * base.$space-2xs)))
+      // Calculate position: track width - thumb width - left padding - right padding
+      // 44px - 18px - 2px (left) - 6px (right) = 18px translation
+      transform: translateY(-50%) translateX(calc(base.$switch-width - base.$switch-thumb-size - base.$space-2xs - 6px))
       
   // Add smooth spring animation for the toggle
   &:not(.disabled) .switch-thumb
