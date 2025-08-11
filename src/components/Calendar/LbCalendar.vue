@@ -687,7 +687,9 @@ defineOptions({
 @use '@/styles/base' as base
 
 .lb-calendar
-  display: inline-block
+  display: inline-flex
+  flex-direction: column
+  gap: var(--lb-space-lg)  // Gap between header and grid
   width: fit-content  // Size to content
   max-width: 100%  // But don't overflow container
   background: var(--lb-background-surface)
@@ -709,7 +711,6 @@ defineOptions({
   display: flex
   align-items: center
   justify-content: space-between
-  margin-bottom: var(--lb-space-lg)
   gap: var(--lb-space-md)
 
 .calendar-navigation
@@ -732,17 +733,15 @@ defineOptions({
     width: auto
 
 .calendar-grid
-  width: calc(7 * base.$unit-40)  // 280px for medium (7 days × 40px)
-  
-  // Large size variant
-  .size-large &
-    width: calc(7 * base.$unit-48)  // 336px for large (7 days × 48px)
+  display: flex
+  flex-direction: column
+  gap: var(--lb-space-2xs)  // Gap between weekday labels and days grid
+  width: fit-content
 
 .weekday-labels
   display: grid
   grid-template-columns: repeat(7, 1fr)
   gap: 0
-  margin-bottom: var(--lb-space-2xs)
 
 .weekday
   display: flex
