@@ -541,8 +541,8 @@ onUnmounted(() => {
   align-items: center
   justify-content: space-between
   width: 100%
-  min-height: var(--lb-size-6xl)
-  padding: 0 var(--lb-space-sm) // 0 8px
+  min-height: base.$unit-40  // 40px for better clickability
+  padding: var(--lb-space-sm) var(--lb-space-md)  // 8px vertical, 12px horizontal
   background: transparent
   border: none
   border-radius: var(--lb-radius-md)
@@ -595,8 +595,8 @@ onUnmounted(() => {
   display: flex
   align-items: center
   justify-content: center
-  width: var(--lb-size-2xl) // 18px
-  height: var(--lb-size-2xl) // 18px
+  width: base.$unit-18  // 18px
+  height: base.$unit-18  // 18px
   color: var(--lb-text-primary-normal)
   flex-shrink: 0
 
