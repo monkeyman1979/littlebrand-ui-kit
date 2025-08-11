@@ -101,23 +101,23 @@ defineExpose({
   // Switch track
   .switch-track
     position: relative
-    width: var(--lb-space-6xl) // 56px
-    height: var(--lb-btn-height-small) // 32px
+    width: base.$switch-width  // 44px
+    height: base.$switch-height  // 24px
     background: var(--lb-background-surface)
-    border: var(--lb-border-md) solid var(--lb-border-neutral-normal)
-    border-radius: var(--lb-radius-full)
+    border: base.$border-md solid var(--lb-border-neutral-normal)
+    border-radius: var(--lb-switch-radius)
     transition: background-color var(--lb-transition), border-color var(--lb-transition), box-shadow var(--lb-transition)
   
   // Switch thumb
   .switch-thumb
     position: absolute
     top: 50%
-    left: var(--lb-space-2xs)
+    left: base.$space-2xs
     transform: translateY(-50%)
-    width: var(--lb-icon-size-lg) // 24px
-    height: var(--lb-icon-size-lg) // 24px
+    width: base.$switch-thumb-size  // 18px
+    height: base.$switch-thumb-size  // 18px
     background: var(--lb-border-neutral-active)
-    border-radius: var(--lb-radius-full)
+    border-radius: base.$radius-full
     transition: transform var(--lb-transition), background-color var(--lb-transition)
     will-change: transform
   
@@ -129,7 +129,8 @@ defineExpose({
       
     .switch-thumb
       background: white
-      transform: translateY(-50%) translateX(calc(var(--lb-space-xl) + var(--lb-space-xs))) // Move 24px to right (20px + 4px)
+      // Calculate exact position: track width - thumb width - (2 * padding)
+      transform: translateY(-50%) translateX(calc(base.$switch-width - base.$switch-thumb-size - (2 * base.$space-2xs)))
       
   // Add smooth spring animation for the toggle
   &:not(.disabled) .switch-thumb
@@ -149,7 +150,7 @@ defineExpose({
   // Focus state
   input:focus-visible ~ .switch-track
     outline: none
-    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
+    box-shadow: 0 0 0 calc(var(--lb-focus-ring-width) + var(--lb-focus-ring-offset)) var(--lb-focus-ring-color)
     border-color: var(--lb-border-primary-normal)
   
   // Invalid state
@@ -158,7 +159,7 @@ defineExpose({
       border-color: var(--lb-border-error-normal)
       
     input:focus-visible ~ .switch-track
-      box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-error-active)
+      box-shadow: 0 0 0 calc(var(--lb-focus-ring-width) + var(--lb-focus-ring-offset)) var(--lb-surface-error-active)
       border-color: var(--lb-border-error-active)
       
     &.checked .switch-track

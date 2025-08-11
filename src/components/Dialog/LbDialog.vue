@@ -263,7 +263,7 @@ defineExpose({
   // Center the dialog using CSS Grid
   display: grid
   place-items: center
-  padding: var(--lb-space-2xl)
+  padding: base.$space-2xl
   
   // Full-screen variant removes padding
   &.variant-fullscreen
@@ -273,9 +273,9 @@ defineExpose({
 .lb-dialog
   position: relative
   background: var(--lb-background-surface)
-  border-radius: var(--lb-radius-xl)
+  border-radius: var(--lb-dialog-radius)
   box-shadow: var(--lb-shadow-lg)
-  max-width: min(90vw, 32rem)
+  max-width: min(90vw, base.$dialog-width-medium)
   width: 100%
   max-height: min(90vh, 48rem)
   display: flex
@@ -293,8 +293,8 @@ defineExpose({
 .dialog-header
   display: flex
   align-items: center
-  gap: var(--lb-space-lg)
-  padding: var(--lb-space-2xl)
+  gap: base.$space-lg
+  padding: base.$dialog-padding
   flex-shrink: 0
   
   .header-content
@@ -304,20 +304,20 @@ defineExpose({
 // Close button positioning
 .dialog-close
   position: absolute
-  top: var(--lb-space-sm)
-  right: var(--lb-space-sm)
+  top: base.$space-sm
+  right: base.$space-sm
   z-index: 1
     
   // Adjust position for fullscreen variant
   .lb-dialog.variant-fullscreen &
-    top: var(--lb-space-lg)
-    right: var(--lb-space-lg)
+    top: base.$space-lg
+    right: base.$space-lg
 
 // Dialog content
 .dialog-content
   flex: 1
   overflow-y: auto
-  padding: var(--lb-space-3xl) var(--lb-space-2xl) var(--lb-space-2xl) var(--lb-space-2xl)
+  padding: base.$space-3xl base.$dialog-padding base.$dialog-padding base.$dialog-padding
   color: var(--lb-text-neutral-contrast-low)
   
   // Adjust padding when fullscreen with header
@@ -329,14 +329,14 @@ defineExpose({
   display: flex
   align-items: center
   justify-content: flex-end
-  gap: var(--lb-space-sm)
-  padding: var(--lb-space-lg)
+  gap: base.$space-sm
+  padding: base.$space-lg
   padding-top: 0
   flex-shrink: 0
   
   // Add top spacing if there's content
   .dialog-content + &
-    padding-top: var(--lb-space-lg)
+    padding-top: base.$space-lg
 
 // Transitions
 .dialog-enter-active
@@ -357,16 +357,16 @@ defineExpose({
 
 .dialog-enter-from .lb-dialog
   opacity: var(--lb-opacity-0)
-  transform: scale(0.95) translateY(var(--lb-space-sm))
+  transform: scale(0.95) translateY(base.$space-sm)
   
 .dialog-leave-to .lb-dialog
   opacity: var(--lb-opacity-0)
-  transform: scale(0.95) translateY(var(--lb-space-sm))
+  transform: scale(0.95) translateY(base.$space-sm)
 
 // Responsive adjustments
 @media (max-width: 640px)
   .lb-dialog-overlay
-    padding: var(--lb-space-lg)
+    padding: base.$space-lg
     
   .lb-dialog
     max-width: 100%
@@ -374,6 +374,6 @@ defineExpose({
   .dialog-header,
   .dialog-content,
   .dialog-footer
-    padding-left: var(--lb-space-lg)
-    padding-right: var(--lb-space-lg)
+    padding-left: base.$space-lg
+    padding-right: base.$space-lg
 </style>

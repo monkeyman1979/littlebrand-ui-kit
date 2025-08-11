@@ -115,7 +115,7 @@ const props = withDefaults(defineProps<LbMenuProps>(), {
   closeOnSelect: true,
   placement: 'bottom-start',
   virtualScrolling: true,
-  itemHeight: 40, // 40px (--lb-input-height-medium) - used for virtual scrolling calculations
+  itemHeight: 40, // 40px (--lb-size-6xl) - used for virtual scrolling calculations
 })
 
 // Emits
@@ -506,7 +506,7 @@ onUnmounted(() => {
 
 .search-input
   width: 100%
-  height: var(--lb-input-height-medium)
+  height: var(--lb-size-6xl)
   padding: 0 var(--lb-space-sm) // 0 8px
   background: var(--lb-background-surface)
   border: var(--lb-border-sm) solid var(--lb-border-neutral-normal)
@@ -541,7 +541,7 @@ onUnmounted(() => {
   align-items: center
   justify-content: space-between
   width: 100%
-  min-height: var(--lb-input-height-medium)
+  min-height: var(--lb-size-6xl)
   padding: 0 var(--lb-space-sm) // 0 8px
   background: transparent
   border: none
@@ -595,8 +595,8 @@ onUnmounted(() => {
   display: flex
   align-items: center
   justify-content: center
-  width: var(--lb-icon-size-sm) // 18px
-  height: var(--lb-icon-size-sm) // 18px
+  width: var(--lb-size-2xl) // 18px
+  height: var(--lb-size-2xl) // 18px
   color: var(--lb-text-primary-normal)
   flex-shrink: 0
 

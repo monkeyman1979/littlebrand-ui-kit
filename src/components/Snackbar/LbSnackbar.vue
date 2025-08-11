@@ -161,12 +161,12 @@ defineOptions({
   position: relative
   display: flex
   align-items: stretch
-  width: min(31.25rem, 90%)
-  min-height: var(--size-2xl)
-  padding: var(--lb-space-md) var(--lb-space-lg)
+  width: min(base.$snackbar-max-width, 90%)
+  min-height: base.$space-5xl  // 48px
+  padding: base.$snackbar-padding
   background-color: var(--lb-background-surface-raised)
-  border: var(--lb-border-sm) solid var(--lb-border-neutral-line)
-  border-radius: var(--lb-radius-sm)
+  border: base.$border-sm solid var(--lb-border-neutral-line)
+  border-radius: var(--lb-snackbar-radius)
   box-shadow: var(--lb-shadow-lg)
   pointer-events: auto
   overflow: hidden
@@ -175,7 +175,7 @@ defineOptions({
   
   // Safe area support for mobile
   @supports (padding: env(safe-area-inset-bottom))
-    padding-bottom: max(var(--lb-space-md), env(safe-area-inset-bottom))
+    padding-bottom: max(base.$snackbar-padding, env(safe-area-inset-bottom))
   
   &.dragging
     transition: none
@@ -186,7 +186,7 @@ defineOptions({
   display: flex
   align-items: flex-start
   flex-wrap: wrap
-  gap: var(--lb-space-sm)
+  gap: base.$space-sm
   width: 100%
   position: relative
 

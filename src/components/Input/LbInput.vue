@@ -1,5 +1,5 @@
 <template lang="pug">
-.lb-input(:class="rootClasses")
+.lb-input(:class="rootClasses" :data-size="effectiveSize")
   .icon.icon-leading(v-if="$slots['icon-leading']")
     slot(name="icon-leading")
   input(
@@ -145,7 +145,6 @@ const props = withDefaults(defineProps<Props>(), {
   required: false,
   clearable: false,
   loading: false,
-  size: 'medium',
   autofocus: false
 })
 
@@ -167,8 +166,21 @@ const showPassword = ref(false)
 const injectedId = inject<ComputedRef<string> | undefined>('formFieldId', undefined)
 const injectedAriaDescribedby = inject<ComputedRef<string | undefined> | undefined>('formFieldAriaDescribedby', undefined)
 
+// Inject density context if available
+const injectedDensitySize = inject<ComputedRef<'medium' | 'large'> | undefined>('densitySize', undefined)
+
 // Computed
 const hasValue = computed(() => props.modelValue !== '' && props.modelValue != null)
+
+// Compute effective size: explicit prop > density > default
+const effectiveSize = computed(() => {
+  // If size is explicitly set, use it
+  if (props.size) return props.size
+  // Otherwise use density-based size if available
+  if (injectedDensitySize?.value) return injectedDensitySize.value
+  // Fall back to default
+  return 'medium'
+})
 
 const computedId = computed(() => {
   return props.id || injectedId?.value
@@ -196,7 +208,7 @@ const rootClasses = computed(() => ({
   'has-leading-icon': !!slots['icon-leading'],
   'has-trailing-icons': hasTrailingIcons.value,
   'loading': props.loading,
-  [`size-${props.size}`]: true
+  [`size-${effectiveSize.value}`]: true
 }))
 
 // Slots
@@ -229,6 +241,7 @@ const handleInput = (event: Event) => {
   emit('update:modelValue', target.value)
   emit('input', event)
 }
+
 </script>
 
 <style lang="sass" scoped>
@@ -241,17 +254,13 @@ const handleInput = (event: Event) => {
   
   // Input styles
   input
-    // Default size (medium)
     width: 100%
-    height: var(--lb-input-height-medium)
-    padding: 0 var(--lb-space-sm)
     background: var(--lb-background-surface)
-    border: var(--lb-border-sm) solid var(--lb-border-neutral-normal)
-    border-radius: var(--lb-radius-md)
-    font-size: var(--lb-font-size-label-base)
+    border: base.$input-border-width solid var(--lb-border-neutral-normal)
+    border-radius: var(--lb-input-radius)
     font-family: inherit
     color: var(--lb-text-neutral-contrast-high)
-    transition: border-color var(--lb-transition), box-shadow var(--lb-transition)
+    transition: border-color var(--lb-transition)
     box-sizing: border-box
     
     // Placeholder
@@ -262,46 +271,38 @@ const handleInput = (event: Event) => {
     // States
     &:hover:not(:disabled):not(:read-only)
       border-color: var(--lb-border-neutral-active)
-    
+
     &:focus
-      outline: none
-      border-color: var(--lb-border-primary-normal)
-      box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
+      outline: base.$input-border-width solid var(--lb-border-primary-active)
     
-    // Focus takes precedence over hover
-    &:focus:hover:not(:disabled):not(:read-only)
-      border-color: var(--lb-border-primary-normal)
-      box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
-    
-    // Invalid state when parent has .invalid class
-    .invalid &
-      border-color: var(--lb-border-error-normal)
-      
-      &:focus
-        border-color: var(--lb-border-error-active)
-        box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-error-active)
-    
-    // Disabled state
-    &:disabled
-      background: var(--lb-surface-neutral-subtle)
-      color: var(--lb-text-neutral-disabled)
-      cursor: not-allowed
-      opacity: var(--lb-opacity-60)
-    
-    // Readonly state
-    &:read-only
-      background: var(--lb-surface-neutral-subtle)
-      cursor: default
-      
-      &:focus
-        border-color: var(--lb-border-neutral-normal)
-        box-shadow: none
+  
+  // Invalid state
+  &.invalid input
+    border-color: var(--lb-border-error-normal)
+  
+  // Disabled state
+  input:disabled
+    background: var(--lb-surface-neutral-subtle)
+    color: var(--lb-text-neutral-disabled)
+    cursor: not-allowed
+    opacity: var(--lb-opacity-60)
+    border-color: var(--lb-border-neutral-disabled)
+  
+  // Readonly state
+  input:read-only
+    background: var(--lb-surface-neutral-subtle)
+    cursor: default
   
   // Size variations
+  &.size-medium input
+    height: base.$input-height-medium
+    padding: 0 base.$input-padding-x-medium
+    font-size: var(--lb-input-font-size-medium)
+  
   &.size-large input
-    height: var(--lb-input-height-large)
-    padding: 0 var(--lb-space-md)
-    font-size: var(--lb-font-size-label-large)
+    height: base.$input-height-large
+    padding: 0 base.$input-padding-x-large
+    font-size: var(--lb-input-font-size-large)
   
   // Icon padding adjustments
   &.has-leading-icon input
@@ -317,13 +318,7 @@ const handleInput = (event: Event) => {
   &.size-large.has-trailing-icons input
     padding-right: var(--lb-space-5xl) // 48px for large
   
-  // Invalid state for input
-  &.invalid input
-    border-color: var(--lb-border-error-normal)
     
-    &:focus
-      border-color: var(--lb-border-error-active)
-      box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-error-active)
   
   // Icon base styles
   .icon
@@ -333,13 +328,13 @@ const handleInput = (event: Event) => {
     display: flex
     align-items: center
     justify-content: center
-    width: var(--lb-input-height-medium)
-    height: var(--lb-input-height-medium)
+    width: base.$input-height-medium  // Icon area matches input height
+    height: base.$input-height-medium
     color: var(--lb-text-neutral-contrast-low)
-    
-    .size-large &
-      width: var(--lb-input-height-large)
-      height: var(--lb-input-height-large)
+  
+  &.size-large .icon
+    width: base.$input-height-large
+    height: base.$input-height-large
     
     &.icon-leading
       left: 0
@@ -358,17 +353,18 @@ const handleInput = (event: Event) => {
       &:hover
         color: var(--lb-text-neutral-contrast-high)
       
-      &:focus-visible
+      &:focus
         outline: var(--lb-focus-ring-width) solid var(--lb-focus-ring-color)
         outline-offset: calc(var(--lb-space-2xs) * -1)
-        border-radius: var(--lb-radius-xs)
+        border-radius: var(--lb-radius-md)
       
       &:active
         opacity: var(--lb-opacity-80)
     
-    // Icon color states
-    input:focus ~ .trailing-icons &
-      color: var(--lb-text-neutral-contrast-high)
+  
+  // Icon focus state
+  input:focus ~ .trailing-icons .icon
+    color: var(--lb-text-neutral-contrast-high)
     
   // Icon states based on parent classes
   &.invalid .icon
@@ -386,13 +382,13 @@ const handleInput = (event: Event) => {
     display: flex
     align-items: center
     justify-content: center
-    width: var(--lb-input-height-medium)
-    height: var(--lb-input-height-medium)
-    gap: var(--lb-space-2xs) // 2px
-    
-    .size-large &
-      width: var(--lb-input-height-large)
-      height: var(--lb-input-height-large)
+    width: base.$input-height-medium
+    height: base.$input-height-medium
+    gap: var(--lb-space-2xs)
+  
+  &.size-large .trailing-icons
+    width: base.$input-height-large
+    height: base.$input-height-large
   
   // Loading spinner animation
   .spinner

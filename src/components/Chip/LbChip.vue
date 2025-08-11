@@ -140,9 +140,9 @@ defineOptions({
   position: relative
   display: inline-flex
   align-items: center
-  gap: var(--lb-space-xs)
-  border: var(--lb-border-sm) solid var(--lb-border-neutral-line)
-  border-radius: var(--lb-radius-sm)
+  gap: base.$space-xs
+  border: base.$border-sm solid var(--lb-border-neutral-line)
+  border-radius: var(--lb-chip-radius)
   font-family: var(--lb-font-body)
   font-weight: var(--lb-font-weight-medium)
   line-height: var(--lb-line-height-compact)
@@ -161,41 +161,113 @@ defineOptions({
     outline-offset: var(--lb-focus-ring-offset)
     transition: none
   
-  // Fixed height of 32px for all chips
-  height: 2rem
-  padding: 0 var(--lb-space-md)
-  font-size: var(--lb-font-size-label-base)
-  gap: var(--lb-space-xs)
-  
-  &.has-leading-icon
-    padding-left: var(--lb-space-sm)
+  // Size variations
+  &.size-small
+    height: base.$chip-height-small  // 24px
+    padding: 0 base.$chip-padding-x-small  // 8px
+    font-size: base.$chip-font-size-small  // 12px
+    gap: base.$space-xs
     
-  &.has-trailing-icon
-    padding-right: var(--lb-space-sm)
+    &.has-leading-icon
+      padding-left: base.$space-xs  // 4px
+    
+    &.has-trailing-icon
+      padding-right: base.$space-xs  // 4px
   
-  // Icon sizes - 18x18px
-  .icon-leading,
-  .icon-trailing,
-  .icon-selected,
-  .icon-dropdown,
-  .delete-button
-    svg
-      width: 1.125rem
-      height: 1.125rem
+  &.size-medium
+    height: base.$chip-height-medium  // 28px
+    padding: 0 base.$chip-padding-x-medium  // 12px
+    font-size: base.$chip-font-size-medium  // 14px
+    gap: base.$space-xs
+    
+    &.has-leading-icon
+      padding-left: base.$space-sm  // 8px
+    
+    &.has-trailing-icon
+      padding-right: base.$space-sm  // 8px
+      
+  &.size-large
+    height: base.$chip-height-large  // 32px
+    padding: 0 base.$chip-padding-x-large  // 16px
+    font-size: base.$chip-font-size-large  // 16px
+    gap: base.$space-xs
+    
+    &.has-leading-icon
+      padding-left: base.$space-md  // 12px
+    
+    &.has-trailing-icon
+      padding-right: base.$space-md  // 12px
   
-  // Avatar container - 24x24px
-  .avatar-container
+  // Icon sizes - based on chip size
+  &.size-small
+    .icon-leading,
+    .icon-trailing,
+    .icon-selected,
+    .icon-dropdown,
+    .delete-button
+      svg
+        width: base.$chip-icon-size-small  // 14px
+        height: base.$chip-icon-size-small  // 14px
+  
+  &.size-medium
+    .icon-leading,
+    .icon-trailing,
+    .icon-selected,
+    .icon-dropdown,
+    .delete-button
+      svg
+        width: base.$chip-icon-size-medium  // 16px
+        height: base.$chip-icon-size-medium  // 16px
+        
+  &.size-large
+    .icon-leading,
+    .icon-trailing,
+    .icon-selected,
+    .icon-dropdown,
+    .delete-button
+      svg
+        width: base.$chip-icon-size-large  // 18px
+        height: base.$chip-icon-size-large  // 18px
+  
+  // Avatar container - sized based on chip size
+  &.size-small .avatar-container
     display: inline-flex
     align-items: center
     justify-content: center
     flex-shrink: 0
-    width: 1.5rem
-    height: 1.5rem
-    margin: -0.25rem 0
+    width: base.$unit-20  // 20px
+    height: base.$unit-20  // 20px
+    margin: calc(base.$space-2xs * -1) 0
     
     :deep(.lb-avatar)
-      width: 1.5rem
-      height: 1.5rem
+      width: base.$unit-20
+      height: base.$unit-20
+      
+  &.size-medium .avatar-container
+    display: inline-flex
+    align-items: center
+    justify-content: center
+    flex-shrink: 0
+    width: base.$unit-24  // 24px
+    height: base.$unit-24  // 24px
+    margin: calc(base.$space-2xs * -1) 0
+    
+    :deep(.lb-avatar)
+      width: base.$unit-24
+      height: base.$unit-24
+      
+  &.size-large .avatar-container
+    display: inline-flex
+    align-items: center
+    justify-content: center
+    flex-shrink: 0
+    width: base.$unit-28  // 28px
+    height: base.$unit-28  // 28px
+    margin: calc(base.$space-2xs * -1) 0
+    
+    :deep(.lb-avatar)
+      width: base.$unit-28
+      height: base.$unit-28
   
   // Variant styles
   &.variant-assist
@@ -310,7 +382,7 @@ defineOptions({
     min-width: 0
     overflow: hidden
     text-overflow: ellipsis
-    padding: 0 var(--lb-space-xs)
+    padding: 0 base.$space-xs
   
   // Delete button
   .delete-button
@@ -322,9 +394,9 @@ defineOptions({
     background: none
     color: currentColor
     cursor: pointer
-    padding: var(--lb-space-2xs)
-    margin: calc(var(--lb-space-2xs) * -1)
-    border-radius: var(--lb-radius-full)
+    padding: base.$space-2xs
+    margin: calc(base.$space-2xs * -1)
+    border-radius: base.$radius-full
     transition: all var(--lb-transition-fast)
     opacity: var(--lb-opacity-70)
     

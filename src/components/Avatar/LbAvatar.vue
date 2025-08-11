@@ -159,38 +159,38 @@ defineOptions({
   display: inline-flex
   align-items: center
   justify-content: center
-  border-radius: var(--lb-radius-full)
+  border-radius: var(--lb-avatar-radius)
   background-color: var(--lb-background-surface-raised)
   box-shadow: var(--lb-shadow-sm)
   flex-shrink: 0
   
   // Size variants
   &.size-xs
-    width: var(--lb-space-2xl) // 24px
-    height: var(--lb-space-2xl) // 24px
+    width: base.$unit-24  // 24px
+    height: base.$unit-24  // 24px
     
   &.size-sm
-    width: var(--lb-space-3xl) // 32px  
-    height: var(--lb-space-3xl) // 32px
+    width: base.$avatar-size-small  // 32px  
+    height: base.$avatar-size-small  // 32px
     
   &.size-md
-    width: var(--lb-space-4xl) // 40px
-    height: var(--lb-space-4xl) // 40px
+    width: base.$unit-40  // 40px
+    height: base.$unit-40  // 40px
     
   &.size-lg
-    width: var(--lb-space-5xl) // 48px
-    height: var(--lb-space-5xl) // 48px
+    width: base.$avatar-size-medium  // 48px
+    height: base.$avatar-size-medium  // 48px
     
   &.size-xl
-    width: var(--lb-space-6xl) // 56px
-    height: var(--lb-space-6xl) // 56px
+    width: base.$unit-56  // 56px
+    height: base.$unit-56  // 56px
 
 .avatar-image
   width: 100%
   height: 100%
   object-fit: cover
   transition: opacity var(--lb-transition)
-  border-radius: var(--lb-radius-full)
+  border-radius: var(--lb-avatar-radius)
   
   &.loading
     opacity: var(--lb-opacity-0)
@@ -210,7 +210,7 @@ defineOptions({
   font-weight: var(--lb-font-weight-medium)
   transition: opacity var(--lb-transition)
   opacity: var(--lb-opacity-0)
-  border-radius: var(--lb-radius-full)
+  border-radius: var(--lb-avatar-radius)
   overflow: hidden
   
   &.visible
@@ -219,51 +219,51 @@ defineOptions({
 // Color variants for fallback background
 .lb-avatar
   &.variant-primary .avatar-fallback
-    background-color: var(--color-primary-subtle)
-    color: var(--lb-fill-primary-normal)
+    background-color: var(--lb-surface-primary-subtle)
+    color: var(--lb-text-primary-normal)
     
   &.variant-secondary .avatar-fallback
-    background-color: var(--color-secondary-subtle)
-    color: var(--color-secondary)
+    background-color: var(--lb-surface-secondary-subtle)
+    color: var(--lb-text-secondary-normal)
     
   &.variant-success .avatar-fallback
-    background-color: var(--color-success-background)
+    background-color: var(--lb-surface-success-subtle)
     color: var(--lb-text-success-normal)
     
   &.variant-warning .avatar-fallback
-    background-color: var(--color-warning-background)
-    color: var(--color-warning-contrast-text)
+    background-color: var(--lb-surface-warning-subtle)
+    color: var(--lb-text-warning-contrast-high)
     
   &.variant-error .avatar-fallback
-    background-color: var(--color-error-background)
+    background-color: var(--lb-surface-error-subtle)
     color: var(--lb-text-error-normal)
     
   &.variant-info .avatar-fallback
-    background-color: var(--color-info-background)
-    color: var(--color-info)
+    background-color: var(--lb-surface-info-subtle)
+    color: var(--lb-text-info-normal)
 
 .fallback-text
   font-family: var(--lb-font-body)
   text-transform: uppercase
-  letter-spacing: var(--letter-spacing-wide)
+  letter-spacing: var(--lb-letter-spacing-wide)
   line-height: var(--lb-line-height-compact)
   user-select: none
   
-  // Font sizes that scale with avatar size using CSS variables
+  // Font sizes that scale with avatar size
   .lb-avatar.size-xs &
-    font-size: var(--lb-font-size-label-small) // 12px
+    font-size: base.$unit-10  // 10px
     
   .lb-avatar.size-sm &
-    font-size: var(--lb-font-size-label-small) // 12px
+    font-size: base.$avatar-font-size-small  // 14px
     
   .lb-avatar.size-md &
-    font-size: var(--lb-font-size-label-base) // 14px
+    font-size: base.$unit-16  // 16px
     
   .lb-avatar.size-lg &
-    font-size: var(--lb-font-size-label-base) // 14px
+    font-size: base.$avatar-font-size-medium  // 18px
     
   .lb-avatar.size-xl &
-    font-size: var(--lb-font-size-label-large) // 16px
+    font-size: base.$unit-20  // 20px
 
 .fallback-icon
   display: flex
@@ -271,62 +271,62 @@ defineOptions({
   justify-content: center
   
 .default-icon
-  // Icon sizes that scale with avatar size using CSS variables
+  // Icon sizes that scale with avatar size
   .lb-avatar.size-xs &
-    width: var(--lb-icon-size-sm)
-    height: var(--lb-icon-size-sm)
+    width: base.$unit-16  // 16px
+    height: base.$unit-16  // 16px
     
   .lb-avatar.size-sm &
-    width: var(--lb-icon-size-sm)
-    height: var(--lb-icon-size-sm)
+    width: base.$unit-18  // 18px
+    height: base.$unit-18  // 18px
     
   .lb-avatar.size-md &
-    width: var(--lb-icon-size-md)
-    height: var(--lb-icon-size-md)
+    width: base.$unit-20  // 20px
+    height: base.$unit-20  // 20px
     
   .lb-avatar.size-lg &
-    width: var(--lb-icon-size-lg)
-    height: var(--lb-icon-size-lg)
+    width: base.$unit-24  // 24px
+    height: base.$unit-24  // 24px
     
   .lb-avatar.size-xl &
-    width: var(--lb-icon-size-lg)
-    height: var(--lb-icon-size-lg)
+    width: base.$unit-28  // 28px
+    height: base.$unit-28  // 28px
 
 .status-indicator
   position: absolute
-  border-radius: var(--lb-radius-full)
-  border: 2px solid var(--lb-background-surface)
+  border-radius: base.$radius-full
+  border: base.$border-md solid var(--lb-background-surface)
   
   // Status indicator sizes and positioning based on avatar size
   .lb-avatar.size-xs &
-    width: 0.5rem // 8px
-    height: 0.5rem // 8px
-    bottom: -0.125rem // -2px
-    right: -0.125rem // -2px
+    width: base.$unit-8  // 8px
+    height: base.$unit-8  // 8px
+    bottom: calc(base.$unit-2 * -1)  // -2px
+    right: calc(base.$unit-2 * -1)  // -2px
     
   .lb-avatar.size-sm &
-    width: 0.625rem // 10px
-    height: 0.625rem // 10px
-    bottom: -0.125rem // -2px
-    right: -0.125rem // -2px
+    width: base.$unit-10  // 10px
+    height: base.$unit-10  // 10px
+    bottom: calc(base.$unit-2 * -1)  // -2px
+    right: calc(base.$unit-2 * -1)  // -2px
     
   .lb-avatar.size-md &
-    width: 0.75rem // 12px
-    height: 0.75rem // 12px
+    width: base.$unit-12  // 12px
+    height: base.$unit-12  // 12px
     bottom: 0
     right: 0
     
   .lb-avatar.size-lg &
-    width: 0.875rem // 14px
-    height: 0.875rem // 14px
+    width: base.$unit-14  // 14px
+    height: base.$unit-14  // 14px
     bottom: 0
     right: 0
     
   .lb-avatar.size-xl &
-    width: 1rem // 16px
-    height: 1rem // 16px
-    bottom: 0.125rem // 2px
-    right: 0.125rem // 2px
+    width: base.$unit-16  // 16px
+    height: base.$unit-16  // 16px
+    bottom: base.$unit-2  // 2px
+    right: base.$unit-2  // 2px
     
   // Status colors
   &.status-online

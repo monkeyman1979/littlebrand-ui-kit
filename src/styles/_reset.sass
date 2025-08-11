@@ -4,6 +4,10 @@
 // Import base for spacing and borders only
 @use 'base' as base
 
+// Set base font size for rem calculations
+html
+  font-size: 16px  // Establish base for rem units
+
 // Box model
 *,
 *::before,
@@ -34,8 +38,7 @@ body
   
 :focus-visible
   outline: base.$focus-ring-width solid var(--lb-focus-ring-color)
-  outline-offset: base.$focus-ring-offset
-  border-radius: base.$radius-xs
+  // border-radius: base.$radius-sm
 
 // Selection styles
 ::selection

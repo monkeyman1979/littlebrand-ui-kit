@@ -144,11 +144,11 @@ defineExpose({
     display: flex
     align-items: center
     justify-content: center
-    width: var(--lb-icon-size-sm) // 18px (1.125rem)
-    height: var(--lb-icon-size-sm) // 18px (1.125rem)
+    width: base.$radio-size  // 20px
+    height: base.$radio-size  // 20px
     background: var(--lb-background-surface)
-    border: var(--lb-border-md) solid var(--lb-border-neutral-normal)
-    border-radius: var(--lb-radius-full)
+    border: base.$radio-border-width solid var(--lb-border-neutral-normal)
+    border-radius: base.$radius-full
     transition: background-color var(--lb-transition), border-color var(--lb-transition), box-shadow var(--lb-transition)
     will-change: background-color, border-color
     
@@ -158,10 +158,10 @@ defineExpose({
     display: flex
     align-items: center
     justify-content: center
-    width: var(--lb-space-sm) // 8px
-    height: var(--lb-space-sm) // 8px
+    width: base.$space-sm  // 8px
+    height: base.$space-sm  // 8px
     background: white
-    border-radius: var(--lb-radius-full)
+    border-radius: base.$radius-full
     opacity: var(--lb-opacity-0)
     transform: scale(0)
     transition: opacity var(--lb-transition), transform var(--lb-transition)
@@ -189,7 +189,7 @@ defineExpose({
   // Focus state
   input:focus-visible ~ .radio-visual
     outline: none
-    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
+    box-shadow: 0 0 0 calc(var(--lb-focus-ring-width) + var(--lb-focus-ring-offset)) var(--lb-focus-ring-color)
     border-color: var(--lb-border-primary-normal)
   
   // Invalid state
@@ -198,7 +198,7 @@ defineExpose({
       border-color: var(--lb-border-error-normal)
       
     input:focus-visible ~ .radio-visual
-      box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-surface-error-active)
+      box-shadow: 0 0 0 calc(var(--lb-focus-ring-width) + var(--lb-focus-ring-offset)) var(--lb-surface-error-active)
       border-color: var(--lb-border-error-active)
       
     &.checked .radio-visual

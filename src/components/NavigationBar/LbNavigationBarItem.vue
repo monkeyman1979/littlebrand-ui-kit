@@ -126,13 +126,13 @@ defineOptions({
     display: flex
     align-items: center
     justify-content: center
-    width: var(--lb-icon-size-lg)
-    height: var(--lb-icon-size-lg)
+    width: var(--lb-size-4xl)
+    height: var(--lb-size-4xl)
     transition: all var(--transition-fast)
     
     :deep(svg)
-      width: var(--lb-icon-size-lg)
-      height: var(--lb-icon-size-lg)
+      width: var(--lb-size-4xl)
+      height: var(--lb-size-4xl)
       transition: all var(--transition-fast)
   
   .label

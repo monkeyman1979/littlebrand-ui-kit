@@ -35,7 +35,7 @@
             :first-day-of-week="firstDayOfWeek"
             :locale="locale"
             variant="embedded"
-            :size="size"
+            :size="effectiveSize"
             :date-mode="dateMode"
             :mode="mode"
             @change="handleDateSelect"
@@ -116,7 +116,6 @@ const props = withDefaults(defineProps<LbDatePickerProps>(), {
   required: false,
   clearable: false,
   showToday: false,
-  size: 'medium',
   firstDayOfWeek: 0,
   locale: 'en-US',
   placement: 'bottom-start',
@@ -142,7 +141,20 @@ const internalDate = ref<Date | null>(props.modelValue)
 const injectedId = inject<ComputedRef<string> | undefined>('formFieldId', undefined)
 const injectedAriaDescribedby = inject<ComputedRef<string | undefined> | undefined>('formFieldAriaDescribedby', undefined)
 
+// Inject density context if available
+const injectedDensitySize = inject<ComputedRef<'medium' | 'large'> | undefined>('densitySize', undefined)
+
 // Computed
+// Compute effective size: explicit prop > density > default
+const effectiveSize = computed(() => {
+  // If size is explicitly set, use it
+  if (props.size) return props.size
+  // Otherwise use density-based size if available
+  if (injectedDensitySize?.value) return injectedDensitySize.value
+  // Fall back to default
+  return 'medium'
+})
+
 const computedId = computed(() => {
   return props.id || injectedId?.value
 })
@@ -154,7 +166,7 @@ const computedAriaDescribedby = computed(() => {
 const datePickerClasses = computed(() => ({
   'disabled': props.disabled,
   'invalid': props.invalid,
-  [`size-${props.size}`]: true
+  [`size-${effectiveSize.value}`]: true
 }))
 
 const displayText = computed(() => {
@@ -273,17 +285,32 @@ defineOptions({
   font-size: var(--lb-font-size-label-base)
   color: var(--lb-text-neutral-contrast-high)
   transition: all var(--lb-transition)
-  height: var(--lb-input-height-medium)
+  height: var(--lb-size-6xl)  // 40px
   cursor: pointer
   text-align: left
   
+  // Size variants
+  &.size-medium
+    height: var(--lb-size-6xl)  // 40px
+    font-size: var(--lb-font-size-label-base)
+  
   &.size-large
-    height: var(--lb-input-height-large)
+    height: var(--lb-size-7xl)  // 48px
     font-size: var(--lb-font-size-label-large)
+  
+  &:focus
+    outline: none
+    border-color: var(--lb-border-primary-normal)
+  
+  &:active:not(:disabled)
+    border-color: var(--lb-border-primary-active)
   
   &:focus-visible
     outline: none
-    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
+    box-shadow: 0 0 0 calc(var(--lb-focus-ring-width) + var(--lb-focus-ring-offset)) var(--lb-focus-ring-color)
+  
+  &:active
+    box-shadow: none  // Remove focus ring on click
   
   &:hover:not(:disabled)
     border-color: var(--lb-border-neutral-active)
@@ -292,8 +319,11 @@ defineOptions({
   &.invalid
     border-color: var(--lb-border-error-normal)
     
-    &:focus-visible
-      box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-border-error-focus)
+    &:focus
+      border-color: var(--lb-border-error-active)
+    
+    &:focus-visible:not(:active)
+      box-shadow: 0 0 0 calc(var(--lb-focus-ring-width) + var(--lb-focus-ring-offset)) var(--lb-surface-error-active)
   
   &:disabled
     cursor: not-allowed
@@ -314,8 +344,8 @@ defineOptions({
   color: var(--lb-text-neutral-contrast-low)
   
   svg
-    width: var(--lb-icon-size-md)
-    height: var(--lb-icon-size-md)
+    width: var(--lb-size-3xl)  // 20px
+    height: var(--lb-size-3xl)  // 20px
     flex-shrink: 0
 
 

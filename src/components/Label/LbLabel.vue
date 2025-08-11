@@ -59,8 +59,8 @@ label
     display: flex
     align-items: center
     color: var(--lb-text-neutral-contrast-low)
-    width: var(--lb-icon-size-xs) // 12px
-    height: var(--lb-icon-size-xs) // 12px
+    width: var(--lb-size-md) // 12px
+    height: var(--lb-size-md) // 12px
   
   // Text wrapper
   > span
