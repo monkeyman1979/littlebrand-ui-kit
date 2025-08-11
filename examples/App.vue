@@ -612,6 +612,16 @@
         h3 Switch
         
         .demo-group
+          h4 Switch Sizes
+          .switch-row
+            .switch-item
+              LbSwitch(v-model="switchSmall" size="small" id="switch-small")
+              LbLabel(for="switch-small") Small (24px)
+            .switch-item
+              LbSwitch(v-model="switchMedium" size="medium" id="switch-medium")
+              LbLabel(for="switch-medium") Medium (32px)
+        
+        .demo-group
           h4 Switch States
           .switch-row
             .switch-item
@@ -2506,6 +2516,8 @@ const termsAccepted = ref(false)
 const showTermsError = ref(false)
 
 // Switch demo values
+const switchSmall = ref(false)
+const switchMedium = ref(true)
 const switchOff = ref(false)
 const switchOn = ref(true)
 const switchDisabled = ref(false)

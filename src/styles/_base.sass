@@ -210,10 +210,21 @@ $checkbox-border-width: $border-md !default  // 2px
 $radio-size: $unit-20 !default               // 20px
 $radio-border-width: $border-md !default     // 2px
 
-$switch-height: $unit-24 !default            // 24px
-$switch-width: $unit-44 !default             // 44px
-$switch-thumb-size: $unit-18 !default        // 18px
-$switch-border-radius: $radius-full !default // 999px
+// Switch sizes
+$switch-height-small: $unit-24 !default       // 24px
+$switch-width-small: $unit-44 !default        // 44px
+$switch-thumb-size-small: $unit-18 !default   // 18px
+
+$switch-height-medium: $unit-32 !default      // 32px
+$switch-width-medium: $unit-56 !default       // 56px (proportionally scaled)
+$switch-thumb-size-medium: $unit-24 !default  // 24px
+
+$switch-border-radius: $radius-full !default  // 999px
+
+// Legacy variables for backward compatibility (map to small)
+$switch-height: $switch-height-small !default
+$switch-width: $switch-width-small !default
+$switch-thumb-size: $switch-thumb-size-small !default
 
 // Avatar Component
 $avatar-size-small: $unit-32 !default        // 32px
