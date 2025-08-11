@@ -64,7 +64,8 @@ label
   
   // Text wrapper
   > span
-    flex: 1
+    display: inline-flex
+    align-items: baseline
   
   // Hint text (inline)
   .hint

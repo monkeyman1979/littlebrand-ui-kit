@@ -17,7 +17,6 @@
         :aria-describedby="computedAriaDescribedby"
         :aria-invalid="invalid || undefined"
         :aria-label="ariaLabel"
-        :tabindex="-1"
       )
         //- Calendar icon (leading)
         .calendar-icon
