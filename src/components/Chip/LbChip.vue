@@ -5,7 +5,7 @@ button.lb-chip(
   :role="clickable ? 'button' : null"
   :aria-pressed="variant === 'filter' ? selected.toString() : null"
   :aria-expanded="hasDropdown ? 'false' : null"
-  :tabindex="disabled ? -1 : 0"
+  :tabindex="disabled || !clickable ? -1 : 0"
   @click="handleClick"
   @keydown.enter="handleClick"
   @keydown.space.prevent="handleClick"
@@ -56,7 +56,6 @@ import { computed, ref, useSlots } from 'vue'
 // Types
 type Variant = 'assist' | 'filter' | 'input' | 'suggestion'
 type Color = 'primary' | 'secondary' | 'neutral' | 'success' | 'warning' | 'error' | 'info'
-type Size = 'small' | 'medium' | 'large'
 
 // Props
 const props = withDefaults(defineProps<{
@@ -66,7 +65,6 @@ const props = withDefaults(defineProps<{
   disabled?: boolean
   clickable?: boolean
   deletable?: boolean
-  size?: Size
   hasDropdown?: boolean
 }>(), {
   variant: 'assist',
@@ -75,7 +73,6 @@ const props = withDefaults(defineProps<{
   disabled: false,
   clickable: true,
   deletable: false,
-  size: 'medium',
   hasDropdown: false
 })
 
@@ -96,7 +93,6 @@ const internalSelected = ref(props.selected)
 const chipClasses = computed(() => [
   `variant-${props.variant}`,
   `color-${props.color}`,
-  `size-${props.size}`,
   {
     'selected': props.variant === 'filter' && props.selected,
     'disabled': props.disabled,
@@ -161,113 +157,41 @@ defineOptions({
     outline-offset: var(--lb-focus-ring-offset)
     transition: none
   
-  // Size variations
-  &.size-small
-    height: base.$chip-height-small  // 24px
-    padding: 0 base.$chip-padding-x-small  // 8px
-    font-size: base.$chip-font-size-small  // 12px
-    gap: base.$space-xs
-    
-    &.has-leading-icon
-      padding-left: base.$space-xs  // 4px
-    
-    &.has-trailing-icon
-      padding-right: base.$space-xs  // 4px
+  // Fixed size (32px height)
+  height: base.$chip-height  // 32px
+  padding: 0 base.$chip-padding-x  // 12px
+  font-size: base.$chip-font-size  // 14px
+  gap: base.$space-xs
   
-  &.size-medium
-    height: base.$chip-height-medium  // 28px
-    padding: 0 base.$chip-padding-x-medium  // 12px
-    font-size: base.$chip-font-size-medium  // 14px
-    gap: base.$space-xs
-    
-    &.has-leading-icon
-      padding-left: base.$space-sm  // 8px
-    
-    &.has-trailing-icon
-      padding-right: base.$space-sm  // 8px
-      
-  &.size-large
-    height: base.$chip-height-large  // 32px
-    padding: 0 base.$chip-padding-x-large  // 16px
-    font-size: base.$chip-font-size-large  // 16px
-    gap: base.$space-xs
-    
-    &.has-leading-icon
-      padding-left: base.$space-md  // 12px
-    
-    &.has-trailing-icon
-      padding-right: base.$space-md  // 12px
+  &.has-leading-icon
+    padding-left: base.$space-sm  // 8px
   
-  // Icon sizes - based on chip size
-  &.size-small
-    .icon-leading,
-    .icon-trailing,
-    .icon-selected,
-    .icon-dropdown,
-    .delete-button
-      svg
-        width: base.$chip-icon-size-small  // 14px
-        height: base.$chip-icon-size-small  // 14px
+  &.has-trailing-icon
+    padding-right: base.$space-sm  // 8px
   
-  &.size-medium
-    .icon-leading,
-    .icon-trailing,
-    .icon-selected,
-    .icon-dropdown,
-    .delete-button
-      svg
-        width: base.$chip-icon-size-medium  // 16px
-        height: base.$chip-icon-size-medium  // 16px
-        
-  &.size-large
-    .icon-leading,
-    .icon-trailing,
-    .icon-selected,
-    .icon-dropdown,
-    .delete-button
-      svg
-        width: base.$chip-icon-size-large  // 18px
-        height: base.$chip-icon-size-large  // 18px
+  // Icon sizes - fixed for single chip size
+  .icon-leading,
+  .icon-trailing,
+  .icon-selected,
+  .icon-dropdown,
+  .delete-button
+    svg
+      width: base.$chip-icon-size  // 16px
+      height: base.$chip-icon-size  // 16px
   
-  // Avatar container - sized based on chip size
-  &.size-small .avatar-container
-    display: inline-flex
-    align-items: center
-    justify-content: center
-    flex-shrink: 0
-    width: base.$unit-20  // 20px
-    height: base.$unit-20  // 20px
-    margin: calc(base.$space-2xs * -1) 0
-    
-    :deep(.lb-avatar)
-      width: base.$unit-20
-      height: base.$unit-20
-      
-  &.size-medium .avatar-container
+  // Avatar container - fixed size
+  .avatar-container
     display: inline-flex
     align-items: center
     justify-content: center
     flex-shrink: 0
     width: base.$unit-24  // 24px
     height: base.$unit-24  // 24px
-    margin: calc(base.$space-2xs * -1) 0
+    margin: calc(base.$space-xs * -1) 0
     
     :deep(.lb-avatar)
       width: base.$unit-24
       height: base.$unit-24
-      
-  &.size-large .avatar-container
-    display: inline-flex
-    align-items: center
-    justify-content: center
-    flex-shrink: 0
-    width: base.$unit-28  // 28px
-    height: base.$unit-28  // 28px
-    margin: calc(base.$space-2xs * -1) 0
-    
-    :deep(.lb-avatar)
-      width: base.$unit-28
-      height: base.$unit-28
   
   // Variant styles
   &.variant-assist
@@ -343,9 +267,15 @@ defineOptions({
       box-shadow: none
       transform: none
   
-  // Non-clickable chips
+  // Non-clickable chips - no interactive states
   &:not(.clickable)
     cursor: default
+    pointer-events: none
+    
+    // Re-enable pointer events for deletable chips
+    .delete-button
+      pointer-events: auto
+      cursor: pointer
     
     &:hover
       background-color: var(--lb-background-surface)

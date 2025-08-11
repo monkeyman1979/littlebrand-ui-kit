@@ -3832,10 +3832,13 @@ section
   min-width: 10rem // 160px
 
   .menu-item
+    min-height: 40px // Match medium dropdown item height
     padding: var(--lb-space-sm) var(--lb-space-md)
     cursor: pointer
     border-radius: var(--lb-radius-sm)
     color: var(--lb-text-neutral-contrast-high)
+    font-size: var(--lb-font-size-label-base) // 14px - base label font
+    line-height: var(--lb-line-height-normal)
     transition: background-color var(--lb-transition)
     display: flex
     align-items: center
