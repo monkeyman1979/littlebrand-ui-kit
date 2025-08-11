@@ -114,6 +114,7 @@ export interface LbCalendarProps {
   variant?: 'standalone' | 'embedded'  // standalone has border/padding, embedded doesn't
   size?: 'medium' | 'large'  // Controls sizing of all interactive elements
   dateMode?: 'past' | 'future' | 'both'  // Controls year range: past (history), future (appointments), both (default)
+  mode?: 'all' | 'past' | 'future'  // Controls which dates can be selected
 }
 
 // Props
@@ -126,7 +127,8 @@ const props = withDefaults(defineProps<LbCalendarProps>(), {
   locale: 'en-US',
   variant: 'standalone',
   size: 'medium',
-  dateMode: 'both'
+  dateMode: 'both',
+  mode: 'all'
 })
 
 // Emits
@@ -323,12 +325,28 @@ const calendarWeeks = computed((): CalendarWeek[] => {
 
 // Navigation checks
 const canNavigatePrevious = computed(() => {
+  // Check mode constraints for future mode
+  if (props.mode === 'future') {
+    const today = new Date()
+    const currentMonthStart = new Date(today.getFullYear(), today.getMonth(), 1)
+    const prevMonth = new Date(selectedYear.value, selectedMonth.value - 1, 1)
+    if (prevMonth < currentMonthStart) return false
+  }
+  
   if (!props.minDate) return true
   const prevMonth = new Date(selectedYear.value, selectedMonth.value - 1, 1)
   return prevMonth >= new Date(props.minDate.getFullYear(), props.minDate.getMonth(), 1)
 })
 
 const canNavigateNext = computed(() => {
+  // Check mode constraints for past mode
+  if (props.mode === 'past') {
+    const today = new Date()
+    const currentMonthStart = new Date(today.getFullYear(), today.getMonth(), 1)
+    const nextMonth = new Date(selectedYear.value, selectedMonth.value + 1, 1)
+    if (nextMonth > currentMonthStart) return false
+  }
+  
   if (!props.maxDate) return true
   const nextMonth = new Date(selectedYear.value, selectedMonth.value + 1, 1)
   return nextMonth <= new Date(props.maxDate.getFullYear(), props.maxDate.getMonth(), 1)
@@ -358,6 +376,20 @@ const isSameDate = (date1: Date, date2: Date): boolean => {
 }
 
 const isDateDisabled = (date: Date): boolean => {
+  // Check mode constraints
+  const today = new Date()
+  today.setHours(0, 0, 0, 0) // Reset time to start of day for comparison
+  const checkDate = new Date(date)
+  checkDate.setHours(0, 0, 0, 0) // Reset time to start of day for comparison
+  
+  if (props.mode === 'future') {
+    // Future mode: disable all past dates (today is allowed)
+    if (checkDate < today) return true
+  } else if (props.mode === 'past') {
+    // Past mode: disable all future dates (today is allowed)
+    if (checkDate > today) return true
+  }
+  
   // Check min/max constraints
   if (props.minDate && date < props.minDate) return true
   if (props.maxDate && date > props.maxDate) return true
