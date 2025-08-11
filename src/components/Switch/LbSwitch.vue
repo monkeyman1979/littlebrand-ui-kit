@@ -149,9 +149,8 @@ defineExpose({
   
   // Focus state
   input:focus-visible ~ .switch-track
-    outline: none
-    box-shadow: 0 0 0 calc(var(--lb-focus-ring-width) + var(--lb-focus-ring-offset)) var(--lb-focus-ring-color)
-    border-color: var(--lb-border-primary-normal)
+    outline: var(--lb-focus-ring-width) solid var(--lb-focus-ring-color)
+    outline-offset: base.$focus-ring-offset
   
   // Invalid state
   &.invalid
