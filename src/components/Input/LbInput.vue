@@ -279,6 +279,10 @@ const handleInput = (event: Event) => {
   // Invalid state
   &.invalid input
     border-color: var(--lb-border-error-normal)
+    
+    // Maintain error border on hover
+    &:hover:not(:disabled):not(:read-only)
+      border-color: var(--lb-border-error-normal)
   
   // Disabled state
   input:disabled

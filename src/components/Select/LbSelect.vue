@@ -501,6 +501,10 @@ defineOptions({
   transition: border-color var(--lb-transition), box-shadow var(--lb-transition)
   box-sizing: border-box
   
+  // Hover state (only when not focused and not invalid)
+  &:hover:not(.select-trigger-disabled):not(:focus):not(.select-trigger-invalid)
+    border-color: var(--lb-border-neutral-active)
+  
   &:focus
     outline: none
     border-color: var(--lb-border-primary-normal)
@@ -513,10 +517,8 @@ defineOptions({
   
   // Keyboard focus state (only shows ring when focused via keyboard)
   &.select-trigger-keyboard-focus:focus:not(:active)
-    box-shadow: 0 0 0 calc(var(--lb-focus-ring-width) + var(--lb-focus-ring-offset)) var(--lb-focus-ring-color)
-  
-  &:hover:not(.select-trigger-disabled)
-    border-color: var(--lb-border-neutral-active)
+    outline: var(--lb-focus-ring-width) solid var(--lb-focus-ring-color)
+    outline-offset: var(--lb-focus-ring-offset)
   
   &.select-trigger-medium
     height: base.$select-height-medium  // 40px
@@ -535,6 +537,10 @@ defineOptions({
   
   &.select-trigger-invalid
     border-color: var(--lb-border-error-normal)
+    
+    // Maintain error border on hover
+    &:hover:not(.select-trigger-disabled)
+      border-color: var(--lb-border-error-normal)
     
     &.select-trigger-keyboard-focus:focus:not(:active)
       box-shadow: 0 0 0 calc(var(--lb-focus-ring-width) + var(--lb-focus-ring-offset)) var(--lb-surface-error-active)

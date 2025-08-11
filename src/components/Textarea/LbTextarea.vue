@@ -236,13 +236,17 @@ defineExpose({
     
     &:focus
       outline: base.$textarea-border-width solid var(--lb-border-primary-active)
+  
+  // Invalid state
+  &.invalid textarea
+    border-color: var(--lb-border-error-normal)
     
-    // Invalid state when parent has .invalid class
-    .invalid &
+    // Maintain error border on hover
+    &:hover:not(:disabled):not(:read-only)
       border-color: var(--lb-border-error-normal)
-      
-      &:focus
-        border-color: var(--lb-border-error-active)
+    
+    &:focus
+      outline: base.$textarea-border-width solid var(--lb-border-error-active)
     
     // Disabled state
     &:disabled
