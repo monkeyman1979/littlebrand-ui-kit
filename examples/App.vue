@@ -2147,6 +2147,23 @@
             .demo-note Weekends are disabled
         
         .demo-group
+          h4 Selection Mode Constraints
+          .calendar-demo
+            LbCalendar(
+              v-model="selectedPastDate"
+              mode="past"
+              date-mode="past"
+            )
+            .demo-note Past mode: Only past dates and today can be selected (future dates are disabled)
+          .calendar-demo
+            LbCalendar(
+              v-model="selectedFutureDate"
+              mode="future"
+              date-mode="future"
+            )
+            .demo-note Future mode: Only today and future dates can be selected (past dates are disabled)
+        
+        .demo-group
           h4 Monday as First Day of Week
           .calendar-demo
             LbCalendar(
@@ -2170,23 +2187,25 @@
             .demo-note Selected: {{ selectedDate1 ? selectedDate1.toLocaleDateString() : 'None' }}
         
         .demo-group
-          h4 Date Mode Variants
+          h4 Date Selection Modes
           .date-picker-demo
             LbDatePicker(
               v-model="selectedBirthdate"
+              mode="past"
               date-mode="past"
               placeholder="Select birthdate"
               placement="bottom-start"
             )
             LbDatePicker(
               v-model="selectedAppointment"
+              mode="future"
               date-mode="future"
               placeholder="Schedule appointment"
               placement="bottom-start"
             )
             .demo-note 
-              p Past mode: Years range from {{ new Date().getFullYear() - 100 }} to {{ new Date().getFullYear() }}
-              p Future mode: Years range from {{ new Date().getFullYear() }} to {{ new Date().getFullYear() + 50 }}
+              p Past mode: Only past dates and today can be selected (for birthdays, historical events)
+              p Future mode: Only today and future dates can be selected (for appointments, scheduling)
         
         .demo-group
           h4 With Action Buttons
@@ -3047,6 +3066,8 @@ const selectedCalendarDate = ref(new Date())
 const selectedCalendarDate2 = ref(new Date())
 const selectedCalendarDate3 = ref(new Date())
 const selectedCalendarDate4 = ref(new Date())
+const selectedPastDate = ref(null)
+const selectedFutureDate = ref(null)
 
 // Min/Max dates for calendar
 const calendarMinDate = new Date()

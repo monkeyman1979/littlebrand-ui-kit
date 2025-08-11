@@ -37,6 +37,7 @@
             variant="embedded"
             :size="size"
             :date-mode="dateMode"
+            :mode="mode"
             @change="handleDateSelect"
           )
           
@@ -103,6 +104,7 @@ export interface LbDatePickerProps {
   id?: string
   ariaDescribedby?: string
   dateMode?: 'past' | 'future' | 'both'  // Controls year range in calendar
+  mode?: 'all' | 'past' | 'future'  // Controls which dates can be selected
 }
 
 // Props
@@ -119,7 +121,8 @@ const props = withDefaults(defineProps<LbDatePickerProps>(), {
   locale: 'en-US',
   placement: 'bottom-start',
   offset: 4,
-  dateMode: 'both'
+  dateMode: 'both',
+  mode: 'all'
 })
 
 // Emits
@@ -192,6 +195,7 @@ const handleDateSelect = (date: Date | null) => {
 
 const selectToday = () => {
   const today = new Date()
+  // Today is now allowed in all modes
   handleDateSelect(today)
 }
 
