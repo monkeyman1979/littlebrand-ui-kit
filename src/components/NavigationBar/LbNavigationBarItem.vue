@@ -91,21 +91,21 @@ defineOptions({
   justify-content: center
   gap: var(--lb-space-xs)
   padding: 0
-  min-height: var(--size-2xl) // 48px minimum touch target
+  min-height: base.$unit-48 // 48px minimum touch target
   height: 100%
   background: none
   border: none
   border-radius: 0
   cursor: pointer
-  transition: all var(--transition-fast)
+  transition: all var(--lb-transition)
   color: var(--lb-text-neutral-contrast-low)
   outline: none
   position: relative
   width: 100%
   
   &:focus-visible
-    outline: var(--focus-ring-width) solid var(--lb-focus-ring-color)
-    outline-offset: var(--focus-ring-offset)
+    outline: var(--lb-focus-ring-width) solid var(--lb-focus-ring-color)
+    outline-offset: var(--lb-focus-ring-offset)
   
   // Only apply hover styles on devices that support hover (non-touch)
   @media (hover: hover)
@@ -126,14 +126,14 @@ defineOptions({
     display: flex
     align-items: center
     justify-content: center
-    width: var(--lb-size-4xl)
-    height: var(--lb-size-4xl)
-    transition: all var(--transition-fast)
+    width: base.$unit-24  // 24px icon size
+    height: base.$unit-24  // 24px icon size
+    transition: all var(--lb-transition)
     
     :deep(svg)
-      width: var(--lb-size-4xl)
-      height: var(--lb-size-4xl)
-      transition: all var(--transition-fast)
+      width: base.$unit-24  // 24px icon size
+      height: base.$unit-24  // 24px icon size
+      transition: all var(--lb-transition)
   
   .label
     font-size: var(--lb-font-size-label-small)
@@ -144,7 +144,7 @@ defineOptions({
     overflow: hidden
     text-overflow: ellipsis
     max-width: 100%
-    transition: color var(--transition-fast)
+    transition: color var(--lb-transition)
 
 // Color variants - Active states
 .lb-navigation-bar-item

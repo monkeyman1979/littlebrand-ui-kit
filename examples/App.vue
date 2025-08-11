@@ -1241,6 +1241,8 @@
             LbChip(variant="input" deletable @delete="handleChipDelete") Input
             
             LbChip(variant="suggestion" @click="handleChipClick") Suggestion
+            
+            LbChip(variant="assist" :clickable="false" color="neutral") Category Label
         
         .demo-group
           h4 Chip Colors
@@ -1441,7 +1443,7 @@
               placeholder="Active Color"
             )
             .switch-field
-              LbSwitch(v-model="navShowLabels" id="nav-labels")
+              LbSwitch(v-model="navShowLabels" id="nav-labels" size="medium")
               LbLabel(for="nav-labels") Show Labels
           .navigation-demo
             LbNavigationBar(
