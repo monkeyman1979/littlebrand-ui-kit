@@ -688,7 +688,8 @@ defineOptions({
 
 .lb-calendar
   display: inline-block
-  width: min(24rem, 100%)
+  width: fit-content  // Size to content
+  max-width: 100%  // But don't overflow container
   background: var(--lb-background-surface)
   font-family: var(--lb-font-body)
   
@@ -731,7 +732,11 @@ defineOptions({
     width: auto
 
 .calendar-grid
-  width: 100%
+  width: calc(7 * base.$unit-40)  // 280px for medium (7 days × 40px)
+  
+  // Large size variant
+  .size-large &
+    width: calc(7 * base.$unit-48)  // 336px for large (7 days × 48px)
 
 .weekday-labels
   display: grid
@@ -743,8 +748,8 @@ defineOptions({
   display: flex
   align-items: center
   justify-content: center
-  min-width: var(--lb-size-6xl) // 40px to match day cells
-  height: var(--lb-space-4xl) // 32px height for weekday labels
+  min-width: base.$unit-40  // 40px to match day cells
+  height: base.$unit-32  // 32px height for weekday labels
   font-size: var(--lb-font-size-label-small)
   font-weight: var(--lb-font-weight-medium)
   color: var(--lb-text-neutral-contrast-low)
@@ -752,8 +757,8 @@ defineOptions({
   
   // Large size variant
   .size-large &
-    min-width: var(--lb-size-7xl) // 48px to match day cells
-    height: var(--lb-space-5xl) // 40px height for large
+    min-width: base.$unit-48  // 48px to match day cells
+    height: base.$unit-40  // 40px height for large
 
 .days-grid
   display: flex
@@ -769,12 +774,14 @@ defineOptions({
   display: flex
   align-items: center
   justify-content: center
-  width: 100%
-  min-width: var(--lb-size-6xl) // 40px for medium
-  height: var(--lb-size-6xl) // 40px for medium
+  width: base.$unit-40  // 40px square for medium
+  min-width: base.$unit-40  // 40px for medium
+  min-height: base.$unit-40  // 40px for medium - using min-height to ensure full height
+  height: base.$unit-40  // 40px for medium
   padding: 0
   background: transparent
   border: none
+  box-sizing: border-box  // Ensure box-sizing is set
   border-radius: var(--lb-radius-md)
   font-size: var(--lb-font-size-body-base) // Medium font by default
   font-weight: var(--lb-font-weight-normal)
@@ -785,8 +792,10 @@ defineOptions({
   
   // Large size variant
   .size-large &
-    min-width: var(--lb-size-7xl) // 48px for large
-    height: var(--lb-size-7xl) // 48px for large
+    width: base.$unit-48  // 48px square for large
+    min-width: base.$unit-48  // 48px for large
+    min-height: base.$unit-48  // 48px for large - using min-height to ensure full height
+    height: base.$unit-48  // 48px for large
     border-radius: var(--lb-radius-lg)
     font-size: var(--lb-font-size-body-large)
   
