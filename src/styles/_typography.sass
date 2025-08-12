@@ -1,8 +1,6 @@
 // LittleBrand UI Kit - Typography
 // Font stacks, sizes, and global typography styles
 
-@use 'base' as base
-
 // === CUSTOM FONT EXAMPLES (uncomment to use) ===
 // Option 1: Self-hosted fonts
 // @font-face
@@ -37,46 +35,48 @@ h2
   font-family: var(--lb-font-heading)
   font-weight: var(--lb-font-weight-semibold)
   line-height: var(--lb-line-height-compact)
-  letter-spacing: -0.02em
+  letter-spacing: var(--lb-letter-spacing-tighter)
 
 h3
   font-size: clamp(1.5rem, 2vw + 0.5rem, 2rem)
   font-family: var(--lb-font-heading)
   font-weight: var(--lb-font-weight-semibold)
   line-height: var(--lb-line-height-compact)
-  letter-spacing: -0.015em
+  letter-spacing: var(--lb-letter-spacing-tight)
 
 h4
   font-size: clamp(1.25rem, 1.5vw + 0.5rem, 1.5rem)
   font-family: var(--lb-font-heading)
   font-weight: var(--lb-font-weight-semibold)
   line-height: var(--lb-line-height-normal)
+  letter-spacing: var(--lb-letter-spacing-normal)
 
 h5
   font-size: clamp(1.125rem, 1vw + 0.5rem, 1.25rem)
   font-family: var(--lb-font-heading)
   font-weight: var(--lb-font-weight-medium)
   line-height: var(--lb-line-height-normal)
+  letter-spacing: var(--lb-letter-spacing-normal)
 
 h6
-  font-size: 1rem
+  font-size: clamp(1rem, 0.75vw + 0.5rem, 1.125rem)
   font-family: var(--lb-font-heading)
   font-weight: var(--lb-font-weight-medium)
   line-height: var(--lb-line-height-normal)
   letter-spacing: var(--lb-letter-spacing-wide)
 
 p
-  font-size: 1rem
+  font-size: var(--lb-font-size-body-base)
   font-family: var(--lb-font-body)
   font-weight: var(--lb-font-weight-normal)
   line-height: var(--lb-line-height-normal)
   
   &.body-large
-    font-size: clamp(1.125rem, 1vw + 0.25rem, 1.25rem)
+    font-size: var(--lb-font-size-body-large)
     line-height: var(--lb-line-height-relaxed)
     
   &.body-small
-    font-size: 0.875rem
+    font-size: var(--lb-font-size-body-small)
     line-height: var(--lb-line-height-normal)
 
 // Label styles (for form labels, captions, etc.)
@@ -92,24 +92,23 @@ p
     
   &.label-small
     font-size: var(--lb-font-size-label-small)
-    letter-spacing: var(--lb-letter-spacing-wide)
 
 // Code and preformatted text
 code,
 pre
   font-family: var(--lb-font-mono)
-  font-size: 0.875em
+  font-size: var(--lb-font-size-label-small)
 
 code
-  padding: 0.125em 0.25em
+  padding: var(--lb-space-2xs) var(--lb-space-xs)
   background: var(--lb-background-surface)
-  border: 1px solid var(--lb-border-neutral-line)
+  border: var(--lb-border-sm) solid var(--lb-border-neutral-line)
   border-radius: var(--lb-radius-xs)
 
 pre
   padding: var(--lb-space-lg)
   background: var(--lb-background-surface)
-  border: 1px solid var(--lb-border-neutral-line)
+  border: var(--lb-border-sm) solid var(--lb-border-neutral-line)
   border-radius: var(--lb-radius-md)
   overflow-x: auto
   
@@ -121,8 +120,7 @@ pre
 // Blockquotes
 blockquote
   padding-left: var(--lb-space-2xl)
-  border-left: var(--lb-border-lg) solid var(--lb-border-neutral-line)
-  font-style: italic
+  border-left: var(--lb-border-md) solid var(--lb-border-neutral-line)
   color: var(--lb-text-neutral-contrast-low)
 
 // Strong and emphasis
@@ -134,17 +132,17 @@ em, i
 
 // Small text
 small
-  font-size: 0.875em
+  font-size: var(--lb-font-size-body-small)
 
 // Display classes for special headings
 .display-1
   font-size: $display-1
   font-weight: var(--lb-font-weight-bold)
-  line-height: 1.1
-  letter-spacing: -0.03em
+  line-height: var(--lb-line-height-tight)
+  letter-spacing: var(--lb-letter-spacing-tighter)
 
 .display-2
   font-size: $display-2
   font-weight: var(--lb-font-weight-bold)
-  line-height: 1.15
+  line-height: var(--lb-line-height-tight)
   letter-spacing: var(--lb-letter-spacing-tighter)
