@@ -267,54 +267,54 @@ defineOptions({
 
   // Size-specific styles for text
   &.size-xs .fallback-text
-    font-size: var(--lb-font-size-label-small)  // 0.75rem
+    font-size: var(--lb-font-size-label-small)
     
   &.size-sm .fallback-text
-    font-size: var(--lb-font-size-label-base)  // 0.875rem
+    font-size: var(--lb-font-size-label-base)
     
   &.size-md .fallback-text
-    font-size: var(--lb-font-size-body-base)  // 1rem
+    font-size: var(--lb-font-size-body-base)
     
   &.size-lg .fallback-text
-    font-size: var(--lb-font-size-body-large)  // 1.125rem
+    font-size: var(--lb-font-size-body-large)
     
   &.size-xl .fallback-text
-    font-size: 1.25rem  // 20px - no token for this size
+    font-size: var(--lb-font-size-body-large)
 
   // Size-specific styles for icon
   &.size-xs .default-icon
-    width: var(--lb-space-lg)  // 16px
-    height: var(--lb-space-lg)  // 16px
+    width: var(--lb-avatar-icon-size-xs)
+    height: var(--lb-avatar-icon-size-xs)
     
   &.size-sm .default-icon
-    width: 1.125rem  // 18px
-    height: 1.125rem  // 18px
+    width: var(--lb-avatar-icon-size-sm)
+    height: var(--lb-avatar-icon-size-sm)
     
   &.size-md .default-icon
-    width: var(--lb-space-xl)  // 20px
-    height: var(--lb-space-xl)  // 20px
+    width: var(--lb-avatar-icon-size-md)
+    height: var(--lb-avatar-icon-size-md)
     
   &.size-lg .default-icon
-    width: var(--lb-space-2xl)  // 24px
-    height: var(--lb-space-2xl)  // 24px
+    width: var(--lb-avatar-icon-size-lg)
+    height: var(--lb-avatar-icon-size-lg)
     
   &.size-xl .default-icon
-    width: 1.75rem  // 28px
-    height: 1.75rem  // 28px
+    width: var(--lb-avatar-icon-size-xl)
+    height: var(--lb-avatar-icon-size-xl)
 
   // Size-specific styles for status indicator
   &.size-xs .status-indicator,
   &.size-sm .status-indicator
-    bottom: calc(var(--lb-space-2xs) * -1)  // -2px
-    right: calc(var(--lb-space-2xs) * -1)  // -2px
+    bottom: calc(var(--lb-space-2xs) * -1)
+    right: calc(var(--lb-space-2xs) * -1)
     
   &.size-xs .status-indicator
-    width: var(--lb-space-sm)  // 8px
-    height: var(--lb-space-sm)  // 8px
+    width: var(--lb-avatar-status-size-xs)
+    height: var(--lb-avatar-status-size-xs)
     
   &.size-sm .status-indicator
-    width: 0.625rem  // 10px
-    height: 0.625rem  // 10px
+    width: var(--lb-avatar-status-size-sm)
+    height: var(--lb-avatar-status-size-sm)
     
   &.size-md .status-indicator,
   &.size-lg .status-indicator
@@ -322,16 +322,16 @@ defineOptions({
     right: 0
     
   &.size-md .status-indicator
-    width: var(--lb-space-md)  // 12px
-    height: var(--lb-space-md)  // 12px
+    width: var(--lb-avatar-status-size-md)
+    height: var(--lb-avatar-status-size-md)
     
   &.size-lg .status-indicator
-    width: 0.875rem  // 14px
-    height: 0.875rem  // 14px
+    width: var(--lb-avatar-status-size-lg)
+    height: var(--lb-avatar-status-size-lg)
     
   &.size-xl .status-indicator
-    width: var(--lb-space-lg)  // 16px
-    height: var(--lb-space-lg)  // 16px
-    bottom: var(--lb-space-2xs)  // 2px
-    right: var(--lb-space-2xs)  // 2px
+    width: var(--lb-avatar-status-size-xl)
+    height: var(--lb-avatar-status-size-xl)
+    bottom: var(--lb-space-2xs)
+    right: var(--lb-space-2xs)
 </style>
