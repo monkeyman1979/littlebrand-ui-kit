@@ -190,6 +190,14 @@ defineExpose({
     &.checked .switch-track
       background: var(--lb-fill-error-normal)
       border-color: var(--lb-fill-error-normal)
+    
+    // Hover states for invalid switches (must override default hover)
+    &:not(.checked) input:not(:disabled):hover ~ .switch-track
+      border-color: var(--lb-border-error-active)
+      
+    &.checked input:not(:disabled):hover ~ .switch-track
+      background: var(--lb-fill-error-hover)
+      border-color: var(--lb-fill-error-hover)
   
   // Disabled state
   &.disabled

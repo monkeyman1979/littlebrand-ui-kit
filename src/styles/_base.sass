@@ -120,3 +120,10 @@ $transition: 300ms ease !default
 // Focus States
 $focus-ring-width: $border-md !default
 $focus-ring-offset: $space-2xs !default
+
+// Mixins
+// Hover support - only applies hover styles on devices that support hovering
+@mixin hover-supported
+  @media (hover: hover)
+    &:hover
+      @content

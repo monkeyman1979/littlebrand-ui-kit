@@ -204,6 +204,14 @@ defineExpose({
     &.checked .radio-visual
       background: var(--lb-fill-error-normal)
       border-color: var(--lb-fill-error-normal)
+    
+    // Hover states for invalid radios (must override default hover)
+    input:not(:disabled):hover ~ .radio-visual
+      border-color: var(--lb-border-error-active)
+      
+    &.checked input:not(:disabled):hover ~ .radio-visual
+      background: var(--lb-fill-error-hover)
+      border-color: var(--lb-fill-error-hover)
   
   // Disabled state
   &.disabled

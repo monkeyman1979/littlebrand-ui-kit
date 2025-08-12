@@ -269,6 +269,15 @@ defineExpose({
     &.indeterminate .checkbox-visual
       background: var(--lb-fill-error-normal)
       border-color: var(--lb-fill-error-normal)
+    
+    // Hover states for invalid checkboxes (must override default hover)
+    input:not(:disabled):hover ~ .checkbox-visual
+      border-color: var(--lb-border-error-active)
+      
+    &.checked input:not(:disabled):hover ~ .checkbox-visual,
+    &.indeterminate input:not(:disabled):hover ~ .checkbox-visual
+      background: var(--lb-fill-error-hover)
+      border-color: var(--lb-fill-error-hover)
   
   // Disabled state
   &.disabled

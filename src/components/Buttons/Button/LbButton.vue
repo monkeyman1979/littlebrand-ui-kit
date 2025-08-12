@@ -277,8 +277,9 @@ defineOptions({
   @if $variant == 'filled'
     background-color: var(--lb-fill-#{$color}-normal)
     color: if($color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-on-variant-light))
-    &:hover:not(.disabled):not(.loading)
-      background-color: var(--lb-fill-#{$color}-hover)
+    &:not(.disabled):not(.loading)
+      @include base.hover-supported
+        background-color: var(--lb-fill-#{$color}-hover)
     &:active:not(.disabled):not(.loading)
       background-color: var(--lb-fill-#{$color}-active)
     &.disabled
@@ -288,9 +289,10 @@ defineOptions({
   @else if $variant == 'tonal'
     background-color: var(--lb-surface-#{$color}-normal)
     color: if($color == 'neutral', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-normal))
-    &:hover:not(.disabled):not(.loading)
-      background-color: var(--lb-surface-#{$color}-hover)
-      color: if($color == 'warning' or $color == 'neutral', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-normal))
+    &:not(.disabled):not(.loading)
+      @include base.hover-supported
+        background-color: var(--lb-surface-#{$color}-hover)
+        color: if($color == 'warning' or $color == 'neutral', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-normal))
     &:active:not(.disabled):not(.loading)
       background-color: var(--lb-surface-#{$color}-active)
     &.disabled
@@ -301,10 +303,11 @@ defineOptions({
     background-color: transparent
     color: if($color == 'neutral', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-normal))
     box-shadow: inset 0 0 0 base.$border-sm var(--lb-border-#{$color}-normal)
-    &:hover:not(.disabled):not(.loading)
-      background-color: var(--lb-fill-#{$color}-normal)
-      color: if($color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-on-variant-light))
-      box-shadow: none
+    &:not(.disabled):not(.loading)
+      @include base.hover-supported
+        background-color: var(--lb-fill-#{$color}-normal)
+        color: if($color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-on-variant-light))
+        box-shadow: none
     &:active:not(.disabled):not(.loading)
       background-color: var(--lb-fill-#{$color}-active)
       box-shadow: none
@@ -315,9 +318,10 @@ defineOptions({
   @else if $variant == 'ghost'
     background-color: transparent
     color: if($color == 'neutral', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-normal))
-    &:hover:not(.disabled):not(.loading)
-      background-color: var(--lb-surface-#{$color}-normal)
-      color: if($color == 'warning' or $color == 'neutral', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-normal))
+    &:not(.disabled):not(.loading)
+      @include base.hover-supported
+        background-color: var(--lb-surface-#{$color}-normal)
+        color: if($color == 'warning' or $color == 'neutral', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-normal))
     &:active:not(.disabled):not(.loading)
       background-color: var(--lb-surface-#{$color}-hover)
       transform: translateY(1px)
@@ -335,9 +339,10 @@ defineOptions({
     display: inline-flex
     align-items: baseline
     gap: base.$space-2xs
-    &:hover:not(.disabled):not(.loading)
-      text-decoration: underline
-      color: if($color == 'warning', var(--lb-text-warning-contrast-high), var(--lb-text-#{$color}-normal))
+    &:not(.disabled):not(.loading)
+      @include base.hover-supported
+        text-decoration: underline
+        color: if($color == 'warning', var(--lb-text-warning-contrast-high), var(--lb-text-#{$color}-normal))
     &:active:not(.disabled):not(.loading)
       opacity: base.$opacity-80
     &.disabled

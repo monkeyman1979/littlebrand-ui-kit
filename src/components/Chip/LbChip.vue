@@ -201,11 +201,12 @@ defineOptions({
     background-color: var(--lb-background-surface)
     color: var(--lb-text-neutral-contrast-high)
     
-    &:hover:not(.disabled)
-      background-color: var(--lb-surface-primary-normal)
-      border-color: var(--lb-border-primary-normal)
-      color: var(--lb-text-primary-normal)
-      box-shadow: base.$shadow-sm
+    &:not(.disabled)
+      @include base.hover-supported
+        background-color: var(--lb-surface-primary-normal)
+        border-color: var(--lb-border-primary-normal)
+        color: var(--lb-text-primary-normal)
+        box-shadow: base.$shadow-sm
       
     &:active:not(.disabled)
       background-color: var(--lb-surface-primary-hover)
@@ -216,27 +217,30 @@ defineOptions({
     background-color: var(--lb-background-surface)
     color: var(--lb-text-neutral-contrast-high)
     
-    &:hover:not(.disabled)
-      background-color: var(--lb-surface-primary-normal)
-      border-color: var(--lb-border-primary-normal)
-      color: var(--lb-text-primary-normal)
+    &:not(.disabled)
+      @include base.hover-supported
+        background-color: var(--lb-surface-primary-normal)
+        border-color: var(--lb-border-primary-normal)
+        color: var(--lb-text-primary-normal)
       
     &.selected
       background-color: var(--lb-surface-primary-hover)
       border-color: var(--lb-border-primary-normal)
       color: var(--lb-text-primary-normal)
       
-      &:hover:not(.disabled)
-        background-color: var(--lb-surface-primary-active)
+      &:not(.disabled)
+        @include base.hover-supported
+          background-color: var(--lb-surface-primary-active)
   
   &.variant-input
     background-color: var(--lb-fill-primary-normal)
     border-color: var(--lb-border-primary-normal)
     color: var(--lb-text-on-variant-light)
     
-    &:hover:not(.disabled)
-      background-color: var(--lb-fill-primary-hover)
-      box-shadow: base.$shadow-sm
+    &:not(.disabled)
+      @include base.hover-supported
+        background-color: var(--lb-fill-primary-hover)
+        box-shadow: base.$shadow-sm
       
     &:active:not(.disabled)
       background-color: var(--lb-fill-primary-active)
@@ -246,11 +250,12 @@ defineOptions({
     background-color: var(--lb-background-surface)
     color: var(--lb-text-neutral-contrast-low)
     
-    &:hover:not(.disabled)
-      background-color: var(--lb-background-surface-raised)
-      border-color: var(--lb-border-neutral-normal)
-      color: var(--lb-text-neutral-contrast-high)
-      box-shadow: base.$shadow-sm
+    &:not(.disabled)
+      @include base.hover-supported
+        background-color: var(--lb-background-surface-raised)
+        border-color: var(--lb-border-neutral-normal)
+        color: var(--lb-text-neutral-contrast-high)
+        box-shadow: base.$shadow-sm
       
     &:active:not(.disabled)
       background-color: var(--lb-surface-primary-normal)
@@ -262,7 +267,7 @@ defineOptions({
     cursor: not-allowed
     opacity: base.$opacity-60
     
-    &:hover
+    @include base.hover-supported
       background-color: var(--lb-background-surface)
       border-color: var(--lb-border-neutral-line)
       color: var(--lb-text-neutral-disabled)
@@ -279,7 +284,7 @@ defineOptions({
       pointer-events: auto
       cursor: pointer
     
-    &:hover
+    @include base.hover-supported
       background-color: var(--lb-background-surface)
       box-shadow: none
       transform: none
@@ -303,8 +308,10 @@ defineOptions({
   .icon-dropdown
     opacity: base.$opacity-70
     
-    .lb-chip:hover:not(.disabled) &
-      opacity: base.$opacity-100
+  .lb-chip:not(.disabled)
+    @include base.hover-supported
+      .icon-dropdown
+        opacity: base.$opacity-100
   
   // Content
   .content
@@ -332,10 +339,11 @@ defineOptions({
     transition: all base.$transition
     opacity: base.$opacity-70
     
-    &:hover:not(:disabled)
-      opacity: base.$opacity-100
-      background-color: var(--lb-surface-error-normal)
-      color: var(--lb-text-error-normal)
+    &:not(:disabled)
+      @include base.hover-supported
+        opacity: base.$opacity-100
+        background-color: var(--lb-surface-error-normal)
+        color: var(--lb-text-error-normal)
       
     &:active:not(:disabled)
       background-color: var(--lb-surface-error-hover)
@@ -356,11 +364,12 @@ defineOptions({
       background-color: var(--lb-background-surface)
       color: var(--lb-text-neutral-contrast-high)
       
-      &:hover:not(.disabled)
-        background-color: var(--lb-surface-#{$color}-normal)
-        border-color: var(--lb-border-#{$color}-normal)
-        color: var(--lb-text-#{$color}-normal)
-        box-shadow: base.$shadow-sm
+      &:not(.disabled)
+        @include base.hover-supported
+          background-color: var(--lb-surface-#{$color}-normal)
+          border-color: var(--lb-border-#{$color}-normal)
+          color: var(--lb-text-#{$color}-normal)
+          box-shadow: base.$shadow-sm
         
       &:active:not(.disabled)
         background-color: var(--lb-surface-#{$color}-hover)
@@ -372,18 +381,20 @@ defineOptions({
       background-color: var(--lb-background-surface)
       color: var(--lb-text-neutral-contrast-high)
       
-      &:hover:not(.disabled)
-        background-color: var(--lb-surface-#{$color}-normal)
-        border-color: var(--lb-border-#{$color}-normal)
-        color: var(--lb-text-#{$color}-normal)
+      &:not(.disabled)
+        @include base.hover-supported
+          background-color: var(--lb-surface-#{$color}-normal)
+          border-color: var(--lb-border-#{$color}-normal)
+          color: var(--lb-text-#{$color}-normal)
         
       &.selected
         background-color: var(--lb-surface-#{$color}-hover)
         border-color: var(--lb-border-#{$color}-normal)
         color: var(--lb-text-#{$color}-normal)
         
-        &:hover:not(.disabled)
-          background-color: var(--lb-surface-#{$color}-active)
+        &:not(.disabled)
+          @include base.hover-supported
+            background-color: var(--lb-surface-#{$color}-active)
   
   @if $variant == 'input'
     &.color-#{$color}
@@ -391,9 +402,10 @@ defineOptions({
       border-color: var(--lb-border-#{$color}-normal)
       color: if($color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-on-variant-light))
       
-      &:hover:not(.disabled)
-        background-color: var(--lb-fill-#{$color}-hover)
-        box-shadow: base.$shadow-sm
+      &:not(.disabled)
+        @include base.hover-supported
+          background-color: var(--lb-fill-#{$color}-hover)
+          box-shadow: base.$shadow-sm
         
       &:active:not(.disabled)
         background-color: var(--lb-fill-#{$color}-active)
@@ -404,11 +416,12 @@ defineOptions({
       background-color: var(--lb-background-surface)
       color: var(--lb-text-neutral-contrast-low)
       
-      &:hover:not(.disabled)
-        background-color: var(--lb-background-surface-raised)
-        border-color: var(--lb-border-neutral-normal)
-        color: var(--lb-text-neutral-contrast-high)
-        box-shadow: base.$shadow-sm
+      &:not(.disabled)
+        @include base.hover-supported
+          background-color: var(--lb-background-surface-raised)
+          border-color: var(--lb-border-neutral-normal)
+          color: var(--lb-text-neutral-contrast-high)
+          box-shadow: base.$shadow-sm
         
       &:active:not(.disabled)
         background-color: var(--lb-surface-#{$color}-normal)
