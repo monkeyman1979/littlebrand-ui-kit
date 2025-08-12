@@ -251,12 +251,18 @@ watch(() => props.modelValue, (newValue) => {
 }, { immediate: true })
 
 // Watch for open state changes
-watch(isOpen, (newIsOpen) => {
+watch(isOpen, (newIsOpen, oldIsOpen) => {
   if (newIsOpen) {
     // Reset internal date to match modelValue when opening
     internalDate.value = props.modelValue
     emit('open')
-  } else {
+  } else if (oldIsOpen) {
+    // When closing (from true to false), commit any selected date
+    // This provides better UX - clicking outside after selecting a date confirms it
+    if (internalDate.value?.getTime() !== props.modelValue?.getTime()) {
+      emit('update:modelValue', internalDate.value)
+      emit('change', internalDate.value)
+    }
     emit('close')
   }
 })
@@ -271,6 +277,7 @@ defineOptions({
 
 <style lang="sass" scoped>
 @use '@/styles/base' as base
+@use '@/styles/typography' as typography
 
 .lb-date-picker
   width: max-content
@@ -278,7 +285,7 @@ defineOptions({
   
   &.disabled
     pointer-events: none
-    opacity: var(--lb-opacity-60)
+    opacity: base.$opacity-60
   
   // Make the popover trigger take full width
   :deep(.lb-popover-trigger)
@@ -292,15 +299,15 @@ defineOptions({
   align-items: center
   justify-content: space-between
   gap: 0.5rem
-  gap: var(--lb-space-md)
-  padding: 0 var(--lb-space-md)
+  gap: base.$space-md
+  padding: 0 base.$space-md
   background: var(--lb-background-surface)
-  border: var(--lb-border-sm) solid var(--lb-border-neutral-line)
-  border-radius: var(--lb-radius-md)
+  border: base.$border-sm solid var(--lb-border-neutral-line)
+  border-radius: base.$radius-md
   font-family: var(--lb-font-body)
-  font-size: var(--lb-font-size-label-base)
+  font-size: typography.$font-size-label-base
   color: var(--lb-text-neutral-contrast-high)
-  transition: all var(--lb-transition)
+  transition: all base.$transition
   height: base.$unit-40  // 40px
   cursor: pointer
   text-align: left
@@ -308,11 +315,11 @@ defineOptions({
   // Size variants
   &.size-medium
     height: base.$unit-40  // 40px
-    font-size: var(--lb-font-size-label-base)
+    font-size: typography.$font-size-label-base
   
   &.size-large
     height: base.$unit-48  // 48px
-    font-size: var(--lb-font-size-label-large)
+    font-size: typography.$font-size-label-large
   
   &:focus
     outline: none
@@ -323,7 +330,7 @@ defineOptions({
   
   &:focus-visible
     outline: none
-    box-shadow: 0 0 0 calc(var(--lb-focus-ring-width) + var(--lb-focus-ring-offset)) var(--lb-focus-ring-color)
+    box-shadow: 0 0 0 calc(#{base.$focus-ring-width} + #{base.$focus-ring-offset}) var(--lb-focus-ring-color)
   
   &:active
     box-shadow: none  // Remove focus ring on click
@@ -343,11 +350,11 @@ defineOptions({
       border-color: var(--lb-border-error-active)
     
     &:focus-visible:not(:active)
-      box-shadow: 0 0 0 calc(var(--lb-focus-ring-width) + var(--lb-focus-ring-offset)) var(--lb-surface-error-active)
+      box-shadow: 0 0 0 calc(#{base.$focus-ring-width} + #{base.$focus-ring-offset}) var(--lb-surface-error-active)
   
   &:disabled
     cursor: not-allowed
-    opacity: var(--lb-opacity-60)
+    opacity: base.$opacity-60
     background: var(--lb-surface-neutral-subtle)
 
 .calendar-icon
@@ -379,7 +386,7 @@ defineOptions({
   border: none
   color: var(--lb-text-neutral-contrast-low)
   cursor: pointer
-  transition: color var(--lb-transition)
+  transition: color base.$transition
   
   &:hover
     color: var(--lb-text-neutral-contrast-high)
@@ -392,19 +399,19 @@ defineOptions({
 .date-picker-content
   display: flex
   flex-direction: column
-  gap: var(--lb-space-md)
+  gap: base.$space-md
   width: fit-content  // Size to calendar content
 
 .date-picker-actions
   display: flex
   justify-content: space-between
   align-items: center
-  padding-top: var(--lb-space-md)
-  border-top: var(--lb-border-sm) solid var(--lb-border-neutral-line)
+  padding-top: base.$space-md
+  border-top: base.$border-sm solid var(--lb-border-neutral-line)
   
   .action-group-left,
   .action-group-right
     display: flex
     align-items: center
-    gap: var(--lb-space-xs)
+    gap: base.$space-xs
 </style>
