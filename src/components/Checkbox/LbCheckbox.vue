@@ -177,6 +177,7 @@ defineExpose({
 
 <style lang="sass" scoped>
 @use '@/styles/base' as base
+@use '@/styles/component-variables' as cv
 @use '@/styles/typography' as typography
 
 .lb-checkbox
@@ -186,7 +187,7 @@ defineExpose({
   // Hidden native checkbox
   input[type="checkbox"]
     position: absolute
-    opacity: var(--lb-opacity-0)
+    opacity: base.$opacity-0
     width: 100%
     height: 100%
     margin: 0
@@ -202,12 +203,12 @@ defineExpose({
     display: flex
     align-items: center
     justify-content: center
-    width: base.$checkbox-size  // 20px
-    height: base.$checkbox-size  // 20px
+    width: cv.$checkbox-size  // 20px
+    height: cv.$checkbox-size  // 20px
     background: var(--lb-background-surface)
-    border: base.$checkbox-border-width solid var(--lb-border-neutral-normal)
-    border-radius: var(--lb-checkbox-radius)
-    transition: background-color var(--lb-transition), border-color var(--lb-transition), box-shadow var(--lb-transition)
+    border: cv.$checkbox-border-width solid var(--lb-border-neutral-normal)
+    border-radius: cv.$checkbox-border-radius
+    transition: background-color base.$transition, border-color base.$transition, box-shadow base.$transition
     will-change: background-color, border-color
     
   
@@ -217,9 +218,9 @@ defineExpose({
     align-items: center
     justify-content: center
     color: white
-    opacity: var(--lb-opacity-0)
+    opacity: base.$opacity-0
     transform: scale(0)
-    transition: opacity var(--lb-transition), transform var(--lb-transition)
+    transition: opacity base.$transition, transform base.$transition
     will-change: opacity, transform
     
     svg
@@ -234,7 +235,7 @@ defineExpose({
       border-color: var(--lb-fill-primary-normal)
       
     .icon
-      opacity: var(--lb-opacity-100)
+      opacity: base.$opacity-100
       transform: scale(1)
       
     // Animation
@@ -252,7 +253,7 @@ defineExpose({
   
   // Focus state
   input:focus-visible ~ .checkbox-visual
-    outline: var(--lb-focus-ring-width) solid var(--lb-focus-ring-color)
+    outline: base.$focus-ring-width solid var(--lb-focus-ring-color)
     outline-offset: base.$focus-ring-offset
   
   // Invalid state
@@ -261,7 +262,7 @@ defineExpose({
       border-color: var(--lb-border-error-normal)
       
     input:focus-visible ~ .checkbox-visual
-      box-shadow: 0 0 0 calc(var(--lb-focus-ring-width) + var(--lb-focus-ring-offset)) var(--lb-surface-error-active)
+      box-shadow: 0 0 0 calc(#{base.$focus-ring-width} + #{base.$focus-ring-offset}) var(--lb-surface-error-active)
       border-color: var(--lb-border-error-active)
       
     &.checked .checkbox-visual,
@@ -271,7 +272,7 @@ defineExpose({
   
   // Disabled state
   &.disabled
-    opacity: var(--lb-opacity-80)
+    opacity: base.$opacity-80
     
     .checkbox-visual
       background: var(--lb-surface-neutral-disabled)

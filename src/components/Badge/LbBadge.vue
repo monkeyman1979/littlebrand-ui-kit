@@ -98,27 +98,29 @@ defineOptions({
 <style lang="sass" scoped>
 @use '@/styles/colors' as colors
 @use '@/styles/base' as base
+@use '@/styles/component-variables' as cv
+@use '@/styles/typography' as typography
 
 .lb-badge
   display: inline-flex
   align-items: center
   justify-content: center
-  font-family: var(--lb-font-body)
-  font-weight: var(--lb-font-weight-semibold)
+  font-family: typography.$font-body
+  font-weight: typography.$font-weight-semibold
   line-height: 1
-  letter-spacing: var(--lb-letter-spacing-tight)
-  border-radius: var(--lb-badge-radius)
+  letter-spacing: typography.$letter-spacing-tight
+  border-radius: cv.$badge-border-radius
   white-space: nowrap
   user-select: none
   vertical-align: top
   animation: lb-badge-appear 0.2s ease-out
-  box-shadow: var(--lb-shadow-sm)
+  box-shadow: base.$shadow-sm
   
   // Base sizing for medium (default)
-  min-width: base.$badge-height-medium  // 20px
-  height: base.$badge-height-medium  // 20px
-  padding: 0 base.$badge-padding-x-medium  // 0 8px
-  font-size: base.$badge-font-size-medium  // 12px
+  min-width: cv.$badge-height-medium  // 20px
+  height: cv.$badge-height-medium  // 20px
+  padding: 0 cv.$badge-padding-x-medium  // 0 8px
+  font-size: cv.$badge-font-size-medium  // 12px
   
   // Position variants
   &.position-top-right
@@ -150,16 +152,16 @@ defineOptions({
   
   // Size variants
   &.size-small
-    min-width: base.$badge-height-small  // 18px
-    height: base.$badge-height-small  // 18px
-    padding: 0 base.$badge-padding-x-small  // 0 4px
-    font-size: base.$badge-font-size-small  // 10px
+    min-width: cv.$badge-height-small  // 18px
+    height: cv.$badge-height-small  // 18px
+    padding: 0 cv.$badge-padding-x-small  // 0 4px
+    font-size: cv.$badge-font-size-small  // 10px
     
   &.size-large
-    min-width: base.$badge-height-large  // 24px
-    height: base.$badge-height-large  // 24px
-    padding: 0 base.$badge-padding-x-large  // 0 8px
-    font-size: base.$badge-font-size-large  // 14px
+    min-width: cv.$badge-height-large  // 24px
+    height: cv.$badge-height-large  // 24px
+    padding: 0 cv.$badge-padding-x-large  // 0 8px
+    font-size: cv.$badge-font-size-large  // 14px
   
   // Dot variant overrides
   &.is-dot
@@ -215,9 +217,9 @@ defineOptions({
 // Appearance animation
 @keyframes lb-badge-appear
   from
-    opacity: var(--lb-opacity-0)
+    opacity: base.$opacity-0
     transform: scale(0.8)
   to
-    opacity: var(--lb-opacity-100)
+    opacity: base.$opacity-100
     transform: scale(1)
 </style>

@@ -484,6 +484,7 @@ onUnmounted(() => {
 
 <style lang="sass" scoped>
 @use '@/styles/base' as base
+@use '@/styles/typography' as typography
 
 .lb-menu
   display: inline-block
@@ -497,8 +498,8 @@ onUnmounted(() => {
   outline: none
 
 .menu-search
-  padding: var(--lb-space-sm) var(--lb-space-sm) var(--lb-space-xs)
-  border-bottom: var(--lb-border-sm) solid var(--lb-border-neutral-normal)
+  padding: base.$space-sm base.$space-sm base.$space-xs
+  border-bottom: base.$border-sm solid var(--lb-border-neutral-normal)
   
   form
     margin: 0
@@ -506,19 +507,19 @@ onUnmounted(() => {
 
 .search-input
   width: 100%
-  height: var(--lb-size-6xl)
-  padding: 0 var(--lb-space-sm) // 0 8px
+  height: base.$size-6xl
+  padding: 0 base.$space-sm // 0 8px
   background: var(--lb-background-surface)
-  border: var(--lb-border-sm) solid var(--lb-border-neutral-normal)
-  border-radius: var(--lb-radius-md)
-  font-size: var(--lb-font-size-label-base)
+  border: base.$border-sm solid var(--lb-border-neutral-normal)
+  border-radius: base.$radius-md
+  font-size: typography.$font-size-label-base
   color: var(--lb-text-neutral-contrast-high)
-  transition: border-color var(--lb-transition)
+  transition: border-color base.$transition
   box-sizing: border-box
 
   &::placeholder
     color: var(--lb-text-neutral-contrast-low)
-    opacity: var(--lb-opacity-100)
+    opacity: base.$opacity-100
 
   &:focus
     outline: none
@@ -531,10 +532,10 @@ onUnmounted(() => {
 
 .menu-items
   position: relative
-  padding: var(--lb-space-xs)
+  padding: base.$space-xs
   display: flex
   flex-direction: column
-  gap: var(--lb-space-2xs)
+  gap: base.$space-2xs
 
 .menu-item
   display: flex
@@ -542,16 +543,16 @@ onUnmounted(() => {
   justify-content: space-between
   width: 100%
   min-height: base.$unit-40  // 40px for better clickability
-  padding: var(--lb-space-sm) var(--lb-space-md)  // 8px vertical, 12px horizontal
+  padding: base.$space-sm base.$space-md  // 8px vertical, 12px horizontal
   background: transparent
   border: none
-  border-radius: var(--lb-radius-md)
-  font-size: var(--lb-font-size-label-base)
+  border-radius: base.$radius-md
+  font-size: typography.$font-size-label-base
   color: var(--lb-text-neutral-contrast-high)
   cursor: pointer
-  transition: background-color var(--lb-transition), color var(--lb-transition)
+  transition: background-color base.$transition, color base.$transition
   box-sizing: border-box
-  gap: var(--lb-space-sm) // 8px
+  gap: base.$space-sm // 8px
 
   &:hover:not(.menu-item-disabled)
     background: var(--lb-surface-neutral-hover)
@@ -569,14 +570,14 @@ onUnmounted(() => {
   &.menu-item-disabled
     color: var(--lb-text-neutral-disabled)
     cursor: not-allowed
-    opacity: var(--lb-opacity-60)
+    opacity: base.$opacity-60
 
 .item-content
   display: flex
   align-items: center
   justify-content: space-between
   width: 100%
-  gap: var(--lb-space-sm) // 8px
+  gap: base.$space-sm // 8px
 
 .item-label
   flex: 1
@@ -588,8 +589,8 @@ onUnmounted(() => {
   :deep(mark)
     background: var(--lb-surface-warning-normal)
     color: var(--lb-text-warning-contrast-high)
-    padding: 0 var(--lb-space-2xs) // 0 2px
-    border-radius: var(--lb-radius-xs)
+    padding: 0 base.$space-2xs // 0 2px
+    border-radius: base.$radius-xs
 
 .item-checkmark
   display: flex
@@ -602,7 +603,7 @@ onUnmounted(() => {
 
 .menu-divider
   width: 100%
-  height: var(--lb-border-sm) // 1px
+  height: base.$border-sm // 1px
   background: var(--lb-border-neutral-normal)
 
 // Focus management

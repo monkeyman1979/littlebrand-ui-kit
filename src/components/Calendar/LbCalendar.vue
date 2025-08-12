@@ -685,11 +685,12 @@ defineOptions({
 
 <style lang="sass" scoped>
 @use '@/styles/base' as base
+@use '@/styles/typography' as typography
 
 .lb-calendar
   display: inline-flex
   flex-direction: column
-  gap: var(--lb-space-lg)  // Gap between header and grid
+  gap: base.$space-lg  // Gap between header and grid
   width: fit-content  // Size to content
   max-width: 100%  // But don't overflow container
   background: var(--lb-background-surface)
@@ -697,9 +698,9 @@ defineOptions({
   
   // Standalone variant - with border and padding
   &.variant-standalone
-    border: var(--lb-border-sm) solid var(--lb-border-neutral-line)
-    border-radius: var(--lb-radius-lg)
-    padding: var(--lb-space-md)
+    border: base.$border-sm solid var(--lb-border-neutral-line)
+    border-radius: base.$radius-lg
+    padding: base.$space-md
   
   // Embedded variant - no border or padding
   &.variant-embedded
@@ -711,17 +712,17 @@ defineOptions({
   display: flex
   align-items: center
   justify-content: space-between
-  gap: var(--lb-space-md)
+  gap: base.$space-md
 
 .calendar-navigation
   display: flex
   align-items: center
-  gap: var(--lb-space-xs)
+  gap: base.$space-xs
   flex: 1
 
 .calendar-selects
   display: flex
-  gap: var(--lb-space-xs)
+  gap: base.$space-xs
   flex: 1
   min-width: 0
   
@@ -735,7 +736,7 @@ defineOptions({
 .calendar-grid
   display: flex
   flex-direction: column
-  gap: var(--lb-space-2xs)  // Gap between weekday labels and days grid
+  gap: base.$space-2xs  // Gap between weekday labels and days grid
   width: fit-content
 
 .weekday-labels
@@ -749,8 +750,8 @@ defineOptions({
   justify-content: center
   min-width: base.$unit-40  // 40px to match day cells
   height: base.$unit-32  // 32px height for weekday labels
-  font-size: var(--lb-font-size-label-small)
-  font-weight: var(--lb-font-weight-medium)
+  font-size: typography.$font-size-label-small
+  font-weight: typography.$font-weight-medium
   color: var(--lb-text-neutral-contrast-low)
   text-align: center
   
@@ -762,7 +763,7 @@ defineOptions({
 .days-grid
   display: flex
   flex-direction: column
-  row-gap: var(--lb-space-2xs)
+  row-gap: base.$space-2xs
 
 .calendar-week
   display: grid
@@ -781,12 +782,12 @@ defineOptions({
   background: transparent
   border: none
   box-sizing: border-box  // Ensure box-sizing is set
-  border-radius: var(--lb-radius-md)
-  font-size: var(--lb-font-size-body-base) // Medium font by default
-  font-weight: var(--lb-font-weight-normal)
+  border-radius: base.$radius-md
+  font-size: typography.$font-size-body-base // Medium font by default
+  font-weight: typography.$font-weight-normal
   color: var(--lb-text-neutral-contrast-high)
   cursor: pointer
-  transition: all var(--lb-transition)
+  transition: all base.$transition
   position: relative
   
   // Large size variant
@@ -795,12 +796,12 @@ defineOptions({
     min-width: base.$unit-48  // 48px for large
     min-height: base.$unit-48  // 48px for large - using min-height to ensure full height
     height: base.$unit-48  // 48px for large
-    border-radius: var(--lb-radius-lg)
-    font-size: var(--lb-font-size-body-large)
+    border-radius: base.$radius-lg
+    font-size: typography.$font-size-body-large
   
   &:focus-visible
-    outline: var(--lb-focus-ring-width) solid var(--lb-focus-ring-color)
-    outline-offset: var(--lb-focus-ring-offset)
+    outline: base.$focus-ring-width solid var(--lb-focus-ring-color)
+    outline-offset: base.$focus-ring-offset
     z-index: 1
   
   &:hover:not(:disabled)
@@ -817,17 +818,17 @@ defineOptions({
   // Other month days (previous/next month)
   &.other-month
     color: var(--lb-text-neutral-contrast-low)
-    opacity: var(--lb-opacity-60)
+    opacity: base.$opacity-60
     
     &:hover:not(:disabled)
       background: var(--lb-surface-neutral-subtle)
-      opacity: var(--lb-opacity-80)
+      opacity: base.$opacity-80
   
   // Today's date
   &.today
     color: var(--lb-text-primary-contrast-high)
-    font-weight: var(--lb-font-weight-medium)
-    border: var(--lb-border-sm) solid var(--lb-border-primary-normal)
+    font-weight: typography.$font-weight-medium
+    border: base.$border-sm solid var(--lb-border-primary-normal)
     
     &:hover:not(:disabled)
       background: var(--lb-surface-neutral-hover)
@@ -841,7 +842,7 @@ defineOptions({
   &.selected
     background: var(--lb-fill-primary-normal)
     color: var(--lb-text-on-variant-light)
-    font-weight: var(--lb-font-weight-medium)
+    font-weight: typography.$font-weight-medium
     
     &:hover:not(:disabled)
       background: var(--lb-fill-primary-hover)
@@ -851,14 +852,14 @@ defineOptions({
     
     // When selected date is also today
     &.today
-      border: var(--lb-border-sm) solid var(--lb-border-primary-active)
+      border: base.$border-sm solid var(--lb-border-primary-active)
   
   // Disabled dates
   &:disabled,
   &.disabled
     color: var(--lb-text-neutral-contrast-low)
     cursor: not-allowed
-    opacity: var(--lb-opacity-60)
+    opacity: base.$opacity-60
     background: transparent
     
     &:hover

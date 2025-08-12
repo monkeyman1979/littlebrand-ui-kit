@@ -248,13 +248,14 @@ defineExpose({
 
 <style lang="sass" scoped>
 @use '@/styles/base' as base
+@use '@/styles/component-variables' as cv
 @use '@/styles/typography' as typography
 
 // Overlay (backdrop)
 .lb-dialog-overlay
   position: fixed
   inset: 0
-  z-index: var(--lb-z-modal-backdrop)
+  z-index: base.$z-modal-backdrop
   background: var(--lb-background-overlay)
   backdrop-filter: blur(2px)
   overflow-y: auto
@@ -273,9 +274,9 @@ defineExpose({
 .lb-dialog
   position: relative
   background: var(--lb-background-surface)
-  border-radius: var(--lb-dialog-radius)
-  box-shadow: var(--lb-shadow-lg)
-  max-width: min(90vw, base.$dialog-width-medium)
+  border-radius: cv.$dialog-border-radius
+  box-shadow: base.$shadow-lg
+  max-width: min(90vw, cv.$dialog-width-medium)
   width: 100%
   max-height: min(90vh, 48rem)
   display: flex
@@ -294,7 +295,7 @@ defineExpose({
   display: flex
   align-items: center
   gap: base.$space-lg
-  padding: base.$dialog-padding
+  padding: cv.$dialog-padding
   flex-shrink: 0
   
   .header-content
@@ -317,7 +318,7 @@ defineExpose({
 .dialog-content
   flex: 1
   overflow-y: auto
-  padding: base.$space-3xl base.$dialog-padding base.$dialog-padding base.$dialog-padding
+  padding: base.$space-3xl cv.$dialog-padding cv.$dialog-padding cv.$dialog-padding
   color: var(--lb-text-neutral-contrast-low)
   
   // Adjust padding when fullscreen with header
@@ -340,27 +341,27 @@ defineExpose({
 
 // Transitions
 .dialog-enter-active
-  transition: opacity var(--lb-transition)
+  transition: opacity base.$transition
 
 .dialog-leave-active
   transition: opacity 200ms ease
 
 .dialog-enter-from,
 .dialog-leave-to
-  opacity: var(--lb-opacity-0)
+  opacity: base.$opacity-0
   
 .dialog-enter-active .lb-dialog
-  transition: transform var(--lb-transition), opacity var(--lb-transition)
+  transition: transform base.$transition, opacity base.$transition
   
 .dialog-leave-active .lb-dialog
   transition: transform 200ms ease, opacity 200ms ease
 
 .dialog-enter-from .lb-dialog
-  opacity: var(--lb-opacity-0)
+  opacity: base.$opacity-0
   transform: scale(0.95) translateY(base.$space-sm)
   
 .dialog-leave-to .lb-dialog
-  opacity: var(--lb-opacity-0)
+  opacity: base.$opacity-0
   transform: scale(0.95) translateY(base.$space-sm)
 
 // Responsive adjustments

@@ -71,9 +71,9 @@ defineOptions({
   align-items: stretch
   height: 4rem // 64px fixed height
   background-color: var(--lb-background-surface)
-  border-top: var(--lb-border-sm) solid var(--lb-border-neutral-line)
-  box-shadow: var(--lb-shadow-sm)
-  z-index: var(--z-dropdown)
+  border-top: base.$border-sm solid var(--lb-border-neutral-line)
+  box-shadow: base.$shadow-sm
+  z-index: base.$z-dropdown
   
   // Account for safe area on mobile devices by increasing height
   @supports (padding: env(safe-area-inset-bottom))
@@ -84,5 +84,5 @@ defineOptions({
     bottom: 0
     left: 0
     right: 0
-    z-index: var(--z-dropdown)
+    z-index: base.$z-dropdown
 </style>

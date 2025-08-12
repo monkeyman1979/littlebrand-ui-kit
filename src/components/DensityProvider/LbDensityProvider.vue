@@ -38,6 +38,9 @@ defineOptions({
 </script>
 
 <style lang="sass" scoped>
+@use '@/styles/base' as base
+@use '@/styles/typography' as typography
+
 .lb-density-provider
   // Set CSS variables that components can use
   &.density-compact

@@ -3756,31 +3756,46 @@ section
 .popover-demo
   display: flex
   flex-direction: column
-  gap: var(--lb-space-lg)
+  gap: 1.5rem
 
 .popover-grid
   display: grid
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr))
-  gap: var(--lb-space-md)
+  grid-template-columns: repeat(3, 1fr)
+  gap: 1rem
+  row-gap: 1.5rem
+  max-width: 600px
   
   @media (max-width: 768px)
     grid-template-columns: repeat(2, 1fr)
+    
+  button
+    width: 100%
+    justify-content: center
 
 .popover-content-demo
-  padding: var(--lb-space-md)
+  padding: 0.875rem
+  min-width: 200px
   
   h4
-    margin: 0 0 var(--lb-space-sm) 0
-    font-size: var(--lb-font-size-label-large)
+    margin: 0 0 0.5rem 0
+    font-size: 1rem
+    font-weight: 600
     color: var(--lb-text-neutral-contrast-high)
   
   p
-    margin: 0 0 var(--lb-space-md) 0
+    margin: 0 0 0.5rem 0
     color: var(--lb-text-neutral-contrast-low)
-    font-size: var(--lb-font-size-label-base)
+    font-size: 0.875rem
+    line-height: 1.5
+    
+    &:last-of-type:not(:only-child)
+      margin-bottom: 0.75rem
     
     &:last-child
       margin-bottom: 0
+  
+  button
+    margin-top: 0.25rem
 
 .user-menu-demo
   min-width: 280px
@@ -3788,60 +3803,63 @@ section
   .user-header
     display: flex
     align-items: center
-    gap: var(--lb-space-md)
-    padding: var(--lb-space-md)
+    gap: 1rem
+    padding: 1.25rem
     
     .user-info
       flex: 1
       min-width: 0
       
       .user-name
-        margin: 0 0 var(--lb-space-2xs) 0
-        font-size: var(--lb-font-size-label-base)
-        font-weight: var(--lb-font-weight-medium)
+        margin: 0 0 0.25rem 0
+        font-size: 1rem
+        font-weight: 600
         color: var(--lb-text-neutral-contrast-high)
       
       .user-email
         margin: 0
-        font-size: var(--lb-font-size-label-small)
+        font-size: 0.75rem
         color: var(--lb-text-neutral-contrast-low)
   
   .user-menu
-    padding: var(--lb-space-xs) 0
+    padding: 0.5rem
     
     .menu-item
       display: flex
       align-items: center
-      gap: var(--lb-space-md)
-      padding: var(--lb-space-sm) var(--lb-space-md)
+      gap: 0.75rem
+      padding: 0.625rem 0.75rem
+      margin: 0.125rem 0
+      border-radius: 0.5rem
       cursor: pointer
-      transition: background-color var(--lb-transition)
+      transition: background-color 0.2s ease
       color: var(--lb-text-neutral-contrast-low)
-      font-size: var(--lb-font-size-label-base)
+      font-size: 0.875rem
       
       &:hover
         background: var(--lb-surface-neutral-hover)
         color: var(--lb-text-neutral-contrast-high)
       
       .menu-icon
-        width: var(--lb-icon-size-sm)
-        height: var(--lb-icon-size-sm)
+        width: 18px
+        height: 18px
         flex-shrink: 0
 
 // Dropdown menu content styles for chip examples
 .dropdown-menu-content
-  padding: var(--lb-space-xs)
+  padding: 0.5rem
   min-width: 10rem // 160px
 
   .menu-item
     min-height: 40px // Match medium dropdown item height
-    padding: var(--lb-space-sm) var(--lb-space-md)
+    padding: 0.625rem 0.75rem
+    margin: 0.125rem 0
     cursor: pointer
-    border-radius: var(--lb-radius-sm)
+    border-radius: 0.5rem
     color: var(--lb-text-neutral-contrast-high)
-    font-size: var(--lb-font-size-label-base) // 14px - base label font
-    line-height: var(--lb-line-height-normal)
-    transition: background-color var(--lb-transition)
+    font-size: 0.875rem
+    line-height: 1.5
+    transition: background-color 0.2s ease
     display: flex
     align-items: center
     
@@ -3876,17 +3894,33 @@ section
 .date-picker-demo
   display: flex
   flex-direction: column
-  gap: var(--lb-space-md)
+  gap: 1rem
   align-items: flex-start
   
-  .lb-date-picker
+  // Direct DatePicker children get spacing
+  > .lb-date-picker
     min-width: 15rem
+    
+    & + .lb-date-picker
+      margin-top: 0.75rem
+  
+  // FormField wrapped DatePickers
+  > .lb-form-field
+    width: 100%
+    max-width: 400px
+    
+    & + .lb-form-field
+      margin-top: 1.5rem
+    
+    .lb-date-picker
+      width: 100%
   
   .demo-note
-    padding: var(--lb-space-sm)
+    margin-top: 1rem
+    padding: 0.75rem
     background: var(--lb-surface-neutral-subtle)
-    border-radius: var(--lb-radius-md)
-    font-size: var(--lb-font-size-body-small)
+    border-radius: 0.625rem
+    font-size: 0.875rem
     color: var(--lb-text-neutral-contrast-high)
     
     p
@@ -3912,18 +3946,41 @@ section
     margin: var(--lb-space-xs) 0
 
 .form-demo
-  min-width: 300px
+  min-width: 320px
+  padding: 1.25rem
   
   h4
-    margin: 0 0 var(--lb-space-lg) 0
+    margin: 0 0 1.25rem 0
+    font-size: 1.125rem
+    font-weight: 600
+    color: var(--lb-text-neutral-contrast-high)
+  
+  .form-field
+    margin-bottom: 1rem
+    
+    label
+      display: block
+      margin-bottom: 0.5rem
+    
+    &:last-of-type
+      margin-bottom: 1.25rem
+  
+  .form-actions
+    display: flex
+    justify-content: flex-end
+    gap: 0.75rem
+    padding-top: 0.25rem
 
 // Dropdown demo styles
 .dropdown-demo-content
-  padding: var(--lb-space-md)
+  padding: 1.25rem
   min-width: 200px
   
   p
-    margin: 0 0 var(--lb-space-sm) 0
+    margin: 0 0 0.75rem 0
+    font-size: 0.875rem
+    color: var(--lb-text-neutral-contrast-low)
+    
     &:last-child
       margin-bottom: 0
 

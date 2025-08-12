@@ -44,9 +44,9 @@ defineSlots<{
 .lb-hint-text
   display: flex
   align-items: center
-  gap: var(--lb-space-xs)
-  font-size: var(--lb-font-size-label-small) // 12px
-  line-height: var(--lb-line-height-normal)
+  gap: base.$space-xs
+  font-size: typography.$font-size-label-small // 12px
+  line-height: typography.$line-height-normal
   color: var(--lb-text-neutral-contrast-low)
   
   // State variations
@@ -72,8 +72,8 @@ defineSlots<{
   .icon
     display: flex
     align-items: center
-    width: var(--lb-size-2xl) // 18px
-    height: var(--lb-size-2xl) // 18px
+    width: base.$size-2xl // 18px
+    height: base.$size-2xl // 18px
     color: currentColor
   
   // Message text wrapper
@@ -86,5 +86,5 @@ defineSlots<{
       text-decoration: underline
       
       &:hover
-        opacity: var(--lb-opacity-80)
+        opacity: base.$opacity-80
 </style>

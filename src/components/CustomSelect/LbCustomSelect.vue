@@ -551,6 +551,8 @@ defineExpose({
 
 <style lang="sass" scoped>
 @use '@/styles/base' as base
+@use '@/styles/component-variables' as cv
+@use '@/styles/typography' as typography
 
 .lb-custom-select
   position: relative
@@ -565,12 +567,12 @@ defineExpose({
   justify-content: space-between
   width: 100%
   background: var(--lb-background-surface)
-  border: base.$select-border-width solid var(--lb-border-neutral-normal)
-  border-radius: var(--lb-select-radius)
+  border: cv.$select-border-width solid var(--lb-border-neutral-normal)
+  border-radius: cv.$select-border-radius
   font-family: inherit
   color: var(--lb-text-neutral-contrast-high)
   cursor: pointer
-  transition: border-color var(--lb-transition), box-shadow var(--lb-transition)
+  transition: border-color base.$transition, box-shadow base.$transition
   box-sizing: border-box
   gap: base.$space-sm
   outline: none
@@ -590,7 +592,7 @@ defineExpose({
   
 // Keyboard focus state (only shows ring when focused via keyboard)
 .keyboard-focus .select-trigger:focus:not(:active)
-  box-shadow: 0 0 0 calc(var(--lb-focus-ring-width) + var(--lb-focus-ring-offset)) var(--lb-focus-ring-color)
+  box-shadow: 0 0 0 calc(#{base.$focus-ring-width} + #{base.$focus-ring-offset}) var(--lb-focus-ring-color)
   
   // Focus takes precedence over hover
   &:focus:hover:not([aria-disabled="true"])
@@ -598,14 +600,14 @@ defineExpose({
 
 // Size variations
 .size-medium .select-trigger
-  height: base.$select-height-medium  // 40px
-  padding: 0 base.$select-padding-x-medium
-  font-size: var(--lb-select-font-size-medium)  // 14px - matches input
+  height: cv.$select-height-medium  // 40px
+  padding: 0 cv.$select-padding-x-medium
+  font-size: cv.$select-font-size-medium  // 14px - matches input
 
 .size-large .select-trigger
-  height: base.$select-height-large  // 48px
-  padding: 0 base.$select-padding-x-large
-  font-size: var(--lb-select-font-size-large)  // 16px - matches input
+  height: cv.$select-height-large  // 48px
+  padding: 0 cv.$select-padding-x-large
+  font-size: cv.$select-font-size-large  // 16px - matches input
 
 // State classes
 .invalid .select-trigger
@@ -616,13 +618,13 @@ defineExpose({
   
 
 .invalid.keyboard-focus .select-trigger:focus:not(:active)
-  box-shadow: 0 0 0 calc(var(--lb-focus-ring-width) + var(--lb-focus-ring-offset)) var(--lb-surface-error-active)
+  box-shadow: 0 0 0 calc(#{base.$focus-ring-width} + #{base.$focus-ring-offset}) var(--lb-surface-error-active)
 
 .disabled .select-trigger
   background: var(--lb-surface-neutral-subtle)
   color: var(--lb-text-neutral-disabled)
   cursor: not-allowed
-  opacity: var(--lb-opacity-60)
+  opacity: base.$opacity-60
   pointer-events: none
 
 .select-value
@@ -653,25 +655,25 @@ defineExpose({
   color: var(--lb-text-neutral-contrast-low)
   cursor: pointer
   border-radius: base.$radius-xs
-  transition: color var(--lb-transition), opacity var(--lb-transition)
+  transition: color base.$transition, opacity base.$transition
   padding: 0
   
   &:hover
     color: var(--lb-text-neutral-contrast-high)
   
   &:focus-visible
-    outline: var(--lb-focus-ring-width) solid var(--lb-focus-ring-color)
-    outline-offset: calc(base.$space-2xs * -1)
+    outline: base.$focus-ring-width solid var(--lb-focus-ring-color)
+    outline-offset: calc(#{base.$space-2xs} * -1)
   
   &:active
-    opacity: var(--lb-opacity-80)
+    opacity: base.$opacity-80
 
 .dropdown-icon
   display: flex
   align-items: center
   justify-content: center
   color: var(--lb-text-neutral-contrast-low)
-  transition: transform var(--lb-transition), color var(--lb-transition)
+  transition: transform base.$transition, color base.$transition
   
   &.is-open
     transform: rotate(180deg)
@@ -684,7 +686,7 @@ defineExpose({
   color: var(--lb-text-error-normal)
 
 .disabled .select-icons
-  opacity: var(--lb-opacity-60)
+  opacity: base.$opacity-60
 
 // Content styles
 .select-content
@@ -701,24 +703,24 @@ defineExpose({
   align-items: center
   justify-content: space-between
   width: 100%
-  min-height: base.$select-height-medium  // 40px
+  min-height: cv.$select-height-medium  // 40px
   padding: 0 base.$space-sm
   background: transparent
   border: none
   border-radius: base.$radius-md
   color: var(--lb-text-neutral-contrast-high)
   cursor: pointer
-  transition: background-color var(--lb-transition), color var(--lb-transition)
+  transition: background-color base.$transition, color base.$transition
   box-sizing: border-box
   gap: base.$space-sm
   
   // Font size based on parent content size
   .select-content-medium &
-    font-size: var(--lb-select-font-size-medium)
+    font-size: cv.$select-font-size-medium
   
   .select-content-large &
-    font-size: var(--lb-select-font-size-large)
-    min-height: base.$select-height-large  // 48px
+    font-size: cv.$select-font-size-large
+    min-height: cv.$select-height-large  // 48px
     padding: 0 base.$space-md
   
   &:hover:not(.select-option-disabled)
@@ -737,7 +739,7 @@ defineExpose({
   &.select-option-disabled
     color: var(--lb-text-neutral-disabled)
     cursor: not-allowed
-    opacity: var(--lb-opacity-60)
+    opacity: base.$opacity-60
 
 .option-content
   display: flex
