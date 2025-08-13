@@ -1,0 +1,178 @@
+// LittleBrand UI Kit - Custom Theme Examples
+// Shows different ways to configure the theme using Approach 5 (Mix & Match)
+
+// ==================================================
+// EXAMPLE 1: Simple - Just provide single colors
+// ==================================================
+@use '../src/styles/theme-config' as config with (
+  $theme-colors: (
+    'primary': #6366f1,    // Indigo - auto-generates 12-step scale
+    'secondary': #10b981,  // Emerald - auto-generates 12-step scale
+    'neutral': 'slate',    // Use built-in slate scale
+    // Other colors (success, warning, error, info) use defaults
+  )
+)
+
+@use '../src/styles/theme' with (
+  $use-custom-theme: true
+)
+
+// ==================================================
+// EXAMPLE 2: Mixed - Some single colors, some full scales
+// ==================================================
+@use '../src/styles/theme-config' as config with (
+  $theme-colors: (
+    // Full scale for precise control of primary
+    'primary': (
+      1: #eef2ff,
+      2: #e0e7ff,
+      3: #c7d2fe,
+      4: #a5b4fc,
+      5: #818cf8,
+      6: #6366f1,
+      7: #4f46e5,
+      8: #4338ca,
+      9: #3730a3,  // Main brand color
+      10: #312e81,
+      11: #1e1b4b,
+      12: #0f0d2e,
+    ),
+    
+    // Single color for secondary (auto-generate)
+    'secondary': #ec4899,  // Pink
+    
+    // Use preset for neutral
+    'neutral': 'gray',
+    
+    // Configure with options
+    'success': (
+      color: #16a34a,
+      curve: 'vivid',  // More saturated scale
+    ),
+  )
+)
+
+@use '../src/styles/theme' with (
+  $use-custom-theme: true
+)
+
+// ==================================================
+// EXAMPLE 3: Extended - With custom accent colors
+// ==================================================
+@use '../src/styles/theme-config' as config with (
+  $theme-colors: (
+    // Standard semantic colors
+    'primary': #8b5cf6,    // Violet
+    'secondary': #06b6d4,  // Cyan
+    'neutral': 'slate',
+    'error': #dc2626,
+    'warning': #f59e0b,
+    'success': #10b981,
+    'info': #3b82f6,
+    
+    // Custom accent colors
+    'accent-purple': #9333ea,
+    'accent-pink': #ec4899,
+    'accent-amber': #f59e0b,
+    'brand-gold': (        // Custom scale for special brand color
+      1: #fffbeb,
+      2: #fef3c7,
+      3: #fde68a,
+      4: #fcd34d,
+      5: #fbbf24,
+      6: #f59e0b,
+      7: #d97706,
+      8: #b45309,
+      9: #92400e,
+      10: #78350f,
+      11: #451a03,
+      12: #1c0a00,
+    ),
+  )
+)
+
+@use '../src/styles/theme' with (
+  $use-custom-theme: true
+)
+
+// The custom colors generate tokens like:
+// --lb-fill-accent-purple-normal
+// --lb-fill-accent-purple-hover
+// --lb-border-accent-pink-normal
+// --lb-text-brand-gold-contrast-high
+// etc.
+
+// ==================================================
+// EXAMPLE 4: Partial scales with overrides
+// ==================================================
+@use '../src/styles/theme-config' as config with (
+  $theme-colors: (
+    'primary': (
+      color: #dc2626,     // Base red color
+      curve: 'muted',      // Less saturated
+      overrides: (
+        9: #b91c1c,        // Override specific step
+        10: #991b1b,       // Custom hover color
+      ),
+    ),
+    'secondary': #059669,
+    'neutral': 'gray',
+  )
+)
+
+@use '../src/styles/theme' with (
+  $use-custom-theme: true
+)
+
+// ==================================================
+// EXAMPLE 5: Minimal - Just change primary
+// ==================================================
+@use '../src/styles/theme-config' as config with (
+  $theme-colors: (
+    'primary': #ff6900,  // Just override primary color
+    // Everything else uses defaults
+  )
+)
+
+@use '../src/styles/theme' with (
+  $use-custom-theme: true
+)
+
+// ==================================================
+// HOW TO USE IN YOUR PROJECT
+// ==================================================
+
+// 1. Create your custom theme file (e.g., custom-theme.sass):
+//    @use 'littlebrand-ui-kit/src/styles/theme-config' as config with (
+//      $theme-colors: (
+//        'primary': #your-color,
+//        'secondary': #your-color,
+//      )
+//    )
+//    
+//    @use 'littlebrand-ui-kit/src/styles/theme' with (
+//      $use-custom-theme: true
+//    )
+
+// 2. Import your custom theme in your main sass file:
+//    @use 'custom-theme'
+//    @use 'littlebrand-ui-kit/src/styles/main'
+
+// 3. The theme will automatically:
+//    - Generate 12-step scales from single colors
+//    - Create all semantic tokens (border, fill, text, surface)
+//    - Generate dark mode versions
+//    - Generate alpha scales
+//    - Support unlimited custom colors
+
+// ==================================================
+// NOTES
+// ==================================================
+
+// - Single colors become step 9 in the generated scale
+// - Steps 1-3 are very light (good for surfaces)
+// - Steps 4-6 are light (good for borders, disabled states)
+// - Steps 7-9 are medium (normal states, primary fills)
+// - Steps 10-12 are dark (hover states, high contrast text)
+// - Dark mode automatically inverts the scale
+// - Custom colors beyond semantic ones are fully supported

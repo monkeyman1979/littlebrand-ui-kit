@@ -99,7 +99,7 @@ const actionColor = computed(() => {
 
 const closeButtonColor = computed(() => {
   // Use a neutral color that works on all variant backgrounds
-  return props.variant === 'default' ? 'primary' : actionColor.value
+  return props.variant === 'default' ? 'neutral' : actionColor.value
 })
 
 // Methods
@@ -216,8 +216,11 @@ defineOptions({
 .lb-snackbar
   // Default variant
   &.variant-default
-    background-color: var(--lb-background-surface-raised)
+    background-color: var(--lb-surface-neutral-raised)
     border-color: var(--lb-border-neutral-line)
+    
+    .snackbar-message
+      color: var(--lb-text-neutral-contrast-high)
   
   // Success variant
   &.variant-success
@@ -241,7 +244,7 @@ defineOptions({
     border-color: var(--lb-border-warning-line)
     
     .snackbar-message
-      color: var(--lb-text-warning-normal)
+      color: var(--lb-text-warning-contrast-high)
   
   // Info variant
   &.variant-info

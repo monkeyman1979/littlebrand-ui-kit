@@ -146,7 +146,7 @@ defineOptions({
   align-items: center
   justify-content: center
   border-radius: cv.$avatar-border-radius
-  background-color: var(--lb-background-surface-raised)
+  background-color: var(--lb-background-surface)
   box-shadow: base.$shadow-sm
   flex-shrink: 0
   
@@ -246,27 +246,27 @@ defineOptions({
 
   // Color variants for fallback
   &.variant-primary .avatar-fallback
-    background-color: var(--lb-surface-primary-subtle)
+    background-color: var(--lb-surface-primary-normal)
     color: var(--lb-text-primary-normal)
     
   &.variant-secondary .avatar-fallback
-    background-color: var(--lb-surface-secondary-subtle)
+    background-color: var(--lb-surface-secondary-normal)
     color: var(--lb-text-secondary-normal)
     
   &.variant-success .avatar-fallback
-    background-color: var(--lb-surface-success-subtle)
+    background-color: var(--lb-surface-success-normal)
     color: var(--lb-text-success-normal)
     
   &.variant-warning .avatar-fallback
-    background-color: var(--lb-surface-warning-subtle)
+    background-color: var(--lb-surface-warning-normal)
     color: var(--lb-text-warning-contrast-high)
     
   &.variant-error .avatar-fallback
-    background-color: var(--lb-surface-error-subtle)
+    background-color: var(--lb-surface-error-normal)
     color: var(--lb-text-error-normal)
     
   &.variant-info .avatar-fallback
-    background-color: var(--lb-surface-info-subtle)
+    background-color: var(--lb-surface-info-normal)
     color: var(--lb-text-info-normal)
 
   // Size-specific styles for text

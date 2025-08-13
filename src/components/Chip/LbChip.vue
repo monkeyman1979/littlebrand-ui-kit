@@ -235,7 +235,7 @@ defineOptions({
   &.variant-input
     background-color: var(--lb-fill-primary-normal)
     border-color: var(--lb-border-primary-normal)
-    color: var(--lb-text-on-variant-light)
+    color: var(--lb-text-on-primary)
     
     &:not(.disabled)
       @include base.hover-supported
@@ -252,7 +252,7 @@ defineOptions({
     
     &:not(.disabled)
       @include base.hover-supported
-        background-color: var(--lb-background-surface-raised)
+        background-color: var(--lb-surface-neutral-hover)
         border-color: var(--lb-border-neutral-normal)
         color: var(--lb-text-neutral-contrast-high)
         box-shadow: base.$shadow-sm
@@ -400,7 +400,7 @@ defineOptions({
     &.color-#{$color}
       background-color: var(--lb-fill-#{$color}-normal)
       border-color: var(--lb-border-#{$color}-normal)
-      color: if($color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-on-variant-light))
+      color: var(--lb-text-on-#{$color})
       
       &:not(.disabled)
         @include base.hover-supported
@@ -418,7 +418,7 @@ defineOptions({
       
       &:not(.disabled)
         @include base.hover-supported
-          background-color: var(--lb-background-surface-raised)
+          background-color: var(--lb-surface-neutral-hover)
           border-color: var(--lb-border-neutral-normal)
           color: var(--lb-text-neutral-contrast-high)
           box-shadow: base.$shadow-sm

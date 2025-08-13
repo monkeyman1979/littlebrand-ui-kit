@@ -276,12 +276,14 @@ defineOptions({
   // Base colors for each variant
   @if $variant == 'filled'
     background-color: var(--lb-fill-#{$color}-normal)
-    color: if($color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-on-variant-light))
+    color: var(--lb-text-on-#{$color})
     &:not(.disabled):not(.loading)
       @include base.hover-supported
         background-color: var(--lb-fill-#{$color}-hover)
+        color: var(--lb-text-on-#{$color}-hover)
     &:active:not(.disabled):not(.loading)
       background-color: var(--lb-fill-#{$color}-active)
+      color: var(--lb-text-on-#{$color}-active)
     &.disabled
       background-color: var(--lb-surface-neutral-subtle)
       color: var(--lb-text-neutral-disabled)
@@ -306,10 +308,11 @@ defineOptions({
     &:not(.disabled):not(.loading)
       @include base.hover-supported
         background-color: var(--lb-fill-#{$color}-normal)
-        color: if($color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-on-variant-light))
+        color: var(--lb-text-on-#{$color})
         box-shadow: none
     &:active:not(.disabled):not(.loading)
       background-color: var(--lb-fill-#{$color}-active)
+      color: var(--lb-text-on-#{$color}-active)
       box-shadow: none
     &.disabled
       color: var(--lb-text-neutral-disabled)
