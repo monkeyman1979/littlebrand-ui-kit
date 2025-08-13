@@ -184,35 +184,35 @@ defineOptions({
 // Variant styles - notification bubble appearance
 .lb-badge.variant-default
   background-color: var(--lb-fill-neutral-normal)
-  color: var(--lb-text-on-variant-light)
+  color: var(--lb-text-on-neutral)
 
 .lb-badge.variant-neutral
   background-color: var(--lb-fill-neutral-normal)
-  color: var(--lb-text-on-variant-light)
+  color: var(--lb-text-on-neutral)
 
 .lb-badge.variant-primary
   background-color: var(--lb-fill-primary-normal)
-  color: var(--lb-text-on-variant-light)
+  color: var(--lb-text-on-primary)
 
 .lb-badge.variant-secondary
   background-color: var(--lb-fill-secondary-normal)
-  color: var(--lb-text-on-variant-light)
+  color: var(--lb-text-on-secondary)
 
 .lb-badge.variant-success
   background-color: var(--lb-fill-success-normal)
-  color: var(--lb-text-on-variant-light)
+  color: var(--lb-text-on-success)
 
 .lb-badge.variant-warning
   background-color: var(--lb-fill-warning-normal)
-  color: var(--lb-text-neutral-contrast-high)
+  color: var(--lb-text-on-warning)
 
 .lb-badge.variant-error
   background-color: var(--lb-fill-error-normal)
-  color: var(--lb-text-on-variant-light)
+  color: var(--lb-text-on-error)
 
 .lb-badge.variant-info
   background-color: var(--lb-fill-info-normal)
-  color: var(--lb-text-on-variant-light)
+  color: var(--lb-text-on-info)
 
 // Appearance animation
 @keyframes lb-badge-appear

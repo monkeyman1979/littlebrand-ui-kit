@@ -841,14 +841,16 @@ defineOptions({
   // Selected date
   &.selected
     background: var(--lb-fill-primary-normal)
-    color: var(--lb-text-on-variant-light)
+    color: var(--lb-text-on-primary)
     font-weight: typography.$font-weight-medium
     
     &:hover:not(:disabled)
       background: var(--lb-fill-primary-hover)
+      color: var(--lb-text-on-primary-hover)
     
     &:active:not(:disabled)
       background: var(--lb-fill-primary-active)
+      color: var(--lb-text-on-primary-active)
     
     // When selected date is also today
     &.today

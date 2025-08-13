@@ -111,11 +111,11 @@
                   .scale-title Primary Scale
                   .scale-row
                     .scale-step(v-for="n in 12" :key="n" :style="{ background: `var(--custom-surface-primary-${getStepName(n)})` }")
-                      span {{ n }}
+                      span(:style="{ color: getScaleStepTextColor('primary', n) }") {{ n }}
                 
                 .preview-buttons
-                  button.preview-btn(:style="{ background: 'var(--custom-fill-primary-normal)', color: 'white' }") Primary Button
-                  button.preview-btn(:style="{ background: 'var(--custom-fill-primary-hover)', color: 'white' }") Hover State
+                  button.preview-btn(:style="{ background: 'var(--custom-fill-primary-normal)', color: 'var(--custom-text-on-primary)' }") Primary Button
+                  button.preview-btn(:style="{ background: 'var(--custom-fill-primary-hover)', color: 'var(--custom-text-on-primary-hover)' }") Hover State
                   button.preview-btn(:style="{ border: '2px solid var(--custom-border-primary-normal)', color: 'var(--custom-text-primary-normal)', background: 'transparent' }") Outline
               
               .preview-card
@@ -123,11 +123,11 @@
                   .scale-title Secondary Scale
                   .scale-row
                     .scale-step(v-for="n in 12" :key="n" :style="{ background: `var(--custom-surface-secondary-${getStepName(n)})` }")
-                      span {{ n }}
+                      span(:style="{ color: getScaleStepTextColor('secondary', n) }") {{ n }}
                 
                 .preview-buttons
-                  button.preview-btn(:style="{ background: 'var(--custom-fill-secondary-normal)', color: 'white' }") Secondary Button
-                  button.preview-btn(:style="{ background: 'var(--custom-fill-secondary-hover)', color: 'white' }") Hover State
+                  button.preview-btn(:style="{ background: 'var(--custom-fill-secondary-normal)', color: 'var(--custom-text-on-secondary)' }") Secondary Button
+                  button.preview-btn(:style="{ background: 'var(--custom-fill-secondary-hover)', color: 'var(--custom-text-on-secondary-hover)' }") Hover State
                   button.preview-btn(:style="{ border: '2px solid var(--custom-border-secondary-normal)', color: 'var(--custom-text-secondary-normal)', background: 'transparent' }") Outline
               
               .preview-card.accent-card
@@ -135,7 +135,7 @@
                   .scale-title Accent Scale
                   .scale-row
                     .scale-step(v-for="n in 12" :key="n" :style="{ background: `var(--custom-surface-accent-${getStepName(n)})` }")
-                      span {{ n }}
+                      span(:style="{ color: getScaleStepTextColor('accent', n) }") {{ n }}
                 
                 .preview-surface(:style="{ background: 'var(--custom-surface-accent-normal)', border: '1px solid var(--custom-border-accent-normal)' }")
                   p(:style="{ color: 'var(--custom-text-accent-contrast-high)' }") Accent Surface
@@ -2773,6 +2773,61 @@ const hexToHSL = (hex) => {
   }
 }
 
+// Calculate relative luminance of a color
+const getLuminance = (hex) => {
+  // Convert hex to RGB
+  const r = parseInt(hex.slice(1, 3), 16) / 255
+  const g = parseInt(hex.slice(3, 5), 16) / 255
+  const b = parseInt(hex.slice(5, 7), 16) / 255
+  
+  // Apply gamma correction
+  const gammaCorrect = (val) => {
+    return val <= 0.03928 ? val / 12.92 : Math.pow((val + 0.055) / 1.055, 2.4)
+  }
+  
+  const rLinear = gammaCorrect(r)
+  const gLinear = gammaCorrect(g)
+  const bLinear = gammaCorrect(b)
+  
+  // Calculate relative luminance
+  return 0.2126 * rLinear + 0.7152 * gLinear + 0.0722 * bLinear
+}
+
+// Determine if white or dark text should be used
+const getContrastText = (backgroundColor) => {
+  const luminance = getLuminance(backgroundColor)
+  // Use white text if luminance is below 0.5, dark text otherwise
+  return luminance > 0.5 ? '#1a1a1a' : 'white'
+}
+
+// Convert HSL string to hex
+const hslToHex = (hslStr) => {
+  const match = hslStr.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/)
+  if (!match) return '#000000'
+  
+  const h = parseInt(match[1]) / 360
+  const s = parseInt(match[2]) / 100
+  const l = parseInt(match[3]) / 100
+  
+  const hue2rgb = (p, q, t) => {
+    if (t < 0) t += 1
+    if (t > 1) t -= 1
+    if (t < 1/6) return p + (q - p) * 6 * t
+    if (t < 1/2) return q
+    if (t < 2/3) return p + (q - p) * (2/3 - t) * 6
+    return p
+  }
+  
+  const q = l < 0.5 ? l * (1 + s) : l + s - l * s
+  const p = 2 * l - q
+  
+  const r = Math.round(hue2rgb(p, q, h + 1/3) * 255)
+  const g = Math.round(hue2rgb(p, q, h) * 255)
+  const b = Math.round(hue2rgb(p, q, h - 1/3) * 255)
+  
+  return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)
+}
+
 const generateColorScale = (baseColor, name) => {
   const hsl = hexToHSL(baseColor)
   const tokens = {}
@@ -2815,6 +2870,11 @@ const generateColorScale = (baseColor, name) => {
   tokens[`--custom-text-${name}-contrast-high`] = scale[12]
   tokens[`--custom-text-${name}-disabled`] = scale[5]
   
+  // Add text-on tokens for filled backgrounds using luminance calculation
+  tokens[`--custom-text-on-${name}`] = getContrastText(hslToHex(scale[9]))
+  tokens[`--custom-text-on-${name}-hover`] = getContrastText(hslToHex(scale[10]))
+  tokens[`--custom-text-on-${name}-active`] = getContrastText(hslToHex(scale[8]))
+  
   // Add surface tokens for the scale visualization
   for (let i = 1; i <= 12; i++) {
     tokens[`--custom-surface-${name}-${getStepName(i)}`] = scale[i]
@@ -2831,6 +2891,19 @@ const generateColorScale = (baseColor, name) => {
 const getStepName = (n) => {
   // For scale visualization
   return n.toString()
+}
+
+// Get the contrast text color for a scale step
+const getScaleStepTextColor = (colorName, step) => {
+  // Get the CSS variable value from customThemeStyles
+  const varName = `--custom-surface-${colorName}-${step}`
+  const hslValue = customThemeStyles.value[varName]
+  
+  if (!hslValue) return '#000000'
+  
+  // Convert HSL to hex for luminance calculation
+  const hexColor = hslToHex(hslValue)
+  return getContrastText(hexColor)
 }
 
 const updateCustomTheme = () => {
@@ -4078,13 +4151,13 @@ section
   min-width: 10rem // 160px
 
   .menu-item
-    min-height: 40px // Match medium dropdown item height
-    padding: 0.625rem 0.75rem
+    height: 40px // Match medium dropdown item height exactly
+    padding: 0 0.75rem // Remove vertical padding, keep horizontal
     margin: 0.125rem 0
     cursor: pointer
     border-radius: 0.5rem
     color: var(--lb-text-neutral-contrast-high)
-    font-size: 0.875rem
+    font-size: 0.875rem // 14px - medium size
     line-height: 1.5
     transition: background-color 0.2s ease
     display: flex
@@ -4493,8 +4566,6 @@ section
               span
                 font-size: 0.625rem
                 font-weight: 600
-                color: white
-                mix-blend-mode: difference
           
           .preview-buttons
             display: flex

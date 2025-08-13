@@ -234,10 +234,52 @@ $use-custom-theme: false !default
     --lb-surface-neutral-subtle: #{colors.$gray-1}
     --lb-surface-neutral-raised: #{colors.$gray-1}
     --lb-surface-neutral-disabled: #{colors.$gray-3}
+    
+    // === TEXT-ON TOKENS (for filled backgrounds) ===
+    // These are hardcoded based on typical luminance values
+    // Primary (orange) - typically needs white text
+    --lb-text-on-primary: white
+    --lb-text-on-primary-hover: white
+    --lb-text-on-primary-active: white
+    
+    // Secondary (teal) - typically needs white text
+    --lb-text-on-secondary: white
+    --lb-text-on-secondary-hover: white
+    --lb-text-on-secondary-active: white
+    
+    // Tertiary (blue) - typically needs white text
+    --lb-text-on-tertiary: white
+    --lb-text-on-tertiary-hover: white
+    --lb-text-on-tertiary-active: white
+    
+    // Success (green) - typically needs white text
+    --lb-text-on-success: white
+    --lb-text-on-success-hover: white
+    --lb-text-on-success-active: white
+    
+    // Warning (yellow) - needs dark text for contrast
+    --lb-text-on-warning: #{colors.$gray-12}
+    --lb-text-on-warning-hover: #{colors.$gray-12}
+    --lb-text-on-warning-active: #{colors.$gray-12}
+    
+    // Error (red) - typically needs white text
+    --lb-text-on-error: white
+    --lb-text-on-error-hover: white
+    --lb-text-on-error-active: white
+    
+    // Info (blue) - typically needs white text
+    --lb-text-on-info: white
+    --lb-text-on-info-hover: white
+    --lb-text-on-info-active: white
+    
+    // Neutral (gray) - typically needs white text
+    --lb-text-on-neutral: white
+    --lb-text-on-neutral-hover: white
+    --lb-text-on-neutral-active: white
   
   // === BACKGROUND TOKENS ===
-  --lb-background-page: #ffffff
-  --lb-background-surface: #ffffff
+  --lb-background-page: #{colors.$gray-1}
+  --lb-background-surface: #{colors.$gray-2}
   --lb-background-overlay: rgba(0, 0, 0, 0.5)
   
   // === ADDITIONAL TOKENS ===
@@ -518,6 +560,40 @@ $use-custom-theme: false !default
     --lb-surface-neutral-subtle: #{colors.$gray-dark-1}
     --lb-surface-neutral-raised: #{colors.$gray-dark-1}
     --lb-surface-neutral-disabled: #{colors.$gray-dark-3}
+    
+    // === TEXT-ON TOKENS (for filled backgrounds in dark mode) ===
+    // In dark mode, most colors remain bright enough for white text
+    --lb-text-on-primary: white
+    --lb-text-on-primary-hover: white
+    --lb-text-on-primary-active: white
+    
+    --lb-text-on-secondary: white
+    --lb-text-on-secondary-hover: white
+    --lb-text-on-secondary-active: white
+    
+    --lb-text-on-tertiary: white
+    --lb-text-on-tertiary-hover: white
+    --lb-text-on-tertiary-active: white
+    
+    --lb-text-on-success: white
+    --lb-text-on-success-hover: white
+    --lb-text-on-success-active: white
+    
+    --lb-text-on-warning: white
+    --lb-text-on-warning-hover: white
+    --lb-text-on-warning-active: white
+    
+    --lb-text-on-error: white
+    --lb-text-on-error-hover: white
+    --lb-text-on-error-active: white
+    
+    --lb-text-on-info: white
+    --lb-text-on-info-hover: white
+    --lb-text-on-info-active: white
+    
+    --lb-text-on-neutral: white
+    --lb-text-on-neutral-hover: white
+    --lb-text-on-neutral-active: white
     
     // === BACKGROUND TOKENS ===
     --lb-background-page: #{colors.$gray-dark-1}

@@ -230,8 +230,8 @@ $theme-colors: () !default
   // Add background tokens (using neutral scale)
   $neutral-scale: map.get($processed, 'neutral')
   @if $neutral-scale
-    $tokens: map.set($tokens, '--lb-background-page', white)
-    $tokens: map.set($tokens, '--lb-background-surface', white)
+    $tokens: map.set($tokens, '--lb-background-page', map.get($neutral-scale, 1))
+    $tokens: map.set($tokens, '--lb-background-surface', map.get($neutral-scale, 2))
     $tokens: map.set($tokens, '--lb-background-overlay', rgba(0, 0, 0, 0.5))
     $tokens: map.set($tokens, '--lb-focus-ring-color', map.get(map.get($processed, 'primary'), 7))
     $tokens: map.set($tokens, '--lb-divider-color', map.get($neutral-scale, 6))

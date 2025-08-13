@@ -6,6 +6,29 @@
 @use 'sass:map'
 @use 'sass:list'
 @use 'sass:meta'
+@use 'sass:string'
+
+// Calculate relative luminance of a color using WCAG formula
+@function get-luminance($color)
+  $r: color.red($color) / 255
+  $g: color.green($color) / 255
+  $b: color.blue($color) / 255
+  
+  // Apply gamma correction
+  $r: if($r <= 0.03928, $r / 12.92, math.pow(($r + 0.055) / 1.055, 2.4))
+  $g: if($g <= 0.03928, $g / 12.92, math.pow(($g + 0.055) / 1.055, 2.4))
+  $b: if($b <= 0.03928, $b / 12.92, math.pow(($b + 0.055) / 1.055, 2.4))
+  
+  // Return relative luminance
+  @return (0.2126 * $r) + (0.7152 * $g) + (0.0722 * $b)
+
+// Determine if white or dark text should be used on a given background
+@function get-contrast-text($background-color)
+  $luminance: get-luminance($background-color)
+  
+  // Use white text if luminance is below 0.5, dark text otherwise
+  // This threshold provides good contrast for most colors
+  @return if($luminance > 0.5, var(--lb-text-neutral-contrast-high), white)
 
 // Generate a 12-step color scale from a single color
 // The input color typically becomes step 9 (the primary/base color)
@@ -137,6 +160,14 @@
   $tokens: map.set($tokens, '--lb-text-#{$name}-contrast-low', map.get($scale, 11))
   $tokens: map.set($tokens, '--lb-text-#{$name}-contrast-high', map.get($scale, 12))
   $tokens: map.set($tokens, '--lb-text-#{$name}-disabled', map.get($scale, 5))
+  
+  // Text-on tokens for filled backgrounds (calculated based on luminance)
+  $fill-normal: map.get($scale, 9)
+  $fill-hover: map.get($scale, 10)
+  $fill-active: map.get($scale, 8)
+  $tokens: map.set($tokens, '--lb-text-on-#{$name}', get-contrast-text($fill-normal))
+  $tokens: map.set($tokens, '--lb-text-on-#{$name}-hover', get-contrast-text($fill-hover))
+  $tokens: map.set($tokens, '--lb-text-on-#{$name}-active', get-contrast-text($fill-active))
   
   // Surface tokens
   $tokens: map.set($tokens, '--lb-surface-#{$name}-normal', map.get($scale, 2))
