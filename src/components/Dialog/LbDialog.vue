@@ -266,6 +266,10 @@ defineExpose({
   place-items: center
   padding: base.$space-2xl
   
+  // Mobile responsive padding
+  @media (max-width: 640px)
+    padding: base.$space-lg
+  
   // Full-screen variant removes padding
   &.variant-fullscreen
     padding: 0
@@ -276,11 +280,16 @@ defineExpose({
   background: var(--lb-background-surface)
   border-radius: cv.$dialog-border-radius
   box-shadow: base.$shadow-lg
-  max-width: min(90vw, cv.$dialog-width-medium)
+  max-width: min(calc(100vw - 2 * base.$space-lg), cv.$dialog-width-medium)
   width: 100%
   max-height: min(90vh, 48rem)
   display: flex
   flex-direction: column
+  
+  // Ensure it doesn't overflow on mobile
+  @media (max-width: 640px)
+    max-width: calc(100vw - 2 * base.$space-lg)
+    max-height: calc(100vh - 2 * base.$space-lg)
   
   // Full-screen variant
   &.variant-fullscreen
