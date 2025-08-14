@@ -29,6 +29,10 @@
         p This is a regular paragraph with normal text.
         p.body-large This is large body text for emphasis.
         p.body-small This is small body text for fine print.
+        p.label.label-large Large Label (16px)
+        p.label Base Label (14px)
+        p.label.label-small Small Label (12px)
+        p.label.label-xsmall XSmall Label (10px)
       
     section.color-section
       h2 Color Palette
@@ -149,6 +153,7 @@
               'accent-purple': #9333ea,
               'brand-gold': #eab308
           p These generate all token variations: --lb-fill-accent-purple-normal, etc.
+
           
     section.components-section
       h2 Components
@@ -280,73 +285,6 @@
                   path(d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22")
               | External Link
               
-      .component-demo
-        h3 Density System
-        
-        .demo-group
-          h4 Global Density Control
-          p Switch between Compact and Default density modes to see how all components below adapt their sizing.
-          .button-row
-            LbSegmentButton(v-model="currentDensity" :allow-empty="false")
-              LbSegmentButtonItem(value="compact") Compact
-              LbSegmentButtonItem(value="default") Default
-        
-        .demo-group
-          h4 Components with Global Density
-          p These components automatically adapt to the selected density mode above.
-          LbDensityProvider(:density="currentDensity")
-            .density-demo-content
-              .input-row
-                LbInput(placeholder="Text input")
-                LbSelect(:options="colorOptions" placeholder="Select an option")
-                LbDatePicker(placeholder="Pick a date")
-              
-              .input-row(style="margin-top: 12px")
-                LbTextarea(placeholder="Enter your message here..." :rows="4" style="width: 100%")
-              
-              .calendar-demo(style="margin-top: 24px")
-                h5 Calendar Component
-                LbCalendar
-        
-        .demo-group
-          h4 Size Override Examples
-          p Components can override the global density by explicitly setting their size prop.
-          LbDensityProvider(:density="currentDensity")
-            .override-examples
-              .override-row
-                span.label Current global density: {{ currentDensity }}
-              .override-row
-                LbInput(placeholder="Uses global density (no size prop)")
-              .override-row
-                LbInput(placeholder="Always medium (size='medium')" size="medium")
-              .override-row
-                LbInput(placeholder="Always large (size='large')" size="large")
-        
-        .demo-group
-          h4 Side-by-Side Comparison
-          .density-comparison
-            .density-example
-              h5 Compact Density
-              LbDensityProvider(density="compact")
-                .input-row
-                  LbInput(placeholder="Compact input")
-                  LbSelect(:options="priorityOptions" placeholder="Compact select")
-                .input-row(style="margin-top: 12px")
-                  LbDatePicker(placeholder="Select date")
-                .input-row(style="margin-top: 12px")
-                  LbTextarea(placeholder="Compact textarea..." :rows="3" style="width: 100%")
-            
-            .density-example
-              h5 Default Density
-              LbDensityProvider(density="default")
-                .input-row
-                  LbInput(placeholder="Default input")
-                  LbSelect(:options="priorityOptions" placeholder="Default select")
-                .input-row(style="margin-top: 12px")
-                  LbDatePicker(placeholder="Select date")
-                .input-row(style="margin-top: 12px")
-                  LbTextarea(placeholder="Default textarea..." :rows="3" style="width: 100%")
-      
       .component-demo
         h3 Input
         
@@ -2508,13 +2446,10 @@ import {
   LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog,
   LbBadge, LbNavigationBar, LbNavigationBarItem, LbBottomSheet, LbChip, LbAvatar, LbProgress, LbDivider, 
   LbSegmentButton, LbSegmentButtonItem, useSnackbar, LbPopover, LbPopoverTrigger, LbPopoverContent, LbPopoverArrow,
-  LbDropdown, LbMenu, LbCalendar, LbDatePicker, LbDensityProvider
+  LbDropdown, LbMenu, LbCalendar, LbDatePicker
 } from '../src'
 
 const isDark = ref(false)
-
-// Density control
-const currentDensity = ref('default')
 
 // Custom theme interactive demo
 const customPrimary = ref('#6366f1')
@@ -3635,6 +3570,7 @@ section
       height: 80px
       border-radius: base.$radius-md
       border: base.$border-sm solid var(--lb-border-neutral-normal)
+
       
 .components-section
   display: flex
@@ -4320,72 +4256,6 @@ section
     justify-content: flex-end
     gap: var(--lb-space-sm)
 
-// Density system demo styles
-.density-demo-content
-  display: flex
-  flex-direction: column
-  gap: base.$space-lg
-  
-  .calendar-demo
-    h5
-      margin: 0 0 base.$space-md 0
-      color: var(--lb-text-neutral-contrast-high)
-      font-size: var(--lb-font-size-label-large)
-    
-    .lb-calendar
-      max-width: 100%
-
-.override-examples
-  display: flex
-  flex-direction: column
-  gap: base.$space-md
-  max-width: 600px
-  
-  .override-row
-    display: flex
-    align-items: center
-    
-    .label
-      font-weight: 500
-      color: var(--lb-text-neutral-contrast-high)
-      padding: base.$space-sm base.$space-md
-      background: var(--lb-surface-neutral-subtle)
-      border-radius: base.$radius-md
-      font-size: var(--lb-font-size-label-base)
-    
-    .lb-input
-      width: 100%
-
-// Density comparison styles
-.density-comparison
-  display: grid
-  grid-template-columns: 1fr 1fr
-  gap: base.$space-xl
-  
-  @media (max-width: 1024px)
-    grid-template-columns: 1fr
-  
-  .density-example
-    padding: base.$space-lg
-    background: var(--lb-surface-neutral-subtle)
-    border-radius: base.$radius-md
-    
-    h5
-      margin: 0 0 base.$space-md 0
-      color: var(--lb-text-neutral-contrast-high)
-      font-size: var(--lb-font-size-label-large)
-    
-    .input-row
-      display: flex
-      gap: base.$space-md
-      flex-wrap: wrap
-      
-      > *
-        flex: 1
-        min-width: 150px
-        
-      .lb-date-picker
-        max-width: 200px
 
 // Custom Theme Section Styles
 .custom-theme-section
@@ -4650,4 +4520,5 @@ section
       color: var(--lb-text-neutral-contrast-low)
       font-size: 0.75rem
       margin: 0
+
 </style>

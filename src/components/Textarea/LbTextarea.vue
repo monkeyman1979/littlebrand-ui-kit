@@ -79,18 +79,9 @@ const isKeyboardFocus = ref(false)
 const injectedId = inject<ComputedRef<string> | undefined>('formFieldId', undefined)
 const injectedAriaDescribedby = inject<ComputedRef<string | undefined> | undefined>('formFieldAriaDescribedby', undefined)
 
-// Inject density context if available
-const injectedDensitySize = inject<ComputedRef<'medium' | 'large'> | undefined>('densitySize', undefined)
-
 // Computed
-// Compute effective size: explicit prop > density > default
 const effectiveSize = computed(() => {
-  // If size is explicitly set, use it
-  if (props.size) return props.size
-  // Otherwise use density-based size if available
-  if (injectedDensitySize?.value) return injectedDensitySize.value
-  // Fall back to default
-  return 'medium'
+  return props.size || 'medium'
 })
 
 const rootClasses = computed(() => ({

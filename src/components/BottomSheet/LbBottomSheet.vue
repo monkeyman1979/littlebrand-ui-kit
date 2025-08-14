@@ -499,11 +499,15 @@ defineExpose({
 // Overlay (backdrop)
 .lb-bottom-sheet-overlay
   position: fixed
-  inset: 0
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
   z-index: base.$z-modal-backdrop
   background: var(--lb-background-overlay)
   backdrop-filter: blur(2px)
   overflow: hidden
+  width: 100%
   
   // Use flexbox to position sheet at bottom
   display: flex
@@ -520,13 +524,16 @@ defineExpose({
   border-radius: base.$radius-lg base.$radius-lg 0 0
   box-shadow: base.$shadow-lg
   width: 100%
-  max-width: 100vw
+  max-width: 100% // Changed from 100vw to prevent overflow
   min-height: 0
   max-height: var(--max-height)
   display: flex
   flex-direction: column
   transform-origin: bottom center
   transition: transform base.$transition, max-height base.$transition
+  
+  // Prevent horizontal overflow
+  overflow-x: hidden
   
   // Safe area padding for mobile devices
   padding-bottom: env(safe-area-inset-bottom)
