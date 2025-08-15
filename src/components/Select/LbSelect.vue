@@ -483,6 +483,8 @@ defineOptions({
 
 <style lang="sass" scoped>
 @use '@/styles/base' as base
+@use '@/styles/component-variables' as cv
+@use '@/styles/typography' as typography
 
 .lb-select
   display: inline-block
@@ -492,13 +494,13 @@ defineOptions({
   display: flex
   align-items: center
   width: 100%
-  padding: 0 base.$select-padding-x-medium
+  padding: 0 cv.$select-padding-x-medium
   background: var(--lb-background-surface)
-  border: base.$select-border-width solid var(--lb-border-neutral-normal)
-  border-radius: var(--lb-select-radius)
+  border: cv.$select-border-width solid var(--lb-border-neutral-normal)
+  border-radius: cv.$select-border-radius
   color: var(--lb-text-neutral-contrast-high)
   cursor: pointer
-  transition: border-color var(--lb-transition), box-shadow var(--lb-transition)
+  transition: border-color base.$transition, box-shadow base.$transition
   box-sizing: border-box
   
   // Hover state (only when not focused and not invalid)
@@ -517,23 +519,23 @@ defineOptions({
   
   // Keyboard focus state (only shows ring when focused via keyboard)
   &.select-trigger-keyboard-focus:focus:not(:active)
-    outline: var(--lb-focus-ring-width) solid var(--lb-focus-ring-color)
-    outline-offset: var(--lb-focus-ring-offset)
+    outline: base.$focus-ring-width solid var(--lb-focus-ring-color)
+    outline-offset: base.$focus-ring-offset
   
   &.select-trigger-medium
-    height: base.$select-height-medium  // 40px
-    font-size: var(--lb-select-font-size-medium)  // 14px - matches input
+    height: cv.$select-height-medium  // 40px
+    font-size: cv.$select-font-size-medium  // 14px - matches input
   
   &.select-trigger-large
-    height: base.$select-height-large  // 48px
-    padding: 0 base.$select-padding-x-large
-    font-size: var(--lb-select-font-size-large)  // 16px - matches input
+    height: cv.$select-height-large  // 48px
+    padding: 0 cv.$select-padding-x-large
+    font-size: cv.$select-font-size-large  // 16px - matches input
   
   &.select-trigger-disabled
     background: var(--lb-surface-neutral-subtle)
     color: var(--lb-text-neutral-disabled)
     cursor: not-allowed
-    opacity: var(--lb-opacity-60)
+    opacity: base.$opacity-60
   
   &.select-trigger-invalid
     border-color: var(--lb-border-error-normal)
@@ -543,7 +545,7 @@ defineOptions({
       border-color: var(--lb-border-error-normal)
     
     &.select-trigger-keyboard-focus:focus:not(:active)
-      box-shadow: 0 0 0 calc(var(--lb-focus-ring-width) + var(--lb-focus-ring-offset)) var(--lb-surface-error-active)
+      box-shadow: 0 0 0 calc(#{base.$focus-ring-width} + #{base.$focus-ring-offset}) var(--lb-surface-error-active)
 
 .select-value
   flex: 1
@@ -553,7 +555,7 @@ defineOptions({
   
   &.placeholder
     color: var(--lb-text-neutral-contrast-low)
-    opacity: var(--lb-opacity-100)
+    opacity: base.$opacity-100
 
 .clear-button
   display: inline-flex
@@ -568,15 +570,15 @@ defineOptions({
   border-radius: base.$radius-full
   color: var(--lb-text-neutral-contrast-low)
   cursor: pointer
-  transition: all var(--lb-transition)
+  transition: all base.$transition
   
   &:hover
     background: var(--lb-surface-neutral-hover)
     color: var(--lb-text-neutral-contrast-high)
   
   &:focus-visible
-    outline: var(--lb-focus-ring-width) solid var(--lb-focus-ring-color)
-    outline-offset: var(--lb-focus-ring-offset)
+    outline: base.$focus-ring-width solid var(--lb-focus-ring-color)
+    outline-offset: base.$focus-ring-offset
 
 .select-icon
   display: inline-flex
@@ -585,11 +587,11 @@ defineOptions({
   margin-left: base.$space-xs
   color: var(--lb-text-neutral-contrast-low)
   flex-shrink: 0
-  transition: transform var(--lb-transition)
+  transition: transform base.$transition
   
   svg
-    width: base.$select-icon-size  // 16px default
-    height: base.$select-icon-size
+    width: cv.$select-icon-size  // 16px default
+    height: cv.$select-icon-size
   
   &.lb-select[aria-expanded="true"]
     transform: rotate(180deg)
@@ -602,7 +604,7 @@ defineOptions({
 
 .select-search
   padding: base.$space-sm
-  border-bottom: base.$select-border-width solid var(--lb-border-neutral-normal)
+  border-bottom: cv.$select-border-width solid var(--lb-border-neutral-normal)
   
   form
     margin: 0
@@ -613,15 +615,15 @@ defineOptions({
   height: base.$unit-32  // 32px
   padding: 0 base.$space-sm
   background: var(--lb-background-surface)
-  border: base.$select-border-width solid var(--lb-border-neutral-normal)
-  border-radius: var(--lb-select-radius)
+  border: cv.$select-border-width solid var(--lb-border-neutral-normal)
+  border-radius: cv.$select-border-radius
   color: var(--lb-text-neutral-contrast-high)
-  transition: border-color var(--lb-transition)
+  transition: border-color base.$transition
   box-sizing: border-box
   
   &::placeholder
     color: var(--lb-text-neutral-contrast-low)
-    opacity: var(--lb-opacity-100)
+    opacity: base.$opacity-100
   
   &:focus
     outline: none
@@ -643,13 +645,13 @@ defineOptions({
   border-radius: base.$radius-sm
   color: var(--lb-text-neutral-contrast-high)
   cursor: pointer
-  transition: background-color var(--lb-transition)
+  transition: background-color base.$transition
   
   &.select-content-medium
-    font-size: var(--lb-select-font-size-medium)
+    font-size: cv.$select-font-size-medium
   
   &.select-content-large
-    font-size: var(--lb-select-font-size-large)
+    font-size: cv.$select-font-size-large
     padding: base.$space-md base.$space-lg
   
   &:hover:not(.select-option-disabled)
@@ -668,7 +670,7 @@ defineOptions({
   &.select-option-disabled
     color: var(--lb-text-neutral-disabled)
     cursor: not-allowed
-    opacity: var(--lb-opacity-60)
+    opacity: base.$opacity-60
 
 .option-label
   flex: 1

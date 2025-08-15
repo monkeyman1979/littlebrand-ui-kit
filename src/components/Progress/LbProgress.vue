@@ -147,6 +147,7 @@ defineOptions({
 
 <style lang="sass" scoped>
 @use '@/styles/base' as base
+@use '@/styles/typography' as typography
 
 .lb-progress
   display: inline-block
@@ -159,7 +160,7 @@ defineOptions({
       position: relative
       width: 100%
       background-color: var(--lb-surface-neutral-normal)
-      border-radius: var(--lb-radius-full)
+      border-radius: base.$radius-full
       overflow: hidden
         
       .progress-fill
@@ -167,8 +168,8 @@ defineOptions({
         top: 0
         height: 100%
         background-color: var(--lb-fill-primary-normal)
-        border-radius: var(--lb-radius-full)
-        transition: width var(--lb-transition)
+        border-radius: base.$radius-full
+        transition: width base.$transition
     
     // Indeterminate linear animation
     &.indeterminate
@@ -205,14 +206,14 @@ defineOptions({
       .progress-fill-circle
         stroke: var(--lb-fill-primary-normal)
         stroke-linecap: round
-        transition: stroke-dashoffset var(--lb-transition)
+        transition: stroke-dashoffset base.$transition
         
       .progress-text
         transform: rotate(90deg)
         font-family: var(--lb-font-body)
-        font-weight: var(--lb-font-weight-medium)
+        font-weight: typography.$font-weight-medium
         fill: var(--lb-text-neutral-contrast-high)
-        font-size: var(--lb-font-size-label-small)
+        font-size: typography.$font-size-label-small
     
     // Circular size variants (dimensions)
     &.circular-size-xs
@@ -220,28 +221,28 @@ defineOptions({
       height: 1.5rem
       
       .progress-text
-        font-size: var(--lb-font-size-label-small)
+        font-size: typography.$font-size-label-small
         
     &.circular-size-sm
       width: 2rem // 32px
       height: 2rem
       
       .progress-text
-        font-size: var(--lb-font-size-label-small)
+        font-size: typography.$font-size-label-small
         
     &.circular-size-md
       width: 2.5rem // 40px
       height: 2.5rem
       
       .progress-text
-        font-size: var(--lb-font-size-label-base)
+        font-size: typography.$font-size-label-base
         
     &.circular-size-lg
       width: 3rem // 48px
       height: 3rem
       
       .progress-text
-        font-size: var(--lb-font-size-label-base)
+        font-size: typography.$font-size-label-base
     
     // Indeterminate animation for circular
     &.indeterminate

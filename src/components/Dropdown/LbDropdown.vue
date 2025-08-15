@@ -60,7 +60,7 @@ const contentStyles = computed(() => ({
   top: `${position.value.top}px`,
   left: `${position.value.left}px`,
   width: props.matchWidth ? `${position.value.width}` : 'auto',
-  zIndex: 'var(--lb-z-dropdown)'
+  zIndex: 1000  // High z-index for dropdown to appear above other elements
 }))
 
 // Methods
@@ -225,13 +225,13 @@ defineOptions({
   
   &[aria-disabled="true"]
     cursor: not-allowed
-    opacity: var(--lb-opacity-60)
+    opacity: base.$opacity-60
 
 .dropdown-content
   background: var(--lb-background-surface)
-  border: var(--lb-border-sm) solid var(--lb-border-neutral-normal)
-  border-radius: var(--lb-radius-lg)
-  box-shadow: var(--lb-shadow-lg)
+  border: base.$border-sm solid var(--lb-border-neutral-normal)
+  border-radius: base.$radius-lg
+  box-shadow: base.$shadow-lg
   overflow-y: auto
   overflow-x: hidden
   max-height: 17rem // 272px
@@ -243,7 +243,7 @@ defineOptions({
 // Transition
 .dropdown-fade-enter-active,
 .dropdown-fade-leave-active
-  transition: opacity var(--lb-transition), transform var(--lb-transition)
+  transition: opacity base.$transition, transform base.$transition
 
 .dropdown-fade-enter-from,
 .dropdown-fade-leave-to

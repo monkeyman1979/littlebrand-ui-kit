@@ -83,13 +83,14 @@ defineOptions({
 
 <style lang="sass" scoped>
 @use '@/styles/base' as base
+@use '@/styles/typography' as typography
 
 .lb-navigation-bar-item
   display: flex
   flex-direction: column
   align-items: center
   justify-content: center
-  gap: var(--lb-space-xs)
+  gap: base.$space-xs
   padding: 0
   min-height: base.$unit-48 // 48px minimum touch target
   height: 100%
@@ -97,15 +98,15 @@ defineOptions({
   border: none
   border-radius: 0
   cursor: pointer
-  transition: all var(--lb-transition)
+  transition: all base.$transition
   color: var(--lb-text-neutral-contrast-low)
   outline: none
   position: relative
   width: 100%
   
   &:focus-visible
-    outline: var(--lb-focus-ring-width) solid var(--lb-focus-ring-color)
-    outline-offset: var(--lb-focus-ring-offset)
+    outline: base.$focus-ring-width solid var(--lb-focus-ring-color)
+    outline-offset: base.$focus-ring-offset
   
   // Only apply hover styles on devices that support hover (non-touch)
   @media (hover: hover)
@@ -116,7 +117,7 @@ defineOptions({
     transform: scale(0.98)
   
   &.disabled
-    opacity: var(--lb-opacity-40)
+    opacity: base.$opacity-40
     cursor: not-allowed
   
   &.no-label
@@ -128,23 +129,23 @@ defineOptions({
     justify-content: center
     width: base.$unit-24  // 24px icon size
     height: base.$unit-24  // 24px icon size
-    transition: all var(--lb-transition)
+    transition: all base.$transition
     
     :deep(svg)
       width: base.$unit-24  // 24px icon size
       height: base.$unit-24  // 24px icon size
-      transition: all var(--lb-transition)
+      transition: all base.$transition
   
   .label
-    font-size: var(--lb-font-size-label-small)
-    font-weight: var(--lb-font-weight-medium)
-    line-height: var(--lb-line-height-compact)
+    font-size: typography.$font-size-label-small
+    font-weight: typography.$font-weight-medium
+    line-height: typography.$line-height-compact
     text-align: center
     white-space: nowrap
     overflow: hidden
     text-overflow: ellipsis
     max-width: 100%
-    transition: color var(--lb-transition)
+    transition: color base.$transition
 
 // Color variants - Active states
 .lb-navigation-bar-item

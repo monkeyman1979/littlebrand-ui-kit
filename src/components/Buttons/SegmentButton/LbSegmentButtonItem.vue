@@ -130,6 +130,7 @@ defineOptions({
 
 <style lang="sass" scoped>
 @use '@/styles/base' as base
+@use '@/styles/typography' as typography
 
 .lb-segment-button-item
   display: flex
@@ -150,9 +151,9 @@ defineOptions({
   cursor: pointer
   transition: all base.$transition
   color: var(--lb-text-neutral-contrast-low)
-  font-size: var(--lb-font-size-label-base)
-  font-weight: var(--lb-font-weight-medium)
-  line-height: var(--lb-line-height-compact)
+  font-size: typography.$font-size-label-base
+  font-weight: typography.$font-weight-medium
+  line-height: typography.$line-height-compact
   outline: none
   position: relative
   white-space: nowrap
@@ -210,15 +211,15 @@ defineOptions({
   // Size variant (only medium now)
   &.size-medium
     padding: 0 base.$space-lg // 16px minimum
-    font-size: var(--lb-font-size-label-base)
+    font-size: typography.$font-size-label-base
     
     .icon-container
-      width: var(--lb-size-2xl) // 18px
-      height: var(--lb-size-2xl) // 18px
+      width: base.$size-2xl // 18px
+      height: base.$size-2xl // 18px
       
       :deep(svg)
-        width: var(--lb-size-2xl) // 18px
-        height: var(--lb-size-2xl) // 18px
+        width: base.$size-2xl // 18px
+        height: base.$size-2xl // 18px
 
 
   // Icon and text layout

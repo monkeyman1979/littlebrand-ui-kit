@@ -136,36 +136,40 @@ defineOptions({
 </script>
 
 <style lang="sass" scoped>
+@use '@/styles/base' as base
+@use '@/styles/typography' as typography
+@use '@/styles/component-variables' as cv
+
 .lb-avatar
   position: relative
   display: inline-flex
   align-items: center
   justify-content: center
-  border-radius: var(--lb-avatar-radius)
-  background-color: var(--lb-background-surface-raised)
-  box-shadow: var(--lb-shadow-sm)
+  border-radius: cv.$avatar-border-radius
+  background-color: var(--lb-background-surface)
+  box-shadow: base.$shadow-sm
   flex-shrink: 0
   
   // Size variants - using space variables since avatar-size variables don't work
   &.size-xs
-    width: var(--lb-avatar-size-xs)
-    height: var(--lb-avatar-size-xs)
+    width: cv.$avatar-size-xs
+    height: cv.$avatar-size-xs
     
   &.size-sm
-    width: var(--lb-avatar-size-sm)
-    height: var(--lb-avatar-size-sm)
+    width: cv.$avatar-size-sm
+    height: cv.$avatar-size-sm
     
   &.size-md
-    width: var(--lb-avatar-size-md)
-    height: var(--lb-avatar-size-md)
+    width: cv.$avatar-size-md
+    height: cv.$avatar-size-md
     
   &.size-lg
-    width: var(--lb-avatar-size-lg)
-    height: var(--lb-avatar-size-lg)
+    width: cv.$avatar-size-lg
+    height: cv.$avatar-size-lg
     
   &.size-xl
-    width: var(--lb-avatar-size-xl)
-    height: var(--lb-avatar-size-xl)
+    width: cv.$avatar-size-xl
+    height: cv.$avatar-size-xl
 
   // Image inside avatar - need to override global img reset
   img.avatar-image
@@ -178,14 +182,14 @@ defineOptions({
     max-width: 100%
     max-height: 100%
     object-fit: cover
-    transition: opacity var(--lb-transition)
+    transition: opacity base.$transition
     border-radius: inherit
     
     &.loading
-      opacity: var(--lb-opacity-0)
+      opacity: base.$opacity-0
       
     &.loaded
-      opacity: var(--lb-opacity-100)
+      opacity: base.$opacity-100
 
   // Fallback container
   .avatar-fallback
@@ -197,20 +201,20 @@ defineOptions({
     display: flex
     align-items: center
     justify-content: center
-    font-weight: var(--lb-font-weight-medium)
-    transition: opacity var(--lb-transition)
-    opacity: var(--lb-opacity-0)
+    font-weight: typography.$font-weight-medium
+    transition: opacity base.$transition
+    opacity: base.$opacity-0
     border-radius: inherit
     
     &.visible
-      opacity: var(--lb-opacity-100)
+      opacity: base.$opacity-100
 
     // Fallback text inside
     .fallback-text
-      font-family: var(--lb-font-body)
+      font-family: typography.$font-body
       text-transform: uppercase
-      letter-spacing: var(--lb-letter-spacing-wide)
-      line-height: var(--lb-line-height-compact)
+      letter-spacing: typography.$letter-spacing-wide
+      line-height: typography.$line-height-compact
       user-select: none
 
     // Fallback icon container
@@ -225,8 +229,8 @@ defineOptions({
   // Status indicator
   .status-indicator
     position: absolute
-    border-radius: var(--lb-radius-full)
-    border: var(--lb-border-md) solid var(--lb-background-surface)
+    border-radius: base.$radius-full
+    border: base.$border-md solid var(--lb-background-surface)
     
     &.status-online
       background-color: var(--lb-text-success-normal)
@@ -242,79 +246,79 @@ defineOptions({
 
   // Color variants for fallback
   &.variant-primary .avatar-fallback
-    background-color: var(--lb-surface-primary-subtle)
+    background-color: var(--lb-surface-primary-normal)
     color: var(--lb-text-primary-normal)
     
   &.variant-secondary .avatar-fallback
-    background-color: var(--lb-surface-secondary-subtle)
+    background-color: var(--lb-surface-secondary-normal)
     color: var(--lb-text-secondary-normal)
     
   &.variant-success .avatar-fallback
-    background-color: var(--lb-surface-success-subtle)
+    background-color: var(--lb-surface-success-normal)
     color: var(--lb-text-success-normal)
     
   &.variant-warning .avatar-fallback
-    background-color: var(--lb-surface-warning-subtle)
+    background-color: var(--lb-surface-warning-normal)
     color: var(--lb-text-warning-contrast-high)
     
   &.variant-error .avatar-fallback
-    background-color: var(--lb-surface-error-subtle)
+    background-color: var(--lb-surface-error-normal)
     color: var(--lb-text-error-normal)
     
   &.variant-info .avatar-fallback
-    background-color: var(--lb-surface-info-subtle)
+    background-color: var(--lb-surface-info-normal)
     color: var(--lb-text-info-normal)
 
   // Size-specific styles for text
   &.size-xs .fallback-text
-    font-size: var(--lb-font-size-label-small)
+    font-size: typography.$font-size-label-small
     
   &.size-sm .fallback-text
-    font-size: var(--lb-font-size-label-base)
+    font-size: typography.$font-size-label-base
     
   &.size-md .fallback-text
-    font-size: var(--lb-font-size-body-base)
+    font-size: typography.$font-size-body-base
     
   &.size-lg .fallback-text
-    font-size: var(--lb-font-size-body-large)
+    font-size: typography.$font-size-body-large
     
   &.size-xl .fallback-text
-    font-size: var(--lb-font-size-body-large)
+    font-size: typography.$font-size-body-large
 
   // Size-specific styles for icon
   &.size-xs .default-icon
-    width: var(--lb-avatar-icon-size-xs)
-    height: var(--lb-avatar-icon-size-xs)
+    width: cv.$avatar-icon-size-xs
+    height: cv.$avatar-icon-size-xs
     
   &.size-sm .default-icon
-    width: var(--lb-avatar-icon-size-sm)
-    height: var(--lb-avatar-icon-size-sm)
+    width: cv.$avatar-icon-size-sm
+    height: cv.$avatar-icon-size-sm
     
   &.size-md .default-icon
-    width: var(--lb-avatar-icon-size-md)
-    height: var(--lb-avatar-icon-size-md)
+    width: cv.$avatar-icon-size-md
+    height: cv.$avatar-icon-size-md
     
   &.size-lg .default-icon
-    width: var(--lb-avatar-icon-size-lg)
-    height: var(--lb-avatar-icon-size-lg)
+    width: cv.$avatar-icon-size-lg
+    height: cv.$avatar-icon-size-lg
     
   &.size-xl .default-icon
-    width: var(--lb-avatar-icon-size-xl)
-    height: var(--lb-avatar-icon-size-xl)
+    width: cv.$avatar-icon-size-xl
+    height: cv.$avatar-icon-size-xl
 
   // Size-specific styles for status indicator
   &.size-xs .status-indicator,
   &.size-sm .status-indicator
-    bottom: calc(var(--lb-space-2xs) * -1)
-    right: calc(var(--lb-space-2xs) * -1)
+    bottom: calc(#{base.$space-2xs} * -1)
+    right: calc(#{base.$space-2xs} * -1)
     
   &.size-xs .status-indicator
-    width: var(--lb-avatar-status-size-xs)
-    height: var(--lb-avatar-status-size-xs)
+    width: cv.$avatar-status-size-xs
+    height: cv.$avatar-status-size-xs
     
   &.size-sm .status-indicator
-    width: var(--lb-avatar-status-size-sm)
-    height: var(--lb-avatar-status-size-sm)
+    width: cv.$avatar-status-size-sm
+    height: cv.$avatar-status-size-sm
     
   &.size-md .status-indicator,
   &.size-lg .status-indicator
@@ -322,16 +326,16 @@ defineOptions({
     right: 0
     
   &.size-md .status-indicator
-    width: var(--lb-avatar-status-size-md)
-    height: var(--lb-avatar-status-size-md)
+    width: cv.$avatar-status-size-md
+    height: cv.$avatar-status-size-md
     
   &.size-lg .status-indicator
-    width: var(--lb-avatar-status-size-lg)
-    height: var(--lb-avatar-status-size-lg)
+    width: cv.$avatar-status-size-lg
+    height: cv.$avatar-status-size-lg
     
   &.size-xl .status-indicator
-    width: var(--lb-avatar-status-size-xl)
-    height: var(--lb-avatar-status-size-xl)
-    bottom: var(--lb-space-2xs)
-    right: var(--lb-space-2xs)
+    width: cv.$avatar-status-size-xl
+    height: cv.$avatar-status-size-xl
+    bottom: base.$space-2xs
+    right: base.$space-2xs
 </style>

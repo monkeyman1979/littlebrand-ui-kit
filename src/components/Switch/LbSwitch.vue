@@ -82,6 +82,7 @@ defineExpose({
 
 <style lang="sass" scoped>
 @use '@/styles/base' as base
+@use '@/styles/component-variables' as cv
 @use '@/styles/typography' as typography
 
 .lb-switch
@@ -91,7 +92,7 @@ defineExpose({
   // Hidden native checkbox
   input[type="checkbox"]
     position: absolute
-    opacity: var(--lb-opacity-0)
+    opacity: base.$opacity-0
     width: 100%
     height: 100%
     margin: 0
@@ -106,8 +107,8 @@ defineExpose({
     position: relative
     background: var(--lb-background-surface)
     border: base.$border-md solid var(--lb-border-neutral-normal)
-    border-radius: base.$switch-border-radius
-    transition: background-color var(--lb-transition), border-color var(--lb-transition), box-shadow var(--lb-transition)
+    border-radius: cv.$switch-border-radius
+    transition: background-color base.$transition, border-color base.$transition, box-shadow base.$transition
   
   // Switch thumb
   .switch-thumb
@@ -116,37 +117,37 @@ defineExpose({
     transform: translateY(-50%)
     background: var(--lb-border-neutral-active)
     border-radius: base.$radius-full
-    transition: transform var(--lb-transition), background-color var(--lb-transition)
+    transition: transform base.$transition, background-color base.$transition
     will-change: transform
   
   // Size variations
   &.size-small
     .switch-track
-      width: base.$switch-width-small  // 44px
-      height: base.$switch-height-small  // 24px
+      width: cv.$switch-width-small  // 44px
+      height: cv.$switch-height-small  // 24px
     
     .switch-thumb
       left: base.$space-2xs  // 2px from left edge
-      width: base.$switch-thumb-size-small  // 18px
-      height: base.$switch-thumb-size-small  // 18px
+      width: cv.$switch-thumb-size-small  // 18px
+      height: cv.$switch-thumb-size-small  // 18px
     
     &.checked .switch-thumb
       // 44px - 18px - 2px (left) - 6px (right) = 18px translation
-      transform: translateY(-50%) translateX(calc(base.$switch-width-small - base.$switch-thumb-size-small - base.$space-2xs - 6px))
+      transform: translateY(-50%) translateX(calc(#{cv.$switch-width-small} - #{cv.$switch-thumb-size-small} - #{base.$space-2xs} - 6px))
   
   &.size-medium
     .switch-track
-      width: base.$switch-width-medium  // 56px
-      height: base.$switch-height-medium  // 32px
+      width: cv.$switch-width-medium  // 56px
+      height: cv.$switch-height-medium  // 32px
     
     .switch-thumb
       left: 3px  // 3px from left edge (moved closer to the left)
-      width: base.$switch-thumb-size-medium  // 24px
-      height: base.$switch-thumb-size-medium  // 24px
+      width: cv.$switch-thumb-size-medium  // 24px
+      height: cv.$switch-thumb-size-medium  // 24px
     
     &.checked .switch-thumb
       // 56px - 24px - 3px (left) - 7px (right) = 22px translation
-      transform: translateY(-50%) translateX(calc(base.$switch-width-medium - base.$switch-thumb-size-medium - 3px - 7px))
+      transform: translateY(-50%) translateX(calc(#{cv.$switch-width-medium} - #{cv.$switch-thumb-size-medium} - 3px - 7px))
   
   // Checked state
   &.checked
@@ -159,7 +160,7 @@ defineExpose({
       
   // Add smooth spring animation for the toggle
   &:not(.disabled) .switch-thumb
-    transition: transform 200ms cubic-bezier(0.4, 0.0, 0.2, 1), background-color var(--lb-transition)
+    transition: transform 200ms cubic-bezier(0.4, 0.0, 0.2, 1), background-color base.$transition
   
   // Hover state
   &:not(.checked) input:not(:disabled):hover ~ .switch-track
@@ -174,7 +175,7 @@ defineExpose({
   
   // Focus state
   input:focus-visible ~ .switch-track
-    outline: var(--lb-focus-ring-width) solid var(--lb-focus-ring-color)
+    outline: base.$focus-ring-width solid var(--lb-focus-ring-color)
     outline-offset: base.$focus-ring-offset
   
   // Invalid state
@@ -183,16 +184,24 @@ defineExpose({
       border-color: var(--lb-border-error-normal)
       
     input:focus-visible ~ .switch-track
-      box-shadow: 0 0 0 calc(var(--lb-focus-ring-width) + var(--lb-focus-ring-offset)) var(--lb-surface-error-active)
+      box-shadow: 0 0 0 calc(#{base.$focus-ring-width} + #{base.$focus-ring-offset}) var(--lb-surface-error-active)
       border-color: var(--lb-border-error-active)
       
     &.checked .switch-track
       background: var(--lb-fill-error-normal)
       border-color: var(--lb-fill-error-normal)
+    
+    // Hover states for invalid switches (must override default hover)
+    &:not(.checked) input:not(:disabled):hover ~ .switch-track
+      border-color: var(--lb-border-error-active)
+      
+    &.checked input:not(:disabled):hover ~ .switch-track
+      background: var(--lb-fill-error-hover)
+      border-color: var(--lb-fill-error-hover)
   
   // Disabled state
   &.disabled
-    opacity: var(--lb-opacity-80)
+    opacity: base.$opacity-80
     
     .switch-track
       background: var(--lb-surface-neutral-disabled)

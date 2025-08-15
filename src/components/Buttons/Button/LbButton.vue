@@ -123,6 +123,7 @@ defineOptions({
 <style lang="sass" scoped>
 @use '@/styles/colors' as colors
 @use '@/styles/base' as base
+@use '@/styles/component-variables' as cv
 @use '@/styles/typography' as typography
 
 .lb-button
@@ -131,17 +132,17 @@ defineOptions({
   grid-auto-flow: column
   align-items: center
   gap: base.$space-2xs
-  padding: 0 base.$button-padding-x-medium
-  height: base.$button-height-medium  // Default to medium
+  padding: 0 cv.$button-padding-x-medium
+  height: cv.$button-height-medium  // Default to medium
   border: none
-  border-radius: var(--lb-button-radius)
-  font-family: var(--lb-font-body)
-  font-size: var(--lb-button-font-size-medium)
-  font-weight: var(--lb-font-weight-medium)
-  line-height: var(--lb-line-height-normal)
-  letter-spacing: var(--lb-letter-spacing-tight)
+  border-radius: cv.$button-border-radius
+  font-family: typography.$font-body
+  font-size: cv.$button-font-size-medium
+  font-weight: typography.$font-weight-medium
+  line-height: typography.$line-height-normal
+  letter-spacing: typography.$letter-spacing-tight
   cursor: pointer
-  transition: all var(--lb-transition)
+  transition: all base.$transition
   text-decoration: none
   white-space: nowrap
   user-select: none
@@ -154,40 +155,40 @@ defineOptions({
     color: inherit
   
   &:focus-visible
-    outline: var(--lb-focus-ring-width) solid var(--lb-focus-ring-color)
-    outline-offset: var(--lb-focus-ring-offset)
+    outline: base.$focus-ring-width solid var(--lb-focus-ring-color)
+    outline-offset: base.$focus-ring-offset
     transition: none
   
   // Size modifiers
   &.small
-    height: base.$button-height-small
-    padding: 0 base.$button-padding-x-small
-    font-size: var(--lb-button-font-size-small)
-    letter-spacing: var(--lb-letter-spacing-normal)
-    border-radius: var(--lb-button-radius-small)
+    height: cv.$button-height-small
+    padding: 0 cv.$button-padding-x-small
+    font-size: cv.$button-font-size-small
+    letter-spacing: typography.$letter-spacing-normal
+    border-radius: cv.$button-border-radius-small
     svg
-      width: base.$button-icon-size-small
-      height: base.$button-icon-size-small
+      width: cv.$button-icon-size-small
+      height: cv.$button-icon-size-small
     
   &.medium
-    height: base.$button-height-medium
-    padding: 0 base.$button-padding-x-medium
-    font-size: var(--lb-button-font-size-medium)
-    letter-spacing: var(--lb-letter-spacing-tight)
-    border-radius: var(--lb-button-radius-medium)
+    height: cv.$button-height-medium
+    padding: 0 cv.$button-padding-x-medium
+    font-size: cv.$button-font-size-medium
+    letter-spacing: typography.$letter-spacing-tight
+    border-radius: cv.$button-border-radius-medium
     svg
-      width: base.$button-icon-size-medium
-      height: base.$button-icon-size-medium
+      width: cv.$button-icon-size-medium
+      height: cv.$button-icon-size-medium
     
   &.large
-    height: base.$button-height-large
-    padding: 0 base.$button-padding-x-large
-    font-size: var(--lb-button-font-size-large)
-    letter-spacing: var(--lb-letter-spacing-wide)
-    border-radius: var(--lb-button-radius-large)
+    height: cv.$button-height-large
+    padding: 0 cv.$button-padding-x-large
+    font-size: cv.$button-font-size-large
+    letter-spacing: typography.$letter-spacing-wide
+    border-radius: cv.$button-border-radius-large
     svg
-      width: base.$button-icon-size-large
-      height: base.$button-icon-size-large
+      width: cv.$button-icon-size-large
+      height: cv.$button-icon-size-large
     
   &.full-width
     width: 100%
@@ -200,19 +201,19 @@ defineOptions({
     justify-content: center
     
     &.small
-      width: base.$button-height-small
-      height: base.$button-height-small
-      border-radius: var(--lb-button-radius-small)
+      width: cv.$button-height-small
+      height: cv.$button-height-small
+      border-radius: cv.$button-border-radius-small
     
     &.medium
-      width: base.$button-height-medium
-      height: base.$button-height-medium
-      border-radius: var(--lb-button-radius-medium)
+      width: cv.$button-height-medium
+      height: cv.$button-height-medium
+      border-radius: cv.$button-border-radius-medium
     
     &.large
-      width: base.$button-height-large
-      height: base.$button-height-large
-      border-radius: var(--lb-button-radius-large)
+      width: cv.$button-height-large
+      height: cv.$button-height-large
+      border-radius: cv.$button-border-radius-large
     
   // Link variant overrides
   &[class*="link-"]
@@ -241,12 +242,12 @@ defineOptions({
     &.disabled
       .spinner circle
         stroke: var(--lb-text-neutral-contrast-high)
-        opacity: var(--lb-opacity-40)
+        opacity: base.$opacity-40
     
   .content
     display: flex
     align-items: center
-    padding: 0 var(--lb-space-xs)
+    padding: 0 base.$space-xs
     
   .icon-leading,
   .icon-trailing
@@ -265,7 +266,7 @@ defineOptions({
       stroke-dasharray: 62.83
       stroke-dashoffset: 47.12
       animation: lb-spinner-dash 1.5s ease-in-out infinite
-      opacity: var(--lb-opacity-80)
+      opacity: base.$opacity-80
 
 // Variant styles
 @mixin button-variant($variant, $color, $color-name)
@@ -275,11 +276,14 @@ defineOptions({
   // Base colors for each variant
   @if $variant == 'filled'
     background-color: var(--lb-fill-#{$color}-normal)
-    color: if($color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-on-variant-light))
-    &:hover:not(.disabled):not(.loading)
-      background-color: var(--lb-fill-#{$color}-hover)
+    color: var(--lb-text-on-#{$color})
+    &:not(.disabled):not(.loading)
+      @include base.hover-supported
+        background-color: var(--lb-fill-#{$color}-hover)
+        color: var(--lb-text-on-#{$color}-hover)
     &:active:not(.disabled):not(.loading)
       background-color: var(--lb-fill-#{$color}-active)
+      color: var(--lb-text-on-#{$color}-active)
     &.disabled
       background-color: var(--lb-surface-neutral-subtle)
       color: var(--lb-text-neutral-disabled)
@@ -287,9 +291,10 @@ defineOptions({
   @else if $variant == 'tonal'
     background-color: var(--lb-surface-#{$color}-normal)
     color: if($color == 'neutral', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-normal))
-    &:hover:not(.disabled):not(.loading)
-      background-color: var(--lb-surface-#{$color}-hover)
-      color: if($color == 'warning' or $color == 'neutral', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-normal))
+    &:not(.disabled):not(.loading)
+      @include base.hover-supported
+        background-color: var(--lb-surface-#{$color}-hover)
+        color: if($color == 'warning' or $color == 'neutral', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-normal))
     &:active:not(.disabled):not(.loading)
       background-color: var(--lb-surface-#{$color}-active)
     &.disabled
@@ -299,24 +304,27 @@ defineOptions({
   @else if $variant == 'outline'
     background-color: transparent
     color: if($color == 'neutral', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-normal))
-    box-shadow: inset 0 0 0 var(--lb-border-sm) var(--lb-border-#{$color}-normal)
-    &:hover:not(.disabled):not(.loading)
-      background-color: var(--lb-fill-#{$color}-normal)
-      color: if($color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-on-variant-light))
-      box-shadow: none
+    box-shadow: inset 0 0 0 base.$border-sm var(--lb-border-#{$color}-normal)
+    &:not(.disabled):not(.loading)
+      @include base.hover-supported
+        background-color: var(--lb-fill-#{$color}-normal)
+        color: var(--lb-text-on-#{$color})
+        box-shadow: none
     &:active:not(.disabled):not(.loading)
       background-color: var(--lb-fill-#{$color}-active)
+      color: var(--lb-text-on-#{$color}-active)
       box-shadow: none
     &.disabled
       color: var(--lb-text-neutral-disabled)
-      box-shadow: inset 0 0 0 var(--lb-border-md) var(--lb-border-neutral-line)
+      box-shadow: inset 0 0 0 base.$border-md var(--lb-border-neutral-line)
       
   @else if $variant == 'ghost'
     background-color: transparent
     color: if($color == 'neutral', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-normal))
-    &:hover:not(.disabled):not(.loading)
-      background-color: var(--lb-surface-#{$color}-normal)
-      color: if($color == 'warning' or $color == 'neutral', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-normal))
+    &:not(.disabled):not(.loading)
+      @include base.hover-supported
+        background-color: var(--lb-surface-#{$color}-normal)
+        color: if($color == 'warning' or $color == 'neutral', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-normal))
     &:active:not(.disabled):not(.loading)
       background-color: var(--lb-surface-#{$color}-hover)
       transform: translateY(1px)
@@ -333,12 +341,13 @@ defineOptions({
     text-decoration: none
     display: inline-flex
     align-items: baseline
-    gap: var(--lb-space-2xs)
-    &:hover:not(.disabled):not(.loading)
-      text-decoration: underline
-      color: if($color == 'warning', var(--lb-text-warning-contrast-high), var(--lb-text-#{$color}-normal))
+    gap: base.$space-2xs
+    &:not(.disabled):not(.loading)
+      @include base.hover-supported
+        text-decoration: underline
+        color: if($color == 'warning', var(--lb-text-warning-contrast-high), var(--lb-text-#{$color}-normal))
     &:active:not(.disabled):not(.loading)
-      opacity: var(--lb-opacity-80)
+      opacity: base.$opacity-80
     &.disabled
       color: var(--lb-text-neutral-disabled)
       cursor: not-allowed
@@ -381,5 +390,5 @@ $color-map: ('primary': 'orange', 'secondary': 'teal', 'neutral': 'neutral', 'su
   
 .lb-fade-enter-from,
 .lb-fade-leave-to
-  opacity: var(--lb-opacity-0)
+  opacity: base.$opacity-0
 </style>

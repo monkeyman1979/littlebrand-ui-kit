@@ -246,6 +246,7 @@ const handleInput = (event: Event) => {
 
 <style lang="sass" scoped>
 @use '@/styles/base' as base
+@use '@/styles/component-variables' as cv
 @use '@/styles/typography' as typography
 
 .lb-input
@@ -256,24 +257,24 @@ const handleInput = (event: Event) => {
   input
     width: 100%
     background: var(--lb-background-surface)
-    border: base.$input-border-width solid var(--lb-border-neutral-normal)
-    border-radius: var(--lb-input-radius)
+    border: cv.$input-border-width solid var(--lb-border-neutral-normal)
+    border-radius: cv.$input-border-radius
     font-family: inherit
     color: var(--lb-text-neutral-contrast-high)
-    transition: border-color var(--lb-transition)
+    transition: border-color base.$transition
     box-sizing: border-box
     
     // Placeholder
     &::placeholder
       color: var(--lb-text-neutral-contrast-low)
-      opacity: var(--lb-opacity-100) // Firefox fix
+      opacity: base.$opacity-100 // Firefox fix
     
     // States
     &:hover:not(:disabled):not(:read-only)
       border-color: var(--lb-border-neutral-active)
 
     &:focus
-      outline: base.$input-border-width solid var(--lb-border-primary-active)
+      outline: cv.$input-border-width solid var(--lb-border-primary-active)
     
   
   // Invalid state
@@ -289,7 +290,6 @@ const handleInput = (event: Event) => {
     background: var(--lb-surface-neutral-subtle)
     color: var(--lb-text-neutral-disabled)
     cursor: not-allowed
-    opacity: var(--lb-opacity-60)
     border-color: var(--lb-border-neutral-disabled)
   
   // Readonly state
@@ -299,28 +299,28 @@ const handleInput = (event: Event) => {
   
   // Size variations
   &.size-medium input
-    height: base.$input-height-medium
-    padding: 0 base.$input-padding-x-medium
-    font-size: var(--lb-input-font-size-medium)
+    height: cv.$input-height-medium
+    padding: 0 cv.$input-padding-x-medium
+    font-size: cv.$input-font-size-medium
   
   &.size-large input
-    height: base.$input-height-large
-    padding: 0 base.$input-padding-x-large
-    font-size: var(--lb-input-font-size-large)
+    height: cv.$input-height-large
+    padding: 0 cv.$input-padding-x-large
+    font-size: cv.$input-font-size-large
   
   // Icon padding adjustments
   &.has-leading-icon input
-    padding-left: var(--lb-space-4xl) // 40px for medium
+    padding-left: base.$space-4xl // 40px for medium
     
   &.has-trailing-icons input
-    padding-right: var(--lb-space-4xl) // 40px for medium
+    padding-right: base.$space-4xl // 40px for medium
   
   // Large size with icons
   &.size-large.has-leading-icon input
-    padding-left: var(--lb-space-5xl) // 48px for large
+    padding-left: base.$space-5xl // 48px for large
     
   &.size-large.has-trailing-icons input
-    padding-right: var(--lb-space-5xl) // 48px for large
+    padding-right: base.$space-5xl // 48px for large
   
     
   
@@ -332,13 +332,13 @@ const handleInput = (event: Event) => {
     display: flex
     align-items: center
     justify-content: center
-    width: base.$input-height-medium  // Icon area matches input height
-    height: base.$input-height-medium
+    width: cv.$input-height-medium  // Icon area matches input height
+    height: cv.$input-height-medium
     color: var(--lb-text-neutral-contrast-low)
   
   &.size-large .icon
-    width: base.$input-height-large
-    height: base.$input-height-large
+    width: cv.$input-height-large
+    height: cv.$input-height-large
     
     &.icon-leading
       left: 0
@@ -352,18 +352,18 @@ const handleInput = (event: Event) => {
       background: none
       border: none
       padding: 0
-      border-radius: var(--lb-radius-xs)  // Set border-radius on the element itself
-      transition: color var(--lb-transition), opacity var(--lb-transition)
+      border-radius: base.$radius-xs  // Set border-radius on the element itself
+      transition: color base.$transition, opacity base.$transition
       
       &:hover
         color: var(--lb-text-neutral-contrast-high)
       
       &:focus-visible
         outline: none
-        box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
+        box-shadow: 0 0 0 base.$focus-ring-width var(--lb-focus-ring-color)
       
       &:active
-        opacity: var(--lb-opacity-80)
+        opacity: base.$opacity-80
     
   
   // Icon focus state
@@ -386,13 +386,13 @@ const handleInput = (event: Event) => {
     display: flex
     align-items: center
     justify-content: center
-    width: base.$input-height-medium
-    height: base.$input-height-medium
-    gap: var(--lb-space-2xs)
+    width: cv.$input-height-medium
+    height: cv.$input-height-medium
+    gap: base.$space-2xs
   
   &.size-large .trailing-icons
-    width: base.$input-height-large
-    height: base.$input-height-large
+    width: cv.$input-height-large
+    height: cv.$input-height-large
   
   // Loading spinner animation
   .spinner

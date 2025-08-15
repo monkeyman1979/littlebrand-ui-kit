@@ -341,5 +341,5 @@ defineExpose({
 
   &.is-disabled
     pointer-events: none
-    opacity: var(--lb-opacity-60)
+    opacity: base.$opacity-60
 </style>

@@ -110,11 +110,11 @@ defineExpose({
   &:focus-visible
     outline: var(--lb-focus-ring-width) solid var(--lb-focus-ring-color)
     outline-offset: var(--lb-focus-ring-offset)
-    border-radius: var(--lb-radius-sm)
+    border-radius: base.$radius-sm
   
   &.is-disabled
     cursor: not-allowed
-    opacity: var(--lb-opacity-60)
+    opacity: base.$opacity-60
   
   &.as-child
     // When used as child, remove styling and let child handle appearance

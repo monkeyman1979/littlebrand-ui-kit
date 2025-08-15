@@ -50,7 +50,7 @@ const arrowClasses = computed(() => ({
 const arrowStyles = computed(() => ({
   position: 'absolute',
   pointerEvents: 'none',
-  zIndex: 'var(--lb-z-dropdown)'
+  zIndex: 'base.$z-dropdown'
 }))
 
 const arrowPath = computed(() => {
@@ -109,30 +109,30 @@ defineExpose({
 .lb-popover-arrow
   position: absolute
   pointer-events: none
-  z-index: var(--lb-z-dropdown)
-  width: var(--lb-space-sm)
-  height: var(--lb-space-sm)
+  z-index: base.$z-dropdown
+  width: base.$space-sm
+  height: base.$space-sm
   
   // Arrow positioning based on placement
   &.placement-top,
   &.placement-top-start,
   &.placement-top-end
-    bottom: calc(var(--lb-space-xs) * -1)
+    bottom: calc(#{base.$space-xs} * -1)
     
   &.placement-bottom,
   &.placement-bottom-start,
   &.placement-bottom-end
-    top: calc(var(--lb-space-xs) * -1)
+    top: calc(#{base.$space-xs} * -1)
     
   &.placement-left,
   &.placement-left-start,
   &.placement-left-end
-    right: calc(var(--lb-space-xs) * -1)
+    right: calc(#{base.$space-xs} * -1)
     
   &.placement-right,
   &.placement-right-start,
   &.placement-right-end
-    left: calc(var(--lb-space-xs) * -1)
+    left: calc(#{base.$space-xs} * -1)
 
 .arrow-svg
   display: block
@@ -142,7 +142,7 @@ defineExpose({
 .arrow-path
   fill: var(--lb-background-surface)
   stroke: var(--lb-border-neutral-line)
-  stroke-width: var(--lb-border-sm)
+  stroke-width: base.$border-sm
   
   // Filter to handle the border properly
   filter: drop-shadow(0 0 0 var(--lb-border-neutral-line))

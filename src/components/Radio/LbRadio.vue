@@ -119,6 +119,7 @@ defineExpose({
 
 <style lang="sass" scoped>
 @use '@/styles/base' as base
+@use '@/styles/component-variables' as cv
 @use '@/styles/typography' as typography
 
 .lb-radio
@@ -128,7 +129,7 @@ defineExpose({
   // Hidden native radio
   input[type="radio"]
     position: absolute
-    opacity: var(--lb-opacity-0)
+    opacity: base.$opacity-0
     width: 100%
     height: 100%
     margin: 0
@@ -144,12 +145,12 @@ defineExpose({
     display: flex
     align-items: center
     justify-content: center
-    width: base.$radio-size  // 20px
-    height: base.$radio-size  // 20px
+    width: cv.$radio-size  // 20px
+    height: cv.$radio-size  // 20px
     background: var(--lb-background-surface)
-    border: base.$radio-border-width solid var(--lb-border-neutral-normal)
+    border: cv.$radio-border-width solid var(--lb-border-neutral-normal)
     border-radius: base.$radius-full
-    transition: background-color var(--lb-transition), border-color var(--lb-transition), box-shadow var(--lb-transition)
+    transition: background-color base.$transition, border-color base.$transition, box-shadow base.$transition
     will-change: background-color, border-color
     
   
@@ -162,9 +163,9 @@ defineExpose({
     height: base.$space-sm  // 8px
     background: white
     border-radius: base.$radius-full
-    opacity: var(--lb-opacity-0)
+    opacity: base.$opacity-0
     transform: scale(0)
-    transition: opacity var(--lb-transition), transform var(--lb-transition)
+    transition: opacity base.$transition, transform base.$transition
     will-change: opacity, transform
     
   
@@ -175,7 +176,7 @@ defineExpose({
       border-color: var(--lb-fill-primary-normal)
       
     .radio-dot
-      opacity: var(--lb-opacity-100)
+      opacity: base.$opacity-100
       transform: scale(1)
   
   // Hover state
@@ -188,7 +189,7 @@ defineExpose({
   
   // Focus state
   input:focus-visible ~ .radio-visual
-    outline: var(--lb-focus-ring-width) solid var(--lb-focus-ring-color)
+    outline: base.$focus-ring-width solid var(--lb-focus-ring-color)
     outline-offset: base.$focus-ring-offset
   
   // Invalid state
@@ -197,16 +198,24 @@ defineExpose({
       border-color: var(--lb-border-error-normal)
       
     input:focus-visible ~ .radio-visual
-      box-shadow: 0 0 0 calc(var(--lb-focus-ring-width) + var(--lb-focus-ring-offset)) var(--lb-surface-error-active)
+      box-shadow: 0 0 0 calc(#{base.$focus-ring-width} + #{base.$focus-ring-offset}) var(--lb-surface-error-active)
       border-color: var(--lb-border-error-active)
       
     &.checked .radio-visual
       background: var(--lb-fill-error-normal)
       border-color: var(--lb-fill-error-normal)
+    
+    // Hover states for invalid radios (must override default hover)
+    input:not(:disabled):hover ~ .radio-visual
+      border-color: var(--lb-border-error-active)
+      
+    &.checked input:not(:disabled):hover ~ .radio-visual
+      background: var(--lb-fill-error-hover)
+      border-color: var(--lb-fill-error-hover)
   
   // Disabled state
   &.disabled
-    opacity: var(--lb-opacity-80)
+    opacity: base.$opacity-80
     
     .radio-visual
       background: var(--lb-surface-neutral-disabled)

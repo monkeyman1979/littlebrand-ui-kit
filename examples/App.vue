@@ -29,6 +29,10 @@
         p This is a regular paragraph with normal text.
         p.body-large This is large body text for emphasis.
         p.body-small This is small body text for fine print.
+        p.label.label-large Large Label (16px)
+        p.label Base Label (14px)
+        p.label.label-small Small Label (12px)
+        p.label.label-xsmall XSmall Label (10px)
       
     section.color-section
       h2 Color Palette
@@ -36,6 +40,120 @@
         .color-card(v-for="color in colors" :key="color.name")
           .color-swatch(:style="{ background: `var(${color.var})` }")
           .label {{ color.name }}
+    
+    section.custom-theme-section
+      h2 Custom Theme Configuration
+      .theme-config-demo
+        h3 Mix & Match Color System
+        p The UI kit now supports flexible theme configuration with three approaches:
+        
+        .config-approaches
+          .approach-card
+            h4 🎨 Single Color Input
+            pre.code-block
+              code.
+                $theme-colors: (
+                  'primary': #6366f1,  // Auto-generates 12-step scale
+                  'secondary': #10b981
+                )
+            p Provide a single color and the system generates a complete 12-step scale with light/dark modes
+          
+          .approach-card
+            h4 📊 Full Scale Control
+            pre.code-block
+              code.
+                $theme-colors: (
+                  'primary': (
+                    1: #eef2ff,  // Lightest
+                    // ... steps 2-11
+                    12: #1e1b4b  // Darkest
+                  )
+                )
+            p Define all 12 steps for precise control over your color scale
+          
+          .approach-card
+            h4 🎯 Use Presets
+            pre.code-block
+              code.
+                $theme-colors: (
+                  'neutral': 'slate',  // Built-in scale
+                  'primary': #ff6900   // Custom brand
+                )
+            p Mix built-in preset scales with custom colors
+        
+        .interactive-theme-demo
+          h4 🎨 Interactive Theme Playground
+          p Try changing the colors below to see how the theme system generates a complete color scale:
+          
+          .color-controls
+            .color-control
+              label Primary Color
+              .color-input-wrapper
+                input(type="color" v-model="customPrimary" @input="updateCustomTheme")
+                span {{ customPrimary }}
+            
+            .color-control
+              label Secondary Color
+              .color-input-wrapper
+                input(type="color" v-model="customSecondary" @input="updateCustomTheme")
+                span {{ customSecondary }}
+            
+            .color-control
+              label Accent Color
+              .color-input-wrapper
+                input(type="color" v-model="customAccent" @input="updateCustomTheme")
+                span {{ customAccent }}
+          
+          .theme-preview(:style="customThemeStyles")
+            .preview-header
+              h5 Live Preview
+              .preview-badge(:style="{ background: 'var(--custom-fill-primary-normal)', color: 'white' }") Dynamic Theme
+            
+            .preview-grid
+              .preview-card
+                .color-scale
+                  .scale-title Primary Scale
+                  .scale-row
+                    .scale-step(v-for="n in 12" :key="n" :style="{ background: `var(--custom-surface-primary-${getStepName(n)})` }")
+                      span(:style="{ color: getScaleStepTextColor('primary', n) }") {{ n }}
+                
+                .preview-buttons
+                  button.preview-btn(:style="{ background: 'var(--custom-fill-primary-normal)', color: 'var(--custom-text-on-primary)' }") Primary Button
+                  button.preview-btn(:style="{ background: 'var(--custom-fill-primary-hover)', color: 'var(--custom-text-on-primary-hover)' }") Hover State
+                  button.preview-btn(:style="{ border: '2px solid var(--custom-border-primary-normal)', color: 'var(--custom-text-primary-normal)', background: 'transparent' }") Outline
+              
+              .preview-card
+                .color-scale
+                  .scale-title Secondary Scale
+                  .scale-row
+                    .scale-step(v-for="n in 12" :key="n" :style="{ background: `var(--custom-surface-secondary-${getStepName(n)})` }")
+                      span(:style="{ color: getScaleStepTextColor('secondary', n) }") {{ n }}
+                
+                .preview-buttons
+                  button.preview-btn(:style="{ background: 'var(--custom-fill-secondary-normal)', color: 'var(--custom-text-on-secondary)' }") Secondary Button
+                  button.preview-btn(:style="{ background: 'var(--custom-fill-secondary-hover)', color: 'var(--custom-text-on-secondary-hover)' }") Hover State
+                  button.preview-btn(:style="{ border: '2px solid var(--custom-border-secondary-normal)', color: 'var(--custom-text-secondary-normal)', background: 'transparent' }") Outline
+              
+              .preview-card.accent-card
+                .color-scale
+                  .scale-title Accent Scale
+                  .scale-row
+                    .scale-step(v-for="n in 12" :key="n" :style="{ background: `var(--custom-surface-accent-${getStepName(n)})` }")
+                      span(:style="{ color: getScaleStepTextColor('accent', n) }") {{ n }}
+                
+                .preview-surface(:style="{ background: 'var(--custom-surface-accent-normal)', border: '1px solid var(--custom-border-accent-normal)' }")
+                  p(:style="{ color: 'var(--custom-text-accent-contrast-high)' }") Accent Surface
+                  small(:style="{ color: 'var(--custom-text-accent-contrast-low)' }") With proper contrast
+        
+        .custom-accent-demo
+          h4 Custom Accent Colors
+          p Beyond semantic colors, add unlimited custom accents:
+          pre.code-block
+            code.
+              'accent-purple': #9333ea,
+              'brand-gold': #eab308
+          p These generate all token variations: --lb-fill-accent-purple-normal, etc.
+
           
     section.components-section
       h2 Components
@@ -167,73 +285,6 @@
                   path(d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22")
               | External Link
               
-      .component-demo
-        h3 Density System
-        
-        .demo-group
-          h4 Global Density Control
-          p Switch between Compact and Default density modes to see how all components below adapt their sizing.
-          .button-row
-            LbSegmentButton(v-model="currentDensity" :allow-empty="false")
-              LbSegmentButtonItem(value="compact") Compact
-              LbSegmentButtonItem(value="default") Default
-        
-        .demo-group
-          h4 Components with Global Density
-          p These components automatically adapt to the selected density mode above.
-          LbDensityProvider(:density="currentDensity")
-            .density-demo-content
-              .input-row
-                LbInput(placeholder="Text input")
-                LbSelect(:options="colorOptions" placeholder="Select an option")
-                LbDatePicker(placeholder="Pick a date")
-              
-              .input-row(style="margin-top: 12px")
-                LbTextarea(placeholder="Enter your message here..." :rows="4" style="width: 100%")
-              
-              .calendar-demo(style="margin-top: 24px")
-                h5 Calendar Component
-                LbCalendar
-        
-        .demo-group
-          h4 Size Override Examples
-          p Components can override the global density by explicitly setting their size prop.
-          LbDensityProvider(:density="currentDensity")
-            .override-examples
-              .override-row
-                span.label Current global density: {{ currentDensity }}
-              .override-row
-                LbInput(placeholder="Uses global density (no size prop)")
-              .override-row
-                LbInput(placeholder="Always medium (size='medium')" size="medium")
-              .override-row
-                LbInput(placeholder="Always large (size='large')" size="large")
-        
-        .demo-group
-          h4 Side-by-Side Comparison
-          .density-comparison
-            .density-example
-              h5 Compact Density
-              LbDensityProvider(density="compact")
-                .input-row
-                  LbInput(placeholder="Compact input")
-                  LbSelect(:options="priorityOptions" placeholder="Compact select")
-                .input-row(style="margin-top: 12px")
-                  LbDatePicker(placeholder="Select date")
-                .input-row(style="margin-top: 12px")
-                  LbTextarea(placeholder="Compact textarea..." :rows="3" style="width: 100%")
-            
-            .density-example
-              h5 Default Density
-              LbDensityProvider(density="default")
-                .input-row
-                  LbInput(placeholder="Default input")
-                  LbSelect(:options="priorityOptions" placeholder="Default select")
-                .input-row(style="margin-top: 12px")
-                  LbDatePicker(placeholder="Select date")
-                .input-row(style="margin-top: 12px")
-                  LbTextarea(placeholder="Default textarea..." :rows="3" style="width: 100%")
-      
       .component-demo
         h3 Input
         
@@ -2395,13 +2446,16 @@ import {
   LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog,
   LbBadge, LbNavigationBar, LbNavigationBarItem, LbBottomSheet, LbChip, LbAvatar, LbProgress, LbDivider, 
   LbSegmentButton, LbSegmentButtonItem, useSnackbar, LbPopover, LbPopoverTrigger, LbPopoverContent, LbPopoverArrow,
-  LbDropdown, LbMenu, LbCalendar, LbDatePicker, LbDensityProvider
+  LbDropdown, LbMenu, LbCalendar, LbDatePicker
 } from '../src'
 
 const isDark = ref(false)
 
-// Density control
-const currentDensity = ref('default')
+// Custom theme interactive demo
+const customPrimary = ref('#6366f1')
+const customSecondary = ref('#10b981')
+const customAccent = ref('#ec4899')
+const customThemeStyles = ref({})
 
 // Input demo values
 const inputValue1 = ref('')
@@ -2622,6 +2676,187 @@ const resetSettings = () => {
     highContrast: false
   }
 }
+
+// Custom theme generation functions
+const hexToHSL = (hex) => {
+  // Convert hex to RGB
+  const r = parseInt(hex.slice(1, 3), 16) / 255
+  const g = parseInt(hex.slice(3, 5), 16) / 255
+  const b = parseInt(hex.slice(5, 7), 16) / 255
+  
+  const max = Math.max(r, g, b)
+  const min = Math.min(r, g, b)
+  let h, s, l = (max + min) / 2
+  
+  if (max === min) {
+    h = s = 0 // achromatic
+  } else {
+    const d = max - min
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
+    
+    switch (max) {
+      case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break
+      case g: h = ((b - r) / d + 2) / 6; break
+      case b: h = ((r - g) / d + 4) / 6; break
+    }
+  }
+  
+  return {
+    h: Math.round(h * 360),
+    s: Math.round(s * 100),
+    l: Math.round(l * 100)
+  }
+}
+
+// Calculate relative luminance of a color
+const getLuminance = (hex) => {
+  // Convert hex to RGB
+  const r = parseInt(hex.slice(1, 3), 16) / 255
+  const g = parseInt(hex.slice(3, 5), 16) / 255
+  const b = parseInt(hex.slice(5, 7), 16) / 255
+  
+  // Apply gamma correction
+  const gammaCorrect = (val) => {
+    return val <= 0.03928 ? val / 12.92 : Math.pow((val + 0.055) / 1.055, 2.4)
+  }
+  
+  const rLinear = gammaCorrect(r)
+  const gLinear = gammaCorrect(g)
+  const bLinear = gammaCorrect(b)
+  
+  // Calculate relative luminance
+  return 0.2126 * rLinear + 0.7152 * gLinear + 0.0722 * bLinear
+}
+
+// Determine if white or dark text should be used
+const getContrastText = (backgroundColor) => {
+  const luminance = getLuminance(backgroundColor)
+  // Use white text if luminance is below 0.5, dark text otherwise
+  return luminance > 0.5 ? '#1a1a1a' : 'white'
+}
+
+// Convert HSL string to hex
+const hslToHex = (hslStr) => {
+  const match = hslStr.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/)
+  if (!match) return '#000000'
+  
+  const h = parseInt(match[1]) / 360
+  const s = parseInt(match[2]) / 100
+  const l = parseInt(match[3]) / 100
+  
+  const hue2rgb = (p, q, t) => {
+    if (t < 0) t += 1
+    if (t > 1) t -= 1
+    if (t < 1/6) return p + (q - p) * 6 * t
+    if (t < 1/2) return q
+    if (t < 2/3) return p + (q - p) * (2/3 - t) * 6
+    return p
+  }
+  
+  const q = l < 0.5 ? l * (1 + s) : l + s - l * s
+  const p = 2 * l - q
+  
+  const r = Math.round(hue2rgb(p, q, h + 1/3) * 255)
+  const g = Math.round(hue2rgb(p, q, h) * 255)
+  const b = Math.round(hue2rgb(p, q, h - 1/3) * 255)
+  
+  return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)
+}
+
+const generateColorScale = (baseColor, name) => {
+  const hsl = hexToHSL(baseColor)
+  const tokens = {}
+  
+  // Generate 12-step scale
+  const scale = {}
+  for (let i = 1; i <= 12; i++) {
+    let lightness, saturation
+    
+    if (i <= 9) {
+      // Steps 1-9: progressively darker from very light
+      const ratio = (i - 1) / 8
+      lightness = 98 - (ratio * (98 - hsl.l))
+      saturation = i <= 3 ? hsl.s * 0.3 : i <= 6 ? hsl.s * 0.6 : hsl.s
+    } else {
+      // Steps 10-12: darker than base
+      const ratio = (i - 9) / 3
+      lightness = hsl.l - (ratio * (hsl.l - 15))
+      saturation = Math.min(hsl.s * 1.1, 100)
+    }
+    
+    scale[i] = `hsl(${hsl.h}, ${Math.round(saturation)}%, ${Math.round(lightness)}%)`
+  }
+  
+  // Generate semantic tokens
+  tokens[`--custom-border-${name}-line`] = scale[6]
+  tokens[`--custom-border-${name}-normal`] = scale[7]
+  tokens[`--custom-border-${name}-active`] = scale[8]
+  tokens[`--custom-border-${name}-focus`] = scale[7]
+  tokens[`--custom-border-${name}-disabled`] = scale[5]
+  
+  tokens[`--custom-fill-${name}-normal`] = scale[9]
+  tokens[`--custom-fill-${name}-hover`] = scale[10]
+  tokens[`--custom-fill-${name}-active`] = scale[8]
+  tokens[`--custom-fill-${name}-focus`] = scale[8]
+  tokens[`--custom-fill-${name}-disabled`] = scale[4]
+  
+  tokens[`--custom-text-${name}-normal`] = scale[9]
+  tokens[`--custom-text-${name}-contrast-low`] = scale[11]
+  tokens[`--custom-text-${name}-contrast-high`] = scale[12]
+  tokens[`--custom-text-${name}-disabled`] = scale[5]
+  
+  // Add text-on tokens for filled backgrounds using luminance calculation
+  tokens[`--custom-text-on-${name}`] = getContrastText(hslToHex(scale[9]))
+  tokens[`--custom-text-on-${name}-hover`] = getContrastText(hslToHex(scale[10]))
+  tokens[`--custom-text-on-${name}-active`] = getContrastText(hslToHex(scale[8]))
+  
+  // Add surface tokens for the scale visualization
+  for (let i = 1; i <= 12; i++) {
+    tokens[`--custom-surface-${name}-${getStepName(i)}`] = scale[i]
+  }
+  
+  tokens[`--custom-surface-${name}-normal`] = scale[2]
+  tokens[`--custom-surface-${name}-hover`] = scale[3]
+  tokens[`--custom-surface-${name}-active`] = scale[4]
+  tokens[`--custom-surface-${name}-subtle`] = scale[1]
+  
+  return tokens
+}
+
+const getStepName = (n) => {
+  // For scale visualization
+  return n.toString()
+}
+
+// Get the contrast text color for a scale step
+const getScaleStepTextColor = (colorName, step) => {
+  // Get the CSS variable value from customThemeStyles
+  const varName = `--custom-surface-${colorName}-${step}`
+  const hslValue = customThemeStyles.value[varName]
+  
+  if (!hslValue) return '#000000'
+  
+  // Convert HSL to hex for luminance calculation
+  const hexColor = hslToHex(hslValue)
+  return getContrastText(hexColor)
+}
+
+const updateCustomTheme = () => {
+  const primaryTokens = generateColorScale(customPrimary.value, 'primary')
+  const secondaryTokens = generateColorScale(customSecondary.value, 'secondary')
+  const accentTokens = generateColorScale(customAccent.value, 'accent')
+  
+  customThemeStyles.value = {
+    ...primaryTokens,
+    ...secondaryTokens,
+    ...accentTokens
+  }
+}
+
+// Initialize custom theme
+onMounted(() => {
+  updateCustomTheme()
+})
 
 // Async search handler
 let searchTimeout
@@ -3335,6 +3570,7 @@ section
       height: 80px
       border-radius: base.$radius-md
       border: base.$border-sm solid var(--lb-border-neutral-normal)
+
       
 .components-section
   display: flex
@@ -3756,31 +3992,46 @@ section
 .popover-demo
   display: flex
   flex-direction: column
-  gap: var(--lb-space-lg)
+  gap: 1.5rem
 
 .popover-grid
   display: grid
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr))
-  gap: var(--lb-space-md)
+  grid-template-columns: repeat(3, 1fr)
+  gap: 1rem
+  row-gap: 1.5rem
+  max-width: 600px
   
   @media (max-width: 768px)
     grid-template-columns: repeat(2, 1fr)
+    
+  button
+    width: 100%
+    justify-content: center
 
 .popover-content-demo
-  padding: var(--lb-space-md)
+  padding: 0.875rem
+  min-width: 200px
   
   h4
-    margin: 0 0 var(--lb-space-sm) 0
-    font-size: var(--lb-font-size-label-large)
+    margin: 0 0 0.5rem 0
+    font-size: 1rem
+    font-weight: 600
     color: var(--lb-text-neutral-contrast-high)
   
   p
-    margin: 0 0 var(--lb-space-md) 0
+    margin: 0 0 0.5rem 0
     color: var(--lb-text-neutral-contrast-low)
-    font-size: var(--lb-font-size-label-base)
+    font-size: 0.875rem
+    line-height: 1.5
+    
+    &:last-of-type:not(:only-child)
+      margin-bottom: 0.75rem
     
     &:last-child
       margin-bottom: 0
+  
+  button
+    margin-top: 0.25rem
 
 .user-menu-demo
   min-width: 280px
@@ -3788,60 +4039,63 @@ section
   .user-header
     display: flex
     align-items: center
-    gap: var(--lb-space-md)
-    padding: var(--lb-space-md)
+    gap: 1rem
+    padding: 1.25rem
     
     .user-info
       flex: 1
       min-width: 0
       
       .user-name
-        margin: 0 0 var(--lb-space-2xs) 0
-        font-size: var(--lb-font-size-label-base)
-        font-weight: var(--lb-font-weight-medium)
+        margin: 0 0 0.25rem 0
+        font-size: 1rem
+        font-weight: 600
         color: var(--lb-text-neutral-contrast-high)
       
       .user-email
         margin: 0
-        font-size: var(--lb-font-size-label-small)
+        font-size: 0.75rem
         color: var(--lb-text-neutral-contrast-low)
   
   .user-menu
-    padding: var(--lb-space-xs) 0
+    padding: 0.5rem
     
     .menu-item
       display: flex
       align-items: center
-      gap: var(--lb-space-md)
-      padding: var(--lb-space-sm) var(--lb-space-md)
+      gap: 0.75rem
+      padding: 0.625rem 0.75rem
+      margin: 0.125rem 0
+      border-radius: 0.5rem
       cursor: pointer
-      transition: background-color var(--lb-transition)
+      transition: background-color 0.2s ease
       color: var(--lb-text-neutral-contrast-low)
-      font-size: var(--lb-font-size-label-base)
+      font-size: 0.875rem
       
       &:hover
         background: var(--lb-surface-neutral-hover)
         color: var(--lb-text-neutral-contrast-high)
       
       .menu-icon
-        width: var(--lb-icon-size-sm)
-        height: var(--lb-icon-size-sm)
+        width: 18px
+        height: 18px
         flex-shrink: 0
 
 // Dropdown menu content styles for chip examples
 .dropdown-menu-content
-  padding: var(--lb-space-xs)
+  padding: 0.5rem
   min-width: 10rem // 160px
 
   .menu-item
-    min-height: 40px // Match medium dropdown item height
-    padding: var(--lb-space-sm) var(--lb-space-md)
+    height: 40px // Match medium dropdown item height exactly
+    padding: 0 0.75rem // Remove vertical padding, keep horizontal
+    margin: 0.125rem 0
     cursor: pointer
-    border-radius: var(--lb-radius-sm)
+    border-radius: 0.5rem
     color: var(--lb-text-neutral-contrast-high)
-    font-size: var(--lb-font-size-label-base) // 14px - base label font
-    line-height: var(--lb-line-height-normal)
-    transition: background-color var(--lb-transition)
+    font-size: 0.875rem // 14px - medium size
+    line-height: 1.5
+    transition: background-color 0.2s ease
     display: flex
     align-items: center
     
@@ -3876,17 +4130,33 @@ section
 .date-picker-demo
   display: flex
   flex-direction: column
-  gap: var(--lb-space-md)
+  gap: 1rem
   align-items: flex-start
   
-  .lb-date-picker
+  // Direct DatePicker children get spacing
+  > .lb-date-picker
     min-width: 15rem
+    
+    & + .lb-date-picker
+      margin-top: 0.75rem
+  
+  // FormField wrapped DatePickers
+  > .lb-form-field
+    width: 100%
+    max-width: 400px
+    
+    & + .lb-form-field
+      margin-top: 1.5rem
+    
+    .lb-date-picker
+      width: 100%
   
   .demo-note
-    padding: var(--lb-space-sm)
+    margin-top: 1rem
+    padding: 0.75rem
     background: var(--lb-surface-neutral-subtle)
-    border-radius: var(--lb-radius-md)
-    font-size: var(--lb-font-size-body-small)
+    border-radius: 0.625rem
+    font-size: 0.875rem
     color: var(--lb-text-neutral-contrast-high)
     
     p
@@ -3912,18 +4182,41 @@ section
     margin: var(--lb-space-xs) 0
 
 .form-demo
-  min-width: 300px
+  min-width: 320px
+  padding: 1.25rem
   
   h4
-    margin: 0 0 var(--lb-space-lg) 0
+    margin: 0 0 1.25rem 0
+    font-size: 1.125rem
+    font-weight: 600
+    color: var(--lb-text-neutral-contrast-high)
+  
+  .form-field
+    margin-bottom: 1rem
+    
+    label
+      display: block
+      margin-bottom: 0.5rem
+    
+    &:last-of-type
+      margin-bottom: 1.25rem
+  
+  .form-actions
+    display: flex
+    justify-content: flex-end
+    gap: 0.75rem
+    padding-top: 0.25rem
 
 // Dropdown demo styles
 .dropdown-demo-content
-  padding: var(--lb-space-md)
+  padding: 1.25rem
   min-width: 200px
   
   p
-    margin: 0 0 var(--lb-space-sm) 0
+    margin: 0 0 0.75rem 0
+    font-size: 0.875rem
+    color: var(--lb-text-neutral-contrast-low)
+    
     &:last-child
       margin-bottom: 0
 
@@ -3963,70 +4256,269 @@ section
     justify-content: flex-end
     gap: var(--lb-space-sm)
 
-// Density system demo styles
-.density-demo-content
-  display: flex
-  flex-direction: column
-  gap: base.$space-lg
-  
-  .calendar-demo
-    h5
-      margin: 0 0 base.$space-md 0
-      color: var(--lb-text-neutral-contrast-high)
-      font-size: var(--lb-font-size-label-large)
-    
-    .lb-calendar
-      max-width: 100%
 
-.override-examples
-  display: flex
-  flex-direction: column
-  gap: base.$space-md
-  max-width: 600px
+// Custom Theme Section Styles
+.custom-theme-section
+  margin-bottom: base.$space-6xl
   
-  .override-row
-    display: flex
-    align-items: center
-    
-    .label
-      font-weight: 500
-      color: var(--lb-text-neutral-contrast-high)
-      padding: base.$space-sm base.$space-md
-      background: var(--lb-surface-neutral-subtle)
-      border-radius: base.$radius-md
-      font-size: var(--lb-font-size-label-base)
-    
-    .lb-input
-      width: 100%
-
-// Density comparison styles
-.density-comparison
-  display: grid
-  grid-template-columns: 1fr 1fr
-  gap: base.$space-xl
-  
-  @media (max-width: 1024px)
-    grid-template-columns: 1fr
-  
-  .density-example
-    padding: base.$space-lg
+  .theme-config-demo
     background: var(--lb-surface-neutral-subtle)
+    padding: base.$space-2xl
+    border-radius: base.$radius-lg
+    
+    h3
+      color: var(--lb-text-primary-contrast-high)
+      margin-bottom: base.$space-lg
+    
+    > p
+      color: var(--lb-text-neutral-contrast-low)
+      margin-bottom: base.$space-xl
+  
+  .config-approaches
+    display: grid
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))
+    gap: base.$space-xl
+    margin-bottom: base.$space-2xl
+    
+  .approach-card
+    background: var(--lb-background-surface)
+    padding: base.$space-xl
     border-radius: base.$radius-md
+    border: base.$border-sm solid var(--lb-border-neutral-line)
     
-    h5
-      margin: 0 0 base.$space-md 0
+    h4
       color: var(--lb-text-neutral-contrast-high)
-      font-size: var(--lb-font-size-label-large)
+      margin-bottom: base.$space-md
+      font-size: 1.125rem
     
-    .input-row
+    p
+      color: var(--lb-text-neutral-contrast-low)
+      font-size: 0.875rem
+      margin-top: base.$space-md
+  
+  .code-block
+    background: var(--lb-surface-neutral-normal)
+    padding: base.$space-md
+    border-radius: base.$radius-sm
+    overflow-x: auto
+    margin: 0
+    
+    code
+      font-family: ui-monospace, SFMono-Regular, 'SF Mono', Consolas, monospace
+      font-size: 0.75rem
+      color: var(--lb-text-neutral-contrast-high)
+      white-space: pre
+      background: none
+      padding: 0
+      border: none
+  
+  .custom-accent-demo
+    background: var(--lb-background-surface)
+    padding: base.$space-xl
+    border-radius: base.$radius-md
+    border: base.$border-sm solid var(--lb-border-neutral-line)
+    margin-bottom: base.$space-xl
+    
+    h4
+      color: var(--lb-text-neutral-contrast-high)
+      margin-bottom: base.$space-md
+    
+    p
+      color: var(--lb-text-neutral-contrast-low)
+      font-size: 0.875rem
+      margin-bottom: base.$space-md
+      
+      &:last-child
+        margin-bottom: 0
+  
+  .interactive-theme-demo
+    background: var(--lb-background-surface)
+    padding: base.$space-xl
+    border-radius: base.$radius-md
+    border: base.$border-sm solid var(--lb-border-neutral-line)
+    margin-bottom: base.$space-xl
+    
+    h4
+      color: var(--lb-text-primary-contrast-high)
+      margin-bottom: base.$space-md
+      font-size: 1.25rem
+    
+    > p
+      color: var(--lb-text-neutral-contrast-low)
+      margin-bottom: base.$space-xl
+    
+    .color-controls
+      display: grid
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))
+      gap: base.$space-lg
+      margin-bottom: base.$space-2xl
+      
+      .color-control
+        label
+          display: block
+          color: var(--lb-text-neutral-contrast-high)
+          font-weight: 500
+          margin-bottom: base.$space-xs
+          font-size: 0.875rem
+        
+        .color-input-wrapper
+          display: flex
+          align-items: center
+          gap: base.$space-md
+          
+          input[type="color"]
+            width: 60px
+            height: 40px
+            border: base.$border-sm solid var(--lb-border-neutral-normal)
+            border-radius: base.$radius-sm
+            cursor: pointer
+            
+            &:hover
+              border-color: var(--lb-border-neutral-active)
+          
+          span
+            font-family: ui-monospace, SFMono-Regular, monospace
+            font-size: 0.875rem
+            color: var(--lb-text-neutral-contrast-low)
+    
+    .theme-preview
+      background: var(--lb-surface-neutral-subtle)
+      border: base.$border-sm solid var(--lb-border-neutral-line)
+      border-radius: base.$radius-md
+      padding: base.$space-xl
+      
+      .preview-header
+        display: flex
+        justify-content: space-between
+        align-items: center
+        margin-bottom: base.$space-xl
+        
+        h5
+          margin: 0
+          color: var(--lb-text-neutral-contrast-high)
+          font-size: 1.125rem
+        
+        .preview-badge
+          padding: base.$space-xs base.$space-md
+          border-radius: base.$radius-full
+          font-size: 0.75rem
+          font-weight: 600
+      
+      .preview-grid
+        display: grid
+        gap: base.$space-xl
+        
+        .preview-card
+          background: var(--lb-background-surface)
+          padding: base.$space-lg
+          border-radius: base.$radius-sm
+          
+          .scale-title
+            font-size: 0.875rem
+            font-weight: 600
+            color: var(--lb-text-neutral-contrast-high)
+            margin-bottom: base.$space-md
+          
+          .scale-row
+            display: grid
+            grid-template-columns: repeat(12, 1fr)
+            gap: 2px
+            margin-bottom: base.$space-lg
+            
+            .scale-step
+              aspect-ratio: 1
+              border-radius: base.$radius-xs
+              display: flex
+              align-items: center
+              justify-content: center
+              position: relative
+              
+              span
+                font-size: 0.625rem
+                font-weight: 600
+          
+          .preview-buttons
+            display: flex
+            gap: base.$space-md
+            flex-wrap: wrap
+            
+            .preview-btn
+              padding: base.$space-sm base.$space-lg
+              border-radius: base.$radius-sm
+              font-size: 0.875rem
+              font-weight: 500
+              border: none
+              cursor: pointer
+              transition: all base.$transition
+              
+              &:hover
+                transform: translateY(-1px)
+                box-shadow: base.$shadow-md
+          
+          .preview-surface
+            padding: base.$space-lg
+            border-radius: base.$radius-sm
+            
+            p
+              margin: 0
+              font-weight: 500
+            
+            small
+              font-size: 0.75rem
+          
+          &.accent-card
+            .scale-row
+              margin-bottom: base.$space-lg
+  
+  .theme-example-buttons
+    background: var(--lb-background-surface)
+    padding: base.$space-xl
+    border-radius: base.$radius-md
+    border: base.$border-sm solid var(--lb-border-neutral-line)
+    
+    h4
+      color: var(--lb-text-neutral-contrast-high)
+      margin-bottom: base.$space-lg
+    
+    .button-row
       display: flex
       gap: base.$space-md
       flex-wrap: wrap
+      margin-bottom: base.$space-md
+    
+    button
+      padding: base.$space-sm base.$space-lg
+      border-radius: base.$radius-sm
+      font-weight: 500
+      font-size: 0.875rem
+      border: none
+      cursor: pointer
+      transition: all base.$transition
       
-      > *
-        flex: 1
-        min-width: 150px
+      &.custom-primary
+        background: #6366f1
+        color: white
         
-      .lb-date-picker
-        max-width: 200px
+        &:hover
+          background: #4f46e5
+      
+      &.custom-secondary
+        background: #10b981
+        color: white
+        
+        &:hover
+          background: #059669
+      
+      &.custom-accent
+        background: #ec4899
+        color: white
+        
+        &:hover
+          background: #db2777
+    
+    .hint
+      color: var(--lb-text-neutral-contrast-low)
+      font-size: 0.75rem
+      margin: 0
+
 </style>

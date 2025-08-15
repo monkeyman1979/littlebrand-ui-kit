@@ -99,7 +99,7 @@ const actionColor = computed(() => {
 
 const closeButtonColor = computed(() => {
   // Use a neutral color that works on all variant backgrounds
-  return props.variant === 'default' ? 'primary' : actionColor.value
+  return props.variant === 'default' ? 'neutral' : actionColor.value
 })
 
 // Methods
@@ -156,18 +156,20 @@ defineOptions({
 
 <style lang="sass" scoped>
 @use '@/styles/base' as base
+@use '@/styles/component-variables' as cv
+@use '@/styles/typography' as typography
 
 .lb-snackbar
   position: relative
   display: flex
   align-items: stretch
-  width: min(base.$snackbar-max-width, 90%)
+  width: min(cv.$snackbar-max-width, 90%)
   min-height: base.$unit-40  // 40px
-  padding: base.$space-sm base.$snackbar-padding  // 8px vertical, 16px horizontal
+  padding: base.$space-sm cv.$snackbar-padding  // 8px vertical, 16px horizontal
   background-color: var(--lb-background-surface-raised)
   border: base.$border-sm solid var(--lb-border-neutral-line)
-  border-radius: var(--lb-snackbar-radius)
-  box-shadow: var(--lb-shadow-lg)
+  border-radius: cv.$snackbar-border-radius
+  box-shadow: base.$shadow-lg
   pointer-events: auto
   overflow: hidden
   transition: transform 200ms ease-out
@@ -192,9 +194,9 @@ defineOptions({
 
 .snackbar-message
   flex: 1 1 auto
-  font-size: var(--lb-font-size-label-base)
-  font-weight: var(--lb-font-weight-normal)
-  line-height: var(--lb-line-height-normal)
+  font-size: typography.$font-size-label-base
+  font-weight: typography.$font-weight-normal
+  line-height: typography.$line-height-normal
   color: var(--lb-text-neutral-contrast-high)
   word-wrap: break-word
   align-self: center
@@ -214,8 +216,11 @@ defineOptions({
 .lb-snackbar
   // Default variant
   &.variant-default
-    background-color: var(--lb-background-surface-raised)
+    background-color: var(--lb-surface-neutral-raised)
     border-color: var(--lb-border-neutral-line)
+    
+    .snackbar-message
+      color: var(--lb-text-neutral-contrast-high)
   
   // Success variant
   &.variant-success
@@ -239,7 +244,7 @@ defineOptions({
     border-color: var(--lb-border-warning-line)
     
     .snackbar-message
-      color: var(--lb-text-warning-normal)
+      color: var(--lb-text-warning-contrast-high)
   
   // Info variant
   &.variant-info

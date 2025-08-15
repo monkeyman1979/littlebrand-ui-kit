@@ -1,0 +1,605 @@
+// LittleBrand UI Kit - Theme Color Tokens
+// Semantic color tokens for theming (light/dark mode support)
+
+@use 'colors' as colors
+@use 'theme-config' as config
+
+// Check if user has provided custom theme colors
+$use-custom-theme: false !default
+
+// Light Theme (Default)
+:root
+  @if $use-custom-theme
+    // Use the new configuration system
+    @include config.apply-theme(config.$theme-colors)
+  @else
+    // Use traditional hardcoded tokens for backward compatibility
+    // === BORDER TOKENS ===
+    // Primary
+    --lb-border-primary-line: #{colors.$orange-6}
+    --lb-border-primary-normal: #{colors.$orange-7}
+    --lb-border-primary-active: #{colors.$orange-8}
+    --lb-border-primary-focus: #{colors.$orange-a7}
+    --lb-border-primary-disabled: #{colors.$orange-a1}
+    
+    // Secondary
+    --lb-border-secondary-line: #{colors.$teal-6}
+    --lb-border-secondary-normal: #{colors.$teal-7}
+    --lb-border-secondary-active: #{colors.$teal-8}
+    --lb-border-secondary-focus: #{colors.$teal-a7}
+    --lb-border-secondary-disabled: #{colors.$teal-a1}
+    
+    // Tertiary
+    --lb-border-tertiary-line: #{colors.$blue-6}
+    --lb-border-tertiary-normal: #{colors.$blue-7}
+    --lb-border-tertiary-active: #{colors.$blue-8}
+    --lb-border-tertiary-focus: #{colors.$blue-a7}
+    --lb-border-tertiary-disabled: #{colors.$blue-a1}
+    
+    // Success
+    --lb-border-success-line: #{colors.$green-6}
+    --lb-border-success-normal: #{colors.$green-7}
+    --lb-border-success-active: #{colors.$green-8}
+    --lb-border-success-focus: #{colors.$green-a7}
+    --lb-border-success-disabled: #{colors.$green-a1}
+    
+    // Warning
+    --lb-border-warning-line: #{colors.$yellow-6}
+    --lb-border-warning-normal: #{colors.$yellow-7}
+    --lb-border-warning-active: #{colors.$yellow-8}
+    --lb-border-warning-focus: #{colors.$yellow-a7}
+    --lb-border-warning-disabled: #{colors.$yellow-a1}
+    
+    // Error
+    --lb-border-error-line: #{colors.$red-6}
+    --lb-border-error-normal: #{colors.$red-7}
+    --lb-border-error-active: #{colors.$red-8}
+    --lb-border-error-focus: #{colors.$red-a7}
+    --lb-border-error-disabled: #{colors.$red-a1}
+    
+    // Info
+    --lb-border-info-line: #{colors.$blue-6}
+    --lb-border-info-normal: #{colors.$blue-7}
+    --lb-border-info-active: #{colors.$blue-8}
+    --lb-border-info-focus: #{colors.$blue-a7}
+    --lb-border-info-disabled: #{colors.$blue-a1}
+    
+    // Neutral
+    --lb-border-neutral-line: #{colors.$gray-6}
+    --lb-border-neutral-normal: #{colors.$gray-7}
+    --lb-border-neutral-active: #{colors.$gray-8}
+    --lb-border-neutral-focus: #{colors.$gray-a7}
+    --lb-border-neutral-disabled: #{colors.$gray-5}
+    
+    // === FILL TOKENS ===
+    // Primary
+    --lb-fill-primary-normal: #{colors.$orange-9}
+    --lb-fill-primary-hover: #{colors.$orange-10}
+    --lb-fill-primary-active: #{colors.$orange-8}
+    --lb-fill-primary-focus: #{colors.$orange-8}
+    --lb-fill-primary-disabled: #{colors.$orange-a4}
+    
+    // Secondary
+    --lb-fill-secondary-normal: #{colors.$teal-9}
+    --lb-fill-secondary-hover: #{colors.$teal-10}
+    --lb-fill-secondary-active: #{colors.$teal-8}
+    --lb-fill-secondary-focus: #{colors.$teal-8}
+    --lb-fill-secondary-disabled: #{colors.$teal-a4}
+    
+    // Tertiary
+    --lb-fill-tertiary-normal: #{colors.$blue-9}
+    --lb-fill-tertiary-hover: #{colors.$blue-10}
+    --lb-fill-tertiary-active: #{colors.$blue-8}
+    --lb-fill-tertiary-focus: #{colors.$blue-8}
+    --lb-fill-tertiary-disabled: #{colors.$blue-a4}
+    
+    // Success
+    --lb-fill-success-normal: #{colors.$green-9}
+    --lb-fill-success-hover: #{colors.$green-10}
+    --lb-fill-success-active: #{colors.$green-8}
+    --lb-fill-success-focus: #{colors.$green-8}
+    --lb-fill-success-disabled: #{colors.$green-a4}
+    
+    // Warning
+    --lb-fill-warning-normal: #{colors.$yellow-9}
+    --lb-fill-warning-hover: #{colors.$yellow-10}
+    --lb-fill-warning-active: #{colors.$yellow-8}
+    --lb-fill-warning-focus: #{colors.$yellow-8}
+    --lb-fill-warning-disabled: #{colors.$yellow-a4}
+    
+    // Error
+    --lb-fill-error-normal: #{colors.$red-9}
+    --lb-fill-error-hover: #{colors.$red-10}
+    --lb-fill-error-active: #{colors.$red-8}
+    --lb-fill-error-focus: #{colors.$red-8}
+    --lb-fill-error-disabled: #{colors.$red-a4}
+    
+    // Info
+    --lb-fill-info-normal: #{colors.$blue-9}
+    --lb-fill-info-hover: #{colors.$blue-10}
+    --lb-fill-info-active: #{colors.$blue-8}
+    --lb-fill-info-focus: #{colors.$blue-8}
+    --lb-fill-info-disabled: #{colors.$blue-a4}
+    
+    // Neutral
+    --lb-fill-neutral-normal: #{colors.$gray-9}
+    --lb-fill-neutral-hover: #{colors.$gray-10}
+    --lb-fill-neutral-active: #{colors.$gray-8}
+    --lb-fill-neutral-focus: #{colors.$gray-8}
+    --lb-fill-neutral-disabled: #{colors.$gray-a4}
+    
+    // === TEXT TOKENS ===
+    // Primary
+    --lb-text-primary-normal: #{colors.$orange-9}
+    --lb-text-primary-contrast-high: #{colors.$orange-12}
+    --lb-text-primary-contrast-low: #{colors.$orange-11}
+    --lb-text-primary-disabled: #{colors.$orange-7}
+    
+    // Secondary
+    --lb-text-secondary-normal: #{colors.$teal-9}
+    --lb-text-secondary-contrast-high: #{colors.$teal-12}
+    --lb-text-secondary-contrast-low: #{colors.$teal-11}
+    --lb-text-secondary-disabled: #{colors.$teal-7}
+    
+    // Tertiary
+    --lb-text-tertiary-normal: #{colors.$blue-9}
+    --lb-text-tertiary-contrast-high: #{colors.$blue-12}
+    --lb-text-tertiary-contrast-low: #{colors.$blue-11}
+    --lb-text-tertiary-disabled: #{colors.$blue-7}
+    
+    // Success
+    --lb-text-success-normal: #{colors.$green-9}
+    --lb-text-success-contrast-high: #{colors.$green-12}
+    --lb-text-success-contrast-low: #{colors.$green-11}
+    --lb-text-success-disabled: #{colors.$green-7}
+    
+    // Warning
+    --lb-text-warning-normal: #{colors.$yellow-9}
+    --lb-text-warning-contrast-high: #{colors.$gray-12} // Better contrast on light bg
+    --lb-text-warning-contrast-low: #{colors.$gray-11}
+    --lb-text-warning-disabled: #{colors.$yellow-7}
+    
+    // Error
+    --lb-text-error-normal: #{colors.$red-9}
+    --lb-text-error-contrast-high: #{colors.$red-12}
+    --lb-text-error-contrast-low: #{colors.$red-11}
+    --lb-text-error-disabled: #{colors.$red-7}
+    
+    // Info
+    --lb-text-info-normal: #{colors.$blue-9}
+    --lb-text-info-contrast-high: #{colors.$blue-12}
+    --lb-text-info-contrast-low: #{colors.$blue-11}
+    --lb-text-info-disabled: #{colors.$blue-7}
+    
+    // Neutral
+    --lb-text-neutral-normal: #{colors.$gray-9}
+    --lb-text-neutral-contrast-high: #{colors.$gray-12}
+    --lb-text-neutral-contrast-low: #{colors.$gray-11}
+    --lb-text-neutral-disabled: #{colors.$gray-7}
+    
+    // === SURFACE TOKENS ===
+    // Primary
+    --lb-surface-primary-normal: #{colors.$orange-2}
+    --lb-surface-primary-hover: #{colors.$orange-3}
+    --lb-surface-primary-active: #{colors.$orange-4}
+    --lb-surface-primary-subtle: #{colors.$orange-1}
+    --lb-surface-primary-raised: #{colors.$orange-1}
+    
+    // Secondary
+    --lb-surface-secondary-normal: #{colors.$teal-2}
+    --lb-surface-secondary-hover: #{colors.$teal-3}
+    --lb-surface-secondary-active: #{colors.$teal-4}
+    --lb-surface-secondary-subtle: #{colors.$teal-1}
+    --lb-surface-secondary-raised: #{colors.$teal-1}
+    
+    // Tertiary
+    --lb-surface-tertiary-normal: #{colors.$blue-2}
+    --lb-surface-tertiary-hover: #{colors.$blue-3}
+    --lb-surface-tertiary-active: #{colors.$blue-4}
+    --lb-surface-tertiary-subtle: #{colors.$blue-1}
+    --lb-surface-tertiary-raised: #{colors.$blue-1}
+    
+    // Success
+    --lb-surface-success-normal: #{colors.$green-2}
+    --lb-surface-success-hover: #{colors.$green-3}
+    --lb-surface-success-active: #{colors.$green-4}
+    --lb-surface-success-subtle: #{colors.$green-1}
+    --lb-surface-success-raised: #{colors.$green-1}
+    
+    // Warning
+    --lb-surface-warning-normal: #{colors.$yellow-2}
+    --lb-surface-warning-hover: #{colors.$yellow-3}
+    --lb-surface-warning-active: #{colors.$yellow-4}
+    --lb-surface-warning-subtle: #{colors.$yellow-1}
+    --lb-surface-warning-raised: #{colors.$yellow-1}
+    
+    // Error
+    --lb-surface-error-normal: #{colors.$red-2}
+    --lb-surface-error-hover: #{colors.$red-3}
+    --lb-surface-error-active: #{colors.$red-4}
+    --lb-surface-error-subtle: #{colors.$red-1}
+    --lb-surface-error-raised: #{colors.$red-1}
+    
+    // Info
+    --lb-surface-info-normal: #{colors.$blue-2}
+    --lb-surface-info-hover: #{colors.$blue-3}
+    --lb-surface-info-active: #{colors.$blue-4}
+    --lb-surface-info-subtle: #{colors.$blue-1}
+    --lb-surface-info-raised: #{colors.$blue-1}
+    
+    // Neutral
+    --lb-surface-neutral-normal: #{colors.$gray-2}
+    --lb-surface-neutral-hover: #{colors.$gray-3}
+    --lb-surface-neutral-active: #{colors.$gray-4}
+    --lb-surface-neutral-subtle: #{colors.$gray-1}
+    --lb-surface-neutral-raised: #{colors.$gray-1}
+    --lb-surface-neutral-disabled: #{colors.$gray-3}
+    
+    // === TEXT-ON TOKENS (for filled backgrounds) ===
+    // These are hardcoded based on typical luminance values
+    // Primary (orange) - typically needs white text
+    --lb-text-on-primary: white
+    --lb-text-on-primary-hover: white
+    --lb-text-on-primary-active: white
+    
+    // Secondary (teal) - typically needs white text
+    --lb-text-on-secondary: white
+    --lb-text-on-secondary-hover: white
+    --lb-text-on-secondary-active: white
+    
+    // Tertiary (blue) - typically needs white text
+    --lb-text-on-tertiary: white
+    --lb-text-on-tertiary-hover: white
+    --lb-text-on-tertiary-active: white
+    
+    // Success (green) - typically needs white text
+    --lb-text-on-success: white
+    --lb-text-on-success-hover: white
+    --lb-text-on-success-active: white
+    
+    // Warning (yellow) - needs dark text for contrast
+    --lb-text-on-warning: #{colors.$gray-12}
+    --lb-text-on-warning-hover: #{colors.$gray-12}
+    --lb-text-on-warning-active: #{colors.$gray-12}
+    
+    // Error (red) - typically needs white text
+    --lb-text-on-error: white
+    --lb-text-on-error-hover: white
+    --lb-text-on-error-active: white
+    
+    // Info (blue) - typically needs white text
+    --lb-text-on-info: white
+    --lb-text-on-info-hover: white
+    --lb-text-on-info-active: white
+    
+    // Neutral (gray) - typically needs white text
+    --lb-text-on-neutral: white
+    --lb-text-on-neutral-hover: white
+    --lb-text-on-neutral-active: white
+  
+  // === BACKGROUND TOKENS ===
+  --lb-background-page: #{colors.$gray-1}
+  --lb-background-surface: #{colors.$gray-2}
+  --lb-background-overlay: rgba(0, 0, 0, 0.5)
+  
+  // === ADDITIONAL TOKENS ===
+  --lb-focus-ring-color: #{colors.$orange-a7}
+  --lb-divider-color: #{colors.$gray-6}
+  
+  // === SIZE VARIABLES as CSS Custom Properties ===
+  // Icon sizes
+  --lb-icon-size-sm: 18px
+  --lb-icon-size-md: 20px
+  --lb-icon-size-lg: 24px
+  
+  // Space (converted from SASS)
+  --lb-space-2xs: 2px
+  --lb-space-xs: 4px
+  --lb-space-sm: 8px
+  --lb-space-md: 12px
+  --lb-space-lg: 16px
+  --lb-space-xl: 20px
+  --lb-space-2xl: 24px
+  --lb-space-3xl: 32px
+  --lb-space-4xl: 40px
+  --lb-space-5xl: 48px
+  --lb-space-6xl: 56px
+  --lb-space-7xl: 64px
+  --lb-space-8xl: 72px
+  --lb-space-9xl: 96px
+  --lb-space-10xl: 120px
+  
+  // Border widths
+  --lb-border-sm: 1px
+  --lb-border-md: 2px
+  
+  // Border radius
+  --lb-radius-xs: 4px
+  --lb-radius-sm: 8px
+  --lb-radius-md: 10px
+  --lb-radius-lg: 12px
+  --lb-radius-xl: 16px
+  --lb-radius-2xl: 24px
+  --lb-radius-3xl: 32px
+  --lb-radius-4xl: 40px
+  --lb-radius-5xl: 48px
+  --lb-radius-6xl: 56px
+  --lb-radius-7xl: 64px
+  --lb-radius-8xl: 72px
+  --lb-radius-9xl: 80px
+  --lb-radius-full: 9999px
+  
+  // Input heights
+  --lb-input-height-medium: 40px
+  --lb-input-height-large: 44px
+
+// Dark Theme
+[data-theme="dark"]
+  @if $use-custom-theme
+    // Use the new configuration system for dark mode
+    @include config.apply-dark-theme(config.$theme-colors)
+  @else
+    // Traditional dark theme tokens
+    // === BORDER TOKENS ===
+    // Primary
+    --lb-border-primary-line: #{colors.$orange-dark-6}
+    --lb-border-primary-normal: #{colors.$orange-dark-7}
+    --lb-border-primary-active: #{colors.$orange-dark-8}
+    --lb-border-primary-focus: #{colors.$orange-dark-a7}
+    --lb-border-primary-disabled: #{colors.$orange-dark-a1}
+    
+    // Secondary
+    --lb-border-secondary-line: #{colors.$teal-dark-6}
+    --lb-border-secondary-normal: #{colors.$teal-dark-7}
+    --lb-border-secondary-active: #{colors.$teal-dark-8}
+    --lb-border-secondary-focus: #{colors.$teal-dark-a7}
+    --lb-border-secondary-disabled: #{colors.$teal-dark-a1}
+    
+    // Tertiary
+    --lb-border-tertiary-line: #{colors.$blue-dark-6}
+    --lb-border-tertiary-normal: #{colors.$blue-dark-7}
+    --lb-border-tertiary-active: #{colors.$blue-dark-8}
+    --lb-border-tertiary-focus: #{colors.$blue-dark-a7}
+    --lb-border-tertiary-disabled: #{colors.$blue-dark-a1}
+    
+    // Success
+    --lb-border-success-line: #{colors.$green-dark-6}
+    --lb-border-success-normal: #{colors.$green-dark-7}
+    --lb-border-success-active: #{colors.$green-dark-8}
+    --lb-border-success-focus: #{colors.$green-dark-a7}
+    --lb-border-success-disabled: #{colors.$green-dark-a1}
+    
+    // Warning
+    --lb-border-warning-line: #{colors.$yellow-dark-6}
+    --lb-border-warning-normal: #{colors.$yellow-dark-7}
+    --lb-border-warning-active: #{colors.$yellow-dark-8}
+    --lb-border-warning-focus: #{colors.$yellow-dark-a7}
+    --lb-border-warning-disabled: #{colors.$yellow-dark-a1}
+    
+    // Error
+    --lb-border-error-line: #{colors.$red-dark-6}
+    --lb-border-error-normal: #{colors.$red-dark-7}
+    --lb-border-error-active: #{colors.$red-dark-8}
+    --lb-border-error-focus: #{colors.$red-dark-a7}
+    --lb-border-error-disabled: #{colors.$red-dark-a1}
+    
+    // Info
+    --lb-border-info-line: #{colors.$blue-dark-6}
+    --lb-border-info-normal: #{colors.$blue-dark-7}
+    --lb-border-info-active: #{colors.$blue-dark-8}
+    --lb-border-info-focus: #{colors.$blue-dark-a7}
+    --lb-border-info-disabled: #{colors.$blue-dark-a1}
+    
+    // Neutral
+    --lb-border-neutral-line: #{colors.$gray-dark-6}
+    --lb-border-neutral-normal: #{colors.$gray-dark-7}
+    --lb-border-neutral-active: #{colors.$gray-dark-8}
+    --lb-border-neutral-focus: #{colors.$gray-dark-a7}
+    --lb-border-neutral-disabled: #{colors.$gray-dark-5}
+    
+    // === FILL TOKENS ===
+    // Primary
+    --lb-fill-primary-normal: #{colors.$orange-dark-9}
+    --lb-fill-primary-hover: #{colors.$orange-dark-10}
+    --lb-fill-primary-active: #{colors.$orange-dark-8}
+    --lb-fill-primary-focus: #{colors.$orange-dark-8}
+    --lb-fill-primary-disabled: #{colors.$orange-dark-a4}
+    
+    // Secondary
+    --lb-fill-secondary-normal: #{colors.$teal-dark-9}
+    --lb-fill-secondary-hover: #{colors.$teal-dark-10}
+    --lb-fill-secondary-active: #{colors.$teal-dark-8}
+    --lb-fill-secondary-focus: #{colors.$teal-dark-8}
+    --lb-fill-secondary-disabled: #{colors.$teal-dark-a4}
+    
+    // Tertiary
+    --lb-fill-tertiary-normal: #{colors.$blue-dark-9}
+    --lb-fill-tertiary-hover: #{colors.$blue-dark-10}
+    --lb-fill-tertiary-active: #{colors.$blue-dark-8}
+    --lb-fill-tertiary-focus: #{colors.$blue-dark-8}
+    --lb-fill-tertiary-disabled: #{colors.$blue-dark-a4}
+    
+    // Success
+    --lb-fill-success-normal: #{colors.$green-dark-9}
+    --lb-fill-success-hover: #{colors.$green-dark-10}
+    --lb-fill-success-active: #{colors.$green-dark-8}
+    --lb-fill-success-focus: #{colors.$green-dark-8}
+    --lb-fill-success-disabled: #{colors.$green-dark-a4}
+    
+    // Warning
+    --lb-fill-warning-normal: #{colors.$yellow-dark-9}
+    --lb-fill-warning-hover: #{colors.$yellow-dark-10}
+    --lb-fill-warning-active: #{colors.$yellow-dark-8}
+    --lb-fill-warning-focus: #{colors.$yellow-dark-8}
+    --lb-fill-warning-disabled: #{colors.$yellow-dark-a4}
+    
+    // Error
+    --lb-fill-error-normal: #{colors.$red-dark-9}
+    --lb-fill-error-hover: #{colors.$red-dark-10}
+    --lb-fill-error-active: #{colors.$red-dark-8}
+    --lb-fill-error-focus: #{colors.$red-dark-8}
+    --lb-fill-error-disabled: #{colors.$red-dark-a4}
+    
+    // Info
+    --lb-fill-info-normal: #{colors.$blue-dark-9}
+    --lb-fill-info-hover: #{colors.$blue-dark-10}
+    --lb-fill-info-active: #{colors.$blue-dark-8}
+    --lb-fill-info-focus: #{colors.$blue-dark-8}
+    --lb-fill-info-disabled: #{colors.$blue-dark-a4}
+    
+    // Neutral
+    --lb-fill-neutral-normal: #{colors.$gray-dark-9}
+    --lb-fill-neutral-hover: #{colors.$gray-dark-10}
+    --lb-fill-neutral-active: #{colors.$gray-dark-8}
+    --lb-fill-neutral-focus: #{colors.$gray-dark-8}
+    --lb-fill-neutral-disabled: #{colors.$gray-dark-a4}
+    
+    // === TEXT TOKENS ===
+    // Primary
+    --lb-text-primary-normal: #{colors.$orange-dark-9}
+    --lb-text-primary-contrast-high: #{colors.$orange-dark-12}
+    --lb-text-primary-contrast-low: #{colors.$orange-dark-11}
+    --lb-text-primary-disabled: #{colors.$orange-dark-a5}
+    
+    // Secondary
+    --lb-text-secondary-normal: #{colors.$teal-dark-9}
+    --lb-text-secondary-contrast-high: #{colors.$teal-dark-12}
+    --lb-text-secondary-contrast-low: #{colors.$teal-dark-11}
+    --lb-text-secondary-disabled: #{colors.$teal-dark-a5}
+    
+    // Tertiary
+    --lb-text-tertiary-normal: #{colors.$blue-dark-9}
+    --lb-text-tertiary-contrast-high: #{colors.$blue-dark-12}
+    --lb-text-tertiary-contrast-low: #{colors.$blue-dark-11}
+    --lb-text-tertiary-disabled: #{colors.$blue-dark-a5}
+    
+    // Success
+    --lb-text-success-normal: #{colors.$green-dark-9}
+    --lb-text-success-contrast-high: #{colors.$green-dark-12}
+    --lb-text-success-contrast-low: #{colors.$green-dark-11}
+    --lb-text-success-disabled: #{colors.$green-dark-a5}
+    
+    // Warning
+    --lb-text-warning-normal: #{colors.$yellow-dark-9}
+    --lb-text-warning-contrast-high: #{colors.$yellow-dark-12}
+    --lb-text-warning-contrast-low: #{colors.$yellow-dark-11}
+    --lb-text-warning-disabled: #{colors.$yellow-dark-a5}
+    
+    // Error
+    --lb-text-error-normal: #{colors.$red-dark-9}
+    --lb-text-error-contrast-high: #{colors.$red-dark-12}
+    --lb-text-error-contrast-low: #{colors.$red-dark-11}
+    --lb-text-error-disabled: #{colors.$red-dark-a5}
+    
+    // Info
+    --lb-text-info-normal: #{colors.$blue-dark-9}
+    --lb-text-info-contrast-high: #{colors.$blue-dark-12}
+    --lb-text-info-contrast-low: #{colors.$blue-dark-11}
+    --lb-text-info-disabled: #{colors.$blue-dark-a5}
+    
+    // Neutral
+    --lb-text-neutral-normal: #{colors.$gray-dark-9}
+    --lb-text-neutral-contrast-high: #{colors.$gray-dark-12}
+    --lb-text-neutral-contrast-low: #{colors.$gray-dark-11}
+    --lb-text-neutral-disabled: #{colors.$gray-dark-a5}
+    
+    // === SURFACE TOKENS ===
+    // Primary
+    --lb-surface-primary-normal: #{colors.$orange-dark-2}
+    --lb-surface-primary-hover: #{colors.$orange-dark-3}
+    --lb-surface-primary-active: #{colors.$orange-dark-4}
+    --lb-surface-primary-subtle: #{colors.$orange-dark-1}
+    --lb-surface-primary-raised: #{colors.$orange-dark-1}
+    
+    // Secondary
+    --lb-surface-secondary-normal: #{colors.$teal-dark-2}
+    --lb-surface-secondary-hover: #{colors.$teal-dark-3}
+    --lb-surface-secondary-active: #{colors.$teal-dark-4}
+    --lb-surface-secondary-subtle: #{colors.$teal-dark-1}
+    --lb-surface-secondary-raised: #{colors.$teal-dark-1}
+    
+    // Tertiary
+    --lb-surface-tertiary-normal: #{colors.$blue-dark-2}
+    --lb-surface-tertiary-hover: #{colors.$blue-dark-3}
+    --lb-surface-tertiary-active: #{colors.$blue-dark-4}
+    --lb-surface-tertiary-subtle: #{colors.$blue-dark-1}
+    --lb-surface-tertiary-raised: #{colors.$blue-dark-1}
+    
+    // Success
+    --lb-surface-success-normal: #{colors.$green-dark-2}
+    --lb-surface-success-hover: #{colors.$green-dark-3}
+    --lb-surface-success-active: #{colors.$green-dark-4}
+    --lb-surface-success-subtle: #{colors.$green-dark-1}
+    --lb-surface-success-raised: #{colors.$green-dark-1}
+    
+    // Warning
+    --lb-surface-warning-normal: #{colors.$yellow-dark-2}
+    --lb-surface-warning-hover: #{colors.$yellow-dark-3}
+    --lb-surface-warning-active: #{colors.$yellow-dark-4}
+    --lb-surface-warning-subtle: #{colors.$yellow-dark-1}
+    --lb-surface-warning-raised: #{colors.$yellow-dark-1}
+    
+    // Error
+    --lb-surface-error-normal: #{colors.$red-dark-2}
+    --lb-surface-error-hover: #{colors.$red-dark-3}
+    --lb-surface-error-active: #{colors.$red-dark-4}
+    --lb-surface-error-subtle: #{colors.$red-dark-1}
+    --lb-surface-error-raised: #{colors.$red-dark-1}
+    
+    // Info
+    --lb-surface-info-normal: #{colors.$blue-dark-2}
+    --lb-surface-info-hover: #{colors.$blue-dark-3}
+    --lb-surface-info-active: #{colors.$blue-dark-4}
+    --lb-surface-info-subtle: #{colors.$blue-dark-1}
+    --lb-surface-info-raised: #{colors.$blue-dark-1}
+    
+    // Neutral
+    --lb-surface-neutral-normal: #{colors.$gray-dark-2}
+    --lb-surface-neutral-hover: #{colors.$gray-dark-3}
+    --lb-surface-neutral-active: #{colors.$gray-dark-4}
+    --lb-surface-neutral-subtle: #{colors.$gray-dark-1}
+    --lb-surface-neutral-raised: #{colors.$gray-dark-1}
+    --lb-surface-neutral-disabled: #{colors.$gray-dark-3}
+    
+    // === TEXT-ON TOKENS (for filled backgrounds in dark mode) ===
+    // In dark mode, most colors remain bright enough for white text
+    --lb-text-on-primary: white
+    --lb-text-on-primary-hover: white
+    --lb-text-on-primary-active: white
+    
+    --lb-text-on-secondary: white
+    --lb-text-on-secondary-hover: white
+    --lb-text-on-secondary-active: white
+    
+    --lb-text-on-tertiary: white
+    --lb-text-on-tertiary-hover: white
+    --lb-text-on-tertiary-active: white
+    
+    --lb-text-on-success: white
+    --lb-text-on-success-hover: white
+    --lb-text-on-success-active: white
+    
+    --lb-text-on-warning: white
+    --lb-text-on-warning-hover: white
+    --lb-text-on-warning-active: white
+    
+    --lb-text-on-error: white
+    --lb-text-on-error-hover: white
+    --lb-text-on-error-active: white
+    
+    --lb-text-on-info: white
+    --lb-text-on-info-hover: white
+    --lb-text-on-info-active: white
+    
+    --lb-text-on-neutral: white
+    --lb-text-on-neutral-hover: white
+    --lb-text-on-neutral-active: white
+    
+    // === BACKGROUND TOKENS ===
+    --lb-background-page: #{colors.$gray-dark-1}
+    --lb-background-surface: #{colors.$gray-dark-2}
+    --lb-background-overlay: rgba(0, 0, 0, 0.7)
+    
+    // === ADDITIONAL TOKENS ===
+    --lb-focus-ring-color: #{colors.$orange-dark-a7}
+    --lb-divider-color: #{colors.$gray-dark-6}

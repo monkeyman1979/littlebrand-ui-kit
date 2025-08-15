@@ -499,11 +499,15 @@ defineExpose({
 // Overlay (backdrop)
 .lb-bottom-sheet-overlay
   position: fixed
-  inset: 0
-  z-index: var(--lb-z-modal-backdrop)
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  z-index: base.$z-modal-backdrop
   background: var(--lb-background-overlay)
   backdrop-filter: blur(2px)
   overflow: hidden
+  width: 100%
   
   // Use flexbox to position sheet at bottom
   display: flex
@@ -517,16 +521,19 @@ defineExpose({
 .lb-bottom-sheet
   position: relative
   background: var(--lb-background-surface)
-  border-radius: var(--lb-radius-lg) var(--lb-radius-lg) 0 0
-  box-shadow: var(--lb-shadow-lg)
+  border-radius: base.$radius-lg base.$radius-lg 0 0
+  box-shadow: base.$shadow-lg
   width: 100%
-  max-width: 100vw
+  max-width: 100% // Changed from 100vw to prevent overflow
   min-height: 0
   max-height: var(--max-height)
   display: flex
   flex-direction: column
   transform-origin: bottom center
-  transition: transform var(--lb-transition), max-height var(--lb-transition)
+  transition: transform base.$transition, max-height base.$transition
+  
+  // Prevent horizontal overflow
+  overflow-x: hidden
   
   // Safe area padding for mobile devices
   padding-bottom: env(safe-area-inset-bottom)
@@ -537,7 +544,7 @@ defineExpose({
     border-radius: 0
     
     .sheet-handle
-      opacity: var(--lb-opacity-30)
+      opacity: base.$opacity-30
   
   &.is-dragging
     transition: none
@@ -549,69 +556,69 @@ defineExpose({
   display: flex
   align-items: center
   justify-content: center
-  height: var(--lb-space-3xl)
+  height: base.$space-3xl
   cursor: grab
   flex-shrink: 0
   touch-action: pan-y
   
   &:before
     content: ''
-    width: var(--lb-space-5xl)
-    height: var(--lb-space-xs)
+    width: base.$space-5xl
+    height: base.$space-xs
     background: var(--lb-border-neutral-active)
-    border-radius: var(--lb-radius-full)
-    opacity: var(--lb-opacity-60)
-    transition: opacity var(--lb-transition)
+    border-radius: base.$radius-full
+    opacity: base.$opacity-60
+    transition: opacity base.$transition
   
   &:hover:before
-    opacity: var(--lb-opacity-80)
+    opacity: base.$opacity-80
   
   &:active
     cursor: grabbing
     
     &:before
-      opacity: var(--lb-opacity-100)
+      opacity: base.$opacity-100
 
 // Header
 .sheet-header
-  padding: 0.5rem var(--lb-space-2xl)
-  border-bottom: var(--lb-border-sm) solid var(--lb-border-neutral-line)
+  padding: 0.5rem base.$space-2xl
+  border-bottom: base.$border-sm solid var(--lb-border-neutral-line)
   flex-shrink: 0
 
 // Content area
 .sheet-content
   flex: 1
   overflow-y: auto
-  padding: var(--lb-space-2xl)
+  padding: base.$space-2xl
   color: var(--lb-text-neutral-contrast-low)
   min-height: 0
   
   // Adjust padding when no handle
   .lb-bottom-sheet:not(:has(.sheet-handle)) &
-    padding-top: var(--lb-space-3xl)
+    padding-top: base.$space-3xl
 
 // Footer
 .sheet-footer
-  padding: var(--lb-space-lg) var(--lb-space-2xl) var(--lb-space-2xl)
-  border-top: var(--lb-border-sm) solid var(--lb-border-neutral-line)
+  padding: base.$space-lg base.$space-2xl base.$space-2xl
+  border-top: base.$border-sm solid var(--lb-border-neutral-line)
   flex-shrink: 0
   
   // Add safe area padding for mobile
-  padding-bottom: calc(var(--lb-space-2xl) + env(safe-area-inset-bottom))
+  padding-bottom: calc(#{base.$space-2xl} + env(safe-area-inset-bottom))
 
 // Transitions
 .bottom-sheet-enter-active
-  transition: opacity var(--lb-transition)
+  transition: opacity base.$transition
 
 .bottom-sheet-leave-active
   transition: opacity 200ms ease
 
 .bottom-sheet-enter-from,
 .bottom-sheet-leave-to
-  opacity: var(--lb-opacity-0)
+  opacity: base.$opacity-0
   
 .bottom-sheet-enter-active .lb-bottom-sheet
-  transition: transform var(--lb-transition)
+  transition: transform base.$transition
   
 .bottom-sheet-leave-active .lb-bottom-sheet
   transition: transform 200ms ease
@@ -631,8 +638,8 @@ defineExpose({
   .sheet-header,
   .sheet-content,
   .sheet-footer
-    padding-left: var(--lb-space-lg)
-    padding-right: var(--lb-space-lg)
+    padding-left: base.$space-lg
+    padding-right: base.$space-lg
 
 // Reduce motion for accessibility
 @media (prefers-reduced-motion: reduce)

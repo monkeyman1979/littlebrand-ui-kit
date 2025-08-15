@@ -365,24 +365,24 @@ onBeforeUnmount(() => {
   width: max-content
   min-width: 12.5rem // 200px
   max-width: min(90vw, 32rem) // 512px
-  padding: var(--lb-space-md)
+  padding: base.$space-md
   
   // Visual
   background: var(--lb-background-surface)
-  border: var(--lb-border-sm) solid var(--lb-border-neutral-normal)
-  border-radius: var(--lb-radius-md)
-  box-shadow: var(--lb-shadow-lg)
+  border: base.$border-sm solid var(--lb-border-neutral-normal)
+  border-radius: base.$radius-md
+  box-shadow: base.$shadow-lg
   
   // Positioning
-  z-index: var(--lb-z-dropdown)
+  z-index: base.$z-dropdown
   
   overflow: auto
-  max-height: calc(100vh - calc(var(--lb-space-xl) * 2))
+  max-height: calc(100vh - calc(#{base.$space-xl} * 2))
 
 // Transition classes for fade animation
 .popover-fade-enter-active,
 .popover-fade-leave-active
-  transition: opacity var(--lb-transition)
+  transition: opacity base.$transition
 
 .popover-fade-enter-from,
 .popover-fade-leave-to

@@ -79,18 +79,9 @@ const isKeyboardFocus = ref(false)
 const injectedId = inject<ComputedRef<string> | undefined>('formFieldId', undefined)
 const injectedAriaDescribedby = inject<ComputedRef<string | undefined> | undefined>('formFieldAriaDescribedby', undefined)
 
-// Inject density context if available
-const injectedDensitySize = inject<ComputedRef<'medium' | 'large'> | undefined>('densitySize', undefined)
-
 // Computed
-// Compute effective size: explicit prop > density > default
 const effectiveSize = computed(() => {
-  // If size is explicitly set, use it
-  if (props.size) return props.size
-  // Otherwise use density-based size if available
-  if (injectedDensitySize?.value) return injectedDensitySize.value
-  // Fall back to default
-  return 'medium'
+  return props.size || 'medium'
 })
 
 const rootClasses = computed(() => ({
@@ -206,6 +197,7 @@ defineExpose({
 
 <style lang="sass" scoped>
 @use '@/styles/base' as base
+@use '@/styles/component-variables' as cv
 @use '@/styles/typography' as typography
 
 .lb-textarea
@@ -215,27 +207,27 @@ defineExpose({
   // Textarea styles
   textarea
     width: 100%
-    min-height: base.$textarea-min-height-medium // 96px minimum
+    min-height: cv.$textarea-min-height-medium // 96px minimum
     background: var(--lb-background-surface)
-    border: base.$textarea-border-width solid var(--lb-border-neutral-normal)
-    border-radius: var(--lb-textarea-radius)
+    border: cv.$textarea-border-width solid var(--lb-border-neutral-normal)
+    border-radius: cv.$textarea-border-radius
     font-family: inherit
-    font-size: var(--lb-textarea-font-size-medium)  // Default to 14px
+    font-size: cv.$textarea-font-size-medium  // Default to 14px
     color: var(--lb-text-neutral-contrast-high)
-    line-height: var(--lb-line-height-relaxed)
-    transition: border-color var(--lb-transition), box-shadow var(--lb-transition)
+    line-height: typography.$line-height-relaxed
+    transition: border-color base.$transition, box-shadow base.$transition
 
     // Placeholder
     &::placeholder
       color: var(--lb-text-neutral-contrast-low)
-      opacity: var(--lb-opacity-100) // Firefox fix
+      opacity: base.$opacity-100 // Firefox fix
     
     // States
     &:hover:not(:disabled):not(:read-only)
       border-color: var(--lb-border-neutral-active)
     
     &:focus
-      outline: base.$textarea-border-width solid var(--lb-border-primary-active)
+      outline: cv.$textarea-border-width solid var(--lb-border-primary-active)
   
   // Invalid state
   &.invalid textarea
@@ -246,31 +238,30 @@ defineExpose({
       border-color: var(--lb-border-error-normal)
     
     &:focus
-      outline: base.$textarea-border-width solid var(--lb-border-error-active)
-    
-    // Disabled state
-    &:disabled
-      background: var(--lb-surface-neutral-subtle)
-      color: var(--lb-text-neutral-disabled)
-      cursor: not-allowed
-      opacity: var(--lb-opacity-60)
-      border-color: var(--lb-border-neutral-disabled)
-    
-    // Readonly state
-    &:read-only
-      background: var(--lb-surface-neutral-subtle)
-      cursor: default
+      outline: cv.$textarea-border-width solid var(--lb-border-error-active)
+  
+  // Disabled state
+  textarea:disabled
+    background: var(--lb-surface-neutral-subtle)
+    color: var(--lb-text-neutral-disabled)
+    cursor: not-allowed
+    border-color: var(--lb-border-neutral-disabled)
+  
+  // Readonly state
+  textarea:read-only
+    background: var(--lb-surface-neutral-subtle)
+    cursor: default
   
   // Size variants - moved outside of textarea to increase specificity
   &.size-medium textarea
-    min-height: base.$textarea-min-height-medium  // 96px
-    font-size: var(--lb-textarea-font-size-medium)  // 14px
-    padding: base.$textarea-padding-y base.$textarea-padding-x
+    min-height: cv.$textarea-min-height-medium  // 96px
+    font-size: cv.$textarea-font-size-medium  // 14px
+    padding: cv.$textarea-padding-y cv.$textarea-padding-x
   
   &.size-large textarea
-    min-height: base.$textarea-min-height-large  // 120px
-    font-size: var(--lb-textarea-font-size-large)  // 16px
-    padding: base.$textarea-padding-y base.$textarea-padding-x  // 8px 12px
+    min-height: cv.$textarea-min-height-large  // 120px
+    font-size: cv.$textarea-font-size-large  // 16px
+    padding: cv.$textarea-padding-y cv.$textarea-padding-x  // 8px 12px
   
   
   // Resize controls
