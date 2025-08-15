@@ -290,7 +290,6 @@ const handleInput = (event: Event) => {
     background: var(--lb-surface-neutral-subtle)
     color: var(--lb-text-neutral-disabled)
     cursor: not-allowed
-    opacity: base.$opacity-60
     border-color: var(--lb-border-neutral-disabled)
   
   // Readonly state

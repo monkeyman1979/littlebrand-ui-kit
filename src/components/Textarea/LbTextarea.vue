@@ -239,19 +239,18 @@ defineExpose({
     
     &:focus
       outline: cv.$textarea-border-width solid var(--lb-border-error-active)
-    
-    // Disabled state
-    &:disabled
-      background: var(--lb-surface-neutral-subtle)
-      color: var(--lb-text-neutral-disabled)
-      cursor: not-allowed
-      opacity: base.$opacity-60
-      border-color: var(--lb-border-neutral-disabled)
-    
-    // Readonly state
-    &:read-only
-      background: var(--lb-surface-neutral-subtle)
-      cursor: default
+  
+  // Disabled state
+  textarea:disabled
+    background: var(--lb-surface-neutral-subtle)
+    color: var(--lb-text-neutral-disabled)
+    cursor: not-allowed
+    border-color: var(--lb-border-neutral-disabled)
+  
+  // Readonly state
+  textarea:read-only
+    background: var(--lb-surface-neutral-subtle)
+    cursor: default
   
   // Size variants - moved outside of textarea to increase specificity
   &.size-medium textarea
