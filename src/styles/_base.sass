@@ -1,0 +1,130 @@
+// LittleBrand UI Kit - Base Variables
+// Core variables for spacing, borders, shadows, and transitions
+// This module is designed to be used with @use
+// Users can override these by setting values before importing the library
+
+// Base unit (1px = 0.0625rem)
+$unit-base: 0.0625rem !default
+
+// Unit scale - foundation for all numeric values
+$unit-1: $unit-base * 1 !default      // 0.0625rem (1px)
+$unit-2: $unit-base * 2 !default      // 0.125rem (2px)
+$unit-4: $unit-base * 4 !default      // 0.25rem (4px)
+$unit-6: $unit-base * 6 !default      // 0.375rem (6px)
+$unit-8: $unit-base * 8 !default      // 0.5rem (8px)
+$unit-10: $unit-base * 10 !default    // 0.625rem (10px)
+$unit-12: $unit-base * 12 !default    // 0.75rem (12px)
+$unit-14: $unit-base * 14 !default    // 0.875rem (14px)
+$unit-16: $unit-base * 16 !default    // 1rem (16px)
+$unit-18: $unit-base * 18 !default    // 1.125rem (18px)
+$unit-20: $unit-base * 20 !default    // 1.25rem (20px)
+$unit-24: $unit-base * 24 !default    // 1.5rem (24px)
+$unit-28: $unit-base * 28 !default    // 1.75rem (28px)
+$unit-32: $unit-base * 32 !default    // 2rem (32px)
+$unit-36: $unit-base * 36 !default    // 2.25rem (36px)
+$unit-40: $unit-base * 40 !default    // 2.5rem (40px)
+$unit-44: $unit-base * 44 !default    // 2.75rem (44px)
+$unit-48: $unit-base * 48 !default    // 3rem (48px)
+$unit-56: $unit-base * 56 !default    // 3.5rem (56px)
+$unit-64: $unit-base * 64 !default    // 4rem (64px)
+$unit-72: $unit-base * 72 !default    // 4.5rem (72px)
+$unit-80: $unit-base * 80 !default    // 5rem (80px)
+$unit-88: $unit-base * 88 !default    // 5.5rem (88px)
+$unit-96: $unit-base * 96 !default    // 6rem (96px)
+$unit-104: $unit-base * 104 !default  // 6.5rem (104px)
+$unit-112: $unit-base * 112 !default  // 7rem (112px)
+$unit-120: $unit-base * 120 !default  // 7.5rem (120px)
+
+// Spacing Scale - T-shirt sizing
+$space-2xs: $unit-2 !default    // 2px
+$space-xs: $unit-4 !default     // 4px
+$space-sm: $unit-8 !default     // 8px
+$space-md: $unit-12 !default    // 12px
+$space-lg: $unit-16 !default    // 16px
+$space-xl: $unit-20 !default    // 20px
+$space-2xl: $unit-24 !default   // 24px
+$space-3xl: $unit-32 !default   // 32px
+$space-4xl: $unit-40 !default   // 40px
+$space-5xl: $unit-48 !default   // 48px
+$space-6xl: $unit-56 !default   // 56px
+$space-7xl: $unit-64 !default   // 64px
+$space-8xl: $unit-72 !default   // 72px
+$space-9xl: $unit-96 !default   // 96px
+$space-10xl: $unit-120 !default // 120px
+
+// Border Widths
+$border-sm: $unit-1 !default    // 1px
+$border-md: $unit-2 !default    // 2px
+
+// Border Radius - T-shirt sizing
+$radius-xs: $unit-4 !default    // 4px
+$radius-sm: $unit-8 !default    // 8px
+$radius-md: $unit-10 !default   // 10px
+$radius-lg: $unit-12 !default   // 12px
+$radius-xl: $unit-16 !default   // 16px
+$radius-2xl: $unit-24 !default  // 24px
+$radius-3xl: $unit-32 !default  // 32px
+$radius-4xl: $unit-40 !default  // 40px
+$radius-5xl: $unit-48 !default  // 48px
+$radius-6xl: $unit-56 !default  // 56px
+$radius-7xl: $unit-64 !default  // 64px
+$radius-8xl: $unit-72 !default  // 72px
+$radius-9xl: $unit-80 !default  // 80px
+$radius-full: 9999px !default   // full rounded
+
+// Shadows (subtle, elegant)
+$shadow-sm: 0 1px 2px hsla(0, 0%, 0%, 0.05) !default
+$shadow-md: 0 4px 6px hsla(0, 0%, 0%, 0.07) !default
+$shadow-lg: 0 10px 15px hsla(0, 0%, 0%, 0.1) !default
+
+// Z-Index Scale (max 50)
+$z-dropdown: 10 !default
+$z-modal-backdrop: 20 !default
+$z-modal: 30 !default
+$z-notification: 40 !default
+
+// Sizing Scale - T-shirt sizing
+$size-2xs: $unit-2 !default     // 2px
+$size-xs: $unit-4 !default      // 4px
+$size-sm: $unit-8 !default      // 8px
+$size-md: $unit-12 !default     // 12px
+$size-lg: $unit-14 !default     // 14px
+$size-xl: $unit-16 !default     // 16px
+$size-2xl: $unit-18 !default    // 18px
+$size-3xl: $unit-20 !default    // 20px
+$size-4xl: $unit-24 !default    // 24px
+$size-5xl: $unit-32 !default    // 32px
+$size-6xl: $unit-40 !default    // 40px
+$size-7xl: $unit-48 !default    // 48px
+$size-8xl: $unit-56 !default    // 56px
+$size-9xl: $unit-64 !default    // 64px
+$size-10xl: $unit-72 !default   // 72px
+$size-11xl: $unit-96 !default   // 96px
+$size-12xl: $unit-120 !default  // 120px
+
+// Opacity Scale
+$opacity-0: 0 !default
+$opacity-10: 0.1 !default
+$opacity-20: 0.2 !default
+$opacity-30: 0.3 !default
+$opacity-40: 0.4 !default
+$opacity-50: 0.5 !default
+$opacity-60: 0.6 !default
+$opacity-70: 0.7 !default
+$opacity-80: 0.8 !default
+$opacity-90: 0.9 !default
+$opacity-100: 1 !default
+
+// Transitions
+$transition: 300ms ease !default
+
+// Focus States
+$focus-ring-width: $border-md !default
+$focus-ring-offset: $space-2xs !default
+
+// Mixins
+// Hover support - only applies hover styles on devices that support hovering
+@mixin hover-supported
+  @media (hover: hover)
+    &:hover
+      @content

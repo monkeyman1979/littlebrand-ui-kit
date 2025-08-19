@@ -1,0 +1,266 @@
+// LittleBrand UI Kit - Theme Configuration System
+// Processes user configuration and generates theme tokens
+
+@use 'sass:map'
+@use 'sass:meta'
+@use 'sass:list'
+@use 'color-generator' as gen
+@use 'colors' as colors
+
+// Default built-in color scales (using existing colors)
+$preset-scales: (
+  // Neutrals
+  'gray': (
+    1: colors.$gray-1,
+    2: colors.$gray-2,
+    3: colors.$gray-3,
+    4: colors.$gray-4,
+    5: colors.$gray-5,
+    6: colors.$gray-6,
+    7: colors.$gray-7,
+    8: colors.$gray-8,
+    9: colors.$gray-9,
+    10: colors.$gray-10,
+    11: colors.$gray-11,
+    12: colors.$gray-12,
+  ),
+  'slate': (
+    1: hsl(210, 20%, 98%),
+    2: hsl(220, 14%, 96%),
+    3: hsl(220, 13%, 91%),
+    4: hsl(220, 12%, 87%),
+    5: hsl(220, 12%, 83%),
+    6: hsl(220, 11%, 77%),
+    7: hsl(220, 10%, 70%),
+    8: hsl(220, 9%, 55%),
+    9: hsl(215, 14%, 45%),
+    10: hsl(217, 19%, 38%),
+    11: hsl(215, 28%, 25%),
+    12: hsl(217, 33%, 12%),
+  ),
+  // Brand colors (current defaults)
+  'orange': (
+    1: colors.$orange-1,
+    2: colors.$orange-2,
+    3: colors.$orange-3,
+    4: colors.$orange-4,
+    5: colors.$orange-5,
+    6: colors.$orange-6,
+    7: colors.$orange-7,
+    8: colors.$orange-8,
+    9: colors.$orange-9,
+    10: colors.$orange-10,
+    11: colors.$orange-11,
+    12: colors.$orange-12,
+  ),
+  'teal': (
+    1: colors.$teal-1,
+    2: colors.$teal-2,
+    3: colors.$teal-3,
+    4: colors.$teal-4,
+    5: colors.$teal-5,
+    6: colors.$teal-6,
+    7: colors.$teal-7,
+    8: colors.$teal-8,
+    9: colors.$teal-9,
+    10: colors.$teal-10,
+    11: colors.$teal-11,
+    12: colors.$teal-12,
+  ),
+  'blue': (
+    1: colors.$blue-1,
+    2: colors.$blue-2,
+    3: colors.$blue-3,
+    4: colors.$blue-4,
+    5: colors.$blue-5,
+    6: colors.$blue-6,
+    7: colors.$blue-7,
+    8: colors.$blue-8,
+    9: colors.$blue-9,
+    10: colors.$blue-10,
+    11: colors.$blue-11,
+    12: colors.$blue-12,
+  ),
+  'green': (
+    1: colors.$green-1,
+    2: colors.$green-2,
+    3: colors.$green-3,
+    4: colors.$green-4,
+    5: colors.$green-5,
+    6: colors.$green-6,
+    7: colors.$green-7,
+    8: colors.$green-8,
+    9: colors.$green-9,
+    10: colors.$green-10,
+    11: colors.$green-11,
+    12: colors.$green-12,
+  ),
+  'yellow': (
+    1: colors.$yellow-1,
+    2: colors.$yellow-2,
+    3: colors.$yellow-3,
+    4: colors.$yellow-4,
+    5: colors.$yellow-5,
+    6: colors.$yellow-6,
+    7: colors.$yellow-7,
+    8: colors.$yellow-8,
+    9: colors.$yellow-9,
+    10: colors.$yellow-10,
+    11: colors.$yellow-11,
+    12: colors.$yellow-12,
+  ),
+  'red': (
+    1: colors.$red-1,
+    2: colors.$red-2,
+    3: colors.$red-3,
+    4: colors.$red-4,
+    5: colors.$red-5,
+    6: colors.$red-6,
+    7: colors.$red-7,
+    8: colors.$red-8,
+    9: colors.$red-9,
+    10: colors.$red-10,
+    11: colors.$red-11,
+    12: colors.$red-12,
+  ),
+) !default
+
+// Default theme configuration
+$default-theme: (
+  'primary': 'orange',
+  'secondary': 'teal',
+  'tertiary': 'blue',
+  'neutral': 'gray',
+  'success': 'green',
+  'warning': 'yellow',
+  'error': 'red',
+  'info': 'blue',
+) !default
+
+// User's theme configuration (can be overridden)
+$theme-colors: () !default
+
+// Process a single color configuration
+@function process-color-config($config)
+  $type: meta.type-of($config)
+  
+  // String: Could be a preset name or hex color
+  @if $type == 'string'
+    @if map.has-key($preset-scales, $config)
+      @return map.get($preset-scales, $config)
+    @else
+      // Assume it's a hex color and generate scale
+      @return gen.generate-scale($config)
+  @else if $type == 'map'
+    // Map: Could be a full scale or config object
+    // Check if it's a configuration object with 'color' key
+    @if map.has-key($config, 'color')
+      $color: map.get($config, 'color')
+      $curve: map.get($config, 'curve') or 'natural'
+      
+      // Generate base scale
+      $scale: gen.generate-scale($color, $curve)
+      
+      // Apply any manual overrides
+      @if map.has-key($config, 'overrides')
+        $overrides: map.get($config, 'overrides')
+        @each $step, $value in $overrides
+          $scale: map.set($scale, $step, $value)
+      
+      @return $scale
+    @else
+      // Assume it's already a complete scale
+      @return $config
+  @else if $type == 'color'
+    // Color type: Generate scale directly
+    @return gen.generate-scale($config)
+  @else
+    // Default: return as-is
+    @return $config
+
+// Process the complete theme configuration
+@function process-theme($user-theme: ())
+  // Start with defaults
+  $processed: ()
+  
+  // Process standard semantic colors
+  $semantic-colors: ('primary', 'secondary', 'tertiary', 'neutral', 'success', 'warning', 'error', 'info')
+  
+  @each $semantic-name in $semantic-colors
+    $value: null
+    
+    // Check if user provided this color
+    @if map.has-key($user-theme, $semantic-name)
+      $value: map.get($user-theme, $semantic-name)
+    @else
+      // Otherwise use default
+      $value: map.get($default-theme, $semantic-name)
+    
+    // Process the value into a scale
+    $scale: process-color-config($value)
+    $processed: map.set($processed, $semantic-name, $scale)
+  
+  // Process any additional custom colors
+  @each $name, $value in $user-theme
+    @if not list.index($semantic-colors, $name)
+      // It's a custom color, process it
+      $scale: process-color-config($value)
+      $processed: map.set($processed, $name, $scale)
+  
+  @return $processed
+
+// Generate all theme tokens from processed scales
+@function generate-all-tokens($processed-theme)
+  $all-tokens: ()
+  
+  @each $name, $scale in $processed-theme
+    $tokens: gen.generate-semantic-tokens($name, $scale)
+    $all-tokens: map.merge($all-tokens, $tokens)
+  
+  @return $all-tokens
+
+// Main mixin to apply theme
+@mixin apply-theme($config: ())
+  // Process the theme configuration
+  $processed: process-theme($config)
+  
+  // Generate all tokens
+  $tokens: generate-all-tokens($processed)
+  
+  // Add background tokens (using neutral scale)
+  $neutral-scale: map.get($processed, 'neutral')
+  @if $neutral-scale
+    $tokens: map.set($tokens, '--lb-background-page', map.get($neutral-scale, 1))
+    $tokens: map.set($tokens, '--lb-background-surface', map.get($neutral-scale, 2))
+    $tokens: map.set($tokens, '--lb-background-overlay', rgba(0, 0, 0, 0.5))
+    $tokens: map.set($tokens, '--lb-focus-ring-color', map.get(map.get($processed, 'primary'), 7))
+    $tokens: map.set($tokens, '--lb-divider-color', map.get($neutral-scale, 6))
+  
+  // Output tokens
+  @include gen.output-tokens($tokens)
+
+// Mixin for dark mode theme
+@mixin apply-dark-theme($config: ())
+  // Process the theme configuration
+  $processed: process-theme($config)
+  
+  // Generate dark mode scales
+  $dark-processed: ()
+  @each $name, $scale in $processed
+    $dark-scale: gen.generate-dark-scale($scale)
+    $dark-processed: map.set($dark-processed, $name, $dark-scale)
+  
+  // Generate all tokens for dark mode
+  $tokens: generate-all-tokens($dark-processed)
+  
+  // Add background tokens for dark mode (using neutral scale)
+  $neutral-scale: map.get($dark-processed, 'neutral')
+  @if $neutral-scale
+    $tokens: map.set($tokens, '--lb-background-page', map.get($neutral-scale, 1))
+    $tokens: map.set($tokens, '--lb-background-surface', map.get($neutral-scale, 2))
+    $tokens: map.set($tokens, '--lb-background-overlay', rgba(0, 0, 0, 0.7))
+    $tokens: map.set($tokens, '--lb-focus-ring-color', map.get(map.get($dark-processed, 'primary'), 7))
+    $tokens: map.set($tokens, '--lb-divider-color', map.get($neutral-scale, 6))
+  
+  // Output tokens
+  @include gen.output-tokens($tokens)

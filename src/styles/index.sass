@@ -1,0 +1,14 @@
+// LittleBrand UI Kit - Complete Styles Bundle
+// This file ensures all styles are included in the build
+
+// 1. Theme variables (MUST be first - defines CSS custom properties)
+@use 'theme'
+
+// 2. Reset styles
+@use 'reset'
+
+// 3. Typography styles  
+@use 'typography'
+
+// The main.sass file uses @forward which is for library authors
+// This file uses @use which ensures the CSS is actually emitted
