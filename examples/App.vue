@@ -1,8 +1,12 @@
+// Development Component Showcase
+// This file is for internal testing only - not included in npm package
+// Used to visually test all components during development
+
 <template lang="pug">
 .app-container
   header.app-header
-    h1 LittleBrand UI Kit
-    p.body-large A clean, semantic Vue.js UI kit with zero utility classes
+    h1 LittleBrand UI Kit - Component Showcase
+    p.body-large Development testing page (not included in npm package)
   
   main.app-main
     section.theme-section
