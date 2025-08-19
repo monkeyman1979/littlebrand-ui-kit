@@ -6,7 +6,8 @@
   "files": [
     "dist",
     "src/components",
-    "src/styles"
+    "src/styles",
+    "src/utils"
   ],
   "main": "./dist/littlebrand-ui.umd.js",
   "module": "./dist/littlebrand-ui.js",
@@ -15,7 +16,8 @@
       "import": "./dist/littlebrand-ui.js",
       "require": "./dist/littlebrand-ui.umd.js"
     },
-    "./style.css": "./dist/littlebrand-ui.css"
+    "./style.css": "./dist/littlebrand-ui.css",
+    "./dist/littlebrand-ui.css": "./dist/littlebrand-ui.css"
   },
   "scripts": {
     "dev": "vite",

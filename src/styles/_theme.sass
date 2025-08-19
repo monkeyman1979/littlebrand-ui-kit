@@ -333,8 +333,8 @@ $use-custom-theme: false !default
   --lb-input-height-medium: 40px
   --lb-input-height-large: 44px
 
-// Dark Theme
-[data-theme="dark"]
+// Dark Theme - Support both data-theme attribute and .dark class
+[data-theme="dark"], .dark
   @if $use-custom-theme
     // Use the new configuration system for dark mode
     @include config.apply-dark-theme(config.$theme-colors)

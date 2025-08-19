@@ -31,8 +31,26 @@ import LbPopover, { LbPopoverTrigger, LbPopoverContent, LbPopoverArrow } from '.
 import LbMenu from './components/Menu'
 import LbDropdown from './components/Dropdown'
 
+// Import color generator utilities
+import { 
+  applyTheme, 
+  generateScale, 
+  generateDarkScale, 
+  generateAlphaScale, 
+  generateSemanticTokens 
+} from './utils/color-generator.js'
+
 // Export individual components for tree-shaking
 export { LbAvatar, LbBadge, LbButton, LbSegmentButton, LbSegmentButtonItem, LbCalendar, LbDatePicker, LbChip, LbDivider, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbCustomSelect, LbFormField, LbDialog, LbBottomSheet, LbNavigationBar, LbNavigationBarItem, LbProgress, LbSnackbar, LbSnackbarProvider, useSnackbar, createSnackbarHelpers, LbPopover, LbPopoverTrigger, LbPopoverContent, LbPopoverArrow, LbMenu, LbDropdown }
+
+// Export color utilities
+export { 
+  applyTheme, 
+  generateScale, 
+  generateDarkScale, 
+  generateAlphaScale, 
+  generateSemanticTokens 
+}
 
 // Plugin install function for Vue.use()
 const LittleBrandUI = {
