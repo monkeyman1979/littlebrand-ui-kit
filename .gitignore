@@ -120,6 +120,12 @@ temp/
 # Output of 'npm pack'
 *.tgz
 
+# Test directories and files
+test-project/
+examples/build-time-example.sass
+examples/custom-colors.sass
+examples/custom-theme-example.css
+
 # Diagnostic reports
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 

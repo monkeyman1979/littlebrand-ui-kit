@@ -31,67 +31,141 @@
   @return if($luminance > 0.5, var(--lb-text-neutral-contrast-high), white)
 
 // Generate a 12-step color scale from a single color
-// The input color typically becomes step 9 (the primary/base color)
+// The input color becomes step 9 (the primary/base color) with minimal modification
+// Based on Radix UI color system principles for perceptual uniformity
 @function generate-scale($color, $curve: 'natural')
   $hue: color.hue($color)
   $base-saturation: color.saturation($color)
   $base-lightness: color.lightness($color)
   
-  // Curve adjustments for different looks
-  $saturation-range: if($curve == 'vivid', 30%, if($curve == 'muted', 15%, 20%))
-  $lightness-range: 88%
+  // Ensure step 9 is in a usable range (40-60% lightness)
+  // This matches Radix UI's approach where step 9 is the "solid" color
+  $target-lightness-9: if($base-lightness > 60%, 52%, if($base-lightness < 40%, 48%, $base-lightness))
   
   $scale: ()
   
+  // Define perceptual lightness curve (non-linear for visual uniformity)
+  // Based on Radix UI's scale structure
+  $lightness-stops: (
+    1: 99%,   // App background
+    2: 98%,   // Subtle background  
+    3: 96%,   // UI element background
+    4: 93%,   // Hovered UI element
+    5: 88%,   // Active UI element
+    6: 78%,   // Subtle borders and separators
+    7: 68%,   // UI element borders
+    8: 58%,   // Hovered borders, focused borders
+    9: $target-lightness-9,  // Solid backgrounds (buttons, etc)
+    10: math.max($target-lightness-9 - 10%, 35%),  // Hovered solid backgrounds
+    11: math.max($target-lightness-9 - 18%, 25%),  // Low contrast text
+    12: math.max($target-lightness-9 - 28%, 15%)   // High contrast text
+  )
+  
+  // Define saturation curve to maintain color identity
+  // Higher values = more saturated (1.0 = original saturation)
+  $saturation-multipliers: (
+    1: 0.20,  // Very subtle hint of color
+    2: 0.32,  // Slightly more color
+    3: 0.48,  // Noticeable but soft
+    4: 0.64,  // Clear color identity
+    5: 0.80,  // Strong color presence
+    6: 0.90,  // Near full saturation
+    7: 0.95,  // Almost original
+    8: 1.00,  // Full saturation
+    9: 1.00,  // Original saturation (no change)
+    10: 1.02, // Slightly boosted for hover
+    11: 0.95, // Slightly muted for text
+    12: 0.90  // Muted for high contrast text
+  )
+  
+  // Apply curve adjustments
+  @if $curve == 'vivid'
+    // Vivid: More saturated throughout
+    $saturation-multipliers: (
+      1: 0.30, 2: 0.45, 3: 0.60, 4: 0.75, 5: 0.90,
+      6: 1.00, 7: 1.05, 8: 1.10, 9: 1.10, 10: 1.12,
+      11: 1.05, 12: 1.00
+    )
+  @else if $curve == 'muted'
+    // Muted: Less saturated throughout
+    $saturation-multipliers: (
+      1: 0.15, 2: 0.25, 3: 0.35, 4: 0.50, 5: 0.65,
+      6: 0.75, 7: 0.80, 8: 0.85, 9: 0.85, 10: 0.85,
+      11: 0.80, 12: 0.75
+    )
+  
   @for $i from 1 through 12
-    $step-ratio: ($i - 1) / 11
+    $target-lightness: map.get($lightness-stops, $i)
+    $sat-multiplier: map.get($saturation-multipliers, $i)
     
-    @if $i <= 9
-      // Steps 1-9: Progressively darker from very light to base
-      $ratio: ($i - 1) / 8
-      $lightness: 98% - ($ratio * (98% - $base-lightness))
-      
-      // Reduce saturation for lighter steps
-      $sat-reduction: if($i <= 3, 0.7, if($i <= 6, 0.85, 1))
-      $saturation: $base-saturation * $sat-reduction
-      
-      $scale: map.set($scale, $i, color.change($color, $lightness: $lightness, $saturation: $saturation))
+    // Calculate final saturation (capped at 100%)
+    $final-saturation: math.min($base-saturation * $sat-multiplier, 100%)
+    
+    // For step 9, keep as close to original as possible
+    @if $i == 9
+      // Only adjust lightness if needed, keep original saturation
+      $scale: map.set($scale, $i, color.change($color, $lightness: $target-lightness))
     @else
-      // Steps 10-12: Darker than base
-      $ratio: ($i - 9) / 3
-      $lightness: $base-lightness - ($ratio * ($base-lightness - 15%))
-      
-      // Slightly increase saturation for darker steps
-      $sat-boost: if($curve == 'vivid', 1.1, 1.05)
-      $saturation: math.min($base-saturation * $sat-boost, 100%)
-      
-      $scale: map.set($scale, $i, color.change($color, $lightness: $lightness, $saturation: $saturation))
+      $scale: map.set($scale, $i, color.change($color, $lightness: $target-lightness, $saturation: $final-saturation))
   
   @return $scale
 
 // Generate dark mode version of a scale
+// Inspired by Radix UI's approach but generated algorithmically
 @function generate-dark-scale($scale)
   $dark-scale: ()
   
+  // Get the base color (step 9) for reference
+  $base-color: map.get($scale, 9)
+  $hue: color.hue($base-color)
+  $base-saturation: color.saturation($base-color)
+  $base-lightness: color.lightness($base-color)
+  
+  // Dark mode lightness curve - more spread out for better differentiation
+  // Matching Radix's approach: very dark backgrounds, bright text
+  $dark-lightness-stops: (
+    1: 8%,    // Very dark app background
+    2: 11%,   // Slightly lighter (more difference from step 1)
+    3: 15%,   // More noticeable difference
+    4: 19%,   // Hovered dark UI element
+    5: 24%,   // Active dark UI element
+    6: 30%,   // Dark subtle borders
+    7: 38%,   // Dark UI borders
+    8: 46%,   // Dark hovered borders
+    9: $base-lightness,  // Keep original color (like Radix!)
+    10: math.min($base-lightness + 8%, 65%),  // Slightly lighter for hover
+    11: 85%,  // Very bright for low contrast text
+    12: 96%   // Near white for high contrast text (matching Radix's #F1EEFE)
+  )
+  
+  // Dark mode saturation adjustments - higher to avoid muddy colors
+  // Add blue tint to backgrounds for more vibrancy
+  $dark-saturation-multipliers: (
+    1: 0.35,  // Still some color in darkest bg
+    2: 0.45,  // More color to differentiate
+    3: 0.55,  // Noticeable color
+    4: 0.65,
+    5: 0.75,
+    6: 0.85,
+    7: 0.95,
+    8: 1.05,  // Boost for visibility
+    9: 1.00,  // Keep original saturation
+    10: 1.00, // Maintain saturation
+    11: 1.10, // Boost for bright text
+    12: 0.95  // Slightly muted but still colorful
+  )
+  
   @for $i from 1 through 12
-    $light-color: map.get($scale, $i)
+    $target-lightness: map.get($dark-lightness-stops, $i)
+    $sat-multiplier: map.get($dark-saturation-multipliers, $i)
     
-    // Invert the scale but maintain hue
-    $inverted-index: 13 - $i
-    $base-color: map.get($scale, $inverted-index)
+    // Calculate final saturation
+    $final-saturation: math.min($base-saturation * $sat-multiplier, 100%)
     
-    // Adjust for better dark mode contrast
-    @if $i <= 3
-      // Dark background tints
-      $lightness: 8% + ($i * 3%)
-      $dark-scale: map.set($dark-scale, $i, color.change($base-color, $lightness: $lightness))
-    @else if $i >= 10
-      // Light foreground colors
-      $lightness: 75% + (($i - 9) * 8%)
-      $dark-scale: map.set($dark-scale, $i, color.change($base-color, $lightness: $lightness))
-    @else
-      // Middle range - adjust for contrast
-      $dark-scale: map.set($dark-scale, $i, $base-color)
+    // Create the dark mode color
+    $dark-scale: map.set($dark-scale, $i, 
+      hsl($hue, $final-saturation, $target-lightness)
+    )
   
   @return $dark-scale
 
@@ -99,20 +173,26 @@
 @function generate-alpha-scale($color, $mode: 'light')
   $alpha-scale: ()
   
-  // Alpha progression for semantic use
-  $alphas: (0.012, 0.027, 0.047, 0.071, 0.090, 0.114, 0.141, 0.220, 0.439, 0.478, 0.565, 0.910)
+  // Get RGB values from the color
+  $r: color.red($color)
+  $g: color.green($color)
+  $b: color.blue($color)
+  
+  // Alpha progression for semantic use - different for light and dark modes
+  // Light mode: lower alphas for subtle backgrounds, higher for borders/overlays
+  // Dark mode: generally needs higher alphas for visibility on dark backgrounds
+  $light-alphas: (0.012, 0.027, 0.047, 0.071, 0.090, 0.114, 0.141, 0.220, 0.439, 0.478, 0.565, 0.910)
+  $dark-alphas: (0.017, 0.034, 0.056, 0.085, 0.110, 0.135, 0.165, 0.250, 0.480, 0.520, 0.620, 0.930)
   
   @for $i from 1 through 12
-    $alpha: list.nth($alphas, $i)
-    
     @if $mode == 'dark'
-      // For dark mode, use white-based alphas
-      $alpha-scale: map.set($alpha-scale, $i, rgba(255, 255, 255, $alpha))
+      // For dark mode, use the color with dark-optimized alphas
+      // The color stays the same (indigo), just different opacity values
+      $alpha: list.nth($dark-alphas, $i)
+      $alpha-scale: map.set($alpha-scale, $i, rgba($r, $g, $b, $alpha))
     @else
-      // For light mode, use color-based alphas
-      $r: color.red($color)
-      $g: color.green($color)
-      $b: color.blue($color)
+      // For light mode, use the color with light-optimized alphas
+      $alpha: list.nth($light-alphas, $i)
       $alpha-scale: map.set($alpha-scale, $i, rgba($r, $g, $b, $alpha))
   
   @return $alpha-scale
