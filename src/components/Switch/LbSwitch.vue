@@ -1,31 +1,45 @@
 <template lang="pug">
-.lb-switch(:class="rootClasses")
-  input(
-    ref="inputRef"
-    type="checkbox"
+label.lb-switch(:class="rootClasses")
+  button.switch-track(
+    ref="buttonRef"
+    type="button"
     role="switch"
     :id="id"
+    :aria-checked="modelValue.toString()"
+    :aria-invalid="invalid || undefined"
+    :aria-describedby="ariaDescribedby || undefined"
+    :disabled="disabled"
+    @click="handleClick"
+    @focus="$emit('focus', $event)"
+    @blur="$emit('blur', $event)"
+    @keydown.space.prevent="handleClick"
+  )
+    .switch-thumb
+  span.switch-label(v-if="hasLabel")
+    slot
+  //- Hidden input for form submission
+  input(
+    v-if="isInForm"
+    ref="hiddenInputRef"
+    type="checkbox"
+    :name="name"
     :checked="modelValue"
     :disabled="disabled"
     :required="required"
-    :aria-checked="modelValue"
-    :aria-invalid="invalid || undefined"
-    :aria-describedby="ariaDescribedby || undefined"
-    @change="handleChange"
-    @focus="$emit('focus', $event)"
-    @blur="$emit('blur', $event)"
+    tabindex="-1"
+    aria-hidden="true"
+    style="position: absolute; pointer-events: none; opacity: 0; margin: 0"
   )
-  .switch-track
-    .switch-thumb
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 
 // Types
 export interface LbSwitchProps {
   modelValue?: boolean
   id?: string
+  name?: string  // For form submission
   disabled?: boolean
   required?: boolean
   invalid?: boolean
@@ -51,7 +65,20 @@ const emit = defineEmits<{
 }>()
 
 // Refs
-const inputRef = ref<HTMLInputElement>()
+const buttonRef = ref<HTMLButtonElement>()
+const hiddenInputRef = ref<HTMLInputElement>()
+
+// Check if component is inside a form
+const isInForm = ref(false)
+
+// Slots
+const slots = defineSlots<{
+  default?: () => any
+}>()
+
+const hasLabel = computed(() => {
+  return !!slots.default
+})
 
 // Computed
 const rootClasses = computed(() => ({
@@ -61,11 +88,22 @@ const rootClasses = computed(() => ({
   [`size-${props.size}`]: true
 }))
 
+// Check if we're in a form on mount
+onMounted(() => {
+  if (buttonRef.value) {
+    isInForm.value = !!buttonRef.value.closest('form')
+  }
+})
+
 // Methods
-const handleChange = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  emit('update:modelValue', target.checked)
-  emit('change', event)
+const handleClick = (event: MouseEvent | KeyboardEvent) => {
+  if (props.disabled) return
+  
+  emit('update:modelValue', !props.modelValue)
+  
+  // Create a synthetic change event for compatibility
+  const changeEvent = new Event('change', { bubbles: true, cancelable: true })
+  emit('change', changeEvent)
 }
 
 // Component options
@@ -76,7 +114,9 @@ defineOptions({
 
 // Expose
 defineExpose({
-  inputRef
+  buttonRef,
+  focus: () => buttonRef.value?.focus(),
+  blur: () => buttonRef.value?.blur()
 })
 </script>
 
@@ -86,29 +126,31 @@ defineExpose({
 @use '@/styles/typography' as typography
 
 .lb-switch
-  position: relative
-  display: inline-block
+  display: inline-flex
+  align-items: center
+  gap: base.$space-sm
   
-  // Hidden native checkbox
-  input[type="checkbox"]
-    position: absolute
-    opacity: base.$opacity-0
-    width: 100%
-    height: 100%
-    margin: 0
-    cursor: pointer
-    z-index: 1
-    
-    &:disabled
-      cursor: not-allowed
+  &.disabled
+    cursor: not-allowed
   
-  // Switch track
+  // Switch track (the button)
   .switch-track
     position: relative
+    padding: 0
+    margin: 0
     background: var(--lb-background-surface)
     border: base.$border-md solid var(--lb-border-neutral-normal)
     border-radius: cv.$switch-border-radius
-    transition: background-color base.$transition, border-color base.$transition, box-shadow base.$transition
+    cursor: pointer
+    transition: all base.$transition
+    -webkit-appearance: none
+    appearance: none
+    
+    &:disabled
+      cursor: not-allowed
+      opacity: base.$opacity-80
+      background: var(--lb-surface-neutral-disabled)
+      border-color: var(--lb-border-neutral-disabled)
   
   // Switch thumb
   .switch-thumb
@@ -163,18 +205,18 @@ defineExpose({
     transition: transform 200ms cubic-bezier(0.4, 0.0, 0.2, 1), background-color base.$transition
   
   // Hover state
-  &:not(.checked) input:not(:disabled):hover ~ .switch-track
+  &:not(.checked) .switch-track:not(:disabled):hover
     border-color: var(--lb-border-neutral-active)
     
     .switch-thumb
       background: var(--lb-fill-neutral-normal)
     
-  &.checked input:not(:disabled):hover ~ .switch-track
+  &.checked .switch-track:not(:disabled):hover
     background: var(--lb-fill-primary-hover)
     border-color: var(--lb-fill-primary-hover)
   
   // Focus state
-  input:focus-visible ~ .switch-track
+  .switch-track:focus-visible
     outline: base.$focus-ring-width solid var(--lb-focus-ring-color)
     outline-offset: base.$focus-ring-offset
   
@@ -183,30 +225,41 @@ defineExpose({
     .switch-track
       border-color: var(--lb-border-error-normal)
       
-    input:focus-visible ~ .switch-track
-      box-shadow: 0 0 0 calc(#{base.$focus-ring-width} + #{base.$focus-ring-offset}) var(--lb-surface-error-active)
-      border-color: var(--lb-border-error-active)
+      &:focus-visible
+        box-shadow: 0 0 0 calc(#{base.$focus-ring-width} + #{base.$focus-ring-offset}) var(--lb-surface-error-active)
+        border-color: var(--lb-border-error-active)
+        outline: none
       
     &.checked .switch-track
       background: var(--lb-fill-error-normal)
       border-color: var(--lb-fill-error-normal)
     
-    // Hover states for invalid switches (must override default hover)
-    &:not(.checked) input:not(:disabled):hover ~ .switch-track
+    // Hover states for invalid switches
+    &:not(.checked) .switch-track:not(:disabled):hover
       border-color: var(--lb-border-error-active)
       
-    &.checked input:not(:disabled):hover ~ .switch-track
+    &.checked .switch-track:not(:disabled):hover
       background: var(--lb-fill-error-hover)
       border-color: var(--lb-fill-error-hover)
   
+  // Label styling
+  .switch-label
+    font-size: typography.$font-size-label-small
+    font-weight: typography.$font-weight-medium
+    line-height: typography.$line-height-normal
+    color: var(--lb-text-neutral-normal)
+    user-select: none
+    
   // Disabled state
   &.disabled
-    opacity: base.$opacity-80
-    
     .switch-track
+      opacity: base.$opacity-80
       background: var(--lb-surface-neutral-disabled)
       border-color: var(--lb-border-neutral-disabled)
       cursor: not-allowed
+      
+      &:hover
+        border-color: var(--lb-border-neutral-disabled)
       
       .switch-thumb
         background: var(--lb-fill-neutral-disabled)
@@ -218,6 +271,6 @@ defineExpose({
       .switch-thumb
         background: var(--lb-fill-neutral-disabled)
       
-    input:hover ~ .switch-track
-      border-color: var(--lb-border-neutral-normal)
+    .switch-label
+      color: var(--lb-text-neutral-disabled)
 </style>

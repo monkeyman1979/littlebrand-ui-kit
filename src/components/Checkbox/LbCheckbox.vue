@@ -1,23 +1,21 @@
 <template lang="pug">
-.lb-checkbox(:class="rootClasses")
-  input(
-    ref="inputRef"
-    type="checkbox"
+label.lb-checkbox(:class="rootClasses")
+  button.checkbox-button(
+    ref="buttonRef"
+    type="button"
+    role="checkbox"
     :id="id"
-    :checked="isChecked"
-    :indeterminate="indeterminate"
-    :disabled="disabled"
-    :required="required"
+    :aria-checked="indeterminate ? 'mixed' : isChecked.toString()"
     :aria-invalid="invalid || undefined"
     :aria-describedby="ariaDescribedby || undefined"
-    :value="value"
-    @change="handleChange"
+    :disabled="disabled"
+    @click="handleClick"
     @focus="$emit('focus', $event)"
     @blur="$emit('blur', $event)"
+    @keydown.space.prevent="handleClick"
   )
-  .checkbox-visual
     //- Checkmark icon
-    .icon(v-if="!indeterminate && (isChecked || showCheckAnimation)")
+    .checkbox-indicator(v-if="!indeterminate && (isChecked || showCheckAnimation)")
       slot(name="icon-check")
         svg(
           width="20" 
@@ -34,7 +32,7 @@
             stroke-linejoin="round"
           )
     //- Indeterminate icon
-    .icon(v-else-if="indeterminate")
+    .checkbox-indicator(v-else-if="indeterminate")
       slot(name="icon-indeterminate")
         svg(
           width="20" 
@@ -49,16 +47,33 @@
             stroke-width="2.5" 
             stroke-linecap="round"
           )
+  span.checkbox-label(v-if="hasLabel")
+    slot
+  //- Hidden input for form submission
+  input(
+    v-if="isInForm"
+    ref="hiddenInputRef"
+    type="checkbox"
+    :name="name"
+    :value="value"
+    :checked="isChecked"
+    :disabled="disabled"
+    :required="required"
+    tabindex="-1"
+    aria-hidden="true"
+    style="position: absolute; pointer-events: none; opacity: 0; margin: 0"
+  )
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch, watchEffect, onUnmounted } from 'vue'
+import { computed, ref, watch, watchEffect, onMounted, onUnmounted } from 'vue'
 
 // Types
 export interface LbCheckboxProps {
   modelValue?: boolean | Array<any>
   value?: any
   id?: string
+  name?: string  // For form submission
   disabled?: boolean
   required?: boolean
   invalid?: boolean
@@ -84,7 +99,11 @@ const emit = defineEmits<{
 }>()
 
 // Refs
-const inputRef = ref<HTMLInputElement>()
+const buttonRef = ref<HTMLButtonElement>()
+const hiddenInputRef = ref<HTMLInputElement>()
+
+// Check if component is inside a form
+const isInForm = ref(false)
 
 // Computed
 const isChecked = computed(() => {
@@ -105,10 +124,17 @@ const rootClasses = computed(() => ({
   'invalid': props.invalid
 }))
 
-// Update indeterminate state on input element
+// Check if we're in a form on mount
+onMounted(() => {
+  if (buttonRef.value) {
+    isInForm.value = !!buttonRef.value.closest('form')
+  }
+})
+
+// Update hidden input indeterminate state if in form
 watchEffect(() => {
-  if (inputRef.value) {
-    inputRef.value.indeterminate = props.indeterminate
+  if (hiddenInputRef.value) {
+    hiddenInputRef.value.indeterminate = props.indeterminate
   }
 })
 
@@ -129,25 +155,27 @@ watch(isChecked, (newVal, oldVal) => {
 })
 
 // Methods
-const handleChange = (event: Event) => {
-  const target = event.target as HTMLInputElement
+const handleClick = (event: MouseEvent | KeyboardEvent) => {
+  if (props.disabled) return
   
   if (Array.isArray(props.modelValue) && props.value !== undefined) {
     const newValue = [...props.modelValue]
     const index = newValue.indexOf(props.value)
     
-    if (target.checked && index === -1) {
+    if (index === -1) {
       newValue.push(props.value)
-    } else if (!target.checked && index > -1) {
+    } else {
       newValue.splice(index, 1)
     }
     
     emit('update:modelValue', newValue)
   } else {
-    emit('update:modelValue', target.checked)
+    emit('update:modelValue', !isChecked.value)
   }
   
-  emit('change', event)
+  // Create a synthetic change event for compatibility
+  const changeEvent = new Event('change', { bubbles: true, cancelable: true })
+  emit('change', changeEvent)
 }
 
 // Cleanup timer on unmount
@@ -158,10 +186,15 @@ onUnmounted(() => {
 })
 
 // Slots
-defineSlots<{
+const slots = defineSlots<{
   'icon-check'?: () => any
   'icon-indeterminate'?: () => any
+  default?: () => any
 }>()
+
+const hasLabel = computed(() => {
+  return !!slots.default
+})
 
 // Component options
 defineOptions({
@@ -171,7 +204,9 @@ defineOptions({
 
 // Expose
 defineExpose({
-  inputRef
+  buttonRef,
+  focus: () => buttonRef.value?.focus(),
+  blur: () => buttonRef.value?.blur()
 })
 </script>
 
@@ -181,42 +216,44 @@ defineExpose({
 @use '@/styles/typography' as typography
 
 .lb-checkbox
-  position: relative
-  display: inline-block
+  display: inline-flex
+  align-items: center
+  gap: base.$space-sm
   
-  // Hidden native checkbox
-  input[type="checkbox"]
-    position: absolute
-    opacity: base.$opacity-0
-    width: 100%
-    height: 100%
-    margin: 0
-    cursor: pointer
-    z-index: 1
-    
-    &:disabled
-      cursor: not-allowed
+  &.disabled
+    cursor: not-allowed
   
-  // Visual checkbox
-  .checkbox-visual
+  // The checkbox button itself
+  .checkbox-button
     position: relative
-    display: flex
+    display: inline-flex
     align-items: center
     justify-content: center
     width: cv.$checkbox-size  // 20px
     height: cv.$checkbox-size  // 20px
+    padding: 0
+    margin: 0
     background: var(--lb-background-surface)
     border: cv.$checkbox-border-width solid var(--lb-border-neutral-normal)
     border-radius: cv.$checkbox-border-radius
-    transition: background-color base.$transition, border-color base.$transition, box-shadow base.$transition
-    will-change: background-color, border-color
+    cursor: pointer
+    transition: all base.$transition
+    -webkit-appearance: none
+    appearance: none
     
+    &:disabled
+      cursor: not-allowed
+      opacity: base.$opacity-80
+      background: var(--lb-surface-neutral-disabled)
+      border-color: var(--lb-border-neutral-disabled)
   
-  // Icon
-  .icon
+  // Checkbox indicator (checkmark or indeterminate line)
+  .checkbox-indicator
     display: flex
     align-items: center
     justify-content: center
+    width: var(--lb-icon-size-sm)  // 18px
+    height: var(--lb-icon-size-sm)  // 18px
     color: white
     opacity: base.$opacity-0
     transform: scale(0)
@@ -230,74 +267,85 @@ defineExpose({
   // States
   &.checked,
   &.indeterminate
-    .checkbox-visual
+    .checkbox-button
       background: var(--lb-fill-primary-normal)
       border-color: var(--lb-fill-primary-normal)
       
-    .icon
+    .checkbox-indicator
       opacity: base.$opacity-100
       transform: scale(1)
       
     // Animation
-    &:not(.indeterminate) .icon
+    &:not(.indeterminate) .checkbox-indicator
       animation: lb-check-bounce 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)
   
   // Hover state
-  input:not(:disabled):hover ~ .checkbox-visual
+  .checkbox-button:not(:disabled):hover
     border-color: var(--lb-border-neutral-active)
     
-  &.checked input:not(:disabled):hover ~ .checkbox-visual,
-  &.indeterminate input:not(:disabled):hover ~ .checkbox-visual
+  &.checked .checkbox-button:not(:disabled):hover,
+  &.indeterminate .checkbox-button:not(:disabled):hover
     background: var(--lb-fill-primary-hover)
     border-color: var(--lb-fill-primary-hover)
   
   // Focus state
-  input:focus-visible ~ .checkbox-visual
+  .checkbox-button:focus-visible
     outline: base.$focus-ring-width solid var(--lb-focus-ring-color)
     outline-offset: base.$focus-ring-offset
   
   // Invalid state
   &.invalid
-    .checkbox-visual
+    .checkbox-button
       border-color: var(--lb-border-error-normal)
       
-    input:focus-visible ~ .checkbox-visual
-      box-shadow: 0 0 0 calc(#{base.$focus-ring-width} + #{base.$focus-ring-offset}) var(--lb-surface-error-active)
-      border-color: var(--lb-border-error-active)
+      &:focus-visible
+        box-shadow: 0 0 0 calc(#{base.$focus-ring-width} + #{base.$focus-ring-offset}) var(--lb-surface-error-active)
+        border-color: var(--lb-border-error-active)
+        outline: none
       
-    &.checked .checkbox-visual,
-    &.indeterminate .checkbox-visual
+    &.checked .checkbox-button,
+    &.indeterminate .checkbox-button
       background: var(--lb-fill-error-normal)
       border-color: var(--lb-fill-error-normal)
     
-    // Hover states for invalid checkboxes (must override default hover)
-    input:not(:disabled):hover ~ .checkbox-visual
+    // Hover states for invalid checkboxes
+    .checkbox-button:not(:disabled):hover
       border-color: var(--lb-border-error-active)
       
-    &.checked input:not(:disabled):hover ~ .checkbox-visual,
-    &.indeterminate input:not(:disabled):hover ~ .checkbox-visual
+    &.checked .checkbox-button:not(:disabled):hover,
+    &.indeterminate .checkbox-button:not(:disabled):hover
       background: var(--lb-fill-error-hover)
       border-color: var(--lb-fill-error-hover)
   
+  // Label styling
+  .checkbox-label
+    font-size: typography.$font-size-label-small
+    font-weight: typography.$font-weight-medium
+    line-height: typography.$line-height-normal
+    color: var(--lb-text-neutral-normal)
+    user-select: none
+    
   // Disabled state
   &.disabled
-    opacity: base.$opacity-80
-    
-    .checkbox-visual
+    .checkbox-button
+      opacity: base.$opacity-80
       background: var(--lb-surface-neutral-disabled)
       border-color: var(--lb-border-neutral-disabled)
       cursor: not-allowed
       
-    &.checked .checkbox-visual,
-    &.indeterminate .checkbox-visual
+      &:hover
+        border-color: var(--lb-border-neutral-disabled)
+      
+    &.checked .checkbox-button,
+    &.indeterminate .checkbox-button
       background: var(--lb-fill-neutral-disabled)
       border-color: var(--lb-border-neutral-disabled)
       
-      .icon
+      .checkbox-indicator
         color: var(--lb-text-neutral-disabled)
       
-    input:hover ~ .checkbox-visual
-      border-color: var(--lb-border-neutral-normal)
+    .checkbox-label
+      color: var(--lb-text-neutral-disabled)
 
 // Animation keyframes
 @keyframes lb-check-bounce

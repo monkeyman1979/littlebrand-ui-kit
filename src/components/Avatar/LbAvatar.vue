@@ -34,6 +34,9 @@
     :aria-label="`Status: ${status}`"
     role="status"
   )
+  
+  //- Badge slot for notification badges
+  slot(name="badge")
 </template>
 
 <script setup lang="ts">

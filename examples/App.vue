@@ -567,6 +567,19 @@
           .demo-note Selected: {{ selectedOptions.join(', ') || 'None' }}
         
         .demo-group
+          h4 Standalone Checkboxes (No Labels)
+          .checkbox-row(style="gap: 24px")
+            LbCheckbox(v-model="standaloneCheck1" id="standalone-1")
+            LbCheckbox(v-model="standaloneCheck2" id="standalone-2")
+            LbCheckbox(v-model="standaloneCheck3" id="standalone-3" disabled)
+            LbCheckbox(v-model="standaloneCheck4" id="standalone-4" invalid)
+            LbCheckbox(v-model="standaloneCheck5" id="standalone-5" :indeterminate="true")
+          .demo-note 
+            | Values: {{ [standaloneCheck1, standaloneCheck2, standaloneCheck3, standaloneCheck4, standaloneCheck5].map(v => v ? '✓' : '✗').join(' ') }}
+          .demo-note(style="margin-top: 8px; font-size: 12px; color: var(--lb-text-neutral-contrast-low)")
+            | Click directly on checkboxes to toggle. Full checkbox area is clickable.
+        
+        .demo-group
           h4 Radio States
           .radio-row
             .radio-item
@@ -1188,7 +1201,7 @@
               LbBadge(variant="error" position="top-right") 3
         
         .demo-group
-          h4 Badge with Avatars
+          h4 Badge with Avatars (Using wrapper)
           .button-row
             .avatar-badge-item
               LbAvatar(name="John Doe" size="md" status="online")
@@ -1199,6 +1212,19 @@
             .avatar-badge-item
               LbAvatar(name="Jane Smith" size="xl" status="busy")
               LbBadge(variant="primary" position="top-right") 12
+        
+        .demo-group
+          h4 Badge with Avatars (Using slot)
+          .button-row
+            LbAvatar(name="Mike Wilson" size="md")
+              template(#badge)
+                LbBadge(variant="error" position="top-right" size="small" dot)
+            LbAvatar(src="https://picsum.photos/seed/badge2/100/100" alt="User with badge" size="lg")
+              template(#badge)
+                LbBadge(variant="error" position="top-right") 5
+            LbAvatar(name="Sara Johnson" size="xl" status="online")
+              template(#badge)
+                LbBadge(variant="primary" position="top-right") 99+
         
         .demo-group
           h4 Inline Badges
@@ -2504,6 +2530,13 @@ const checkboxChecked = ref(true)
 const checkboxDisabled = ref(false)
 const checkboxDisabledChecked = ref(true)
 const checkboxInvalid = ref(true)
+
+// Standalone checkboxes (no labels)
+const standaloneCheck1 = ref(false)
+const standaloneCheck2 = ref(true)
+const standaloneCheck3 = ref(false)
+const standaloneCheck4 = ref(true)
+const standaloneCheck5 = ref(false)
 
 // Indeterminate state demo
 const parentCheckbox = ref(false)
