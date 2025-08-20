@@ -257,12 +257,9 @@ watch(isOpen, (newIsOpen, oldIsOpen) => {
     internalDate.value = props.modelValue
     emit('open')
   } else if (oldIsOpen) {
-    // When closing (from true to false), commit any selected date
-    // This provides better UX - clicking outside after selecting a date confirms it
-    if (internalDate.value?.getTime() !== props.modelValue?.getTime()) {
-      emit('update:modelValue', internalDate.value)
-      emit('change', internalDate.value)
-    }
+    // When closing (from true to false), reset to original value
+    // Only the OK button should commit changes
+    internalDate.value = props.modelValue
     emit('close')
   }
 })

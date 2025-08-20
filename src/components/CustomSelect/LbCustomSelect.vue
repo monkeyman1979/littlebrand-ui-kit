@@ -15,7 +15,7 @@
         :tabindex="disabled ? -1 : 0"
         role="combobox"
         :aria-expanded="isOpen"
-        :aria-haspopup="listbox"
+        :aria-haspopup="'listbox'"
         :aria-labelledby="computedAriaDescribedby"
         :aria-invalid="invalid || undefined"
         :aria-disabled="disabled"
