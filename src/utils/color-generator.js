@@ -284,7 +284,7 @@ export function generateSemanticTokens(name, scale, darkScale = null) {
   tokens[`--lb-text-${name}-normal`] = scale[9]
   tokens[`--lb-text-${name}-contrast-low`] = scale[11]
   tokens[`--lb-text-${name}-contrast-high`] = scale[12]
-  tokens[`--lb-text-${name}-disabled`] = scale[5]
+  tokens[`--lb-text-${name}-disabled`] = scale[7]
   
   // Text-on tokens (determine if white or dark text needed)
   const rgb9 = scale[9].match(/\d+/g)
@@ -327,6 +327,10 @@ export function generateSemanticTokens(name, scale, darkScale = null) {
  */
 export function applyTheme(colors, curve = 'natural') {
   const root = document.documentElement
+  
+  // Preserve current dark mode state before applying new colors
+  const isDarkMode = document.documentElement.classList.contains('dark') ||
+                     document.body.classList.contains('dark')
   
   // Default colors if not provided
   const defaultColors = {
@@ -380,18 +384,40 @@ export function applyTheme(colors, curve = 'natural') {
     }
   })
   
-  // Also apply background tokens which are not color-specific
-  // Light mode backgrounds
-  root.style.setProperty('--lb-background-page', 'white')
-  root.style.setProperty('--lb-background-surface', '#fafafa')
-  root.style.setProperty('--lb-background-overlay', 'rgba(0, 0, 0, 0.5)')
+  // Derive background tokens from the neutral scale (or custom background source)
+  const backgroundSource = colors.background || 'neutral'
+  let backgroundScale = null
+  let darkBackgroundScale = null
+  
+  // Determine which scale to use for backgrounds
+  if (backgroundSource === 'neutral' || backgroundSource === 'primary' || 
+      backgroundSource === 'secondary' || backgroundSource === 'tertiary') {
+    // Use an existing color scale
+    const sourceColor = finalColors[backgroundSource]
+    backgroundScale = generateScale(sourceColor, curve)
+    darkBackgroundScale = generateDarkScale(backgroundScale, sourceColor)
+  } else if (typeof backgroundSource === 'string' && backgroundSource.startsWith('#')) {
+    // Generate a scale from a custom hex color
+    backgroundScale = generateScale(backgroundSource, curve)
+    darkBackgroundScale = generateDarkScale(backgroundScale, backgroundSource)
+  } else {
+    // Fallback to neutral if invalid
+    const neutralColor = finalColors.neutral
+    backgroundScale = generateScale(neutralColor, curve)
+    darkBackgroundScale = generateDarkScale(backgroundScale, neutralColor)
+  }
+  
+  // Apply light mode backgrounds derived from the scale
+  root.style.setProperty('--lb-background-page', backgroundScale[1])  // Lightest
+  root.style.setProperty('--lb-background-surface', backgroundScale[2])  // Slightly darker
+  root.style.setProperty('--lb-background-overlay', `rgba(0, 0, 0, 0.5)`)  // Keep overlay as semi-transparent black
   
   // Store dark mode backgrounds
   if (!window.__lbDarkTheme) window.__lbDarkTheme = {}
   window.__lbDarkTheme.backgrounds = {
-    '--lb-background-page': '#0a0a0a',
-    '--lb-background-surface': '#1a1a1a',
-    '--lb-background-overlay': 'rgba(0, 0, 0, 0.7)'
+    '--lb-background-page': darkBackgroundScale[1],
+    '--lb-background-surface': darkBackgroundScale[2],
+    '--lb-background-overlay': `rgba(0, 0, 0, 0.7)`
   }
   
   // Add event listener for dark mode if not already added
@@ -440,6 +466,30 @@ export function applyTheme(colors, curve = 'natural') {
     observer.observe(document.body, {
       attributes: true,
       attributeFilter: ['class']
+    })
+  }
+  
+  // Re-apply dark mode if it was active before the theme update
+  if (isDarkMode && window.__lbDarkTheme) {
+    // Apply dark theme values
+    Object.entries(window.__lbDarkTheme).forEach(([name, data]) => {
+      if (name === 'backgrounds') {
+        // Apply background values
+        Object.entries(data).forEach(([property, value]) => {
+          root.style.setProperty(property, value)
+        })
+      } else {
+        // Apply color tokens
+        Object.entries(data.tokens).forEach(([property, value]) => {
+          root.style.setProperty(property, value)
+        })
+        Object.entries(data.scale).forEach(([step, value]) => {
+          root.style.setProperty(`--lb-${name}-${step}`, value)
+        })
+        Object.entries(data.alpha).forEach(([step, value]) => {
+          root.style.setProperty(`--lb-${name}-alpha-${step}`, value)
+        })
+      }
     })
   }
 }

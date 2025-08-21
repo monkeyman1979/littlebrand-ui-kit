@@ -1,28 +1,42 @@
 <template lang="pug">
-.lb-radio(:class="rootClasses")
-  input(
-    ref="inputRef"
-    type="radio"
+label.lb-radio(:class="rootClasses")
+  button.radio-button(
+    ref="buttonRef"
+    type="button"
+    role="radio"
     :id="id"
+    :aria-checked="isChecked.toString()"
+    :aria-invalid="invalid || undefined"
+    :aria-describedby="ariaDescribedby || undefined"
+    :disabled="disabled"
+    @click="handleClick"
+    @focus="$emit('focus', $event)"
+    @blur="$emit('blur', $event)"
+    @keydown.space.prevent="handleClick"
+  )
+    .radio-indicator(v-if="isChecked")
+      slot(name="icon-selected")
+        //- Default dot indicator
+  span.radio-label(v-if="hasLabel")
+    slot
+  //- Hidden input for form submission
+  input(
+    v-if="isInForm"
+    ref="hiddenInputRef"
+    type="radio"
     :name="name"
+    :value="value"
     :checked="isChecked"
     :disabled="disabled"
     :required="required"
-    :aria-invalid="invalid || undefined"
-    :aria-describedby="ariaDescribedby || undefined"
-    :value="value"
-    @change="handleChange"
-    @focus="$emit('focus', $event)"
-    @blur="$emit('blur', $event)"
+    tabindex="-1"
+    aria-hidden="true"
+    style="position: absolute; pointer-events: none; opacity: 0; margin: 0"
   )
-  .radio-visual
-    .radio-dot(v-if="isChecked")
-      slot(name="icon-selected")
-        //- Default dot
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch, onUnmounted } from 'vue'
+import { computed, ref, watch, onMounted, onUnmounted } from 'vue'
 
 // Types
 export interface LbRadioProps {
@@ -52,7 +66,11 @@ const emit = defineEmits<{
 }>()
 
 // Refs
-const inputRef = ref<HTMLInputElement>()
+const buttonRef = ref<HTMLButtonElement>()
+const hiddenInputRef = ref<HTMLInputElement>()
+
+// Check if component is inside a form
+const isInForm = ref(false)
 
 // Track if we should show the selection animation
 const showSelectionAnimation = ref(false)
@@ -85,10 +103,22 @@ watch(isChecked, (newVal, oldVal) => {
   }
 })
 
+// Check if we're in a form on mount
+onMounted(() => {
+  if (buttonRef.value) {
+    isInForm.value = !!buttonRef.value.closest('form')
+  }
+})
+
 // Methods
-const handleChange = (event: Event) => {
+const handleClick = (event: MouseEvent | KeyboardEvent) => {
+  if (props.disabled || isChecked.value) return
+  
   emit('update:modelValue', props.value)
-  emit('change', event)
+  
+  // Create a synthetic change event for compatibility
+  const changeEvent = new Event('change', { bubbles: true, cancelable: true })
+  emit('change', changeEvent)
 }
 
 // Use form input composable for consistent attributes
@@ -101,9 +131,14 @@ onUnmounted(() => {
 })
 
 // Slots
-defineSlots<{
+const slots = defineSlots<{
   'icon-selected'?: () => any
+  default?: () => any
 }>()
+
+const hasLabel = computed(() => {
+  return !!slots.default
+})
 
 // Component options
 defineOptions({
@@ -113,7 +148,9 @@ defineOptions({
 
 // Expose
 defineExpose({
-  inputRef
+  buttonRef,
+  focus: () => buttonRef.value?.focus(),
+  blur: () => buttonRef.value?.blur()
 })
 </script>
 
@@ -123,39 +160,39 @@ defineExpose({
 @use '@/styles/typography' as typography
 
 .lb-radio
-  position: relative
-  display: inline-block
+  display: inline-flex
+  align-items: center
+  gap: base.$space-sm
   
-  // Hidden native radio
-  input[type="radio"]
-    position: absolute
-    opacity: base.$opacity-0
-    width: 100%
-    height: 100%
-    margin: 0
-    cursor: pointer
-    z-index: 1
-    
-    &:disabled
-      cursor: not-allowed
+  &.disabled
+    cursor: not-allowed
   
-  // Visual radio
-  .radio-visual
+  // The radio button itself
+  .radio-button
     position: relative
-    display: flex
+    display: inline-flex
     align-items: center
     justify-content: center
     width: cv.$radio-size  // 20px
     height: cv.$radio-size  // 20px
+    padding: 0
+    margin: 0
     background: var(--lb-background-surface)
     border: cv.$radio-border-width solid var(--lb-border-neutral-normal)
     border-radius: base.$radius-full
-    transition: background-color base.$transition, border-color base.$transition, box-shadow base.$transition
-    will-change: background-color, border-color
+    cursor: pointer
+    transition: all base.$transition
+    -webkit-appearance: none
+    appearance: none
     
+    &:disabled
+      cursor: not-allowed
+      opacity: base.$opacity-80
+      background: var(--lb-surface-neutral-disabled)
+      border-color: var(--lb-border-neutral-disabled)
   
-  // Radio dot
-  .radio-dot
+  // Radio indicator (the dot)
+  .radio-indicator
     display: flex
     align-items: center
     justify-content: center
@@ -171,62 +208,73 @@ defineExpose({
   
   // Checked state
   &.checked
-    .radio-visual
+    .radio-button
       background: var(--lb-fill-primary-normal)
       border-color: var(--lb-fill-primary-normal)
       
-    .radio-dot
+    .radio-indicator
       opacity: base.$opacity-100
       transform: scale(1)
   
   // Hover state
-  input:not(:disabled):hover ~ .radio-visual
+  .radio-button:not(:disabled):hover
     border-color: var(--lb-border-neutral-active)
     
-  &.checked input:not(:disabled):hover ~ .radio-visual
+  &.checked .radio-button:not(:disabled):hover
     background: var(--lb-fill-primary-hover)
     border-color: var(--lb-fill-primary-hover)
   
   // Focus state
-  input:focus-visible ~ .radio-visual
+  .radio-button:focus-visible
     outline: base.$focus-ring-width solid var(--lb-focus-ring-color)
     outline-offset: base.$focus-ring-offset
   
   // Invalid state
   &.invalid
-    .radio-visual
+    .radio-button
       border-color: var(--lb-border-error-normal)
       
-    input:focus-visible ~ .radio-visual
-      box-shadow: 0 0 0 calc(#{base.$focus-ring-width} + #{base.$focus-ring-offset}) var(--lb-surface-error-active)
-      border-color: var(--lb-border-error-active)
+      &:focus-visible
+        box-shadow: 0 0 0 calc(#{base.$focus-ring-width} + #{base.$focus-ring-offset}) var(--lb-surface-error-active)
+        border-color: var(--lb-border-error-active)
+        outline: none
       
-    &.checked .radio-visual
+    &.checked .radio-button
       background: var(--lb-fill-error-normal)
       border-color: var(--lb-fill-error-normal)
     
-    // Hover states for invalid radios (must override default hover)
-    input:not(:disabled):hover ~ .radio-visual
+    // Hover states for invalid radios
+    .radio-button:not(:disabled):hover
       border-color: var(--lb-border-error-active)
       
-    &.checked input:not(:disabled):hover ~ .radio-visual
+    &.checked .radio-button:not(:disabled):hover
       background: var(--lb-fill-error-hover)
       border-color: var(--lb-fill-error-hover)
   
+  // Label styling
+  .radio-label
+    font-size: typography.$font-size-label-small
+    font-weight: typography.$font-weight-medium
+    line-height: typography.$line-height-normal
+    color: var(--lb-text-neutral-normal)
+    user-select: none
+    
   // Disabled state
   &.disabled
-    opacity: base.$opacity-80
-    
-    .radio-visual
+    .radio-button
+      opacity: base.$opacity-80
       background: var(--lb-surface-neutral-disabled)
       border-color: var(--lb-border-neutral-disabled)
       cursor: not-allowed
       
-    &.checked .radio-visual
+      &:hover
+        border-color: var(--lb-border-neutral-disabled)
+      
+    &.checked .radio-button
       background: var(--lb-fill-neutral-disabled)
       border-color: var(--lb-border-neutral-disabled)
       
-    input:hover ~ .radio-visual
-      border-color: var(--lb-border-neutral-normal)
+    .radio-label
+      color: var(--lb-text-neutral-disabled)
 
 </style>

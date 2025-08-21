@@ -552,6 +552,7 @@ defineOptions({
   overflow: hidden
   text-overflow: ellipsis
   white-space: nowrap
+  text-align: left
   
   &.placeholder
     color: var(--lb-text-neutral-contrast-low)

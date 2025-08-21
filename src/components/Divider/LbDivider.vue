@@ -18,17 +18,20 @@ const props = withDefaults(defineProps<{
   orientation?: Orientation
   size?: Size
   inset?: boolean
+  stretch?: boolean  // For vertical dividers to stretch to parent height
 }>(), {
   orientation: 'horizontal',
   size: 'thin',
-  inset: false
+  inset: false,
+  stretch: false
 })
 
 // Computed
 const dividerClasses = computed(() => [
   `orientation-${props.orientation}`,
   `size-${props.size}`,
-  { 'inset': props.inset }
+  { 'inset': props.inset },
+  { 'stretch': props.stretch && props.orientation === 'vertical' }
 ])
 
 // Component options
@@ -72,10 +75,18 @@ defineOptions({
     min-height: base.$space-lg
     display: inline-block
     vertical-align: middle
-    align-self: stretch // Stretch to parent height if in flex container
     
+    // When stretch is true, divider stretches to fill parent height
+    &.stretch
+      height: auto
+      align-self: stretch // Stretch to parent height if in flex container
+      
     &.inset
       align-self: center
       height: calc(100% - #{base.$space-lg * 2})
       max-height: calc(#{base.$space-2xl} - #{base.$space-sm})
+      
+      &.stretch
+        height: calc(100% - #{base.$space-lg * 2})
+        max-height: none
 </style>
