@@ -1,5 +1,5 @@
 <template lang="pug">
-label.lb-radio(:class="rootClasses")
+div.lb-radio(:class="rootClasses")
   button.radio-button(
     ref="buttonRef"
     type="button"
@@ -204,6 +204,7 @@ defineExpose({
     transform: scale(0)
     transition: opacity base.$transition, transform base.$transition
     will-change: opacity, transform
+    pointer-events: none
     
   
   // Checked state

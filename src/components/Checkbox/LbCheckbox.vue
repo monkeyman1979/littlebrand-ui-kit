@@ -1,5 +1,5 @@
 <template lang="pug">
-label.lb-checkbox(:class="rootClasses")
+div.lb-checkbox(:class="rootClasses")
   button.checkbox-button(
     ref="buttonRef"
     type="button"
@@ -259,6 +259,7 @@ defineExpose({
     transform: scale(0)
     transition: opacity base.$transition, transform base.$transition
     will-change: opacity, transform
+    pointer-events: none
     
     svg
       width: 100%
