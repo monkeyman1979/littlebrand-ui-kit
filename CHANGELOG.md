@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+- **Checkbox Double-Click Issue**
+  - Fixed checkbox toggling twice when clicked directly (would activate then immediately deactivate)
+  - Changed Checkbox, Radio, and Switch components to use `<div>` wrapper instead of `<label>`
+  - Only the control itself is now clickable, not the surrounding label text
+  - Added `pointer-events: none` to inner elements for proper click handling
+  - Users can still use separate `LbLabel` components with `for` attribute for clickable labels
+
 ## [0.2.0] - 2025-08-21
 
 ### Fixed
