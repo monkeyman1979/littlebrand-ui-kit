@@ -245,7 +245,7 @@ defineExpose({
   
   // Label styling
   .switch-label
-    font-size: typography.$font-size-label-small
+    font-size: typography.$font-size-label-base
     font-weight: typography.$font-weight-medium
     line-height: typography.$line-height-normal
     color: var(--lb-text-neutral-normal)
