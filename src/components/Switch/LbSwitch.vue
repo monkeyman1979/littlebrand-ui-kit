@@ -1,5 +1,5 @@
 <template lang="pug">
-label.lb-switch(:class="rootClasses")
+div.lb-switch(:class="rootClasses")
   button.switch-track(
     ref="buttonRef"
     type="button"
@@ -161,6 +161,7 @@ defineExpose({
     border-radius: base.$radius-full
     transition: transform base.$transition, background-color base.$transition
     will-change: transform
+    pointer-events: none
   
   // Size variations
   &.size-small
