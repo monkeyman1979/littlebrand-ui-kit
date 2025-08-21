@@ -96,8 +96,5 @@ const LittleBrandUI = {
   }
 }
 
-// Export the plugin
-export default LittleBrandUI
-
-// Also export the install function directly
+// Export the plugin (using named exports only to avoid bundler warnings)
 export { LittleBrandUI }
