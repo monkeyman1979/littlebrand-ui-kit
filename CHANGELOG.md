@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.2] - 2025-08-21
+
+### Fixed
+- **Form Component Label Readability**
+  - Increased label font size from 12px to 14px for Checkbox, Radio, and Switch components
+  - Improved readability while maintaining consistent typography across form controls
+
 ## [0.2.1] - 2025-08-21
 
 ### Fixed
@@ -19,10 +26,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Only the control itself is now clickable, not the surrounding label text
   - Added `pointer-events: none` to inner elements for proper click handling
   - Users can still use separate `LbLabel` components with `for` attribute for clickable labels
-
-- **Form Component Label Readability**
-  - Increased label font size from 12px to 14px for Checkbox, Radio, and Switch components
-  - Improved readability while maintaining consistent typography across form controls
 
 ## [0.2.0] - 2025-08-21
 
