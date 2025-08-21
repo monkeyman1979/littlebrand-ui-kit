@@ -47,7 +47,8 @@ defineOptions({
   border: none
   background-color: var(--lb-border-neutral-line)
   margin: 0
-  --divider-size: #{base.$border-sm} // Default size
+  // Default size
+  --divider-size: #{base.$border-sm}
   
   // Size variants using existing border variables
   &.size-thin
