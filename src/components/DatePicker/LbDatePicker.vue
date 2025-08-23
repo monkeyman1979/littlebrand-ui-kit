@@ -318,19 +318,12 @@ defineOptions({
     height: base.$unit-48  // 48px
     font-size: typography.$font-size-label-large
   
-  &:focus
-    outline: none
-    border-color: var(--lb-border-primary-normal)
-  
-  &:active:not(:disabled)
-    border-color: var(--lb-border-primary-active)
-  
+  // Focus visible state (keyboard navigation)
   &:focus-visible
-    outline: none
-    box-shadow: 0 0 0 calc(#{base.$focus-ring-width} + #{base.$focus-ring-offset}) var(--lb-focus-ring-color)
-  
-  &:active
-    box-shadow: none  // Remove focus ring on click
+    outline: base.$focus-ring-width solid transparent
+    outline-offset: base.$focus-ring-offset
+    border-color: var(--lb-border-neutral-active)
+    box-shadow: base.$shadow-sm
   
   &:hover:not(:disabled):not(.invalid)
     border-color: var(--lb-border-neutral-active)
@@ -343,11 +336,12 @@ defineOptions({
       border-color: var(--lb-border-error-normal)
       background: var(--lb-surface-neutral-hover)
     
-    &:focus
+    // Error border on focus
+    &:focus-visible
+      outline: base.$focus-ring-width solid transparent
+      outline-offset: base.$focus-ring-offset
       border-color: var(--lb-border-error-active)
-    
-    &:focus-visible:not(:active)
-      box-shadow: 0 0 0 calc(#{base.$focus-ring-width} + #{base.$focus-ring-offset}) var(--lb-surface-error-active)
+      box-shadow: base.$shadow-sm
   
   &:disabled
     cursor: not-allowed
