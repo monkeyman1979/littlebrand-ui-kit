@@ -580,23 +580,12 @@ defineExpose({
   &:hover:not([aria-disabled="true"])
     border-color: var(--lb-border-neutral-active)
   
-  &:focus
-    outline: none
-    border-color: var(--lb-border-primary-normal)
-    box-shadow: none  // No ring by default
-  
-  // Active state (when clicking/interacting)
-  &:active:not([aria-disabled="true"])
-    border-color: var(--lb-border-primary-active)
-    box-shadow: none  // Remove focus ring on click
-  
-// Keyboard focus state (only shows ring when focused via keyboard)
-.keyboard-focus .select-trigger:focus:not(:active)
-  box-shadow: 0 0 0 calc(#{base.$focus-ring-width} + #{base.$focus-ring-offset}) var(--lb-focus-ring-color)
-  
-  // Focus takes precedence over hover
-  &:focus:hover:not([aria-disabled="true"])
-    border-color: var(--lb-border-primary-normal)
+  // Focus visible state (keyboard navigation)
+  &:focus-visible
+    outline: base.$focus-ring-width solid transparent
+    outline-offset: base.$focus-ring-offset
+    border-color: var(--lb-border-neutral-active)
+    box-shadow: base.$shadow-sm
 
 // Size variations
 .size-medium .select-trigger
@@ -613,12 +602,12 @@ defineExpose({
 .invalid .select-trigger
   border-color: var(--lb-border-error-normal)
   
-  &:focus
+  // Error border on focus
+  &:focus-visible
+    outline: base.$focus-ring-width solid transparent
+    outline-offset: base.$focus-ring-offset
     border-color: var(--lb-border-error-active)
-  
-
-.invalid.keyboard-focus .select-trigger:focus:not(:active)
-  box-shadow: 0 0 0 calc(#{base.$focus-ring-width} + #{base.$focus-ring-offset}) var(--lb-surface-error-active)
+    box-shadow: base.$shadow-sm
 
 .disabled .select-trigger
   background: var(--lb-surface-neutral-subtle)
@@ -662,8 +651,9 @@ defineExpose({
     color: var(--lb-text-neutral-contrast-high)
   
   &:focus-visible
-    outline: base.$focus-ring-width solid var(--lb-focus-ring-color)
-    outline-offset: calc(#{base.$space-2xs} * -1)
+    outline: base.$focus-ring-width solid transparent
+    outline-offset: base.$focus-ring-offset
+    border-color: var(--lb-border-neutral-active)
   
   &:active
     opacity: base.$opacity-80

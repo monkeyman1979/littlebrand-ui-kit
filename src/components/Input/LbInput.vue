@@ -273,8 +273,11 @@ const handleInput = (event: Event) => {
     &:hover:not(:disabled):not(:read-only)
       border-color: var(--lb-border-neutral-active)
 
-    &:focus
-      outline: cv.$input-border-width solid var(--lb-border-primary-active)
+    &:focus-visible
+      outline: base.$focus-ring-width solid transparent
+      outline-offset: base.$focus-ring-offset
+      border-color: var(--lb-border-neutral-active)
+      box-shadow: base.$shadow-sm
     
   
   // Invalid state
@@ -284,6 +287,13 @@ const handleInput = (event: Event) => {
     // Maintain error border on hover
     &:hover:not(:disabled):not(:read-only)
       border-color: var(--lb-border-error-normal)
+    
+    // Error border on focus
+    &:focus-visible
+      outline: base.$focus-ring-width solid transparent
+      outline-offset: base.$focus-ring-offset
+      border-color: var(--lb-border-error-active)
+      box-shadow: base.$shadow-sm
   
   // Disabled state
   input:disabled

@@ -504,23 +504,15 @@ defineOptions({
   box-sizing: border-box
   
   // Hover state (only when not focused and not invalid)
-  &:hover:not(.select-trigger-disabled):not(:focus):not(.select-trigger-invalid)
+  &:hover:not(.select-trigger-disabled):not(.select-trigger-invalid)
     border-color: var(--lb-border-neutral-active)
   
-  &:focus
-    outline: none
-    border-color: var(--lb-border-primary-normal)
-    box-shadow: none  // No ring by default
-  
-  // Active state (when clicking/interacting)
-  &:active:not(.select-trigger-disabled)
-    border-color: var(--lb-border-primary-active)
-    box-shadow: none  // Remove focus ring on click
-  
-  // Keyboard focus state (only shows ring when focused via keyboard)
-  &.select-trigger-keyboard-focus:focus:not(:active)
-    outline: base.$focus-ring-width solid var(--lb-focus-ring-color)
+  // Focus visible state (keyboard navigation)
+  &:focus-visible
+    outline: base.$focus-ring-width solid transparent
     outline-offset: base.$focus-ring-offset
+    border-color: var(--lb-border-neutral-active)
+    box-shadow: base.$shadow-sm
   
   &.select-trigger-medium
     height: cv.$select-height-medium  // 40px
@@ -544,8 +536,12 @@ defineOptions({
     &:hover:not(.select-trigger-disabled)
       border-color: var(--lb-border-error-normal)
     
-    &.select-trigger-keyboard-focus:focus:not(:active)
-      box-shadow: 0 0 0 calc(#{base.$focus-ring-width} + #{base.$focus-ring-offset}) var(--lb-surface-error-active)
+    // Error border on focus
+    &:focus-visible
+      outline: base.$focus-ring-width solid transparent
+      outline-offset: base.$focus-ring-offset
+      border-color: var(--lb-border-error-active)
+      box-shadow: base.$shadow-sm
 
 .select-value
   flex: 1
@@ -626,14 +622,11 @@ defineOptions({
     color: var(--lb-text-neutral-contrast-low)
     opacity: base.$opacity-100
   
-  &:focus
-    outline: none
-    border-color: var(--lb-border-primary-normal)
-    box-shadow: none  // No ring by default
-  
-  &:active
-    border-color: var(--lb-border-primary-active)
-    box-shadow: none  // Remove focus ring on click
+  &:focus-visible
+    outline: base.$focus-ring-width solid transparent
+    outline-offset: base.$focus-ring-offset
+    border-color: var(--lb-border-neutral-active)
+    box-shadow: base.$shadow-sm
 
 .select-options
   padding: base.$space-xs

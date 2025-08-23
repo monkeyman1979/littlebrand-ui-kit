@@ -521,10 +521,11 @@ onUnmounted(() => {
     color: var(--lb-text-neutral-contrast-low)
     opacity: base.$opacity-100
 
-  &:focus
-    outline: none
-    border-color: var(--lb-border-primary-normal)
-    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
+  &:focus-visible
+    outline: base.$focus-ring-width solid transparent
+    outline-offset: base.$focus-ring-offset
+    border-color: var(--lb-border-neutral-active)
+    box-shadow: base.$shadow-sm
 
 .menu-items-container
   position: relative

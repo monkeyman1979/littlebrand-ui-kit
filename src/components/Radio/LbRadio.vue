@@ -181,7 +181,7 @@ defineExpose({
     border: cv.$radio-border-width solid var(--lb-border-neutral-normal)
     border-radius: base.$radius-full
     cursor: pointer
-    transition: all base.$transition
+    transition: background-color base.$transition, border-color base.$transition, opacity base.$transition
     -webkit-appearance: none
     appearance: none
     
