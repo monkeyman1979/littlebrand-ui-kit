@@ -130,8 +130,8 @@ defineOptions({
   position: relative
   display: inline-grid
   grid-auto-flow: column
-  align-items: center
-  gap: base.$space-2xs
+  place-content: center
+  gap: base.$space-xs
   padding: 0 cv.$button-padding-x-medium
   height: cv.$button-height-medium  // Default to medium
   border: none
