@@ -20,37 +20,137 @@ npm install littlebrand-ui-kit
 
 ## 🚀 Quick Start
 
-### Basic Usage
+### Method 1: Global Plugin Installation (All Components)
+
+Register all components globally with the plugin:
 
 ```javascript
 import { createApp } from 'vue'
 import App from './App.vue'
-
-// Import components you need
-import { LbButton, LbInput } from 'littlebrand-ui-kit'
-
-// Import the CSS
+import { LittleBrandUI, applyTheme } from 'littlebrand-ui-kit'
 import 'littlebrand-ui-kit/style.css'
 
+// OPTIONAL: Customize colors (one hex = entire color system!)
+applyTheme({
+  primary: '#AB4ABA',    // Your brand purple
+  secondary: '#F76B15'   // Your brand orange
+  // Generates all shades, dark mode, and semantic tokens automatically!
+})
+
 const app = createApp(App)
-
-// Use components locally
-app.component('LbButton', LbButton)
-app.component('LbInput', LbInput)
-
+app.use(LittleBrandUI)  // Registers all components globally
 app.mount('#app')
 ```
 
-### Use in Templates
+### Method 2: Import as Needed (Recommended - Tree-shaking)
+
+Import only the components you need in each file:
+
+```javascript
+// main.js - Setup and theme customization
+import { createApp } from 'vue'
+import App from './App.vue'
+import { applyTheme } from 'littlebrand-ui-kit'
+import 'littlebrand-ui-kit/style.css'
+
+// OPTIONAL: Customize colors globally
+applyTheme({
+  primary: '#8b5cf6',
+  secondary: '#f59e0b'
+})
+
+const app = createApp(App)
+app.mount('#app')
+```
 
 ```vue
+<!-- Any component file -->
+<script setup>
+import { LbButton, LbInput } from 'littlebrand-ui-kit'
+</script>
+
 <template>
   <lb-button variant="filled" color="primary">
     Click Me
   </lb-button>
-  
   <lb-input v-model="text" placeholder="Enter text" />
 </template>
+```
+
+### Method 3: Manual Global Registration
+
+Register specific components globally:
+
+```javascript
+import { createApp } from 'vue'
+import App from './App.vue'
+import { 
+  LbButton, 
+  LbInput, 
+  LbDialog,
+  applyTheme 
+} from 'littlebrand-ui-kit'
+import 'littlebrand-ui-kit/style.css'
+
+// Customize colors
+applyTheme({
+  primary: '#AB4ABA',
+  secondary: '#F76B15',
+  neutral: '#94a3b8',
+  success: '#10b981',
+  warning: '#f59e0b',
+  error: '#ef4444'
+})
+
+// Make applyTheme available globally for runtime theme changes
+window.applyTheme = applyTheme
+
+const app = createApp(App)
+
+// Register only the components you need globally
+app.component('LbButton', LbButton)
+app.component('LbInput', LbInput)
+app.component('LbDialog', LbDialog)
+
+app.mount('#app')
+```
+
+### With SnackbarProvider
+
+To use snackbars, wrap your app with `LbSnackbarProvider`:
+
+```javascript
+import { createApp, h } from 'vue'
+import App from './App.vue'
+import { LbSnackbarProvider, applyTheme } from 'littlebrand-ui-kit'
+import 'littlebrand-ui-kit/style.css'
+
+// Customize colors
+applyTheme({ primary: '#8b5cf6' })
+
+const app = createApp({
+  render() {
+    return h(LbSnackbarProvider, () => h(App))
+  }
+})
+app.mount('#app')
+```
+
+Then use snackbars anywhere:
+
+```vue
+<script setup>
+import { useSnackbar } from 'littlebrand-ui-kit'
+
+const { showSnackbar } = useSnackbar()
+
+const handleClick = () => {
+  showSnackbar({ 
+    message: 'Action completed!',
+    variant: 'success'
+  })
+}
+</script>
 ```
 
 ## 🎨 Color Customization

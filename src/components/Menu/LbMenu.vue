@@ -131,6 +131,7 @@ const emit = defineEmits<{
 const searchInputRef = ref<HTMLInputElement>()
 const menuContainerRef = ref<HTMLElement>()
 const menuItemsRef = ref<HTMLElement>()
+const triggerElement = ref<HTMLElement>()
 
 // State
 const isOpen = ref(false)
@@ -414,6 +415,9 @@ const focusSearchInput = () => {
 }
 
 const handleOpen = () => {
+  // Store the trigger element (currently focused element)
+  triggerElement.value = document.activeElement as HTMLElement
+  
   emit('open')
   
   nextTick(() => {
@@ -432,6 +436,11 @@ const handleClose = () => {
   emit('close')
   searchQuery.value = ''
   highlightedIndex.value = -1
+  
+  // Return focus to trigger
+  nextTick(() => {
+    triggerElement.value?.focus()
+  })
 }
 
 const handleScroll = () => {
@@ -521,10 +530,11 @@ onUnmounted(() => {
     color: var(--lb-text-neutral-contrast-low)
     opacity: base.$opacity-100
 
-  &:focus
-    outline: none
-    border-color: var(--lb-border-primary-normal)
-    box-shadow: 0 0 0 var(--lb-focus-ring-width) var(--lb-focus-ring-color)
+  &:focus-visible
+    outline: base.$focus-ring-width solid transparent
+    outline-offset: base.$focus-ring-offset
+    border-color: var(--lb-border-neutral-active)
+    box-shadow: base.$shadow-sm
 
 .menu-items-container
   position: relative
@@ -554,18 +564,18 @@ onUnmounted(() => {
   box-sizing: border-box
   gap: base.$space-sm // 8px
 
-  &:hover:not(.menu-item-disabled)
+  &:hover:not(.menu-item-disabled):not(.menu-item-selected)
     background: var(--lb-surface-neutral-hover)
 
-  &.menu-item-highlighted:not(.menu-item-disabled)
+  &.menu-item-highlighted:not(.menu-item-disabled):not(.menu-item-selected)
     background: var(--lb-surface-neutral-hover)
 
   &.menu-item-selected
-    background: var(--lb-surface-primary-subtle)
-    color: var(--lb-text-primary-contrast-high)
+    background: var(--lb-surface-neutral-hover)
+    color: var(--lb-text-neutral-contrast-high)
 
     &:hover
-      background: var(--lb-surface-primary-hover)
+      background: var(--lb-surface-neutral-hover)
 
   &.menu-item-disabled
     color: var(--lb-text-neutral-disabled)
@@ -598,7 +608,7 @@ onUnmounted(() => {
   justify-content: center
   width: base.$unit-18  // 18px
   height: base.$unit-18  // 18px
-  color: var(--lb-text-primary-normal)
+  color: var(--lb-text-neutral-contrast-low)
   flex-shrink: 0
 
 .menu-divider
@@ -606,8 +616,4 @@ onUnmounted(() => {
   height: base.$border-sm // 1px
   background: var(--lb-border-neutral-normal)
 
-// Focus management
-.menu-content:focus-within
-  .menu-item.menu-item-highlighted:not(.menu-item-disabled)
-    background: var(--lb-surface-neutral-active)
 </style>

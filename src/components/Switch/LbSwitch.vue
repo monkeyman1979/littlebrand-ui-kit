@@ -142,7 +142,7 @@ defineExpose({
     border: base.$border-md solid var(--lb-border-neutral-normal)
     border-radius: cv.$switch-border-radius
     cursor: pointer
-    transition: all base.$transition
+    transition: background-color base.$transition, border-color base.$transition, opacity base.$transition
     -webkit-appearance: none
     appearance: none
     

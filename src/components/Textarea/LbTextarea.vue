@@ -226,8 +226,11 @@ defineExpose({
     &:hover:not(:disabled):not(:read-only)
       border-color: var(--lb-border-neutral-active)
     
-    &:focus
-      outline: cv.$textarea-border-width solid var(--lb-border-primary-active)
+    &:focus-visible
+      outline: base.$focus-ring-width solid transparent
+      outline-offset: base.$focus-ring-offset
+      border-color: var(--lb-border-neutral-active)
+      box-shadow: base.$shadow-sm
   
   // Invalid state
   &.invalid textarea
@@ -237,8 +240,12 @@ defineExpose({
     &:hover:not(:disabled):not(:read-only)
       border-color: var(--lb-border-error-normal)
     
-    &:focus
-      outline: cv.$textarea-border-width solid var(--lb-border-error-active)
+    // Error border on focus
+    &:focus-visible
+      outline: base.$focus-ring-width solid transparent
+      outline-offset: base.$focus-ring-offset
+      border-color: var(--lb-border-error-active)
+      box-shadow: base.$shadow-sm
   
   // Disabled state
   textarea:disabled
@@ -277,11 +284,5 @@ defineExpose({
   &.resize-both textarea
     resize: both
   
-  // Invalid state for textarea
-  &.invalid textarea
-    border-color: var(--lb-border-error-normal)
-    
-    &:focus
-      border-color: var(--lb-border-error-active)
   
 </style>

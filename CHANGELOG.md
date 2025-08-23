@@ -5,6 +5,46 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.3] - 2025-08-23
+
+### Fixed
+- **Focus State Improvements**
+  - Input, Textarea, and Select components now use `:focus-visible` for keyboard-only focus indication
+  - Fixed layout shifts from focus states by using transparent outlines
+  - Resolved checkbox, switch, and radio focus ring scale animation issues
+  - Fixed global `:focus` rules interfering with accessibility
+
+- **Menu Component Navigation**
+  - Fixed tab navigation issue where focus would jump to top of page after selection
+  - Added proper focus management to return focus to trigger element after menu closes
+  - Fixed selected item background disappearing when hovering over other items
+
+- **Chip Dropdown Accessibility**
+  - Fixed keyboard navigation not working in chip dropdowns
+  - Arrow keys now properly navigate menu items instead of scrolling the page
+  - Enter key now selects items as expected
+  - Replaced plain div elements with LbMenu component for full keyboard support
+
+### Changed
+- **Focus Behavior**
+  - All components now use `:focus-visible` instead of `:focus` for better UX
+  - Border active color tokens changed from color-mode-8 to color-mode-9 for stronger contrast
+  - Added subtle drop shadows (`base.$shadow-sm`) to focus states for better visibility
+
+- **Selected Item Styling**
+  - Menu, Select, and CustomSelect selected items now use neutral surface colors instead of primary
+  - Selected item background changed to `var(--lb-surface-neutral-hover)` for subtle appearance
+  - Checkmark icons in menus changed from primary to neutral text color (`var(--lb-text-neutral-contrast-low)`)
+
+- **Component Architecture**
+  - Chip dropdowns in examples now use LbMenu component instead of LbDropdown with plain divs
+  - Improved CSS specificity for selected states to prevent style conflicts
+
+### Added
+- Focus management system in Menu component to track and restore trigger element focus
+- Proper keyboard event handlers for chip dropdown menus
+- Menu option arrays for chip dropdowns with proper value/label structure
+
 ## [0.2.2] - 2025-08-21
 
 ### Fixed
