@@ -130,8 +130,8 @@ defineOptions({
   position: relative
   display: inline-grid
   grid-auto-flow: column
-  align-items: center
-  gap: base.$space-2xs
+  place-content: center
+  gap: base.$space-xs
   padding: 0 cv.$button-padding-x-medium
   height: cv.$button-height-medium  // Default to medium
   border: none
@@ -340,7 +340,7 @@ defineOptions({
     border-radius: 0
     text-decoration: none
     display: inline-flex
-    align-items: baseline
+    align-items: center
     gap: base.$space-2xs
     &:not(.disabled):not(.loading)
       @include base.hover-supported

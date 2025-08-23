@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.4] - 2025-08-23
+
+### Fixed
+- **Button Component Alignment**
+  - Fixed button content not being properly centered by using `place-content: center` instead of `align-items: center`
+  - Increased gap between button elements from `space-2xs` to `space-xs` for better visual balance
+  - Fixed link variant buttons with icons showing baseline alignment - now uses `align-items: center` for proper vertical centering
+  - Resolved issue where full-width buttons would show text pushed to the left
+
+### Changed
+- **Button Component Layout**
+  - Changed grid layout from `align-items` to `place-content` for improved content centering
+  - Updated link variant alignment from `baseline` to `center` for consistent icon positioning
+
 ## [0.2.3] - 2025-08-23
 
 ### Fixed
