@@ -340,7 +340,7 @@ defineOptions({
     border-radius: 0
     text-decoration: none
     display: inline-flex
-    align-items: baseline
+    align-items: center
     gap: base.$space-2xs
     &:not(.disabled):not(.loading)
       @include base.hover-supported
