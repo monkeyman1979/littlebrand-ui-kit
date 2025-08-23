@@ -648,18 +648,18 @@ defineOptions({
     font-size: cv.$select-font-size-large
     padding: base.$space-md base.$space-lg
   
-  &:hover:not(.select-option-disabled)
+  &:hover:not(.select-option-disabled):not(.select-option-selected)
     background: var(--lb-surface-neutral-hover)
   
-  &.select-option-highlighted:not(.select-option-disabled)
+  &.select-option-highlighted:not(.select-option-disabled):not(.select-option-selected)
     background: var(--lb-surface-neutral-hover)
   
   &.select-option-selected
-    background: var(--lb-surface-primary-subtle)
-    color: var(--lb-text-primary-contrast-high)
+    background: var(--lb-surface-neutral-hover)
+    color: var(--lb-text-neutral-contrast-high)
     
     &:hover
-      background: var(--lb-surface-primary-hover)
+      background: var(--lb-surface-neutral-hover)
   
   &.select-option-disabled
     color: var(--lb-text-neutral-disabled)
@@ -677,7 +677,7 @@ defineOptions({
   align-items: center
   justify-content: center
   margin-left: base.$space-sm
-  color: var(--lb-text-primary-normal)
+  color: var(--lb-text-neutral-contrast-low)
   flex-shrink: 0
 
 .select-divider

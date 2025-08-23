@@ -1377,66 +1377,28 @@
           h4 Chips with Functional Dropdown
           .button-row
             //- Filter chip with dropdown menu
-            LbDropdown
+            LbMenu(v-model="selectedSort" :options="sortMenuOptions")
               template(#trigger)
                 LbChip(variant="filter" :has-dropdown="true") 
-                  | Sort: {{ selectedSort || 'Default' }}
-              
-              template(#content)
-                .dropdown-menu-content
-                  .menu-item(
-                    v-for="option in ['Default', 'Name', 'Date', 'Size']"
-                    :key="option"
-                    @click="selectedSort = option"
-                    :class="{ 'menu-item-selected': selectedSort === option }"
-                  ) {{ option }}
+                  | Sort: {{ selectedSortLabel }}
             
             //- Assist chip with dropdown for more actions
-            LbDropdown
+            LbMenu(v-model="selectedChipAction" :options="chipActionMenuOptions" @select="handleChipActionSelect")
               template(#trigger)
                 LbChip(variant="assist" :has-dropdown="true")
                   template(#leadingIcon)
                     svg(viewBox="0 0 24 24" fill="currentColor" width="18" height="18")
                       path(d="M10.5 6a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm0 6a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm0 6a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z")
                   | More actions
-              
-              template(#content)
-                .dropdown-menu-content
-                  .menu-item(@click="handleChipAction('edit')")
-                    svg(width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="margin-right: 8px")
-                      path(d="M11.013 2.513a1.75 1.75 0 012.475 2.474L6.226 12.25a2.751 2.751 0 01-.892.596l-2.047.848a.75.75 0 01-.98-.98l.848-2.047a2.751 2.751 0 01.596-.892l7.262-7.262z")
-                    | Edit
-                  .menu-item(@click="handleChipAction('duplicate')")
-                    svg(width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="margin-right: 8px")
-                      path(d="M10.5 3A1.5 1.5 0 0112 4.5v7a1.5 1.5 0 01-1.5 1.5h-5A1.5 1.5 0 014 11.5v-7A1.5 1.5 0 015.5 3h5zm1.5 8.5v-7a3 3 0 00-3-3h-5a3 3 0 00-3 3v7a3 3 0 003 3h5a3 3 0 003-3z")
-                    | Duplicate
-                  .menu-item(@click="handleChipAction('share')")
-                    svg(width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="margin-right: 8px")
-                      path(d="M5.75 7.5a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zm2.5 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zm3.25.75a.75.75 0 00-1.5 0v1.5a.75.75 0 001.5 0v-1.5z")
-                    | Share
-                  .menu-divider
-                  .menu-item.menu-item-danger(@click="handleChipAction('delete')")
-                    svg(width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="margin-right: 8px")
-                      path(d="M5 5.5A.5.5 0 015.5 5h5a.5.5 0 01.5.5V6h-6v-.5zM4.5 7.5a.5.5 0 00-.5.5v5a2 2 0 002 2h4a2 2 0 002-2V8a.5.5 0 00-.5-.5h-7z")
-                    | Delete
             
             //- Date picker chip with dropdown
-            LbDropdown
+            LbMenu(v-model="selectedChipDate" :options="dateMenuOptions")
               template(#trigger)
                 LbChip(variant="suggestion" :has-dropdown="true")
                   template(#leadingIcon)
                     svg(viewBox="0 0 24 24" fill="currentColor" width="18" height="18")
                       path(d="M17 3h4a1 1 0 011 1v16a1 1 0 01-1 1H3a1 1 0 01-1-1V4a1 1 0 011-1h4V1h2v2h6V1h2v2zm3 8H4v8h16v-8zm-5-6h-2v1h-2V5H9v1H7V5H4v4h16V5h-3v1h-2V5z")
-                  | {{ selectedChipDate || 'Pick date' }}
-              
-              template(#content)
-                .dropdown-menu-content
-                  .menu-item(@click="selectedChipDate = 'Today'") Today
-                  .menu-item(@click="selectedChipDate = 'Tomorrow'") Tomorrow
-                  .menu-item(@click="selectedChipDate = 'This week'") This week
-                  .menu-item(@click="selectedChipDate = 'This month'") This month
-                  .menu-divider
-                  .menu-item(@click="selectedChipDate = 'Custom range'") Custom range...
+                  | {{ selectedChipDateLabel }}
           .demo-note Active filters: {{ activeFilters }}
         
         .demo-group
@@ -3149,6 +3111,43 @@ const activeFilters = computed(() => {
 const selectedSort = ref('')
 const selectedChipDate = ref('')
 
+// Menu options for chip dropdowns
+const sortMenuOptions = [
+  { value: 'default', label: 'Default' },
+  { value: 'name', label: 'Name' },
+  { value: 'date', label: 'Date' },
+  { value: 'size', label: 'Size' }
+]
+
+const chipActionMenuOptions = [
+  { value: 'edit', label: 'Edit' },
+  { value: 'duplicate', label: 'Duplicate' },
+  { value: 'share', label: 'Share' },
+  { type: 'divider' },
+  { value: 'delete', label: 'Delete' }
+]
+
+const dateMenuOptions = [
+  { value: 'today', label: 'Today' },
+  { value: 'tomorrow', label: 'Tomorrow' },
+  { value: 'this-week', label: 'This week' },
+  { value: 'this-month', label: 'This month' },
+  { type: 'divider' },
+  { value: 'custom', label: 'Custom range...' }
+]
+
+const selectedSortLabel = computed(() => {
+  const option = sortMenuOptions.find(o => o.value === selectedSort.value)
+  return option ? option.label : 'Default'
+})
+
+const selectedChipDateLabel = computed(() => {
+  const option = dateMenuOptions.find(o => o.value === selectedChipDate.value)
+  return option ? option.label : 'Pick date'
+})
+
+const selectedChipAction = ref('')
+
 const handleChipClick = () => {
   console.log('Chip clicked')
 }
@@ -3157,9 +3156,9 @@ const handleChipDelete = () => {
   console.log('Chip deleted')
 }
 
-const handleChipAction = (action) => {
+const handleChipActionSelect = (action) => {
   console.log('Chip action:', action)
-  // You could handle different actions here
+  // Handle different actions here
   switch(action) {
     case 'edit':
       console.log('Edit action')

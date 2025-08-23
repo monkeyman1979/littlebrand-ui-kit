@@ -713,18 +713,18 @@ defineExpose({
     min-height: cv.$select-height-large  // 48px
     padding: 0 base.$space-md
   
-  &:hover:not(.select-option-disabled)
+  &:hover:not(.select-option-disabled):not(.select-option-selected)
     background: var(--lb-surface-neutral-hover)
   
-  &.select-option-highlighted:not(.select-option-disabled)
+  &.select-option-highlighted:not(.select-option-disabled):not(.select-option-selected)
     background: var(--lb-surface-neutral-hover)
   
   &.select-option-selected
-    background: var(--lb-surface-primary-subtle)
-    color: var(--lb-text-primary-contrast-high)
+    background: var(--lb-surface-neutral-hover)
+    color: var(--lb-text-neutral-contrast-high)
     
     &:hover
-      background: var(--lb-surface-primary-hover)
+      background: var(--lb-surface-neutral-hover)
   
   &.select-option-disabled
     color: var(--lb-text-neutral-disabled)
@@ -751,6 +751,6 @@ defineExpose({
   justify-content: center
   width: base.$unit-18  // 18px
   height: base.$unit-18  // 18px
-  color: var(--lb-text-primary-normal)
+  color: var(--lb-text-neutral-contrast-low)
   flex-shrink: 0
 </style>
