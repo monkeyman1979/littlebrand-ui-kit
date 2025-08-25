@@ -7,10 +7,12 @@ A modern Vue 3 UI component library with a powerful color generation system. Bui
 - 🎨 **Smart Color System** - Provide one color, get 68+ design tokens automatically
 - 🚀 **Runtime Theming** - Change colors instantly without rebuilding
 - 📦 **20+ Components** - Buttons, forms, dialogs, navigation, and more
-- 🌙 **Dark Mode** - Automatic dark mode with optimized colors
+- 🌙 **Dark Mode** - Opt-in dark mode with optimized colors
 - 🎯 **Zero Config** - Works out of the box with beautiful defaults
 - 🌳 **Tree-Shakeable** - Only bundle what you use
 - 💅 **SASS + Pug** - Clean, maintainable component code
+- 📝 **200+ CSS Variables** - Complete control over typography, spacing, and colors
+- 🔤 **Unified Typography** - Control all headings, body, or labels with single variables
 
 ## 📦 Installation
 
@@ -370,11 +372,18 @@ MIT © LittleBrand
 
 Contributions are welcome! Please read our contributing guidelines before submitting PRs.
 
+## 📚 Documentation
+
+- **[Customization Guide](./CUSTOMIZATION.md)** - Complete customization documentation
+- **[CSS Variables Reference](./CSS_VARIABLES_REFERENCE.md)** - All 200+ customizable variables
+- **[Typography Guide](./TYPOGRAPHY_CUSTOMIZATION_GUIDE.md)** - Font setup and typography
+- **[Override Template](./littlebrand-overrides-template.sass)** - Ready-to-use starter file
+
 ## 🔗 Links
 
-- [Documentation](./CUSTOMIZATION.md)
 - [Examples](./examples/)
 - [GitHub Repository](https://github.com/monkeyman1979/littlebrand-ui-kit)
+- [NPM Package](https://www.npmjs.com/package/littlebrand-ui-kit)
 
 ---
 
