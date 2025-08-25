@@ -1,0 +1,465 @@
+// ================================================================
+// LittleBrand UI Kit - Override Template
+// ================================================================
+// 
+// This template contains ALL available CSS variables from the
+// LittleBrand UI Kit. Uncomment and modify only the variables
+// you want to customize.
+//
+// USAGE:
+// 1. Copy this file to your project
+// 2. Rename it (e.g., _littlebrand-overrides.sass)
+// 3. Import it AFTER the LittleBrand UI Kit styles
+// 4. Uncomment and modify the variables you want to change
+//
+// ================================================================
+
+// ================================================================
+// FONT LOADING
+// ================================================================
+
+// Option 1: Google Fonts
+// @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap')
+
+// Option 2: Self-hosted fonts
+// @font-face
+//   font-family: 'CustomFont'
+//   src: url('/assets/fonts/CustomFont.woff2') format('woff2')
+//   font-weight: 400
+//   font-display: swap
+
+// Option 3: Variable fonts
+// @font-face
+//   font-family: 'VariableFont'
+//   src: url('/assets/fonts/VariableFont.woff2') format('woff2-variations')
+//   font-weight: 100 900
+//   font-display: swap
+
+// ================================================================
+// CSS VARIABLE OVERRIDES
+// ================================================================
+
+:root
+  // ============================================================
+  // TYPOGRAPHY
+  // ============================================================
+  
+  // Font Families
+  // --lb-font-heading: 'Your Font', sans-serif
+  // --lb-font-body: 'Your Font', sans-serif
+  // --lb-font-mono: 'Your Mono Font', monospace
+  
+  // Unified Font Weights (recommended - controls all at once)
+  // --lb-font-weight-heading: 600    // All headings
+  // --lb-font-weight-body: 400       // All body text
+  // --lb-font-weight-label: 500      // All labels/UI text
+  
+  // Individual Weight Values (for fine control)
+  // --lb-font-weight-normal: 400
+  // --lb-font-weight-medium: 500
+  // --lb-font-weight-semibold: 600
+  // --lb-font-weight-bold: 700
+  
+  // Line Heights
+  // --lb-line-height-tight: 1.1
+  // --lb-line-height-compact: 1.25
+  // --lb-line-height-normal: 1.5
+  // --lb-line-height-relaxed: 1.75
+  
+  // Body Font Sizes
+  // --lb-font-size-body-small: 0.875rem
+  // --lb-font-size-body-base: 1rem
+  // --lb-font-size-body-large: 1.125rem
+  
+  // Label/UI Font Sizes
+  // --lb-font-size-label-xsmall: 0.625rem
+  // --lb-font-size-label-small: 0.75rem
+  // --lb-font-size-label-base: 0.875rem
+  // --lb-font-size-label-large: 1rem
+  
+  // Display Sizes (for hero text)
+  // --lb-display-1: clamp(3rem, 5vw + 1rem, 5rem)
+  // --lb-display-2: clamp(2.5rem, 4vw + 1rem, 4rem)
+  
+  // Letter Spacing
+  // --lb-letter-spacing-tighter: -0.025em
+  // --lb-letter-spacing-tight: -0.01em
+  // --lb-letter-spacing-normal: normal
+  // --lb-letter-spacing-wide: 0.025em
+  
+  // ============================================================
+  // COLOR TOKENS - PRIMARY
+  // ============================================================
+  
+  // Primary Borders
+  // --lb-border-primary-line: #color
+  // --lb-border-primary-normal: #color
+  // --lb-border-primary-active: #color
+  // --lb-border-primary-focus: #color
+  // --lb-border-primary-disabled: #color
+  
+  // Primary Fills
+  // --lb-fill-primary-normal: #color
+  // --lb-fill-primary-hover: #color
+  // --lb-fill-primary-active: #color
+  // --lb-fill-primary-focus: #color
+  // --lb-fill-primary-disabled: #color
+  
+  // Primary Text
+  // --lb-text-primary-normal: #color
+  // --lb-text-primary-contrast-high: #color
+  // --lb-text-primary-contrast-low: #color
+  // --lb-text-primary-disabled: #color
+  
+  // Primary Surfaces
+  // --lb-surface-primary-normal: #color
+  // --lb-surface-primary-hover: #color
+  // --lb-surface-primary-active: #color
+  // --lb-surface-primary-subtle: #color
+  // --lb-surface-primary-raised: #color
+  
+  // Text on Primary
+  // --lb-text-on-primary: white
+  // --lb-text-on-primary-hover: white
+  // --lb-text-on-primary-active: white
+  
+  // ============================================================
+  // COLOR TOKENS - SECONDARY
+  // ============================================================
+  
+  // Secondary Borders
+  // --lb-border-secondary-line: #color
+  // --lb-border-secondary-normal: #color
+  // --lb-border-secondary-active: #color
+  // --lb-border-secondary-focus: #color
+  // --lb-border-secondary-disabled: #color
+  
+  // Secondary Fills
+  // --lb-fill-secondary-normal: #color
+  // --lb-fill-secondary-hover: #color
+  // --lb-fill-secondary-active: #color
+  // --lb-fill-secondary-focus: #color
+  // --lb-fill-secondary-disabled: #color
+  
+  // Secondary Text
+  // --lb-text-secondary-normal: #color
+  // --lb-text-secondary-contrast-high: #color
+  // --lb-text-secondary-contrast-low: #color
+  // --lb-text-secondary-disabled: #color
+  
+  // Secondary Surfaces
+  // --lb-surface-secondary-normal: #color
+  // --lb-surface-secondary-hover: #color
+  // --lb-surface-secondary-active: #color
+  // --lb-surface-secondary-subtle: #color
+  // --lb-surface-secondary-raised: #color
+  
+  // Text on Secondary
+  // --lb-text-on-secondary: white
+  // --lb-text-on-secondary-hover: white
+  // --lb-text-on-secondary-active: white
+  
+  // ============================================================
+  // COLOR TOKENS - TERTIARY
+  // ============================================================
+  
+  // Tertiary Borders
+  // --lb-border-tertiary-line: #color
+  // --lb-border-tertiary-normal: #color
+  // --lb-border-tertiary-active: #color
+  // --lb-border-tertiary-focus: #color
+  // --lb-border-tertiary-disabled: #color
+  
+  // Tertiary Fills
+  // --lb-fill-tertiary-normal: #color
+  // --lb-fill-tertiary-hover: #color
+  // --lb-fill-tertiary-active: #color
+  // --lb-fill-tertiary-focus: #color
+  // --lb-fill-tertiary-disabled: #color
+  
+  // Tertiary Text
+  // --lb-text-tertiary-normal: #color
+  // --lb-text-tertiary-contrast-high: #color
+  // --lb-text-tertiary-contrast-low: #color
+  // --lb-text-tertiary-disabled: #color
+  
+  // Tertiary Surfaces
+  // --lb-surface-tertiary-normal: #color
+  // --lb-surface-tertiary-hover: #color
+  // --lb-surface-tertiary-active: #color
+  // --lb-surface-tertiary-subtle: #color
+  // --lb-surface-tertiary-raised: #color
+  
+  // Text on Tertiary
+  // --lb-text-on-tertiary: white
+  // --lb-text-on-tertiary-hover: white
+  // --lb-text-on-tertiary-active: white
+  
+  // ============================================================
+  // COLOR TOKENS - NEUTRAL
+  // ============================================================
+  
+  // Neutral Borders
+  // --lb-border-neutral-line: #color
+  // --lb-border-neutral-normal: #color
+  // --lb-border-neutral-active: #color
+  // --lb-border-neutral-focus: #color
+  // --lb-border-neutral-disabled: #color
+  
+  // Neutral Fills
+  // --lb-fill-neutral-normal: #color
+  // --lb-fill-neutral-hover: #color
+  // --lb-fill-neutral-active: #color
+  // --lb-fill-neutral-focus: #color
+  // --lb-fill-neutral-disabled: #color
+  
+  // Neutral Text
+  // --lb-text-neutral-normal: #color
+  // --lb-text-neutral-contrast-high: #color
+  // --lb-text-neutral-contrast-low: #color
+  // --lb-text-neutral-disabled: #color
+  
+  // Neutral Surfaces
+  // --lb-surface-neutral-normal: #color
+  // --lb-surface-neutral-hover: #color
+  // --lb-surface-neutral-active: #color
+  // --lb-surface-neutral-subtle: #color
+  // --lb-surface-neutral-raised: #color
+  // --lb-surface-neutral-disabled: #color
+  
+  // Text on Neutral
+  // --lb-text-on-neutral: white
+  // --lb-text-on-neutral-hover: white
+  // --lb-text-on-neutral-active: white
+  
+  // ============================================================
+  // COLOR TOKENS - SUCCESS
+  // ============================================================
+  
+  // Success Borders
+  // --lb-border-success-line: #color
+  // --lb-border-success-normal: #color
+  // --lb-border-success-active: #color
+  // --lb-border-success-focus: #color
+  // --lb-border-success-disabled: #color
+  
+  // Success Fills
+  // --lb-fill-success-normal: #color
+  // --lb-fill-success-hover: #color
+  // --lb-fill-success-active: #color
+  // --lb-fill-success-focus: #color
+  // --lb-fill-success-disabled: #color
+  
+  // Success Text
+  // --lb-text-success-normal: #color
+  // --lb-text-success-contrast-high: #color
+  // --lb-text-success-contrast-low: #color
+  // --lb-text-success-disabled: #color
+  
+  // Success Surfaces
+  // --lb-surface-success-normal: #color
+  // --lb-surface-success-hover: #color
+  // --lb-surface-success-active: #color
+  // --lb-surface-success-subtle: #color
+  // --lb-surface-success-raised: #color
+  
+  // Text on Success
+  // --lb-text-on-success: white
+  // --lb-text-on-success-hover: white
+  // --lb-text-on-success-active: white
+  
+  // ============================================================
+  // COLOR TOKENS - WARNING
+  // ============================================================
+  
+  // Warning Borders
+  // --lb-border-warning-line: #color
+  // --lb-border-warning-normal: #color
+  // --lb-border-warning-active: #color
+  // --lb-border-warning-focus: #color
+  // --lb-border-warning-disabled: #color
+  
+  // Warning Fills
+  // --lb-fill-warning-normal: #color
+  // --lb-fill-warning-hover: #color
+  // --lb-fill-warning-active: #color
+  // --lb-fill-warning-focus: #color
+  // --lb-fill-warning-disabled: #color
+  
+  // Warning Text
+  // --lb-text-warning-normal: #color
+  // --lb-text-warning-contrast-high: #color
+  // --lb-text-warning-contrast-low: #color
+  // --lb-text-warning-disabled: #color
+  
+  // Warning Surfaces
+  // --lb-surface-warning-normal: #color
+  // --lb-surface-warning-hover: #color
+  // --lb-surface-warning-active: #color
+  // --lb-surface-warning-subtle: #color
+  // --lb-surface-warning-raised: #color
+  
+  // Text on Warning (often dark for contrast)
+  // --lb-text-on-warning: #333
+  // --lb-text-on-warning-hover: #333
+  // --lb-text-on-warning-active: #333
+  
+  // ============================================================
+  // COLOR TOKENS - ERROR
+  // ============================================================
+  
+  // Error Borders
+  // --lb-border-error-line: #color
+  // --lb-border-error-normal: #color
+  // --lb-border-error-active: #color
+  // --lb-border-error-focus: #color
+  // --lb-border-error-disabled: #color
+  
+  // Error Fills
+  // --lb-fill-error-normal: #color
+  // --lb-fill-error-hover: #color
+  // --lb-fill-error-active: #color
+  // --lb-fill-error-focus: #color
+  // --lb-fill-error-disabled: #color
+  
+  // Error Text
+  // --lb-text-error-normal: #color
+  // --lb-text-error-contrast-high: #color
+  // --lb-text-error-contrast-low: #color
+  // --lb-text-error-disabled: #color
+  
+  // Error Surfaces
+  // --lb-surface-error-normal: #color
+  // --lb-surface-error-hover: #color
+  // --lb-surface-error-active: #color
+  // --lb-surface-error-subtle: #color
+  // --lb-surface-error-raised: #color
+  
+  // Text on Error
+  // --lb-text-on-error: white
+  // --lb-text-on-error-hover: white
+  // --lb-text-on-error-active: white
+  
+  // ============================================================
+  // COLOR TOKENS - INFO
+  // ============================================================
+  
+  // Info Borders
+  // --lb-border-info-line: #color
+  // --lb-border-info-normal: #color
+  // --lb-border-info-active: #color
+  // --lb-border-info-focus: #color
+  // --lb-border-info-disabled: #color
+  
+  // Info Fills
+  // --lb-fill-info-normal: #color
+  // --lb-fill-info-hover: #color
+  // --lb-fill-info-active: #color
+  // --lb-fill-info-focus: #color
+  // --lb-fill-info-disabled: #color
+  
+  // Info Text
+  // --lb-text-info-normal: #color
+  // --lb-text-info-contrast-high: #color
+  // --lb-text-info-contrast-low: #color
+  // --lb-text-info-disabled: #color
+  
+  // Info Surfaces
+  // --lb-surface-info-normal: #color
+  // --lb-surface-info-hover: #color
+  // --lb-surface-info-active: #color
+  // --lb-surface-info-subtle: #color
+  // --lb-surface-info-raised: #color
+  
+  // Text on Info
+  // --lb-text-on-info: white
+  // --lb-text-on-info-hover: white
+  // --lb-text-on-info-active: white
+  
+  // ============================================================
+  // SPACING & SIZING
+  // ============================================================
+  
+  // Spacing Scale
+  // --lb-space-2xs: 2px
+  // --lb-space-xs: 4px
+  // --lb-space-sm: 8px
+  // --lb-space-md: 12px
+  // --lb-space-lg: 16px
+  // --lb-space-xl: 20px
+  // --lb-space-2xl: 24px
+  // --lb-space-3xl: 32px
+  // --lb-space-4xl: 40px
+  // --lb-space-5xl: 48px
+  // --lb-space-6xl: 56px
+  // --lb-space-7xl: 64px
+  // --lb-space-8xl: 72px
+  // --lb-space-9xl: 96px
+  // --lb-space-10xl: 120px
+  
+  // Border Radius
+  // --lb-radius-xs: 4px
+  // --lb-radius-sm: 8px
+  // --lb-radius-md: 10px
+  // --lb-radius-lg: 12px
+  // --lb-radius-xl: 16px
+  // --lb-radius-2xl: 24px
+  // --lb-radius-3xl: 32px
+  // --lb-radius-4xl: 40px
+  // --lb-radius-5xl: 48px
+  // --lb-radius-6xl: 56px
+  // --lb-radius-7xl: 64px
+  // --lb-radius-8xl: 72px
+  // --lb-radius-9xl: 80px
+  // --lb-radius-full: 9999px
+  
+  // Icon Sizes
+  // --lb-icon-size-sm: 18px
+  // --lb-icon-size-md: 20px
+  // --lb-icon-size-lg: 24px
+  
+  // Border Widths
+  // --lb-border-sm: 1px
+  // --lb-border-md: 2px
+  
+  // Input Heights
+  // --lb-input-height-medium: 40px
+  // --lb-input-height-large: 44px
+  
+  // ============================================================
+  // BACKGROUND & SPECIAL
+  // ============================================================
+  
+  // Background Colors
+  // --lb-background-page: #color
+  // --lb-background-surface: #color
+  // --lb-background-overlay: rgba(0, 0, 0, 0.5)
+  
+  // Special Purpose
+  // --lb-focus-ring-color: #color
+  // --lb-divider-color: #color
+
+// ================================================================
+// DARK MODE OVERRIDES (Optional)
+// ================================================================
+// 
+// If you need different values for dark mode, add them here:
+//
+// [data-theme="dark"], .dark
+//   // Add dark mode specific overrides
+//   // --lb-fill-primary-normal: #different-color
+//   // --lb-background-page: #1a1a1a
+
+// ================================================================
+// COMPONENT-SPECIFIC OVERRIDES (Optional)
+// ================================================================
+//
+// You can also scope overrides to specific sections:
+//
+// .marketing-section
+//   --lb-font-heading: 'Display Font', serif
+//   --lb-font-weight-heading: 900
+//
+// .documentation
+//   --lb-font-body: 'Reading Font', serif
+//   --lb-line-height-normal: 1.7
