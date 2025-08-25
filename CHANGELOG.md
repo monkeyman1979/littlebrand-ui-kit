@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.5] - 2024-01-25
+
+### Added
+- **Typography System Improvements**
+  - Added unified font weight CSS variables for easier customization:
+    - `--lb-font-weight-heading` - Controls all heading weights (h1-h6) at once
+    - `--lb-font-weight-body` - Controls all body text weight
+    - `--lb-font-weight-label` - Controls all label/UI text weight
+  - Typography CSS variables now properly defined at `:root` level for global access
+
+- **Comprehensive Documentation**
+  - Created `CSS_VARIABLES_REFERENCE.md` - Complete reference of all 200+ CSS variables
+  - Created `TYPOGRAPHY_CUSTOMIZATION_GUIDE.md` - Detailed guide for font customization
+  - Created `littlebrand-overrides-template.sass` - Ready-to-use template with all variables
+  - Created `littlebrand.css.d.ts` - TypeScript definitions for IDE IntelliSense support
+  - Updated `CUSTOMIZATION.md` - Now serves as main hub with improved structure
+  - Added Dark Mode documentation section clarifying opt-in behavior
+
+### Changed
+- **Typography Implementation**
+  - All headings (h1-h6) now use unified `--lb-font-weight-heading` variable
+  - Removed inconsistent font weights across heading levels
+  - Removed SASS variable fallbacks from typography styles (CSS variables are now properly defined)
+  - Body text and labels now use their respective unified weight variables
+
+### Fixed
+- **Typography Customization**
+  - Fixed CSS variables not being accessible for runtime customization
+  - Fixed need for override files to redefine heading styles
+  - Typography variables now properly cascade without requiring `!important`
+
 ## [0.2.4] - 2025-08-23
 
 ### Fixed
