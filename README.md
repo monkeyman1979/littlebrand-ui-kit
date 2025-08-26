@@ -331,7 +331,7 @@ applyTheme({
   --lb-font-size-sm: 13px;
   --lb-font-size-base: 15px;
   --lb-font-size-lg: 18px;
-  --lb-font-weight-normal: 400;
+  --lb-font-weight-regular: 400;
   --lb-font-weight-medium: 500;
   --lb-font-weight-bold: 700;
   
