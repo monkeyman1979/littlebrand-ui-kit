@@ -30,14 +30,24 @@ declare module 'csstype' {
     /** Unified font weight for labels and UI text (default: 500) */
     '--lb-font-weight-label'?: number | string;
     
-    /** Normal font weight (400) */
-    '--lb-font-weight-normal'?: number | string;
+    /** Thin font weight (100) */
+    '--lb-font-weight-thin'?: number | string;
+    /** Extra light font weight (200) */
+    '--lb-font-weight-extralight'?: number | string;
+    /** Light font weight (300) */
+    '--lb-font-weight-light'?: number | string;
+    /** Regular font weight (400) */
+    '--lb-font-weight-regular'?: number | string;
     /** Medium font weight (500) */
     '--lb-font-weight-medium'?: number | string;
     /** Semibold font weight (600) */
     '--lb-font-weight-semibold'?: number | string;
     /** Bold font weight (700) */
     '--lb-font-weight-bold'?: number | string;
+    /** Extra bold font weight (800) */
+    '--lb-font-weight-extrabold'?: number | string;
+    /** Black font weight (900) */
+    '--lb-font-weight-black'?: number | string;
     
     /** Tight line height (1.1) */
     '--lb-line-height-tight'?: number | string;

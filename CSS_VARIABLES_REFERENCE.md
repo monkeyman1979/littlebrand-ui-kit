@@ -328,11 +328,16 @@ Text colors for use on filled backgrounds (ensures proper contrast).
 ### Font Weights
 
 ```css
-/* Individual weight values */
---lb-font-weight-normal      /* 400 */
+/* Full font weight scale */
+--lb-font-weight-thin        /* 100 */
+--lb-font-weight-extralight  /* 200 */
+--lb-font-weight-light       /* 300 */
+--lb-font-weight-regular     /* 400 */
 --lb-font-weight-medium      /* 500 */
 --lb-font-weight-semibold    /* 600 */
 --lb-font-weight-bold        /* 700 */
+--lb-font-weight-extrabold   /* 800 */
+--lb-font-weight-black       /* 900 */
 
 /* Unified weights for easy customization */
 --lb-font-weight-heading     /* Weight for all headings */
