@@ -195,7 +195,7 @@ defineOptions({
 .snackbar-message
   flex: 1 1 auto
   font-size: typography.$font-size-label-base
-  font-weight: typography.$font-weight-normal
+  font-weight: typography.$font-weight-regular
   line-height: typography.$line-height-normal
   color: var(--lb-text-neutral-contrast-high)
   word-wrap: break-word

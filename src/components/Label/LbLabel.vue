@@ -52,7 +52,7 @@ label
   &.required > span::after
     content: ' *'
     color: var(--lb-text-error-normal)
-    font-weight: typography.$font-weight-normal
+    font-weight: typography.$font-weight-regular
   
   // Icon
   .icon
@@ -69,7 +69,7 @@ label
   
   // Hint text (inline)
   .hint
-    font-weight: typography.$font-weight-normal
+    font-weight: typography.$font-weight-regular
     color: var(--lb-text-neutral-contrast-low)
     margin-left: base.$space-xs
     font-size: typography.$font-size-label-small

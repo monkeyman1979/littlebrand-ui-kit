@@ -784,7 +784,7 @@ defineOptions({
   box-sizing: border-box  // Ensure box-sizing is set
   border-radius: base.$radius-md
   font-size: typography.$font-size-body-base // Medium font by default
-  font-weight: typography.$font-weight-normal
+  font-weight: typography.$font-weight-regular
   color: var(--lb-text-neutral-contrast-high)
   cursor: pointer
   transition: all base.$transition
