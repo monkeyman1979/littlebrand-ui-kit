@@ -142,7 +142,7 @@ defineOptions({
   border: base.$border-sm solid var(--lb-border-neutral-line)
   border-radius: cv.$chip-border-radius
   font-family: typography.$font-body
-  font-weight: typography.$font-weight-medium
+  font-weight: var(--lb-font-weight-label)
   line-height: typography.$line-height-compact
   letter-spacing: typography.$letter-spacing-tight
   cursor: pointer
@@ -153,6 +153,7 @@ defineOptions({
   outline: none
   background-color: var(--lb-background-surface)
   color: var(--lb-text-neutral-contrast-high)
+  align-self: flex-start  // Prevent stretching in flex containers
   
   &:focus-visible
     outline: base.$focus-ring-width solid var(--lb-focus-ring-color)

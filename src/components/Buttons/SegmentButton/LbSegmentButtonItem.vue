@@ -152,7 +152,7 @@ defineOptions({
   transition: all base.$transition
   color: var(--lb-text-neutral-contrast-low)
   font-size: typography.$font-size-label-base
-  font-weight: typography.$font-weight-medium
+  font-weight: var(--lb-font-weight-label)
   line-height: typography.$line-height-compact
   outline: none
   position: relative

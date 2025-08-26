@@ -211,7 +211,7 @@ defineOptions({
       .progress-text
         transform: rotate(90deg)
         font-family: var(--lb-font-body)
-        font-weight: typography.$font-weight-medium
+        font-weight: var(--lb-font-weight-label)
         fill: var(--lb-text-neutral-contrast-high)
         font-size: typography.$font-size-label-small
     

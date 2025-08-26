@@ -613,7 +613,7 @@ defineOptions({
   padding: 0 base.$space-sm
   background: var(--lb-background-surface)
   border: cv.$select-border-width solid var(--lb-border-neutral-normal)
-  border-radius: cv.$select-border-radius
+  border-radius: base.$radius-sm  // 8px for search inputs inside dropdowns
   color: var(--lb-text-neutral-contrast-high)
   transition: border-color base.$transition
   box-sizing: border-box

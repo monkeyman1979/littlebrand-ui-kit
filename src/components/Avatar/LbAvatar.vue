@@ -204,7 +204,7 @@ defineOptions({
     display: flex
     align-items: center
     justify-content: center
-    font-weight: typography.$font-weight-medium
+    font-weight: var(--lb-font-weight-label)
     transition: opacity base.$transition
     opacity: base.$opacity-0
     border-radius: inherit

@@ -751,7 +751,7 @@ defineOptions({
   min-width: base.$unit-40  // 40px to match day cells
   height: base.$unit-32  // 32px height for weekday labels
   font-size: typography.$font-size-label-small
-  font-weight: typography.$font-weight-medium
+  font-weight: var(--lb-font-weight-label)
   color: var(--lb-text-neutral-contrast-low)
   text-align: center
   
@@ -784,7 +784,7 @@ defineOptions({
   box-sizing: border-box  // Ensure box-sizing is set
   border-radius: base.$radius-md
   font-size: typography.$font-size-body-base // Medium font by default
-  font-weight: typography.$font-weight-regular
+  font-weight: var(--lb-font-weight-body)
   color: var(--lb-text-neutral-contrast-high)
   cursor: pointer
   transition: all base.$transition
@@ -827,7 +827,7 @@ defineOptions({
   // Today's date
   &.today
     color: var(--lb-text-primary-contrast-high)
-    font-weight: typography.$font-weight-medium
+    font-weight: var(--lb-font-weight-label)
     border: base.$border-sm solid var(--lb-border-primary-normal)
     
     &:hover:not(:disabled)
@@ -842,7 +842,7 @@ defineOptions({
   &.selected
     background: var(--lb-fill-primary-normal)
     color: var(--lb-text-on-primary)
-    font-weight: typography.$font-weight-medium
+    font-weight: var(--lb-font-weight-label)
     
     &:hover:not(:disabled)
       background: var(--lb-fill-primary-hover)
