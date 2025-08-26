@@ -64,6 +64,19 @@ The UI kit provides these main typography variables that you can override:
 }
 ```
 
+## Font Weight Runtime Override Support
+
+As of v0.2.8, all components now use CSS custom properties for font weights, enabling runtime customization:
+
+- Components properly respond to dynamic font weight changes via CSS variables
+- You can override font weights at runtime using JavaScript:
+  ```javascript
+  // Dynamically change font weights
+  document.documentElement.style.setProperty('--lb-font-weight-label', '700');
+  document.documentElement.style.setProperty('--lb-font-weight-body', '300');
+  ```
+- All 18+ components now use `var(--lb-font-weight-*)` instead of hardcoded SASS variables
+
 ## Best Practices for Customization
 
 ### 1. Create an Override File

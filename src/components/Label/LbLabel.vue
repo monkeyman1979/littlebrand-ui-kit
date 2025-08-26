@@ -42,17 +42,18 @@ label
   gap: base.$space-xs
   font-family: typography.$font-body
   font-size: typography.$font-size-label-base // 14px (0.875rem)
-  font-weight: typography.$font-weight-medium
+  font-weight: var(--lb-font-weight-label)
   line-height: typography.$line-height-normal
   color: var(--lb-text-neutral-contrast-high)
   cursor: pointer
   letter-spacing: typography.$letter-spacing-tight
+  align-self: flex-start  // Prevent stretching in flex containers
   
   // Required indicator
   &.required > span::after
     content: ' *'
     color: var(--lb-text-error-normal)
-    font-weight: typography.$font-weight-regular
+    font-weight: var(--lb-font-weight-body)
   
   // Icon
   .icon
@@ -69,7 +70,7 @@ label
   
   // Hint text (inline)
   .hint
-    font-weight: typography.$font-weight-regular
+    font-weight: var(--lb-font-weight-body)
     color: var(--lb-text-neutral-contrast-low)
     margin-left: base.$space-xs
     font-size: typography.$font-size-label-small

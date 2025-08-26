@@ -345,6 +345,8 @@ Text colors for use on filled backgrounds (ensures proper contrast).
 --lb-font-weight-label       /* Weight for labels/UI text */
 ```
 
+> **Note:** As of v0.2.8, all components use CSS custom properties for font weights, enabling runtime customization via JavaScript or CSS overrides.
+
 ### Font Sizes
 
 ```css

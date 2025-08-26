@@ -38,6 +38,115 @@
         p.label.label-small Small Label (12px)
         p.label.label-xsmall XSmall Label (10px)
       
+    section.font-weight-section
+      h2 Font Weight Testing
+      p.body-large Adjust font weights dynamically to see how they affect components
+      
+      .font-weight-controls
+        .control-group
+          h3 Font Weight Controls
+          
+          .weight-control
+            label
+              | Label Weight (Buttons, Form Labels, etc.)
+              span.weight-value {{ fontWeightLabel }}
+            input(
+              type="range" 
+              v-model.number="fontWeightLabel" 
+              @input="updateFontWeights"
+              min="100" 
+              max="900" 
+              step="100"
+            )
+            .weight-labels
+              span.weight-label(data-weight="100") Thin
+              span.weight-label(data-weight="300") Light
+              span.weight-label(data-weight="400") Regular
+              span.weight-label(data-weight="500") Medium
+              span.weight-label(data-weight="600") Semibold
+              span.weight-label(data-weight="700") Bold
+              span.weight-label(data-weight="900") Black
+          
+          .weight-control
+            label
+              | Body Weight (Paragraphs, Content Text)
+              span.weight-value {{ fontWeightBody }}
+            input(
+              type="range" 
+              v-model.number="fontWeightBody" 
+              @input="updateFontWeights"
+              min="100" 
+              max="900" 
+              step="100"
+            )
+            .weight-labels
+              span.weight-label(data-weight="100") Thin
+              span.weight-label(data-weight="300") Light
+              span.weight-label(data-weight="400") Regular
+              span.weight-label(data-weight="500") Medium
+              span.weight-label(data-weight="600") Semibold
+              span.weight-label(data-weight="700") Bold
+              span.weight-label(data-weight="900") Black
+          
+          .weight-control
+            label
+              | Heading Weight (H1-H6)
+              span.weight-value {{ fontWeightHeading }}
+            input(
+              type="range" 
+              v-model.number="fontWeightHeading" 
+              @input="updateFontWeights"
+              min="100" 
+              max="900" 
+              step="100"
+            )
+            .weight-labels
+              span.weight-label(data-weight="100") Thin
+              span.weight-label(data-weight="300") Light
+              span.weight-label(data-weight="400") Regular
+              span.weight-label(data-weight="500") Medium
+              span.weight-label(data-weight="600") Semibold
+              span.weight-label(data-weight="700") Bold
+              span.weight-label(data-weight="900") Black
+          
+          .control-buttons
+            LbButton(@click="resetFontWeights" variant="outline" color="neutral") Reset to Defaults
+            LbButton(@click="applyBoldPreset" variant="outline" color="primary") Apply Bold Preset
+            LbButton(@click="applyLightPreset" variant="outline" color="secondary") Apply Light Preset
+      
+      .font-weight-preview
+        h3 Live Preview
+        
+        .preview-grid
+          .preview-group
+            h4 Components with Label Weight
+            .preview-items
+              LbButton(variant="filled" color="primary") Primary Button
+              LbButton(variant="outline" color="secondary") Secondary Button
+              LbButton(variant="ghost" color="neutral") Ghost Button
+              LbChip(color="primary" variant="filled" removable) Chip Component
+              LbLabel Label Component
+              .form-preview
+                LbCheckbox(v-model="fontTestCheckbox") Checkbox with Label
+                LbRadio(v-model="fontTestRadio" value="option1") Radio with Label
+                LbSwitch(v-model="fontTestSwitch") Switch with Label
+          
+          .preview-group
+            h4 Body Text Weight
+            p This is a regular paragraph demonstrating the body font weight. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            p.body-large Large body text with adjusted weight
+            p.body-small Small body text with adjusted weight
+            LbSnackbar(:model-value="true" message="Snackbar uses body font weight" variant="info" position="relative" :auto-hide="false")
+          
+          .preview-group
+            h4 Heading Weight
+            h1 Heading Level 1
+            h2 Heading Level 2
+            h3 Heading Level 3
+            h4 Heading Level 4
+            h5 Heading Level 5
+            h6 Heading Level 6
+      
     section.color-section
       h2 Color Palette
       .color-grid
@@ -2437,7 +2546,7 @@ import { ref, onMounted, computed, watch } from 'vue'
 import { 
   LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog,
   LbBadge, LbNavigationBar, LbNavigationBarItem, LbBottomSheet, LbChip, LbAvatar, LbProgress, LbDivider, 
-  LbSegmentButton, LbSegmentButtonItem, useSnackbar, LbPopover, LbPopoverTrigger, LbPopoverContent, LbPopoverArrow,
+  LbSegmentButton, LbSegmentButtonItem, useSnackbar, LbSnackbar, LbPopover, LbPopoverTrigger, LbPopoverContent, LbPopoverArrow,
   LbDropdown, LbMenu, LbCalendar, LbDatePicker
 } from '../src'
 
@@ -2448,6 +2557,16 @@ const customPrimary = ref('#6366f1')
 const customSecondary = ref('#10b981')
 const customAccent = ref('#ec4899')
 const customThemeStyles = ref({})
+
+// Font weight testing variables
+const fontWeightLabel = ref(500)
+const fontWeightBody = ref(400)
+const fontWeightHeading = ref(600)
+
+// Font weight test form values
+const fontTestCheckbox = ref(false)
+const fontTestRadio = ref('option1')
+const fontTestSwitch = ref(false)
 
 // Input demo values
 const inputValue1 = ref('')
@@ -3061,6 +3180,34 @@ const toggleTheme = () => {
   document.documentElement.setAttribute('data-theme', isDark.value ? 'dark' : 'light')
 }
 
+// Font weight functions
+const updateFontWeights = () => {
+  document.documentElement.style.setProperty('--lb-font-weight-label', fontWeightLabel.value)
+  document.documentElement.style.setProperty('--lb-font-weight-body', fontWeightBody.value)
+  document.documentElement.style.setProperty('--lb-font-weight-heading', fontWeightHeading.value)
+}
+
+const resetFontWeights = () => {
+  fontWeightLabel.value = 500
+  fontWeightBody.value = 400
+  fontWeightHeading.value = 600
+  updateFontWeights()
+}
+
+const applyBoldPreset = () => {
+  fontWeightLabel.value = 700
+  fontWeightBody.value = 500
+  fontWeightHeading.value = 800
+  updateFontWeights()
+}
+
+const applyLightPreset = () => {
+  fontWeightLabel.value = 400
+  fontWeightBody.value = 300
+  fontWeightHeading.value = 500
+  updateFontWeights()
+}
+
 // Badge demo data
 const badgeCount = ref(5)
 
@@ -3588,6 +3735,138 @@ section
   
   > *
     margin: 0
+    
+.font-weight-section
+  display: flex
+  flex-direction: column
+  gap: base.$space-xl
+  
+  .font-weight-controls
+    background: var(--lb-surface-neutral-subtle)
+    border-radius: base.$radius-lg
+    padding: base.$space-lg
+    
+    .control-group
+      display: flex
+      flex-direction: column
+      gap: base.$space-lg
+      
+      h3
+        margin: 0 0 base.$space-sm 0
+        color: var(--lb-text-neutral-contrast-high)
+    
+    .weight-control
+      display: flex
+      flex-direction: column
+      gap: base.$space-xs
+      
+      label
+        display: flex
+        justify-content: space-between
+        align-items: center
+        font-weight: 500
+        color: var(--lb-text-neutral-contrast-high)
+        margin-bottom: base.$space-xs
+        
+        .weight-value
+          background: var(--lb-surface-primary-normal)
+          color: var(--lb-text-primary-contrast-high)
+          padding: base.$space-xs base.$space-sm
+          border-radius: base.$radius-sm
+          font-family: var(--lb-font-mono)
+          font-size: 0.875rem
+          min-width: 3rem
+          text-align: center
+      
+      input[type="range"]
+        width: 100%
+        height: 6px
+        background: var(--lb-surface-neutral-normal)
+        border-radius: base.$radius-full
+        outline: none
+        -webkit-appearance: none
+        
+        &::-webkit-slider-thumb
+          -webkit-appearance: none
+          appearance: none
+          width: 20px
+          height: 20px
+          background: var(--lb-fill-primary-normal)
+          border-radius: 50%
+          cursor: pointer
+          transition: all base.$transition
+          
+          &:hover
+            background: var(--lb-fill-primary-hover)
+            transform: scale(1.1)
+        
+        &::-moz-range-thumb
+          width: 20px
+          height: 20px
+          background: var(--lb-fill-primary-normal)
+          border-radius: 50%
+          cursor: pointer
+          border: none
+          transition: all base.$transition
+          
+          &:hover
+            background: var(--lb-fill-primary-hover)
+            transform: scale(1.1)
+      
+      .weight-labels
+        display: flex
+        justify-content: space-between
+        font-size: 0.75rem
+        color: var(--lb-text-neutral-contrast-low)
+        margin-top: base.$space-xs
+        
+        .weight-label
+          flex: 1
+          text-align: center
+          
+          &[data-weight="500"]
+            color: var(--lb-text-primary-normal)
+            font-weight: 600
+    
+    .control-buttons
+      display: flex
+      gap: base.$space-sm
+      margin-top: base.$space-lg
+  
+  .font-weight-preview
+    h3
+      margin: 0 0 base.$space-lg 0
+      color: var(--lb-text-neutral-contrast-high)
+    
+    .preview-grid
+      display: grid
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))
+      gap: base.$space-xl
+      
+      .preview-group
+        display: flex
+        flex-direction: column
+        gap: base.$space-md
+        
+        h4
+          margin: 0
+          color: var(--lb-text-neutral-contrast-high)
+          padding-bottom: base.$space-xs
+          border-bottom: 1px solid var(--lb-border-neutral-line)
+        
+        .preview-items
+          display: flex
+          flex-direction: column
+          gap: base.$space-sm
+          align-items: flex-start  // Prevent children from stretching
+          
+        .form-preview
+          display: flex
+          flex-direction: column
+          gap: base.$space-md
+          padding: base.$space-md
+          background: var(--lb-surface-neutral-subtle)
+          border-radius: base.$radius-md
     
 .color-section
   .color-grid

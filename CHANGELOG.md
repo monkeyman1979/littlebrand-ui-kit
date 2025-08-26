@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+- **Font Weight CSS Variable Implementation**
+  - Replaced all hardcoded SASS font-weight variables with CSS custom properties across all components
+  - Components now properly respond to runtime CSS variable overrides
+  - Fixed 18 components: LbButton, LbSegmentButtonItem, LbChip, LbLabel, LbCheckbox, LbRadio, LbSwitch, LbNavigationBarItem, LbAvatar, LbProgress, LbCalendar, LbBadge, LbSnackbar, and more
+  - Components now use `var(--lb-font-weight-label)`, `var(--lb-font-weight-body)`, and `var(--lb-font-weight-semibold)` instead of SASS variables
+
+- **Component Layout Issues**
+  - Fixed LbChip and LbLabel components stretching to full width in flex containers
+  - Added `align-self: flex-start` to prevent unwanted stretching
+  - Ensures inline components maintain their intrinsic width
+
+- **Search Input Border Radius**
+  - Fixed oversized border radius (10px) on search inputs inside Select and Menu dropdowns
+  - Changed to use `base.$radius-sm` (8px/0.5rem) for better visual hierarchy
+  - Search inputs in dropdowns now have appropriately sized corners
+
+### Added
+- **Font Weight Testing Section**
+  - Added interactive font weight testing section to examples/App.vue
+  - Includes range sliders for dynamic adjustment of label, body, and heading weights
+  - Live preview showing how font weights affect various components
+  - Preset buttons for quick testing (Bold, Light, Reset to Defaults)
+
 ## [0.2.7] - 2025-08-26
 
 ### Fixed

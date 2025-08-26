@@ -321,7 +321,7 @@ defineExpose({
   // Label styling
   .checkbox-label
     font-size: typography.$font-size-label-base
-    font-weight: typography.$font-weight-medium
+    font-weight: var(--lb-font-weight-label)
     line-height: typography.$line-height-normal
     color: var(--lb-text-neutral-normal)
     user-select: none
