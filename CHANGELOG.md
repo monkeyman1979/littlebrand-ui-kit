@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.7] - 2025-08-26
+
+### Fixed
+- **Font Weight Variable Override Issue**
+  - Fixed unified font weight variables using `var()` references that prevented proper overriding in external projects
+  - Changed `--lb-font-weight-heading`, `--lb-font-weight-body`, and `--lb-font-weight-label` to use direct numeric values (600, 400, 500)
+  - Removed duplicate typography variable definitions from dark theme (typography doesn't change between themes)
+
+### Changed
+- **Typography System**
+  - Expanded font weight scale from 4 weights to full CSS standard 9-weight scale (100-900)
+  - Renamed `--lb-font-weight-normal` to `--lb-font-weight-regular` for clarity and consistency
+  - Added new font weights: thin (100), extralight (200), light (300), extrabold (800), black (900)
+  - Updated all SASS variables to match the new naming convention
+
+### Updated
+- **Documentation & Type Definitions**
+  - Updated `littlebrand-overrides-template.sass` with full font weight scale
+  - Updated TypeScript definitions in `littlebrand.css.d.ts` with all 9 font weights
+  - Updated `TYPOGRAPHY_CUSTOMIZATION_GUIDE.md` with new font weight variables
+  - Updated `CSS_VARIABLES_REFERENCE.md` with complete weight scale
+  - Updated README.md to use `--lb-font-weight-regular` instead of `--lb-font-weight-normal`
+
 ## [0.2.6] - 2025-01-25
 
 ### Changed

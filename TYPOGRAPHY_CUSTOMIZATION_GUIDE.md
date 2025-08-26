@@ -22,11 +22,16 @@ The UI kit provides these main typography variables that you can override:
   --lb-font-weight-body: 400;     /* Controls paragraph/body text weight */
   --lb-font-weight-label: 500;    /* Controls form labels and UI text weight */
   
-  /* Individual Weight Values (if you need fine control) */
-  --lb-font-weight-normal: 400;
+  /* Full Font Weight Scale */
+  --lb-font-weight-thin: 100;
+  --lb-font-weight-extralight: 200;
+  --lb-font-weight-light: 300;
+  --lb-font-weight-regular: 400;
   --lb-font-weight-medium: 500;
   --lb-font-weight-semibold: 600;
   --lb-font-weight-bold: 700;
+  --lb-font-weight-extrabold: 800;
+  --lb-font-weight-black: 900;
 }
 ```
 
