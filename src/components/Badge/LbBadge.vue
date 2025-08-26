@@ -106,7 +106,7 @@ defineOptions({
   align-items: center
   justify-content: center
   font-family: typography.$font-body
-  font-weight: typography.$font-weight-semibold
+  font-weight: var(--lb-font-weight-semibold)
   line-height: 1
   letter-spacing: typography.$letter-spacing-tight
   border-radius: cv.$badge-border-radius

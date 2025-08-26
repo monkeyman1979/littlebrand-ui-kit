@@ -138,7 +138,7 @@ defineOptions({
   
   .label
     font-size: typography.$font-size-label-small
-    font-weight: typography.$font-weight-medium
+    font-weight: var(--lb-font-weight-label)
     line-height: typography.$line-height-compact
     text-align: center
     white-space: nowrap
