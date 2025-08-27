@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Changed BottomSheet default maxHeight from `80vh` to `80dvh` to prevent jumping when mobile address bar toggles
   - Added fallback for browsers that don't support dvh units
 
-## [0.2.8] - 2025-08-27
+## [0.2.8] - 2025-08-26
 
 ### Fixed
 - **Font Weight CSS Variable Implementation**
