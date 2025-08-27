@@ -58,6 +58,7 @@ Teleport(to="body")
 
 <script setup lang="ts">
 import { computed, ref, nextTick, onBeforeUnmount, onMounted } from 'vue'
+import { useScrollLock } from '@vueuse/core'
 import LbButton from '@/components/Buttons/Button/LbButton.vue'
 
 // Types
@@ -96,9 +97,8 @@ const overlayRef = ref<HTMLElement>()
 const titleId = generateId('dialog-title')
 const contentId = generateId('dialog-content')
 
-// Store original body overflow
-let originalBodyOverflow = ''
-let originalBodyPaddingRight = ''
+// Scroll lock using VueUse
+const isScrollLocked = useScrollLock(typeof document !== 'undefined' ? document.body : null)
 
 // Focus management
 const lastFocusedElement = ref<HTMLElement | null>(null)
@@ -129,22 +129,6 @@ const trapFocus = (event: KeyboardEvent) => {
   }
 }
 
-// Scroll lock functions
-const lockScroll = () => {
-  const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
-  originalBodyOverflow = document.body.style.overflow
-  originalBodyPaddingRight = document.body.style.paddingRight
-  
-  document.body.style.overflow = 'hidden'
-  if (scrollbarWidth > 0) {
-    document.body.style.paddingRight = `${scrollbarWidth}px`
-  }
-}
-
-const unlockScroll = () => {
-  document.body.style.overflow = originalBodyOverflow
-  document.body.style.paddingRight = originalBodyPaddingRight
-}
 
 // Computed
 const overlayClasses = computed(() => ({
@@ -183,8 +167,8 @@ const onEnter = async () => {
   // Store last focused element
   lastFocusedElement.value = document.activeElement as HTMLElement
   
-  // Lock scroll
-  lockScroll()
+  // Lock scroll using VueUse
+  isScrollLocked.value = true
   
   // Focus overlay for keyboard events
   overlayRef.value?.focus()
@@ -196,8 +180,8 @@ const onEnter = async () => {
 }
 
 const onAfterLeave = () => {
-  // Unlock scroll
-  unlockScroll()
+  // Unlock scroll using VueUse
+  isScrollLocked.value = false
   
   // Remove focus trap
   overlayRef.value?.removeEventListener('keydown', trapFocus)
@@ -226,7 +210,7 @@ onBeforeUnmount(() => {
   
   // Clean up scroll lock if dialog is open
   if (props.modelValue) {
-    unlockScroll()
+    isScrollLocked.value = false
   }
   
   // Remove focus trap listener if still attached
