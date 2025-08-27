@@ -3830,6 +3830,7 @@ section
     
     .control-buttons
       display: flex
+      flex-wrap: wrap
       gap: base.$space-sm
       margin-top: base.$space-lg
   
