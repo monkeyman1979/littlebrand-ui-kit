@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2025-08-27
+
+### Fixed
+- **Scroll Lock Implementation**
+  - Replaced manual scroll lock implementation with VueUse's `useScrollLock` composable for better reliability
+  - Fixed background scrolling issues on iOS Safari and mobile devices
+  - Eliminated content shift when scrollbar disappears on desktop
+  - Fixed scroll position loss when closing dialogs/sheets
+  - Improved BottomSheet overlay to support scrolling for tall content
+  - Added proper touch event handling for mobile devices
+
+### Added
+- **Dependencies**
+  - Added `@vueuse/core` (v13.8.0) as a dependency for robust scroll lock functionality
+  
+### Changed
+- **Component Architecture**
+  - LbDialog and LbBottomSheet now use battle-tested VueUse composable instead of custom implementation
+  - BottomSheet overlay CSS changed from `overflow: hidden` to `overflow-y: auto` for better UX with long content
+  - Both components now handle scroll locking internally - no user configuration needed
+
 ## [0.2.9] - 2025-08-27
 
 ### Fixed

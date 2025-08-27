@@ -48,6 +48,7 @@ Teleport(to="body")
 
 <script setup lang="ts">
 import { computed, ref, nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
+import { useScrollLock } from '@vueuse/core'
 
 // Types
 export type BottomSheetState = 'closed' | 'default' | 'expanded'
@@ -103,9 +104,8 @@ const lastMoveY = ref(0)
 const isContentAtTop = ref(true)
 const touchStartedOnContent = ref(false)
 
-// Store original body overflow
-let originalBodyOverflow = ''
-let originalBodyPaddingRight = ''
+// Scroll lock using VueUse
+const isScrollLocked = useScrollLock(typeof document !== 'undefined' ? document.body : null)
 
 // Focus management
 const lastFocusedElement = ref<HTMLElement | null>(null)
@@ -307,22 +307,6 @@ const trapFocus = (event: KeyboardEvent) => {
   }
 }
 
-// Scroll lock functions
-const lockScroll = () => {
-  const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
-  originalBodyOverflow = document.body.style.overflow
-  originalBodyPaddingRight = document.body.style.paddingRight
-  
-  document.body.style.overflow = 'hidden'
-  if (scrollbarWidth > 0) {
-    document.body.style.paddingRight = `${scrollbarWidth}px`
-  }
-}
-
-const unlockScroll = () => {
-  document.body.style.overflow = originalBodyOverflow
-  document.body.style.paddingRight = originalBodyPaddingRight
-}
 
 // Computed
 const overlayClasses = computed(() => ({
@@ -382,8 +366,8 @@ const onEnter = async () => {
   // Store last focused element
   lastFocusedElement.value = document.activeElement as HTMLElement
   
-  // Lock scroll
-  lockScroll()
+  // Lock scroll using VueUse
+  isScrollLocked.value = true
   
   // Focus overlay for keyboard events
   overlayRef.value?.focus()
@@ -410,8 +394,8 @@ const onEnter = async () => {
 const onAfterLeave = () => {
   currentState.value = 'closed'
   
-  // Unlock scroll
-  unlockScroll()
+  // Unlock scroll using VueUse
+  isScrollLocked.value = false
   
   // Remove focus trap
   overlayRef.value?.removeEventListener('keydown', trapFocus)
@@ -458,7 +442,7 @@ onBeforeUnmount(() => {
   
   // Clean up scroll lock if sheet is open
   if (props.modelValue) {
-    unlockScroll()
+    isScrollLocked.value = false
   }
   
   // Remove all event listeners
@@ -506,8 +490,10 @@ defineExpose({
   z-index: base.$z-modal-backdrop
   background: var(--lb-background-overlay)
   backdrop-filter: blur(2px)
-  overflow: hidden
+  overflow-y: auto
+  overflow-x: hidden
   width: 100%
+  -webkit-overflow-scrolling: touch
   
   // Use flexbox to position sheet at bottom
   display: flex
