@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.9] - 2025-08-27
+
+### Fixed
+- **Responsive Layout Issues**
+  - Fixed overflow in Font Weight Testing section by adding `flex-wrap` to control buttons
+  - Improved Dialog component responsiveness by using `width: min(dialog-width-medium, 90%)` instead of complex calc()
+  - Removed unnecessary media query overrides in Dialog component
+  - Changed BottomSheet default maxHeight from `80vh` to `80dvh` to prevent jumping when mobile address bar toggles
+  - Added fallback for browsers that don't support dvh units
+
 ## [0.2.8] - 2025-08-26
 
 ### Fixed
