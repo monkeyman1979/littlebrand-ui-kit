@@ -65,7 +65,7 @@ export interface LbBottomSheetProps {
 // Props
 const props = withDefaults(defineProps<LbBottomSheetProps>(), {
   modelValue: false,
-  maxHeight: '80vh',
+  maxHeight: '80dvh',
   expandable: true,
   swipeable: true,
   showHandle: true,
@@ -539,6 +539,7 @@ defineExpose({
   padding-bottom: env(safe-area-inset-bottom)
   
   &.state-expanded
+    max-height: 100vh // Fallback for browsers that don't support dvh
     max-height: 100dvh
     max-height: calc(100dvh - env(safe-area-inset-top, 0px))
     border-radius: 0
