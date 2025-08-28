@@ -214,7 +214,7 @@ defineOptions({
 
     // Fallback text inside
     .fallback-text
-      font-family: typography.$font-body
+      font-family: var(--lb-font-label)
       text-transform: uppercase
       letter-spacing: typography.$letter-spacing-wide
       line-height: typography.$line-height-compact

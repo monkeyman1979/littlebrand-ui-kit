@@ -141,7 +141,7 @@ defineOptions({
   gap: base.$space-xs
   border: base.$border-sm solid var(--lb-border-neutral-line)
   border-radius: cv.$chip-border-radius
-  font-family: typography.$font-body
+  font-family: var(--lb-font-label)
   font-weight: var(--lb-font-weight-label)
   line-height: typography.$line-height-compact
   letter-spacing: typography.$letter-spacing-tight

@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.3] - 2025-08-28
+
+### Added
+- **Dedicated Font Variable for UI Elements**
+  - New `--lb-font-label` CSS variable for independent typography control of UI elements
+  - Enables three distinct font families: headings (`--lb-font-heading`), body content (`--lb-font-body`), and UI/labels (`--lb-font-label`)
+  - Applied to all UI components: buttons, labels, hints, badges, chips, and avatar fallback text
+  - Added to littlebrand-overrides-template.sass for easy customization
+  - Allows better typography separation between content and interface elements
+
 ## [0.3.2] - 2025-08-28
 
 ### Fixed

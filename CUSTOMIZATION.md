@@ -85,6 +85,7 @@ If you prefer a minimal file with only your overrides:
   // Typography
   --lb-font-heading: 'Inter', sans-serif
   --lb-font-body: 'Inter', sans-serif
+  --lb-font-label: 'Inter', sans-serif  // UI elements (v0.3.3+)
   --lb-font-weight-heading: 700
   
   // Colors (if not using applyTheme)
@@ -131,7 +132,7 @@ applyTheme({
 ## 🎨 What Can Be Customized?
 
 ### Typography System
-- **Font families** - Separate fonts for headings, body, and code
+- **Font families** - Three separate fonts for headings, body, and UI elements (v0.3.3+)
 - **Font weights** - Unified control for all headings, body text, and labels
 - **Font sizes** - Responsive sizing system with body and label scales
 - **Line heights** - From tight to relaxed spacing
@@ -184,6 +185,7 @@ Using a custom font from Google Fonts:
 :root
   --lb-font-heading: 'Poppins', sans-serif
   --lb-font-body: 'Poppins', sans-serif
+  --lb-font-label: 'Poppins', sans-serif
   --lb-font-weight-heading: 600
 ```
 
@@ -197,6 +199,7 @@ Want a serif font for headings and sans-serif for body?
 :root
   --lb-font-heading: 'Playfair Display', serif
   --lb-font-body: 'Inter', sans-serif
+  --lb-font-label: 'Inter', sans-serif  // UI elements use same as body
   --lb-font-weight-heading: 700
   --lb-font-weight-body: 400
 ```
@@ -429,6 +432,7 @@ Not sure what variable to override?
 :root
   --lb-font-heading: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif
   --lb-font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif
+  --lb-font-label: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif
 ```
 
 ### Variable Fonts for Flexibility
@@ -440,6 +444,8 @@ Not sure what variable to override?
 
 :root
   --lb-font-heading: 'VariableFont', sans-serif
+  --lb-font-body: 'VariableFont', sans-serif
+  --lb-font-label: 'VariableFont', sans-serif
   --lb-font-weight-heading: 650  // Any value in range
 ```
 
