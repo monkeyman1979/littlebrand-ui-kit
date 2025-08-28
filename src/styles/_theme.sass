@@ -3,20 +3,12 @@
 // All scale variables come from _colors.sass
 
 @use 'colors' as colors
-@use 'theme-config' as config
 
 // Include the color scale variables as CSS custom properties
 @include colors.generate-color-variables()
 
-// Check if user has provided custom theme colors
-$use-custom-theme: false !default
-
 // Light Theme Semantic Tokens
 :root
-  @if $use-custom-theme
-    // Use the new configuration system
-    @include config.apply-theme(config.$theme-colors)
-  @else
     // === BORDER TOKENS ===
     // Primary
     --lb-border-primary-line: var(--lb-primary-6)
@@ -281,129 +273,125 @@ $use-custom-theme: false !default
     --lb-text-on-neutral-hover: white
     --lb-text-on-neutral-active: white
   
-  // === BACKGROUND TOKENS ===
-  --lb-background-page: var(--lb-neutral-1)
-  --lb-background-surface: var(--lb-neutral-2)
-  --lb-background-overlay: rgba(0, 0, 0, 0.5)
-  
-  // === ADDITIONAL TOKENS ===
-  --lb-focus-ring-color: var(--lb-primary-7)
-  --lb-divider-color: var(--lb-border-neutral-line)
-  
-  // === SIZE VARIABLES as CSS Custom Properties ===
-  // Icon sizes
-  --lb-icon-size-sm: 18px
-  --lb-icon-size-md: 20px
-  --lb-icon-size-lg: 24px
-  
-  // Space (converted from SASS)
-  --lb-space-2xs: 2px
-  --lb-space-xs: 4px
-  --lb-space-sm: 8px
-  --lb-space-md: 12px
-  --lb-space-lg: 16px
-  --lb-space-xl: 20px
-  --lb-space-2xl: 24px
-  --lb-space-3xl: 32px
-  --lb-space-4xl: 40px
-  --lb-space-5xl: 48px
-  --lb-space-6xl: 56px
-  --lb-space-7xl: 64px
-  --lb-space-8xl: 72px
-  --lb-space-9xl: 96px
-  --lb-space-10xl: 120px
-  
-  // Border widths
-  --lb-border-sm: 1px
-  --lb-border-md: 2px
-  
-  // Border radius
-  --lb-radius-xs: 4px
-  --lb-radius-sm: 8px
-  --lb-radius-md: 10px
-  --lb-radius-lg: 12px
-  --lb-radius-xl: 16px
-  --lb-radius-2xl: 24px
-  --lb-radius-3xl: 32px
-  --lb-radius-4xl: 40px
-  --lb-radius-5xl: 48px
-  --lb-radius-6xl: 56px
-  --lb-radius-7xl: 64px
-  --lb-radius-8xl: 72px
-  --lb-radius-9xl: 80px
-  --lb-radius-full: 9999px
-  
-  // Input heights
-  --lb-input-height-medium: 40px
-  --lb-input-height-large: 44px
-  
-  // === TYPOGRAPHY TOKENS ===
-  // Font families
-  --lb-font-heading: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif
-  --lb-font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif
-  --lb-font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace
-  
-  // Font weights
-  --lb-font-weight-thin: 100
-  --lb-font-weight-extralight: 200
-  --lb-font-weight-light: 300
-  --lb-font-weight-regular: 400
-  --lb-font-weight-medium: 500
-  --lb-font-weight-semibold: 600
-  --lb-font-weight-bold: 700
-  --lb-font-weight-extrabold: 800
-  --lb-font-weight-black: 900
-  
-  // Unified font weights for easy customization
-  --lb-font-weight-heading: 600
-  --lb-font-weight-body: 400
-  --lb-font-weight-label: 500
-  
-  // Line heights
-  --lb-line-height-tight: 1.1
-  --lb-line-height-compact: 1.25
-  --lb-line-height-normal: 1.5
-  --lb-line-height-relaxed: 1.75
-  
-  // Font sizes - Body text (for content)
-  --lb-font-size-body-small: 0.875rem
-  --lb-font-size-body-base: 1rem
-  --lb-font-size-body-large: 1.125rem
-  
-  // Font sizes - Labels (for UI elements)
-  --lb-font-size-label-xsmall: 0.625rem
-  --lb-font-size-label-small: 0.75rem
-  --lb-font-size-label-base: 0.875rem
-  --lb-font-size-label-large: 1rem
-  
-  // Letter spacing
-  --lb-letter-spacing-tighter: -0.025em
-  --lb-letter-spacing-tight: -0.01em
-  --lb-letter-spacing-normal: normal
-  --lb-letter-spacing-wide: 0.025em
-  
-  // Display sizes (for hero sections, etc.)
-  --lb-display-1: clamp(3rem, 5vw + 1rem, 5rem)
-  --lb-display-2: clamp(2.5rem, 4vw + 1rem, 4rem)
-
-// Dark Theme - Support both data-theme attribute and .dark class
-[data-theme="dark"], .dark
-  @if $use-custom-theme
-    // Use the new configuration system for dark mode
-    @include config.apply-dark-theme(config.$theme-colors)
-  @else
-    // Dark mode semantic tokens - all reference the dark scale variables
-    // which are already defined by the color system
-    
     // === BACKGROUND TOKENS ===
     --lb-background-page: var(--lb-neutral-1)
     --lb-background-surface: var(--lb-neutral-2)
-    --lb-background-overlay: rgba(0, 0, 0, 0.7)
+    --lb-background-overlay: rgba(0, 0, 0, 0.5)
     
     // === ADDITIONAL TOKENS ===
     --lb-focus-ring-color: var(--lb-primary-7)
     --lb-divider-color: var(--lb-border-neutral-line)
     
-    // Text-on tokens for dark mode
-    // In dark mode, most colors remain bright enough for white text
-    --lb-text-on-warning: white
+    // === SIZE VARIABLES as CSS Custom Properties ===
+    // Icon sizes
+    --lb-icon-size-sm: 18px
+    --lb-icon-size-md: 20px
+    --lb-icon-size-lg: 24px
+    
+    // Space (converted from SASS)
+    --lb-space-2xs: 2px
+    --lb-space-xs: 4px
+    --lb-space-sm: 8px
+    --lb-space-md: 12px
+    --lb-space-lg: 16px
+    --lb-space-xl: 20px
+    --lb-space-2xl: 24px
+    --lb-space-3xl: 32px
+    --lb-space-4xl: 40px
+    --lb-space-5xl: 48px
+    --lb-space-6xl: 56px
+    --lb-space-7xl: 64px
+    --lb-space-8xl: 72px
+    --lb-space-9xl: 96px
+    --lb-space-10xl: 120px
+    
+    // Border widths
+    --lb-border-sm: 1px
+    --lb-border-md: 2px
+    
+    // Border radius
+    --lb-radius-xs: 4px
+    --lb-radius-sm: 8px
+    --lb-radius-md: 10px
+    --lb-radius-lg: 12px
+    --lb-radius-xl: 16px
+    --lb-radius-2xl: 24px
+    --lb-radius-3xl: 32px
+    --lb-radius-4xl: 40px
+    --lb-radius-5xl: 48px
+    --lb-radius-6xl: 56px
+    --lb-radius-7xl: 64px
+    --lb-radius-8xl: 72px
+    --lb-radius-9xl: 80px
+    --lb-radius-full: 9999px
+    
+    // Input heights
+    --lb-input-height-medium: 40px
+    --lb-input-height-large: 44px
+    
+    // === TYPOGRAPHY TOKENS ===
+    // Font families
+    --lb-font-heading: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif
+    --lb-font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif
+    --lb-font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace
+    
+    // Font weights
+    --lb-font-weight-thin: 100
+    --lb-font-weight-extralight: 200
+    --lb-font-weight-light: 300
+    --lb-font-weight-regular: 400
+    --lb-font-weight-medium: 500
+    --lb-font-weight-semibold: 600
+    --lb-font-weight-bold: 700
+    --lb-font-weight-extrabold: 800
+    --lb-font-weight-black: 900
+    
+    // Unified font weights for easy customization
+    --lb-font-weight-heading: 600
+    --lb-font-weight-body: 400
+    --lb-font-weight-label: 500
+    
+    // Line heights
+    --lb-line-height-tight: 1.1
+    --lb-line-height-compact: 1.25
+    --lb-line-height-normal: 1.5
+    --lb-line-height-relaxed: 1.75
+    
+    // Font sizes - Body text (for content)
+    --lb-font-size-body-small: 0.875rem
+    --lb-font-size-body-base: 1rem
+    --lb-font-size-body-large: 1.125rem
+    
+    // Font sizes - Labels (for UI elements)
+    --lb-font-size-label-xsmall: 0.625rem
+    --lb-font-size-label-small: 0.75rem
+    --lb-font-size-label-base: 0.875rem
+    --lb-font-size-label-large: 1rem
+    
+    // Letter spacing
+    --lb-letter-spacing-tighter: -0.025em
+    --lb-letter-spacing-tight: -0.01em
+    --lb-letter-spacing-normal: normal
+    --lb-letter-spacing-wide: 0.025em
+    
+    // Display sizes (for hero sections, etc.)
+    --lb-display-1: clamp(3rem, 5vw + 1rem, 5rem)
+    --lb-display-2: clamp(2.5rem, 4vw + 1rem, 4rem)
+
+// Dark Theme - Support both data-theme attribute and .dark class
+[data-theme="dark"], .dark
+  // Dark mode semantic tokens - all reference the dark scale variables
+  // which are already defined by the color system
+  
+  // === BACKGROUND TOKENS ===
+  --lb-background-page: var(--lb-neutral-1)
+  --lb-background-surface: var(--lb-neutral-2)
+  --lb-background-overlay: rgba(0, 0, 0, 0.7)
+  
+  // === ADDITIONAL TOKENS ===
+  --lb-focus-ring-color: var(--lb-primary-7)
+  --lb-divider-color: var(--lb-border-neutral-line)
+  
+  // Text-on tokens for dark mode
+  // In dark mode, most colors remain bright enough for white text
+  --lb-text-on-warning: white

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OKLCH Color Test - LittleBrand UI Kit</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      padding: 2rem;
+      background: #f5f5f5;
+    }
+    
+    h1 {
+      color: #333;
+      margin-bottom: 2rem;
+    }
+    
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    
+    .color-set {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .color-set h3 {
+      margin: 0 0 1rem 0;
+      color: #444;
+    }
+    
+    .color-scale {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    
+    .color-swatch {
+      height: 30px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      padding: 0 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    
+    .support-info {
+      background: #fff;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 2rem;
+      border: 2px solid #ddd;
+    }
+    
+    .support-info.supported {
+      border-color: #22c55e;
+      background: #f0fdf4;
+    }
+    
+    .support-info.unsupported {
+      border-color: #ef4444;
+      background: #fef2f2;
+    }
+    
+    /* OKLCH Colors - Modern Browsers */
+    @supports (color: oklch(0.5 0.2 120)) {
+      .oklch-orange-1 { background: oklch(0.990 0.020 70); }
+      .oklch-orange-2 { background: oklch(0.975 0.040 70); }
+      .oklch-orange-3 { background: oklch(0.950 0.070 70); }
+      .oklch-orange-4 { background: oklch(0.920 0.100 70); }
+      .oklch-orange-5 { background: oklch(0.870 0.140 70); }
+      .oklch-orange-6 { background: oklch(0.800 0.170 70); }
+      .oklch-orange-7 { background: oklch(0.700 0.190 70); }
+      .oklch-orange-8 { background: oklch(0.600 0.200 70); color: white; }
+      .oklch-orange-9 { background: oklch(0.500 0.200 70); color: white; }
+      .oklch-orange-10 { background: oklch(0.450 0.190 70); color: white; }
+      .oklch-orange-11 { background: oklch(0.350 0.150 70); color: white; }
+      .oklch-orange-12 { background: oklch(0.250 0.100 70); color: white; }
+      
+      .oklch-teal-1 { background: oklch(0.990 0.010 195); }
+      .oklch-teal-2 { background: oklch(0.975 0.020 195); }
+      .oklch-teal-3 { background: oklch(0.942 0.040 195); }
+      .oklch-teal-4 { background: oklch(0.900 0.060 195); }
+      .oklch-teal-5 { background: oklch(0.850 0.080 195); }
+      .oklch-teal-6 { background: oklch(0.780 0.100 195); }
+      .oklch-teal-7 { background: oklch(0.680 0.120 195); }
+      .oklch-teal-8 { background: oklch(0.540 0.130 195); color: white; }
+      .oklch-teal-9 { background: oklch(0.450 0.130 195); color: white; }
+      .oklch-teal-10 { background: oklch(0.410 0.120 195); color: white; }
+      .oklch-teal-11 { background: oklch(0.340 0.100 195); color: white; }
+      .oklch-teal-12 { background: oklch(0.220 0.070 195); color: white; }
+    }
+    
+    /* HSL Fallback - Older Browsers */
+    @supports not (color: oklch(0.5 0.2 120)) {
+      .oklch-orange-1 { background: hsl(24, 100%, 99%); }
+      .oklch-orange-2 { background: hsl(24, 100%, 97.5%); }
+      .oklch-orange-3 { background: hsl(24, 100%, 95%); }
+      .oklch-orange-4 { background: hsl(24, 100%, 92%); }
+      .oklch-orange-5 { background: hsl(24, 100%, 87%); }
+      .oklch-orange-6 { background: hsl(24, 100%, 80%); }
+      .oklch-orange-7 { background: hsl(24, 100%, 70%); }
+      .oklch-orange-8 { background: hsl(24, 100%, 60%); color: white; }
+      .oklch-orange-9 { background: hsl(24, 100%, 50%); color: white; }
+      .oklch-orange-10 { background: hsl(24, 100%, 45%); color: white; }
+      .oklch-orange-11 { background: hsl(24, 90%, 35%); color: white; }
+      .oklch-orange-12 { background: hsl(24, 80%, 15%); color: white; }
+      
+      .oklch-teal-1 { background: hsl(180, 60%, 99%); }
+      .oklch-teal-2 { background: hsl(180, 60%, 97.5%); }
+      .oklch-teal-3 { background: hsl(180, 60%, 94.2%); }
+      .oklch-teal-4 { background: hsl(180, 60%, 90%); }
+      .oklch-teal-5 { background: hsl(180, 60%, 85%); }
+      .oklch-teal-6 { background: hsl(180, 60%, 78%); }
+      .oklch-teal-7 { background: hsl(180, 60%, 68%); }
+      .oklch-teal-8 { background: hsl(180, 60%, 54%); color: white; }
+      .oklch-teal-9 { background: hsl(180, 60%, 37%); color: white; }
+      .oklch-teal-10 { background: hsl(180, 60%, 33%); color: white; }
+      .oklch-teal-11 { background: hsl(180, 65%, 24%); color: white; }
+      .oklch-teal-12 { background: hsl(180, 65%, 11%); color: white; }
+    }
+  </style>
+</head>
+<body>
+  <h1>OKLCH Color System Test</h1>
+  
+  <div class="support-info" id="support-status">
+    <strong>Browser Support:</strong> <span id="support-text"></span>
+  </div>
+  
+  <h2>Color Scales Demonstration</h2>
+  <div class="color-grid">
+    <div class="color-set">
+      <h3>Orange Scale (Primary)</h3>
+      <div class="color-scale">
+        <div class="color-swatch oklch-orange-1">Step 1</div>
+        <div class="color-swatch oklch-orange-2">Step 2</div>
+        <div class="color-swatch oklch-orange-3">Step 3</div>
+        <div class="color-swatch oklch-orange-4">Step 4</div>
+        <div class="color-swatch oklch-orange-5">Step 5</div>
+        <div class="color-swatch oklch-orange-6">Step 6</div>
+        <div class="color-swatch oklch-orange-7">Step 7</div>
+        <div class="color-swatch oklch-orange-8">Step 8</div>
+        <div class="color-swatch oklch-orange-9">Step 9 (Base)</div>
+        <div class="color-swatch oklch-orange-10">Step 10</div>
+        <div class="color-swatch oklch-orange-11">Step 11</div>
+        <div class="color-swatch oklch-orange-12">Step 12</div>
+      </div>
+    </div>
+    
+    <div class="color-set">
+      <h3>Teal Scale (Secondary)</h3>
+      <div class="color-scale">
+        <div class="color-swatch oklch-teal-1">Step 1</div>
+        <div class="color-swatch oklch-teal-2">Step 2</div>
+        <div class="color-swatch oklch-teal-3">Step 3</div>
+        <div class="color-swatch oklch-teal-4">Step 4</div>
+        <div class="color-swatch oklch-teal-5">Step 5</div>
+        <div class="color-swatch oklch-teal-6">Step 6</div>
+        <div class="color-swatch oklch-teal-7">Step 7</div>
+        <div class="color-swatch oklch-teal-8">Step 8</div>
+        <div class="color-swatch oklch-teal-9">Step 9 (Base)</div>
+        <div class="color-swatch oklch-teal-10">Step 10</div>
+        <div class="color-swatch oklch-teal-11">Step 11</div>
+        <div class="color-swatch oklch-teal-12">Step 12</div>
+      </div>
+    </div>
+  </div>
+  
+  <h2>Benefits of OKLCH</h2>
+  <ul>
+    <li><strong>Perceptual Uniformity:</strong> OKLCH lightness corresponds directly to perceived brightness</li>
+    <li><strong>Better Gradients:</strong> Color transitions are smoother and more natural</li>
+    <li><strong>Consistent Saturation:</strong> Chroma remains consistent when adjusting lightness</li>
+    <li><strong>Wide Gamut:</strong> Can represent colors beyond sRGB on capable displays</li>
+    <li><strong>Predictable Adjustments:</strong> Changing lightness doesn't affect perceived hue</li>
+  </ul>
+  
+  <script>
+    // Check for OKLCH support
+    const supportsOklch = CSS.supports('color', 'oklch(0.5 0.2 120)');
+    const statusEl = document.getElementById('support-status');
+    const textEl = document.getElementById('support-text');
+    
+    if (supportsOklch) {
+      statusEl.className = 'support-info supported';
+      textEl.textContent = 'Your browser supports OKLCH! You are seeing the modern OKLCH color implementation with improved perceptual uniformity.';
+    } else {
+      statusEl.className = 'support-info unsupported';
+      textEl.textContent = 'Your browser does not support OKLCH. You are seeing the HSL fallback colors. Consider updating to a modern browser for the best color experience.';
+    }
+    
+    // Log browser info
+    console.log('OKLCH Support:', supportsOklch);
+    console.log('User Agent:', navigator.userAgent);
+  </script>
+</body>
+</html>
