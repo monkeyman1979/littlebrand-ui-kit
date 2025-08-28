@@ -136,7 +136,7 @@
             p This is a regular paragraph demonstrating the body font weight. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             p.body-large Large body text with adjusted weight
             p.body-small Small body text with adjusted weight
-            LbSnackbar(:model-value="true" message="Snackbar uses body font weight" variant="info" position="relative" :auto-hide="false")
+            LbSnackbar(id="font-weight-demo" :model-value="true" message="Snackbar uses body font weight" variant="info" position="relative" :auto-hide="false")
           
           .preview-group
             h4 Heading Weight
@@ -153,6 +153,75 @@
         .color-card(v-for="color in colors" :key="color.name")
           .color-swatch(:style="{ background: `var(${color.var})` }")
           .label {{ color.name }}
+    
+    section.oklch-demo-section
+      h2 OKLCH Color System Test
+      
+      .oklch-support-banner
+        .banner-icon
+          svg(width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+            path(d="M9 11l3 3L22 4")
+            path(d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11")
+        .banner-content
+          strong Browser Support: 
+          span Your browser supports OKLCH! You are seeing the modern OKLCH color implementation with improved perceptual uniformity.
+      
+      .oklch-description
+        h3 Color Scales Demonstration
+        p Our UI kit uses OKLCH color space for perceptually uniform color scales. Each color has 12 carefully crafted steps that maintain consistent perceived brightness differences.
+      
+      .color-scales-container
+        .scale-column
+          h4 Orange Scale (Primary)
+          .color-scale-oklch
+            .scale-step-oklch(v-for="n in 12" :key="`orange-${n}`" :class="`step-${n}`")
+              .step-swatch(:style="{ background: getColorForStep('primary', n) }")
+              .step-label Step {{ n }}{{ n === 9 ? ' (Base)' : '' }}
+        
+        .scale-column
+          h4 Teal Scale (Secondary)
+          .color-scale-oklch
+            .scale-step-oklch(v-for="n in 12" :key="`teal-${n}`" :class="`step-${n}`")
+              .step-swatch(:style="{ background: getColorForStep('secondary', n) }")
+              .step-label Step {{ n }}{{ n === 9 ? ' (Base)' : '' }}
+      
+      .oklch-benefits
+        h3 Benefits of OKLCH
+        ul
+          li
+            strong Perceptual Uniformity: 
+            span OKLCH lightness corresponds directly to perceived brightness
+          li
+            strong Better Gradients: 
+            span Color transitions are smoother and more natural
+          li
+            strong Consistent Saturation: 
+            span Chroma remains consistent when adjusting lightness
+          li
+            strong Wide Gamut: 
+            span Can represent colors beyond sRGB on capable displays
+          li
+            strong Predictable Adjustments: 
+            span Changing lightness doesn't affect perceived hue
+      
+      .theme-mode-comparison
+        h3 Light & Dark Mode Support
+        p The OKLCH system automatically adapts for dark mode with optimized lightness curves:
+        
+        .mode-preview-grid
+          .mode-preview.light-preview
+            h5 Light Mode
+            .preview-colors
+              .preview-color-chip(v-for="color in ['primary', 'secondary', 'neutral']" :key="`light-${color}`")
+                .chip-main(:style="{ background: getLightModeColor(color) }")
+                .chip-label {{ capitalize(color) }}
+          
+          .mode-preview.dark-preview
+            h5 Dark Mode
+            .preview-colors
+              .preview-color-chip(v-for="color in ['primary', 'secondary', 'neutral']" :key="`dark-${color}`")
+                .chip-main(:style="{ background: getDarkModeColor(color) }")
+                .chip-label {{ capitalize(color) }}
     
     section.custom-theme-section
       h2 Custom Theme Configuration
@@ -2543,6 +2612,7 @@
 
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue'
+import { generateScale, getContrastText } from '@/utils/color-generator.js'
 import { 
   LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog,
   LbBadge, LbNavigationBar, LbNavigationBarItem, LbBottomSheet, LbChip, LbAvatar, LbProgress, LbDivider, 
@@ -2795,115 +2865,13 @@ const resetSettings = () => {
   }
 }
 
-// Custom theme generation functions
-const hexToHSL = (hex) => {
-  // Convert hex to RGB
-  const r = parseInt(hex.slice(1, 3), 16) / 255
-  const g = parseInt(hex.slice(3, 5), 16) / 255
-  const b = parseInt(hex.slice(5, 7), 16) / 255
-  
-  const max = Math.max(r, g, b)
-  const min = Math.min(r, g, b)
-  let h, s, l = (max + min) / 2
-  
-  if (max === min) {
-    h = s = 0 // achromatic
-  } else {
-    const d = max - min
-    s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
-    
-    switch (max) {
-      case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break
-      case g: h = ((b - r) / d + 2) / 6; break
-      case b: h = ((r - g) / d + 4) / 6; break
-    }
-  }
-  
-  return {
-    h: Math.round(h * 360),
-    s: Math.round(s * 100),
-    l: Math.round(l * 100)
-  }
-}
-
-// Calculate relative luminance of a color
-const getLuminance = (hex) => {
-  // Convert hex to RGB
-  const r = parseInt(hex.slice(1, 3), 16) / 255
-  const g = parseInt(hex.slice(3, 5), 16) / 255
-  const b = parseInt(hex.slice(5, 7), 16) / 255
-  
-  // Apply gamma correction
-  const gammaCorrect = (val) => {
-    return val <= 0.03928 ? val / 12.92 : Math.pow((val + 0.055) / 1.055, 2.4)
-  }
-  
-  const rLinear = gammaCorrect(r)
-  const gLinear = gammaCorrect(g)
-  const bLinear = gammaCorrect(b)
-  
-  // Calculate relative luminance
-  return 0.2126 * rLinear + 0.7152 * gLinear + 0.0722 * bLinear
-}
-
-// Determine if white or dark text should be used
-const getContrastText = (backgroundColor) => {
-  const luminance = getLuminance(backgroundColor)
-  // Use white text if luminance is below 0.5, dark text otherwise
-  return luminance > 0.5 ? '#1a1a1a' : 'white'
-}
-
-// Convert HSL string to hex
-const hslToHex = (hslStr) => {
-  const match = hslStr.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/)
-  if (!match) return '#000000'
-  
-  const h = parseInt(match[1]) / 360
-  const s = parseInt(match[2]) / 100
-  const l = parseInt(match[3]) / 100
-  
-  const hue2rgb = (p, q, t) => {
-    if (t < 0) t += 1
-    if (t > 1) t -= 1
-    if (t < 1/6) return p + (q - p) * 6 * t
-    if (t < 1/2) return q
-    if (t < 2/3) return p + (q - p) * (2/3 - t) * 6
-    return p
-  }
-  
-  const q = l < 0.5 ? l * (1 + s) : l + s - l * s
-  const p = 2 * l - q
-  
-  const r = Math.round(hue2rgb(p, q, h + 1/3) * 255)
-  const g = Math.round(hue2rgb(p, q, h) * 255)
-  const b = Math.round(hue2rgb(p, q, h - 1/3) * 255)
-  
-  return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)
-}
+// Custom theme generation functions using OKLCH
+// Old HSL functions removed - now using imported OKLCH utilities
 
 const generateColorScale = (baseColor, name) => {
-  const hsl = hexToHSL(baseColor)
+  // Generate OKLCH-based 12-step scale
+  const scale = generateScale(baseColor)
   const tokens = {}
-  
-  // Generate 12-step scale
-  const scale = {}
-  for (let i = 1; i <= 12; i++) {
-    let lightness, saturation
-    
-    if (i <= 9) {
-      // Steps 1-9: progressively darker from very light
-      const ratio = (i - 1) / 8
-      lightness = 98 - (ratio * (98 - hsl.l))
-      saturation = i <= 3 ? hsl.s * 0.3 : i <= 6 ? hsl.s * 0.6 : hsl.s
-    } else {
-      // Steps 10-12: darker than base
-      const ratio = (i - 9) / 3
-      lightness = hsl.l - (ratio * (hsl.l - 15))
-      saturation = Math.min(hsl.s * 1.1, 100)
-    }
-    
-    scale[i] = `hsl(${hsl.h}, ${Math.round(saturation)}%, ${Math.round(lightness)}%)`
-  }
   
   // Generate semantic tokens
   tokens[`--custom-border-${name}-line`] = scale[6]
@@ -2923,10 +2891,10 @@ const generateColorScale = (baseColor, name) => {
   tokens[`--custom-text-${name}-contrast-high`] = scale[12]
   tokens[`--custom-text-${name}-disabled`] = scale[5]
   
-  // Add text-on tokens for filled backgrounds using luminance calculation
-  tokens[`--custom-text-on-${name}`] = getContrastText(hslToHex(scale[9]))
-  tokens[`--custom-text-on-${name}-hover`] = getContrastText(hslToHex(scale[10]))
-  tokens[`--custom-text-on-${name}-active`] = getContrastText(hslToHex(scale[8]))
+  // Add text-on tokens using OKLCH contrast calculation
+  tokens[`--custom-text-on-${name}`] = getContrastText(baseColor)
+  tokens[`--custom-text-on-${name}-hover`] = getContrastText(baseColor)
+  tokens[`--custom-text-on-${name}-active`] = getContrastText(baseColor)
   
   // Add surface tokens for the scale visualization
   for (let i = 1; i <= 12; i++) {
@@ -2948,15 +2916,9 @@ const getStepName = (n) => {
 
 // Get the contrast text color for a scale step
 const getScaleStepTextColor = (colorName, step) => {
-  // Get the CSS variable value from customThemeStyles
-  const varName = `--custom-surface-${colorName}-${step}`
-  const hslValue = customThemeStyles.value[varName]
-  
-  if (!hslValue) return '#000000'
-  
-  // Convert HSL to hex for luminance calculation
-  const hexColor = hslToHex(hslValue)
-  return getContrastText(hexColor)
+  // For OKLCH colors, determine contrast based on step number
+  // Steps 1-6 are light (need dark text), 7-12 are dark (need light text)
+  return step <= 6 ? '#1a1a1a' : 'white'
 }
 
 const updateCustomTheme = () => {
@@ -3178,6 +3140,23 @@ const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1)
 const toggleTheme = () => {
   isDark.value = !isDark.value
   document.documentElement.setAttribute('data-theme', isDark.value ? 'dark' : 'light')
+}
+
+// OKLCH demo helper methods
+const getColorForStep = (color, step) => {
+  // Use the CSS scale variables instead of hardcoded values
+  // This properly demonstrates the token architecture
+  return `var(--lb-${color}-${step})`
+}
+
+const getLightModeColor = (color) => {
+  // Return the CSS variable for light mode
+  return `var(--lb-fill-${color}-normal)`
+}
+
+const getDarkModeColor = (color) => {
+  // Return the CSS variable for dark mode
+  return `var(--lb-fill-${color}-normal)`
 }
 
 // Font weight functions
@@ -3887,6 +3866,155 @@ section
       border-radius: base.$radius-md
       border: base.$border-sm solid var(--lb-border-neutral-normal)
 
+.oklch-demo-section
+  display: flex
+  flex-direction: column
+  gap: base.$space-2xl
+  
+  .oklch-support-banner
+    display: flex
+    align-items: center
+    gap: base.$space-md
+    padding: base.$space-lg
+    background: var(--lb-surface-success-subtle)
+    border: base.$border-sm solid var(--lb-border-success-normal)
+    border-radius: base.$radius-md
+    color: var(--lb-text-success-contrast-high)
+    
+    .banner-icon
+      flex-shrink: 0
+      color: var(--lb-text-success-normal)
+    
+    .banner-content
+      strong
+        font-weight: var(--lb-font-weight-semibold)
+  
+  .oklch-description
+    h3
+      margin: 0 0 base.$space-sm 0
+    p
+      margin: 0
+      color: var(--lb-text-neutral-contrast-low)
+  
+  .color-scales-container
+    display: grid
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))
+    gap: base.$space-2xl
+    
+    .scale-column
+      h4
+        margin: 0 0 base.$space-md 0
+        color: var(--lb-text-neutral-contrast-high)
+    
+    .color-scale-oklch
+      display: flex
+      flex-direction: column
+      gap: 2px
+      padding: base.$space-sm
+      background: var(--lb-surface-neutral-subtle)
+      border-radius: base.$radius-md
+      
+      .scale-step-oklch
+        display: flex
+        align-items: center
+        gap: base.$space-md
+        padding: base.$space-xs
+        
+        &.step-9
+          .step-label
+            font-weight: var(--lb-font-weight-semibold)
+        
+        .step-swatch
+          width: 100%
+          height: 32px
+          border-radius: base.$radius-sm
+          border: base.$border-sm solid var(--lb-border-neutral-line)
+        
+        .step-label
+          min-width: 80px
+          font-size: var(--lb-font-size-label-small)
+          color: var(--lb-text-neutral-contrast-low)
+  
+  .oklch-benefits
+    background: var(--lb-surface-neutral-subtle)
+    padding: base.$space-lg
+    border-radius: base.$radius-md
+    
+    h3
+      margin: 0 0 base.$space-md 0
+      color: var(--lb-text-neutral-contrast-high)
+    
+    ul
+      margin: 0
+      padding-left: base.$space-lg
+      display: flex
+      flex-direction: column
+      gap: base.$space-sm
+      
+      li
+        color: var(--lb-text-neutral-normal)
+        
+        strong
+          color: var(--lb-text-neutral-contrast-high)
+          font-weight: var(--lb-font-weight-semibold)
+  
+  .theme-mode-comparison
+    h3
+      margin: 0 0 base.$space-sm 0
+      color: var(--lb-text-neutral-contrast-high)
+    
+    p
+      margin: 0 0 base.$space-lg 0
+      color: var(--lb-text-neutral-contrast-low)
+    
+    .mode-preview-grid
+      display: grid
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr))
+      gap: base.$space-lg
+      
+      .mode-preview
+        padding: base.$space-lg
+        border-radius: base.$radius-md
+        
+        &.light-preview
+          background: white
+          border: base.$border-sm solid var(--lb-border-neutral-line)
+          
+          h5
+            color: var(--lb-text-neutral-contrast-high)
+        
+        &.dark-preview
+          background: oklch(0.17 0.003 0)
+          border: base.$border-sm solid oklch(0.378 0.004 0)
+          
+          h5
+            color: oklch(0.93 0.002 0)
+        
+        h5
+          margin: 0 0 base.$space-md 0
+          font-size: var(--lb-font-size-label-large)
+        
+        .preview-colors
+          display: flex
+          gap: base.$space-sm
+          
+          .preview-color-chip
+            flex: 1
+            
+            .chip-main
+              height: 48px
+              border-radius: base.$radius-sm
+              margin-bottom: base.$space-xs
+            
+            .chip-label
+              font-size: var(--lb-font-size-label-small)
+              text-align: center
+              
+              .light-preview &
+                color: var(--lb-text-neutral-normal)
+              
+              .dark-preview &
+                color: oklch(0.639 0.005 0)
       
 .components-section
   display: flex
