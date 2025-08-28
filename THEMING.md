@@ -28,22 +28,37 @@ The LittleBrand UI Kit features a sophisticated yet flexible theming system that
 ## Quick Start
 
 ### Using the Default Theme
-```sass
-// In your main sass file
-@use '@littlebrand/ui-kit/styles/main'
+```javascript
+// In your main.js
+import { createApp } from 'vue'
+import App from './App.vue'
+import { LittleBrandUI } from 'littlebrand-ui-kit'
+import 'littlebrand-ui-kit/style.css'
+
+const app = createApp(App)
+app.use(LittleBrandUI)
+app.mount('#app')
 
 // That's it! You get orange primary, teal secondary, etc.
 ```
 
 ### Using a Custom Theme
-```sass
-@use '@littlebrand/ui-kit/styles/theme' with (
-  $use-custom-theme: true,
-  $theme-colors: (
-    'primary': '#FF6B6B',    // Your brand red
-    'secondary': '#4ECDC4'   // Your brand teal
-  )
-)
+```javascript
+// In your main.js
+import { createApp } from 'vue'
+import App from './App.vue'
+import { LittleBrandUI, applyTheme } from 'littlebrand-ui-kit'
+import 'littlebrand-ui-kit/style.css'
+
+// Apply your custom colors - generates 68+ tokens automatically!
+applyTheme({
+  primary: '#FF6B6B',    // Your brand red
+  secondary: '#4ECDC4'   // Your brand teal
+})
+
+const app = createApp(App)
+app.use(LittleBrandUI)
+app.mount('#app')
 ```
 
 ## Color System Architecture
@@ -51,19 +66,26 @@ The LittleBrand UI Kit features a sophisticated yet flexible theming system that
 ### File Structure
 ```
 src/styles/
-├── _colors.sass           # RadixUI color scales (raw values)
-├── _theme.sass            # Main theme file & token output
-├── _theme-config.sass     # Configuration processing
-├── _color-generator.sass  # Scale generation functions
-└── main.sass             # Entry point
+├── _colors.sass           # OKLCH color definitions
+├── _theme.sass            # Theme system using colors  
+├── _base.sass             # Core spacing, sizing, layout variables
+├── _typography.sass       # Typography using CSS custom properties
+├── _component-variables.sass # Component-specific variables
+├── _reset.sass            # CSS reset with stable values
+├── index.sass             # Main entry point
+└── main.sass             # Alternative entry point
+
+src/utils/
+├── oklch-utils.js         # OKLCH conversion and manipulation utilities
+└── color-generator.js     # Main color generation API
 ```
 
-### How Files Work Together
+### How the System Works
 
-1. **`_colors.sass`** - Contains all predefined 12-step color scales
-2. **`_theme.sass`** - Routes between traditional/custom modes
-3. **`_theme-config.sass`** - Processes user configurations
-4. **`_color-generator.sass`** - Generates scales and tokens dynamically
+1. **`_colors.sass`** - Contains OKLCH color scales for all semantic colors
+2. **`_theme.sass`** - Outputs CSS custom properties from color scales
+3. **`color-generator.js`** - Provides runtime theming with `applyTheme()` function
+4. **`oklch-utils.js`** - Core OKLCH color space utilities for generation
 
 ## Token Structure
 
@@ -111,97 +133,112 @@ Used for subtle backgrounds (cards, tonal buttons)
 
 ## Usage Methods
 
-### Method 1: Traditional Theme (Default)
+### Method 1: Default Theme
 
-No configuration needed. Uses predefined colors:
+No configuration needed. Uses predefined OKLCH colors:
 - Primary: Orange
-- Secondary: Teal
+- Secondary: Teal  
+- Tertiary: Blue
 - Success: Green
 - Warning: Yellow
 - Error: Red
 - Info: Blue
 - Neutral: Gray
 
-```sass
-@use '@littlebrand/ui-kit/styles/main'
+```javascript
+import 'littlebrand-ui-kit/style.css'
+// That's it! Default theme is applied automatically
 ```
 
-### Method 2: Custom Theme with Hex Colors
+### Method 2: Runtime Theme with JavaScript
 
-Provide single colors, and the system generates 12-step scales:
+Provide single colors, and the system generates 12-step OKLCH scales automatically:
 
-```sass
-@use '@littlebrand/ui-kit/styles/theme' with (
-  $use-custom-theme: true,
-  $theme-colors: (
-    'primary': '#FF6B6B',
-    'secondary': '#4ECDC4',
-    'success': '#51CF66',
-    'warning': '#FFD43B',
-    'error': '#FF6B6B',
-    'neutral': '#868E96'
-  )
-)
+```javascript
+import { applyTheme } from 'littlebrand-ui-kit'
+
+applyTheme({
+  primary: '#FF6B6B',      // Your brand red
+  secondary: '#4ECDC4',    // Your brand teal
+  success: '#51CF66',      // Custom success green
+  warning: '#FFD43B',      // Custom warning yellow
+  error: '#FF6B6B',        // Custom error red
+  neutral: '#868E96'       // Custom neutral gray
+})
 ```
 
-### Method 3: Using Preset Scales
+### Method 3: Saturation Curves
 
-Reference built-in color scales by name:
+Control the mood of your colors with different curves:
 
-```sass
-@use '@littlebrand/ui-kit/styles/theme' with (
-  $use-custom-theme: true,
-  $theme-colors: (
-    'primary': 'orange',    // Use predefined orange scale
-    'secondary': 'teal',    // Use predefined teal scale
-    'neutral': 'slate'      // Use predefined slate scale
-  )
-)
+```javascript
+import { applyTheme } from 'littlebrand-ui-kit'
+
+// Natural curve (default) - balanced saturation
+applyTheme({ primary: '#FF6B6B' }, 'natural')
+
+// Vivid curve - more saturated, bold colors
+applyTheme({ primary: '#FF6B6B' }, 'vivid')
+
+// Muted curve - less saturated, subtle colors
+applyTheme({ primary: '#FF6B6B' }, 'muted')
 ```
 
-### Method 4: Full Custom Scales
+### Method 4: CSS Variable Overrides
 
-Provide complete 12-step scales for precise control:
+For fine-grained control, override specific CSS variables:
 
-```sass
-@use '@littlebrand/ui-kit/styles/theme' with (
-  $use-custom-theme: true,
-  $theme-colors: (
-    'primary': (
-      1: hsl(24, 100%, 98%),
-      2: hsl(24, 100%, 96%),
-      3: hsl(24, 100%, 93%),
-      4: hsl(25, 100%, 90%),
-      5: hsl(25, 100%, 86%),
-      6: hsl(25, 100%, 82%),
-      7: hsl(24, 100%, 77%),
-      8: hsl(24, 100%, 71%),
-      9: hsl(24, 100%, 64%),
-      10: hsl(24, 100%, 58%),
-      11: hsl(24, 100%, 45%),
-      12: hsl(24, 100%, 35%)
-    )
-  )
-)
+```css
+:root {
+  /* Override specific tokens */
+  --lb-fill-primary-normal: oklch(0.65 0.15 30);
+  --lb-border-primary-normal: oklch(0.65 0.15 30);
+  
+  /* Or use hex colors that convert to OKLCH automatically */
+  --lb-text-primary-normal: #ff6b6b;
+  
+  /* Background customization */
+  --lb-background-page: oklch(0.98 0.005 30);
+  --lb-background-surface: oklch(0.96 0.01 30);
+}
+
+/* Dark mode specific overrides */
+[data-theme="dark"], .dark {
+  --lb-fill-primary-normal: oklch(0.75 0.12 30);
+  --lb-background-page: oklch(0.08 0.005 30);
+}
 ```
 
-### Method 5: Mix & Match
+### Method 5: Runtime Theme Changes
 
-Combine different input types in one configuration:
+Change themes dynamically during runtime:
 
-```sass
-@use '@littlebrand/ui-kit/styles/theme' with (
-  $use-custom-theme: true,
-  $theme-colors: (
-    'primary': '#FF6B6B',        // Hex color
-    'secondary': 'teal',         // Preset
-    'neutral': (                 // Full scale
-      1: hsl(210, 20%, 98%),
-      // ... all 12 steps
-    ),
-    'brand-purple': '#9333EA'    // Custom semantic color
-  )
-)
+```javascript
+// Theme switcher function
+function applyBrandTheme(themeName) {
+  const themes = {
+    corporate: {
+      primary: '#0066cc',
+      secondary: '#6b7280',
+      neutral: '#94a3b8'
+    },
+    playful: {
+      primary: '#8b5cf6',
+      secondary: '#ec4899',
+      neutral: '#6b7280'
+    },
+    nature: {
+      primary: '#059669',
+      secondary: '#d97706',
+      neutral: '#78716c'
+    }
+  }
+  
+  applyTheme(themes[themeName], 'natural')
+}
+
+// Usage
+applyBrandTheme('corporate')
 ```
 
 ## Configuration Options
@@ -384,13 +421,13 @@ The system automatically generates dark mode colors by:
 
 ```css
 :root {
-  /* Light mode tokens */
-  --lb-fill-primary-normal: hsl(24, 100%, 64%);
+  /* Light mode tokens (OKLCH) */
+  --lb-fill-primary-normal: oklch(0.679 0.200 41.4);
 }
 
-[data-theme="dark"] {
-  /* Dark mode tokens */
-  --lb-fill-primary-normal: hsl(24, 90%, 45%);
+[data-theme="dark"], .dark {
+  /* Dark mode tokens (automatically generated) */
+  --lb-fill-primary-normal: oklch(0.545 0.180 41.4);
 }
 ```
 

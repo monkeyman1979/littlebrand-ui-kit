@@ -35,12 +35,17 @@ The UI kit requires modern browsers with OKLCH support. No HSL fallback is provi
 ```
 src/styles/
 ├── _colors.sass           # OKLCH color definitions
-├── _color-generator.sass  # Color scale generation functions
-├── oklch-overrides.css   # CSS custom properties for colors
-└── _theme.sass            # Theme system using colors
+├── _theme.sass            # Theme system using colors  
+├── _base.sass             # Core spacing, sizing, layout variables
+├── _typography.sass       # Typography using CSS custom properties
+├── _component-variables.sass # Component-specific variables
+├── _reset.sass            # CSS reset with stable values
+├── index.sass             # Main entry point
+└── main.sass              # Alternative entry point
 
 src/utils/
-└── oklch-utils.js         # OKLCH conversion and manipulation utilities
+├── oklch-utils.js         # OKLCH conversion and manipulation utilities
+└── color-generator.js     # Main color generation API
 ```
 
 ### Usage in Components
@@ -78,24 +83,29 @@ The compiled CSS includes both formats with feature detection:
 
 ### JavaScript API
 
-The color generator utilities automatically detect and use OKLCH when available:
+The color generator utilities provide comprehensive OKLCH-based theming:
 
 ```javascript
-import colorGenerator from '@/utils/color-generator.js';
+import { applyTheme, generateScale } from '@/utils/color-generator.js';
 
-// Automatically uses OKLCH if supported, HSL otherwise
-const scale = colorGenerator.generateScale('#ff6600');
+// Apply a complete theme with automatic OKLCH generation
+applyTheme({
+  primary: '#ff6600',   // Orange - generates 68+ tokens automatically
+  secondary: '#0066cc'  // Blue
+});
 
-// Check if OKLCH is supported
-if (colorGenerator.supportsOklch) {
-  console.log('Using OKLCH color space');
-}
+// Generate individual color scales
+const orangeScale = generateScale('#ff6600');
+console.log(orangeScale[9]); // oklch(0.679 0.200 41.4)
 
-// Direct OKLCH utilities (when supported)
-if (colorGenerator.oklch) {
-  const oklch = colorGenerator.oklch.hexToOklch('#ff6600');
-  console.log(oklch); // { L: 0.5, C: 0.2, H: 70 }
-}
+// Direct OKLCH utilities
+import { hexToOklch, oklchToHex } from '@/utils/oklch-utils.js';
+
+const oklch = hexToOklch('#ff6600');
+console.log(oklch); // { L: 0.679, C: 0.200, H: 41.4 }
+
+const hex = oklchToHex(0.679, 0.200, 41.4);
+console.log(hex); // '#ff6600'
 ```
 
 ## Custom Theme Colors
@@ -115,7 +125,7 @@ const customTheme = {
   secondary: '#3377ff',
 };
 
-colorGenerator.applyTheme(customTheme);
+applyTheme(customTheme);
 ```
 
 ## Migration Notes
@@ -134,18 +144,31 @@ When adding new colors:
 
 ### Color Conversion
 
-To convert between formats:
+The utilities provide comprehensive color conversion:
 
 ```javascript
-import { hexToOklch, oklchToHex } from '@/utils/oklch-utils.js';
+import { 
+  hexToOklch, 
+  oklchToHex, 
+  generateScale, 
+  generateDarkScale,
+  generateAlphaScale 
+} from '@/utils/color-generator.js';
 
 // Convert hex to OKLCH
 const oklch = hexToOklch('#ff6600');
 // Result: { L: 0.679, C: 0.200, H: 41.4 }
 
-// Convert OKLCH to hex
-const hex = oklchToHex(0.679, 0.200, 41.4);
-// Result: '#ff6600'
+// Generate complete 12-step scale
+const scale = generateScale('#ff6600');
+// Result: { 1: 'oklch(...)', 2: 'oklch(...)', ..., 12: 'oklch(...)' }
+
+// Generate optimized dark mode scale
+const darkScale = generateDarkScale(scale, '#ff6600');
+
+// Generate transparent versions
+const alphaLight = generateAlphaScale('#ff6600', 'light');
+const alphaDark = generateAlphaScale('#ff6600', 'dark');
 ```
 
 ## Testing
