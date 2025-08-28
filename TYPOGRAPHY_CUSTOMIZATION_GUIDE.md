@@ -12,9 +12,10 @@ The UI kit provides these main typography variables that you can override:
 
 ```css
 :root {
-  /* Font Families */
+  /* Font Families (NEW - v0.3.3+: Separate UI font) */
   --lb-font-heading: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
   --lb-font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --lb-font-label: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;  /* UI elements */
   --lb-font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;
   
   /* Unified Font Weights (NEW - v0.2.4+) */
@@ -92,8 +93,9 @@ Create a dedicated file for your LittleBrand customizations (e.g., `_littlebrand
 
 // Override the CSS variables
 :root
-  --lb-font-heading: 'Inter', sans-serif
-  --lb-font-body: 'Inter', sans-serif
+  --lb-font-heading: 'Playfair Display', serif  // Serif for headings
+  --lb-font-body: 'Inter', sans-serif           // Sans-serif for body
+  --lb-font-label: 'Inter', sans-serif          // Sans-serif for UI (buttons, labels, etc.)
   --lb-font-weight-heading: 700  // Makes ALL headings bold
   --lb-font-weight-body: 400
   --lb-font-weight-label: 500
@@ -150,6 +152,7 @@ Always use `:root` selector for global typography overrides to ensure proper spe
 :root
   --lb-font-heading: 'CustomFont', sans-serif
   --lb-font-body: 'CustomFont', sans-serif
+  --lb-font-label: 'CustomFont', sans-serif
 ```
 
 ### Method 3: Variable Fonts
@@ -165,6 +168,7 @@ Always use `:root` selector for global typography overrides to ensure proper spe
 :root
   --lb-font-heading: 'VariableFont', sans-serif
   --lb-font-body: 'VariableFont', sans-serif
+  --lb-font-label: 'VariableFont', sans-serif
   --lb-font-weight-heading: 650  // Any value in the range
   --lb-font-weight-body: 380
 ```
@@ -200,6 +204,7 @@ Here's a complete example of a typical override file:
   // Font families
   --lb-font-heading: 'Space Grotesk', system-ui, sans-serif
   --lb-font-body: 'Inter', system-ui, sans-serif
+  --lb-font-label: 'Inter', system-ui, sans-serif  // UI elements
   --lb-font-mono: 'JetBrains Mono', monospace
   
   // Unified font weights (simplest approach)
@@ -232,6 +237,7 @@ Just want to change the font family? This is all you need:
 :root
   --lb-font-heading: 'Raleway', sans-serif
   --lb-font-body: 'Raleway', sans-serif
+  --lb-font-label: 'Raleway', sans-serif
 ```
 
 ### Scenario 2: Different Fonts for Headings and Body
@@ -242,18 +248,35 @@ Just want to change the font family? This is all you need:
 :root
   --lb-font-heading: 'Playfair Display', serif
   --lb-font-body: 'Source Sans Pro', sans-serif
+  --lb-font-label: 'Source Sans Pro', sans-serif
   --lb-font-weight-heading: 700
   --lb-font-weight-body: 400
 ```
 
-### Scenario 3: Making All Headings Lighter
+### Scenario 3: Three Different Fonts (NEW - v0.3.3+)
+
+For maximum typography control with distinct fonts for headings, content, and UI:
+
+```sass
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Merriweather:wght@400&family=Inter:wght@500;600&display=swap')
+
+:root
+  --lb-font-heading: 'Playfair Display', serif     // Elegant serif for headings
+  --lb-font-body: 'Merriweather', serif           // Readable serif for body text
+  --lb-font-label: 'Inter', sans-serif            // Clean sans-serif for UI elements
+  --lb-font-weight-heading: 700
+  --lb-font-weight-body: 400
+  --lb-font-weight-label: 500
+```
+
+### Scenario 4: Making All Headings Lighter
 
 ```sass
 :root
   --lb-font-weight-heading: 400  // Changes h1-h6 to regular weight
 ```
 
-### Scenario 4: Component-Level Override
+### Scenario 5: Component-Level Override
 
 For specific sections only:
 

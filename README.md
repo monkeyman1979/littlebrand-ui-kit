@@ -12,7 +12,7 @@ A modern Vue 3 UI component library with a powerful color generation system. Bui
 - 🌳 **Tree-Shakeable** - Only bundle what you use
 - 💅 **SASS + Pug** - Clean, maintainable component code
 - 📝 **200+ CSS Variables** - Complete control over typography, spacing, and colors
-- 🔤 **Unified Typography** - Control all headings, body, or labels with single variables
+- 🔤 **Flexible Typography** - Three independent font families for headings, body, and UI elements
 
 ## 📦 Installation
 
@@ -189,8 +189,10 @@ Override specific variables in your CSS:
   --lb-border-primary-normal: #8b5cf6;
   --lb-text-primary-normal: #8b5cf6;
   
-  /* Change typography */
-  --lb-font-family-base: 'Inter', sans-serif;
+  /* Change typography - separate fonts for different contexts */
+  --lb-font-heading: 'Playfair Display', serif;
+  --lb-font-body: 'Inter', sans-serif;  
+  --lb-font-label: 'Inter', sans-serif;  /* UI elements */
   --lb-font-size-base: 15px;
   
   /* Change border radius */
@@ -326,8 +328,12 @@ applyTheme({
 
 ```css
 :root {
-  /* Typography */
-  --lb-font-family-base: 'Roboto', sans-serif;
+  /* Typography - Three independent font families */
+  --lb-font-heading: 'Playfair Display', serif;
+  --lb-font-body: 'Roboto', sans-serif;
+  --lb-font-label: 'Inter', sans-serif;
+  
+  /* Font sizes and weights */
   --lb-font-size-sm: 13px;
   --lb-font-size-base: 15px;
   --lb-font-size-lg: 18px;
