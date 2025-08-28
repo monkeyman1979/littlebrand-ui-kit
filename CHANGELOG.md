@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.2] - 2025-08-28
+
+### Fixed
+- **OKLCH Contrast Calculation Algorithm**
+  - Fixed incorrect text color selection on filled buttons across all color variants
+  - Raised contrast threshold from 0.6 to 0.75 for better OKLCH lightness evaluation
+  - Added special handling for warning/yellow colors that require dark text at lower lightness values (>0.65)
+  - Primary buttons now correctly display white text on dark orange backgrounds (was incorrectly showing black)
+  - All other dark filled buttons (secondary, success, error, info, neutral) maintain proper white text
+  - Warning buttons correctly keep dark text for accessibility on yellow backgrounds
+  - Eliminated the need for manual `--lb-text-on-primary` overrides in user projects
+  - Ensured consistency between static theme defaults and dynamic color generation
+
 ## [0.3.1] - 2025-08-28
 
 ### Improved
