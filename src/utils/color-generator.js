@@ -64,7 +64,19 @@ export function generateSemanticTokens(name, scale, darkScale = null) {
   // Parse OKLCH lightness from scale[9]
   const match = scale[9].match(/oklch\(([\d.]+)/)
   const lightness = match ? parseFloat(match[1]) : 0.5
-  const textColor = lightness > 0.6 ? 'var(--lb-text-neutral-contrast-high)' : 'white'
+  
+  // Improved OKLCH contrast calculation
+  // Most colors at 0.75+ lightness need dark text, but yellow is special case
+  let textColor = 'white' // Default to white for most colors
+  
+  if (lightness > 0.75) {
+    // High lightness usually needs dark text
+    textColor = 'var(--lb-text-neutral-contrast-high)'
+  } else if (lightness > 0.65 && name === 'warning') {
+    // Yellow/warning colors need dark text even at lower lightness
+    textColor = 'var(--lb-text-neutral-contrast-high)'
+  }
+  // All other cases default to white text
   
   tokens[`--lb-text-on-${name}`] = textColor
   tokens[`--lb-text-on-${name}-hover`] = textColor
