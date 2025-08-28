@@ -40,7 +40,7 @@ label
   display: inline-flex
   align-items: center
   gap: base.$space-xs
-  font-family: typography.$font-body
+  font-family: var(--lb-font-label)
   font-size: typography.$font-size-label-base // 14px (0.875rem)
   font-weight: var(--lb-font-weight-label)
   line-height: typography.$line-height-normal

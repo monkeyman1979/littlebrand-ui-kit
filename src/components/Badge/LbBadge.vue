@@ -105,7 +105,7 @@ defineOptions({
   display: inline-flex
   align-items: center
   justify-content: center
-  font-family: typography.$font-body
+  font-family: var(--lb-font-label)
   font-weight: var(--lb-font-weight-semibold)
   line-height: 1
   letter-spacing: typography.$letter-spacing-tight

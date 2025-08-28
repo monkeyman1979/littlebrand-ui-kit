@@ -136,7 +136,7 @@ defineOptions({
   height: cv.$button-height-medium  // Default to medium
   border: none
   border-radius: cv.$button-border-radius
-  font-family: typography.$font-body
+  font-family: var(--lb-font-label)
   font-size: cv.$button-font-size-medium
   font-weight: var(--lb-font-weight-label)
   line-height: typography.$line-height-normal
