@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.1] - 2025-08-28
+
+### Improved
+- **OKLCH Color System Enhancements**
+  - Corrected yellow color hue from 110° to 95° for purer yellow tone without green tint
+  - Enhanced typography contrast by improving lightness values for better text readability:
+    - Light mode steps 1-2: Better contrast against white backgrounds
+    - Dark mode steps 11-12: Enhanced contrast for high-contrast text on dark backgrounds
+  - Interactive Theme Playground now uses centralized OKLCH utilities instead of redundant HSL functions
+
+### Changed
+- **Architecture Simplification**
+  - Consolidated style system by removing 3 obsolete SASS files: `_color-generator.sass`, `_theme-config.sass`, `configure.sass`
+  - Streamlined `_theme.sass` by removing branching theme configuration system
+  - Updated color-generator.js to use consolidated OKLCH utilities for better maintainability
+
+### Fixed
+- **Component Consistency**
+  - Fixed Interactive Theme Playground name collision between imported and local color functions
+  - Removed redundant HSL color generation code in favor of OKLCH utilities
+  - Improved text-on-color contrast calculation using OKLCH-based lightness detection
+
 ## [0.3.0] - 2025-08-27
 
 ### Fixed
