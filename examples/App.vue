@@ -136,7 +136,7 @@
             p This is a regular paragraph demonstrating the body font weight. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             p.body-large Large body text with adjusted weight
             p.body-small Small body text with adjusted weight
-            LbSnackbar(:model-value="true" message="Snackbar uses body font weight" variant="info" position="relative" :auto-hide="false")
+            LbSnackbar(id="font-weight-demo" :model-value="true" message="Snackbar uses body font weight" variant="info" position="relative" :auto-hide="false")
           
           .preview-group
             h4 Heading Weight
@@ -153,6 +153,75 @@
         .color-card(v-for="color in colors" :key="color.name")
           .color-swatch(:style="{ background: `var(${color.var})` }")
           .label {{ color.name }}
+    
+    section.oklch-demo-section
+      h2 OKLCH Color System Test
+      
+      .oklch-support-banner
+        .banner-icon
+          svg(width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+            path(d="M9 11l3 3L22 4")
+            path(d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11")
+        .banner-content
+          strong Browser Support: 
+          span Your browser supports OKLCH! You are seeing the modern OKLCH color implementation with improved perceptual uniformity.
+      
+      .oklch-description
+        h3 Color Scales Demonstration
+        p Our UI kit uses OKLCH color space for perceptually uniform color scales. Each color has 12 carefully crafted steps that maintain consistent perceived brightness differences.
+      
+      .color-scales-container
+        .scale-column
+          h4 Orange Scale (Primary)
+          .color-scale-oklch
+            .scale-step-oklch(v-for="n in 12" :key="`orange-${n}`" :class="`step-${n}`")
+              .step-swatch(:style="{ background: getColorForStep('primary', n) }")
+              .step-label Step {{ n }}{{ n === 9 ? ' (Base)' : '' }}
+        
+        .scale-column
+          h4 Teal Scale (Secondary)
+          .color-scale-oklch
+            .scale-step-oklch(v-for="n in 12" :key="`teal-${n}`" :class="`step-${n}`")
+              .step-swatch(:style="{ background: getColorForStep('secondary', n) }")
+              .step-label Step {{ n }}{{ n === 9 ? ' (Base)' : '' }}
+      
+      .oklch-benefits
+        h3 Benefits of OKLCH
+        ul
+          li
+            strong Perceptual Uniformity: 
+            span OKLCH lightness corresponds directly to perceived brightness
+          li
+            strong Better Gradients: 
+            span Color transitions are smoother and more natural
+          li
+            strong Consistent Saturation: 
+            span Chroma remains consistent when adjusting lightness
+          li
+            strong Wide Gamut: 
+            span Can represent colors beyond sRGB on capable displays
+          li
+            strong Predictable Adjustments: 
+            span Changing lightness doesn't affect perceived hue
+      
+      .theme-mode-comparison
+        h3 Light & Dark Mode Support
+        p The OKLCH system automatically adapts for dark mode with optimized lightness curves:
+        
+        .mode-preview-grid
+          .mode-preview.light-preview
+            h5 Light Mode
+            .preview-colors
+              .preview-color-chip(v-for="color in ['primary', 'secondary', 'neutral']" :key="`light-${color}`")
+                .chip-main(:style="{ background: getLightModeColor(color) }")
+                .chip-label {{ capitalize(color) }}
+          
+          .mode-preview.dark-preview
+            h5 Dark Mode
+            .preview-colors
+              .preview-color-chip(v-for="color in ['primary', 'secondary', 'neutral']" :key="`dark-${color}`")
+                .chip-main(:style="{ background: getDarkModeColor(color) }")
+                .chip-label {{ capitalize(color) }}
     
     section.custom-theme-section
       h2 Custom Theme Configuration
@@ -3180,6 +3249,23 @@ const toggleTheme = () => {
   document.documentElement.setAttribute('data-theme', isDark.value ? 'dark' : 'light')
 }
 
+// OKLCH demo helper methods
+const getColorForStep = (color, step) => {
+  // Use the CSS scale variables instead of hardcoded values
+  // This properly demonstrates the token architecture
+  return `var(--lb-${color}-${step})`
+}
+
+const getLightModeColor = (color) => {
+  // Return the CSS variable for light mode
+  return `var(--lb-fill-${color}-normal)`
+}
+
+const getDarkModeColor = (color) => {
+  // Return the CSS variable for dark mode
+  return `var(--lb-fill-${color}-normal)`
+}
+
 // Font weight functions
 const updateFontWeights = () => {
   document.documentElement.style.setProperty('--lb-font-weight-label', fontWeightLabel.value)
@@ -3887,6 +3973,155 @@ section
       border-radius: base.$radius-md
       border: base.$border-sm solid var(--lb-border-neutral-normal)
 
+.oklch-demo-section
+  display: flex
+  flex-direction: column
+  gap: base.$space-2xl
+  
+  .oklch-support-banner
+    display: flex
+    align-items: center
+    gap: base.$space-md
+    padding: base.$space-lg
+    background: var(--lb-surface-success-subtle)
+    border: base.$border-sm solid var(--lb-border-success-normal)
+    border-radius: base.$radius-md
+    color: var(--lb-text-success-contrast-high)
+    
+    .banner-icon
+      flex-shrink: 0
+      color: var(--lb-text-success-normal)
+    
+    .banner-content
+      strong
+        font-weight: var(--lb-font-weight-semibold)
+  
+  .oklch-description
+    h3
+      margin: 0 0 base.$space-sm 0
+    p
+      margin: 0
+      color: var(--lb-text-neutral-contrast-low)
+  
+  .color-scales-container
+    display: grid
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))
+    gap: base.$space-2xl
+    
+    .scale-column
+      h4
+        margin: 0 0 base.$space-md 0
+        color: var(--lb-text-neutral-contrast-high)
+    
+    .color-scale-oklch
+      display: flex
+      flex-direction: column
+      gap: 2px
+      padding: base.$space-sm
+      background: var(--lb-surface-neutral-subtle)
+      border-radius: base.$radius-md
+      
+      .scale-step-oklch
+        display: flex
+        align-items: center
+        gap: base.$space-md
+        padding: base.$space-xs
+        
+        &.step-9
+          .step-label
+            font-weight: var(--lb-font-weight-semibold)
+        
+        .step-swatch
+          width: 100%
+          height: 32px
+          border-radius: base.$radius-sm
+          border: base.$border-sm solid var(--lb-border-neutral-line)
+        
+        .step-label
+          min-width: 80px
+          font-size: var(--lb-font-size-label-small)
+          color: var(--lb-text-neutral-contrast-low)
+  
+  .oklch-benefits
+    background: var(--lb-surface-neutral-subtle)
+    padding: base.$space-lg
+    border-radius: base.$radius-md
+    
+    h3
+      margin: 0 0 base.$space-md 0
+      color: var(--lb-text-neutral-contrast-high)
+    
+    ul
+      margin: 0
+      padding-left: base.$space-lg
+      display: flex
+      flex-direction: column
+      gap: base.$space-sm
+      
+      li
+        color: var(--lb-text-neutral-normal)
+        
+        strong
+          color: var(--lb-text-neutral-contrast-high)
+          font-weight: var(--lb-font-weight-semibold)
+  
+  .theme-mode-comparison
+    h3
+      margin: 0 0 base.$space-sm 0
+      color: var(--lb-text-neutral-contrast-high)
+    
+    p
+      margin: 0 0 base.$space-lg 0
+      color: var(--lb-text-neutral-contrast-low)
+    
+    .mode-preview-grid
+      display: grid
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr))
+      gap: base.$space-lg
+      
+      .mode-preview
+        padding: base.$space-lg
+        border-radius: base.$radius-md
+        
+        &.light-preview
+          background: white
+          border: base.$border-sm solid var(--lb-border-neutral-line)
+          
+          h5
+            color: var(--lb-text-neutral-contrast-high)
+        
+        &.dark-preview
+          background: oklch(0.17 0.003 0)
+          border: base.$border-sm solid oklch(0.378 0.004 0)
+          
+          h5
+            color: oklch(0.93 0.002 0)
+        
+        h5
+          margin: 0 0 base.$space-md 0
+          font-size: var(--lb-font-size-label-large)
+        
+        .preview-colors
+          display: flex
+          gap: base.$space-sm
+          
+          .preview-color-chip
+            flex: 1
+            
+            .chip-main
+              height: 48px
+              border-radius: base.$radius-sm
+              margin-bottom: base.$space-xs
+            
+            .chip-label
+              font-size: var(--lb-font-size-label-small)
+              text-align: center
+              
+              .light-preview &
+                color: var(--lb-text-neutral-normal)
+              
+              .dark-preview &
+                color: oklch(0.639 0.005 0)
       
 .components-section
   display: flex

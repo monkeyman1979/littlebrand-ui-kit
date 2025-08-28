@@ -1,400 +1,461 @@
-// LittleBrand UI Kit - Color Scales
-// 1-12 scale inspired by Radix UI using HSL format
-// This module is designed to be used with @use
+// LittleBrand UI Kit - OKLCH Color System
+// Single source of truth for all colors using OKLCH color space
+// Enhanced dynamic ranges for better visual distinction between steps
 
-// === Neutral Scale - Light ===
-$gray-1: hsl(0, 0%, 99%)
-$gray-2: hsl(0, 0%, 97.3%)
-$gray-3: hsl(0, 0%, 95.1%)
-$gray-4: hsl(0, 0%, 93%)
-$gray-5: hsl(0, 0%, 90.9%)
-$gray-6: hsl(0, 0%, 88.7%)
-$gray-7: hsl(0, 0%, 85.8%)
-$gray-8: hsl(0, 0%, 78%)
-$gray-9: hsl(0, 0%, 56.1%)
-$gray-10: hsl(0, 0%, 52.3%)
-$gray-11: hsl(0, 0%, 43.5%)
-$gray-12: hsl(0, 0%, 9%)
+// === Primary (Orange) - Enhanced Dynamic Range ===
+// Base: #FF6600 at step 9
+$orange-1: oklch(0.995 0.020 44)   // Nearly white with hint of orange
+$orange-2: oklch(0.980 0.040 44)
+$orange-3: oklch(0.950 0.065 44)
+$orange-4: oklch(0.900 0.095 44)
+$orange-5: oklch(0.840 0.125 43.5)
+$orange-6: oklch(0.780 0.155 43.5)
+$orange-7: oklch(0.745 0.180 43.5)
+$orange-8: oklch(0.720 0.195 43.5)
+$orange-9: oklch(0.696 0.204 43.5)  // Base color: #FF6600
+$orange-10: oklch(0.640 0.195 43)
+$orange-11: oklch(0.450 0.160 42)
+$orange-12: oklch(0.200 0.120 41)   // Nearly black with orange tint
 
-// === Neutral Scale - Dark ===
-$gray-dark-1: hsl(0, 0%, 8.5%)
-$gray-dark-2: hsl(0, 0%, 11%)
-$gray-dark-3: hsl(0, 0%, 13.6%)
-$gray-dark-4: hsl(0, 0%, 15.8%)
-$gray-dark-5: hsl(0, 0%, 17.9%)
-$gray-dark-6: hsl(0, 0%, 20.5%)
-$gray-dark-7: hsl(0, 0%, 24.3%)
-$gray-dark-8: hsl(0, 0%, 31.2%)
-$gray-dark-9: hsl(0, 0%, 43.9%)
-$gray-dark-10: hsl(0, 0%, 49.4%)
-$gray-dark-11: hsl(0, 0%, 62.8%)
-$gray-dark-12: hsl(0, 0%, 93%)
+// Orange Dark Mode
+$orange-dark-1: oklch(0.100 0.030 43.5)
+$orange-dark-2: oklch(0.150 0.050 43.5)
+$orange-dark-3: oklch(0.220 0.080 43.5)
+$orange-dark-4: oklch(0.300 0.110 43.5)
+$orange-dark-5: oklch(0.380 0.140 43.5)
+$orange-dark-6: oklch(0.480 0.170 43.5)
+$orange-dark-7: oklch(0.580 0.190 43.5)
+$orange-dark-8: oklch(0.650 0.200 43.5)
+$orange-dark-9: oklch(0.696 0.204 43.5)  // Same as light mode step 9
+$orange-dark-10: oklch(0.760 0.190 43.5)
+$orange-dark-11: oklch(0.850 0.150 43.5)
+$orange-dark-12: oklch(0.950 0.100 43.5)
 
-// Gray Alpha (Light)
-$gray-a1: hsla(0, 0%, 0%, 0.012)
-$gray-a2: hsla(0, 0%, 0%, 0.027)
-$gray-a3: hsla(0, 0%, 0%, 0.047)
-$gray-a4: hsla(0, 0%, 0%, 0.071)
-$gray-a5: hsla(0, 0%, 0%, 0.090)
-$gray-a6: hsla(0, 0%, 0%, 0.114)
-$gray-a7: hsla(0, 0%, 0%, 0.141)
-$gray-a8: hsla(0, 0%, 0%, 0.220)
-$gray-a9: hsla(0, 0%, 0%, 0.439)
-$gray-a10: hsla(0, 0%, 0%, 0.478)
-$gray-a11: hsla(0, 0%, 0%, 0.565)
-$gray-a12: hsla(0, 0%, 0%, 0.910)
+// === Secondary (Teal) - Enhanced Dynamic Range ===
+$teal-1: oklch(0.995 0.015 195)    // Nearly white with hint of teal
+$teal-2: oklch(0.975 0.030 195)
+$teal-3: oklch(0.935 0.050 195)
+$teal-4: oklch(0.870 0.075 195)
+$teal-5: oklch(0.790 0.105 195)
+$teal-6: oklch(0.710 0.135 195)
+$teal-7: oklch(0.660 0.150 194.8)
+$teal-8: oklch(0.630 0.158 194.8)
+$teal-9: oklch(0.608 0.162 194.8)  // Base teal
+$teal-10: oklch(0.550 0.150 194.5)
+$teal-11: oklch(0.400 0.125 194)
+$teal-12: oklch(0.150 0.085 193)   // Nearly black with teal tint
 
-// Gray Dark Alpha
-$gray-dark-a1: hsla(0, 0%, 100%, 0.005)
-$gray-dark-a2: hsla(0, 0%, 100%, 0.013)
-$gray-dark-a3: hsla(0, 0%, 100%, 0.034)
-$gray-dark-a4: hsla(0, 0%, 100%, 0.056)
-$gray-dark-a5: hsla(0, 0%, 100%, 0.086)
-$gray-dark-a6: hsla(0, 0%, 100%, 0.124)
-$gray-dark-a7: hsla(0, 0%, 100%, 0.176)
-$gray-dark-a8: hsla(0, 0%, 100%, 0.249)
-$gray-dark-a9: hsla(0, 0%, 100%, 0.386)
-$gray-dark-a10: hsla(0, 0%, 100%, 0.446)
-$gray-dark-a11: hsla(0, 0%, 100%, 0.592)
-$gray-dark-a12: hsla(0, 0%, 100%, 0.923)
+// Teal Dark Mode
+$teal-dark-1: oklch(0.140 0.020 195)
+$teal-dark-2: oklch(0.170 0.030 195)
+$teal-dark-3: oklch(0.230 0.050 195)
+$teal-dark-4: oklch(0.280 0.070 195)
+$teal-dark-5: oklch(0.330 0.080 195)
+$teal-dark-6: oklch(0.390 0.090 195)
+$teal-dark-7: oklch(0.470 0.100 195)
+$teal-dark-8: oklch(0.550 0.110 195)
+$teal-dark-9: oklch(0.608 0.162 194.8)  // Same as light mode step 9
+$teal-dark-10: oklch(0.650 0.150 195)
+$teal-dark-11: oklch(0.750 0.120 195)
+$teal-dark-12: oklch(0.900 0.080 195)
 
-// === Primary (Orange) - Light ===
-$orange-1: hsl(24, 100%, 99%)
-$orange-2: hsl(24, 100%, 97.5%)
-$orange-3: hsl(24, 100%, 95%)
-$orange-4: hsl(24, 100%, 92%)
-$orange-5: hsl(24, 100%, 87%)
-$orange-6: hsl(24, 100%, 80%)
-$orange-7: hsl(24, 100%, 70%)
-$orange-8: hsl(24, 100%, 60%)
-$orange-9: hsl(24, 100%, 50%)
-$orange-10: hsl(24, 100%, 45%)
-$orange-11: hsl(24, 90%, 35%)
-$orange-12: hsl(24, 80%, 15%)
+// === Tertiary (Blue) - Enhanced Dynamic Range ===
+$blue-1: oklch(0.995 0.020 264)    // Nearly white with hint of blue
+$blue-2: oklch(0.975 0.045 264)
+$blue-3: oklch(0.930 0.075 264)
+$blue-4: oklch(0.850 0.110 264)
+$blue-5: oklch(0.750 0.155 264)
+$blue-6: oklch(0.650 0.195 264)
+$blue-7: oklch(0.595 0.220 264.1)
+$blue-8: oklch(0.570 0.230 264.1)
+$blue-9: oklch(0.546 0.236 264.1)  // Base blue
+$blue-10: oklch(0.490 0.225 264)
+$blue-11: oklch(0.350 0.185 263.5)
+$blue-12: oklch(0.150 0.120 263)   // Nearly black with blue tint
 
+// Blue Dark Mode
+$blue-dark-1: oklch(0.175 0.020 240)
+$blue-dark-2: oklch(0.210 0.030 240)
+$blue-dark-3: oklch(0.260 0.050 240)
+$blue-dark-4: oklch(0.310 0.070 240)
+$blue-dark-5: oklch(0.360 0.090 240)
+$blue-dark-6: oklch(0.420 0.110 240)
+$blue-dark-7: oklch(0.500 0.140 240)
+$blue-dark-8: oklch(0.550 0.160 240)
+$blue-dark-9: oklch(0.546 0.236 264.1)  // Same as light mode step 9
+$blue-dark-10: oklch(0.680 0.170 240)
+$blue-dark-11: oklch(0.800 0.140 240)
+$blue-dark-12: oklch(0.900 0.080 240)
 
-// === Primary (Orange) - Dark ===
-$orange-dark-1: hsl(24, 50%, 8%)
-$orange-dark-2: hsl(24, 60%, 11%)
-$orange-dark-3: hsl(24, 65%, 15%)
-$orange-dark-4: hsl(24, 65%, 19%)
-$orange-dark-5: hsl(24, 70%, 23%)
-$orange-dark-6: hsl(24, 75%, 28%)
-$orange-dark-7: hsl(24, 80%, 35%)
-$orange-dark-8: hsl(24, 85%, 42%)
-$orange-dark-9: hsl(24, 100%, 50%)
-$orange-dark-10: hsl(24, 100%, 55%)
-$orange-dark-11: hsl(24, 100%, 70%)
-$orange-dark-12: hsl(24, 90%, 88%)
+// === Neutral (Gray) - Enhanced Dynamic Range ===
+$gray-1: oklch(0.995 0.003 225)    // Nearly white
+$gray-2: oklch(0.975 0.004 225)
+$gray-3: oklch(0.935 0.005 225)
+$gray-4: oklch(0.870 0.006 225)
+$gray-5: oklch(0.790 0.007 225)
+$gray-6: oklch(0.710 0.008 225)
+$gray-7: oklch(0.660 0.009 225)
+$gray-8: oklch(0.635 0.010 225)
+$gray-9: oklch(0.617 0.010 225)    // Base gray
+$gray-10: oklch(0.520 0.010 225)
+$gray-11: oklch(0.350 0.008 225)
+$gray-12: oklch(0.100 0.005 225)   // Nearly black
 
+// Gray Dark Mode
+$gray-dark-1: oklch(0.170 0.003 0)
+$gray-dark-2: oklch(0.210 0.003 0)
+$gray-dark-3: oklch(0.256 0.003 0)
+$gray-dark-4: oklch(0.296 0.003 0)
+$gray-dark-5: oklch(0.334 0.003 0)
+$gray-dark-6: oklch(0.378 0.004 0)
+$gray-dark-7: oklch(0.438 0.004 0)
+$gray-dark-8: oklch(0.540 0.005 0)
+$gray-dark-9: oklch(0.617 0.010 225)  // Same as light mode step 9
+$gray-dark-10: oklch(0.694 0.005 0)
+$gray-dark-11: oklch(0.814 0.004 0)
+$gray-dark-12: oklch(0.930 0.002 0)
 
-// === Secondary (Teal) - Light ===
-$teal-1: hsl(180, 60%, 99%)
-$teal-2: hsl(180, 60%, 97.5%)
-$teal-3: hsl(180, 60%, 94.2%)
-$teal-4: hsl(180, 60%, 90%)
-$teal-5: hsl(180, 60%, 85%)
-$teal-6: hsl(180, 60%, 78%)
-$teal-7: hsl(180, 60%, 68%)
-$teal-8: hsl(180, 60%, 54%)
-$teal-9: hsl(180, 60%, 37%)
-$teal-10: hsl(180, 60%, 33%)
-$teal-11: hsl(180, 65%, 24%)
-$teal-12: hsl(180, 65%, 11%)
+// === Success (Green) - Enhanced Dynamic Range ===
+$green-1: oklch(0.995 0.018 143)   // Nearly white with hint of green
+$green-2: oklch(0.975 0.038 143)
+$green-3: oklch(0.935 0.062 143)
+$green-4: oklch(0.870 0.090 142.5)
+$green-5: oklch(0.790 0.125 142.5)
+$green-6: oklch(0.710 0.155 142.5)
+$green-7: oklch(0.665 0.170 142.5)
+$green-8: oklch(0.640 0.177 142.5)
+$green-9: oklch(0.622 0.180 142.5) // Base green
+$green-10: oklch(0.560 0.168 142)
+$green-11: oklch(0.400 0.140 141.5)
+$green-12: oklch(0.150 0.095 141)  // Nearly black with green tint
 
-// Teal Alpha
-$teal-a1: hsla(180, 60%, 50%, 0.020)
-$teal-a2: hsla(180, 60%, 50%, 0.045)
-$teal-a3: hsla(180, 60%, 50%, 0.088)
-$teal-a4: hsla(180, 60%, 50%, 0.140)
-$teal-a5: hsla(180, 60%, 50%, 0.200)
-$teal-a6: hsla(180, 60%, 50%, 0.280)
-$teal-a7: hsla(180, 60%, 50%, 0.400)
-$teal-a8: hsla(180, 60%, 50%, 0.540)
-$teal-a9: hsla(180, 60%, 37%, 1.0)
-$teal-a10: hsla(180, 60%, 33%, 1.0)
-$teal-a11: hsla(180, 65%, 24%, 1.0)
-$teal-a12: hsla(180, 65%, 11%, 1.0)
+// Green Dark Mode
+$green-dark-1: oklch(0.140 0.015 145)
+$green-dark-2: oklch(0.180 0.025 145)
+$green-dark-3: oklch(0.230 0.040 145)
+$green-dark-4: oklch(0.280 0.055 145)
+$green-dark-5: oklch(0.340 0.070 145)
+$green-dark-6: oklch(0.400 0.085 145)
+$green-dark-7: oklch(0.480 0.110 145)
+$green-dark-8: oklch(0.550 0.140 145)
+$green-dark-9: oklch(0.622 0.180 142.5)  // Same as light mode step 9
+$green-dark-10: oklch(0.680 0.150 145)
+$green-dark-11: oklch(0.750 0.140 145)
+$green-dark-12: oklch(0.880 0.090 145)
 
-// === Secondary (Teal) - Dark ===
-$teal-dark-1: hsl(180, 30%, 7%)
-$teal-dark-2: hsl(180, 30%, 9%)
-$teal-dark-3: hsl(180, 40%, 12.5%)
-$teal-dark-4: hsl(180, 45%, 15.4%)
-$teal-dark-5: hsl(180, 45%, 18.1%)
-$teal-dark-6: hsl(180, 45%, 21.5%)
-$teal-dark-7: hsl(180, 45%, 26.8%)
-$teal-dark-8: hsl(180, 45%, 35.4%)
-$teal-dark-9: hsl(180, 60%, 37%)
-$teal-dark-10: hsl(180, 60%, 41%)
-$teal-dark-11: hsl(180, 60%, 55%)
-$teal-dark-12: hsl(180, 60%, 88%)
+// === Warning (Yellow) - Enhanced Dynamic Range ===
+$yellow-1: oklch(0.995 0.025 110)  // Nearly white with hint of yellow
+$yellow-2: oklch(0.975 0.048 110)
+$yellow-3: oklch(0.945 0.075 110)
+$yellow-4: oklch(0.910 0.105 110)
+$yellow-5: oklch(0.880 0.135 110)
+$yellow-6: oklch(0.860 0.155 109.8)
+$yellow-7: oklch(0.850 0.165 109.8)
+$yellow-8: oklch(0.845 0.168 109.8)
+$yellow-9: oklch(0.839 0.170 109.8) // Base yellow
+$yellow-10: oklch(0.780 0.160 109.5)
+$yellow-11: oklch(0.600 0.135 109)
+$yellow-12: oklch(0.200 0.085 108)  // Dark with yellow tint (min lightness higher for yellow)
 
-// Teal Dark Alpha
-$teal-dark-a1: hsla(180, 60%, 50%, 0.025)
-$teal-dark-a2: hsla(180, 60%, 50%, 0.045)
-$teal-dark-a3: hsla(180, 60%, 50%, 0.080)
-$teal-dark-a4: hsla(180, 60%, 50%, 0.115)
-$teal-dark-a5: hsla(180, 60%, 50%, 0.155)
-$teal-dark-a6: hsla(180, 60%, 50%, 0.200)
-$teal-dark-a7: hsla(180, 60%, 50%, 0.268)
-$teal-dark-a8: hsla(180, 60%, 50%, 0.354)
-$teal-dark-a9: hsla(180, 60%, 37%, 1.0)
-$teal-dark-a10: hsla(180, 60%, 41%, 1.0)
-$teal-dark-a11: hsla(180, 60%, 55%, 1.0)
-$teal-dark-a12: hsla(180, 60%, 88%, 1.0)
+// Yellow Dark Mode
+$yellow-dark-1: oklch(0.110 0.020 105)
+$yellow-dark-2: oklch(0.160 0.040 105)
+$yellow-dark-3: oklch(0.210 0.060 105)
+$yellow-dark-4: oklch(0.270 0.080 105)
+$yellow-dark-5: oklch(0.340 0.100 105)
+$yellow-dark-6: oklch(0.430 0.120 105)
+$yellow-dark-7: oklch(0.550 0.140 105)
+$yellow-dark-8: oklch(0.650 0.155 105)
+$yellow-dark-9: oklch(0.839 0.170 109.8)  // Same as light mode step 9
+$yellow-dark-10: oklch(0.750 0.160 105)
+$yellow-dark-11: oklch(0.800 0.150 105)
+$yellow-dark-12: oklch(0.900 0.100 105)
 
-// === Utility Colors ===
+// === Error (Red) - Enhanced Dynamic Range ===
+$red-1: oklch(0.995 0.022 29)     // Nearly white with hint of red
+$red-2: oklch(0.975 0.048 29)
+$red-3: oklch(0.935 0.078 29)
+$red-4: oklch(0.870 0.115 29)
+$red-5: oklch(0.790 0.160 29)
+$red-6: oklch(0.710 0.205 29.2)
+$red-7: oklch(0.668 0.235 29.2)
+$red-8: oklch(0.645 0.250 29.2)
+$red-9: oklch(0.625 0.258 29.2)   // Base red
+$red-10: oklch(0.560 0.245 29)
+$red-11: oklch(0.400 0.205 28.5)
+$red-12: oklch(0.100 0.140 28)    // Nearly black with red tint
 
-// Blue (for focus states, links)
-$blue-1: hsl(206, 100%, 99.2%)
-$blue-2: hsl(206, 100%, 97.8%)
-$blue-3: hsl(206, 100%, 96.5%)
-$blue-4: hsl(206, 100%, 93%)
-$blue-5: hsl(206, 100%, 88.5%)
-$blue-6: hsl(206, 100%, 84%)
-$blue-7: hsl(206, 96%, 78%)
-$blue-8: hsl(206, 93%, 66%)
-$blue-9: hsl(206, 90%, 54%)
-$blue-10: hsl(206, 90%, 48%)
-$blue-11: hsl(206, 95%, 30%)
-$blue-12: hsl(206, 100%, 13%)
+// Red Dark Mode
+$red-dark-1: oklch(0.170 0.015 25)
+$red-dark-2: oklch(0.220 0.030 25)
+$red-dark-3: oklch(0.280 0.045 25)
+$red-dark-4: oklch(0.330 0.060 25)
+$red-dark-5: oklch(0.390 0.075 25)
+$red-dark-6: oklch(0.460 0.090 25)
+$red-dark-7: oklch(0.540 0.120 25)
+$red-dark-8: oklch(0.600 0.150 25)
+$red-dark-9: oklch(0.625 0.258 29.2)  // Same as light mode step 9
+$red-dark-10: oklch(0.700 0.180 25)
+$red-dark-11: oklch(0.800 0.150 25)
+$red-dark-12: oklch(0.900 0.090 25)
 
-// Blue Alpha
-$blue-a1: hsla(206, 100%, 50%, 0.016)
-$blue-a2: hsla(206, 100%, 50%, 0.034)
-$blue-a3: hsla(206, 100%, 50%, 0.07)
-$blue-a4: hsla(206, 100%, 50%, 0.110)
-$blue-a5: hsla(206, 100%, 50%, 0.160)
-$blue-a6: hsla(206, 100%, 50%, 0.220)
-$blue-a7: hsla(206, 100%, 50%, 0.295)
-$blue-a8: hsla(206, 100%, 50%, 0.390)
-$blue-a9: hsla(206, 100%, 50%, 0.540)
-$blue-a10: hsla(206, 100%, 50%, 0.620)
-$blue-a11: hsla(206, 100%, 50%, 0.760)
-$blue-a12: hsla(206, 100%, 50%, 0.920)
+// === Alpha Variants (simplified - removing most as they're not used) ===
+// We'll keep a few for backward compatibility but most aren't needed
+$gray-a1: oklch(0 0 0 / 0.012)
+$gray-a4: oklch(0 0 0 / 0.071)
+$gray-a5: oklch(0 0 0 / 0.090)
+$gray-a7: oklch(0 0 0 / 0.141)
+$gray-dark-a1: oklch(1 0 0 / 0.005)
+$gray-dark-a5: oklch(1 0 0 / 0.086)
+$orange-a1: oklch(0.696 0.204 43.5 / 0.012)
+$orange-a4: oklch(0.696 0.204 43.5 / 0.071)
+$orange-a7: oklch(0.696 0.204 43.5 / 0.182)
+$orange-dark-a1: oklch(1 0.200 43.5 / 0.017)
+$orange-dark-a7: oklch(1 0.200 43.5 / 0.303)
+$teal-a1: oklch(0.608 0.162 194.8 / 0.020)
+$teal-a4: oklch(0.608 0.162 194.8 / 0.140)
+$teal-a7: oklch(0.608 0.162 194.8 / 0.400)
+$teal-dark-a1: oklch(0.608 0.162 194.8 / 0.025)
+$blue-a1: oklch(0.546 0.236 264.1 / 0.016)
+$blue-a4: oklch(0.546 0.236 264.1 / 0.110)
+$blue-a7: oklch(0.546 0.236 264.1 / 0.295)
+$blue-dark-a1: oklch(0.546 0.236 264.1 / 0.030)
+$green-a1: oklch(0.622 0.180 142.5 / 0.020)
+$green-a4: oklch(0.622 0.180 142.5 / 0.116)
+$green-dark-a1: oklch(0.622 0.180 142.5 / 0.025)
+$yellow-a1: oklch(0.839 0.170 109.8 / 0.040)
+$yellow-a4: oklch(0.839 0.170 109.8 / 0.200)
+$yellow-dark-a1: oklch(0.839 0.170 109.8 / 0.055)
+$red-a1: oklch(0.625 0.258 29.2 / 0.012)
+$red-a4: oklch(0.625 0.258 29.2 / 0.130)
+$red-dark-a1: oklch(0.625 0.258 29.2 / 0.030)
 
-// Blue Dark
-$blue-dark-1: hsl(212, 35%, 9.2%)
-$blue-dark-2: hsl(211, 39%, 11%)
-$blue-dark-3: hsl(210, 42%, 14%)
-$blue-dark-4: hsl(209, 45%, 17%)
-$blue-dark-5: hsl(208, 48%, 20%)
-$blue-dark-6: hsl(207, 52%, 24%)
-$blue-dark-7: hsl(206, 98%, 48%)
-$blue-dark-8: hsl(206, 94%, 51%)
-$blue-dark-9: hsl(206, 90%, 54%)
-$blue-dark-10: hsl(206, 90%, 60%)
-$blue-dark-11: hsl(206, 95%, 74%)
-$blue-dark-12: hsl(206, 100%, 88%)
+// === CSS Custom Property Generation ===
+// This mixin generates CSS custom properties for all color scales
+@mixin generate-color-variables()
+  :root
+    // Primary Scale
+    --lb-primary-1: #{$orange-1}
+    --lb-primary-2: #{$orange-2}
+    --lb-primary-3: #{$orange-3}
+    --lb-primary-4: #{$orange-4}
+    --lb-primary-5: #{$orange-5}
+    --lb-primary-6: #{$orange-6}
+    --lb-primary-7: #{$orange-7}
+    --lb-primary-8: #{$orange-8}
+    --lb-primary-9: #{$orange-9}
+    --lb-primary-10: #{$orange-10}
+    --lb-primary-11: #{$orange-11}
+    --lb-primary-12: #{$orange-12}
 
-// Blue Dark Alpha
-$blue-dark-a1: hsla(206, 100%, 50%, 0.030)
-$blue-dark-a2: hsla(206, 100%, 50%, 0.054)
-$blue-dark-a3: hsla(206, 100%, 50%, 0.15)
-$blue-dark-a4: hsla(206, 100%, 50%, 0.200)
-$blue-dark-a5: hsla(206, 100%, 50%, 0.252)
-$blue-dark-a6: hsla(206, 100%, 50%, 0.315)
-$blue-dark-a7: hsla(206, 100%, 50%, 0.480)
-$blue-dark-a8: hsla(206, 100%, 50%, 0.510)
-$blue-dark-a9: hsla(206, 100%, 50%, 0.540)
-$blue-dark-a10: hsla(206, 100%, 50%, 0.600)
-$blue-dark-a11: hsla(206, 100%, 50%, 0.740)
-$blue-dark-a12: hsla(206, 100%, 50%, 0.880)
+    // Secondary Scale
+    --lb-secondary-1: #{$teal-1}
+    --lb-secondary-2: #{$teal-2}
+    --lb-secondary-3: #{$teal-3}
+    --lb-secondary-4: #{$teal-4}
+    --lb-secondary-5: #{$teal-5}
+    --lb-secondary-6: #{$teal-6}
+    --lb-secondary-7: #{$teal-7}
+    --lb-secondary-8: #{$teal-8}
+    --lb-secondary-9: #{$teal-9}
+    --lb-secondary-10: #{$teal-10}
+    --lb-secondary-11: #{$teal-11}
+    --lb-secondary-12: #{$teal-12}
 
-// Red (for errors)
-$red-1: hsl(0, 100%, 99.4%)
-$red-2: hsl(0, 100%, 98.4%)
-$red-3: hsl(0, 100%, 96.1%)
-$red-4: hsl(0, 100%, 93.5%)
-$red-5: hsl(359, 90%, 85%)
-$red-6: hsl(358, 82%, 72%)
-$red-7: hsl(358, 75%, 59%)
-$red-8: hsl(358, 70%, 53%)
-$red-9: hsl(358, 65%, 48%)
-$red-10: hsl(358, 65%, 43%)
-$red-11: hsl(356, 57%, 28%)
-$red-12: hsl(355, 50%, 15%)
+    // Tertiary Scale
+    --lb-tertiary-1: #{$blue-1}
+    --lb-tertiary-2: #{$blue-2}
+    --lb-tertiary-3: #{$blue-3}
+    --lb-tertiary-4: #{$blue-4}
+    --lb-tertiary-5: #{$blue-5}
+    --lb-tertiary-6: #{$blue-6}
+    --lb-tertiary-7: #{$blue-7}
+    --lb-tertiary-8: #{$blue-8}
+    --lb-tertiary-9: #{$blue-9}
+    --lb-tertiary-10: #{$blue-10}
+    --lb-tertiary-11: #{$blue-11}
+    --lb-tertiary-12: #{$blue-12}
 
-// Red Alpha
-$red-a1: hsla(0, 100%, 50%, 0.012)
-$red-a2: hsla(0, 100%, 50%, 0.032)
-$red-a3: hsla(0, 100%, 50%, 0.078)
-$red-a4: hsla(0, 100%, 50%, 0.130)
-$red-a5: hsla(0, 100%, 50%, 0.200)
-$red-a6: hsla(0, 100%, 50%, 0.280)
-$red-a7: hsla(358, 75%, 50%, 0.410)
-$red-a8: hsla(358, 70%, 50%, 0.470)
-$red-a9: hsla(358, 65%, 48%, 1.0)
-$red-a10: hsla(358, 65%, 43%, 1.0)
-$red-a11: hsla(356, 57%, 28%, 1.0)
-$red-a12: hsla(355, 50%, 15%, 1.0)
+    // Neutral Scale
+    --lb-neutral-1: #{$gray-1}
+    --lb-neutral-2: #{$gray-2}
+    --lb-neutral-3: #{$gray-3}
+    --lb-neutral-4: #{$gray-4}
+    --lb-neutral-5: #{$gray-5}
+    --lb-neutral-6: #{$gray-6}
+    --lb-neutral-7: #{$gray-7}
+    --lb-neutral-8: #{$gray-8}
+    --lb-neutral-9: #{$gray-9}
+    --lb-neutral-10: #{$gray-10}
+    --lb-neutral-11: #{$gray-11}
+    --lb-neutral-12: #{$gray-12}
 
-// Red Dark
-$red-dark-1: hsl(353, 23%, 9%)
-$red-dark-2: hsl(357, 34%, 12%)
-$red-dark-3: hsl(357, 38%, 15%)
-$red-dark-4: hsl(357, 42%, 18%)
-$red-dark-5: hsl(357, 46%, 22%)
-$red-dark-6: hsl(357, 50%, 27%)
-$red-dark-7: hsl(358, 75%, 59%)
-$red-dark-8: hsl(358, 70%, 54%)
-$red-dark-9: hsl(358, 65%, 48%)
-$red-dark-10: hsl(358, 65%, 53%)
-$red-dark-11: hsl(356, 60%, 68%)
-$red-dark-12: hsl(355, 70%, 87%)
+    // Success Scale
+    --lb-success-1: #{$green-1}
+    --lb-success-2: #{$green-2}
+    --lb-success-3: #{$green-3}
+    --lb-success-4: #{$green-4}
+    --lb-success-5: #{$green-5}
+    --lb-success-6: #{$green-6}
+    --lb-success-7: #{$green-7}
+    --lb-success-8: #{$green-8}
+    --lb-success-9: #{$green-9}
+    --lb-success-10: #{$green-10}
+    --lb-success-11: #{$green-11}
+    --lb-success-12: #{$green-12}
 
-// Red Dark Alpha
-$red-dark-a1: hsla(0, 100%, 50%, 0.030)
-$red-dark-a2: hsla(0, 100%, 50%, 0.060)
-$red-dark-a3: hsla(0, 100%, 50%, 0.100)
-$red-dark-a4: hsla(0, 100%, 50%, 0.140)
-$red-dark-a5: hsla(0, 100%, 50%, 0.190)
-$red-dark-a6: hsla(0, 100%, 50%, 0.250)
-$red-dark-a7: hsla(358, 75%, 50%, 0.590)
-$red-dark-a8: hsla(358, 70%, 50%, 0.540)
-$red-dark-a9: hsla(358, 65%, 48%, 1.0)
-$red-dark-a10: hsla(358, 65%, 53%, 1.0)
-$red-dark-a11: hsla(356, 60%, 68%, 1.0)
-$red-dark-a12: hsla(355, 70%, 87%, 1.0)
+    // Warning Scale
+    --lb-warning-1: #{$yellow-1}
+    --lb-warning-2: #{$yellow-2}
+    --lb-warning-3: #{$yellow-3}
+    --lb-warning-4: #{$yellow-4}
+    --lb-warning-5: #{$yellow-5}
+    --lb-warning-6: #{$yellow-6}
+    --lb-warning-7: #{$yellow-7}
+    --lb-warning-8: #{$yellow-8}
+    --lb-warning-9: #{$yellow-9}
+    --lb-warning-10: #{$yellow-10}
+    --lb-warning-11: #{$yellow-11}
+    --lb-warning-12: #{$yellow-12}
 
-// Green (for success)
-$green-1: hsl(146, 100%, 99%)
-$green-2: hsl(142, 100%, 98%)
-$green-3: hsl(142, 93%, 95%)
-$green-4: hsl(142, 88%, 91%)
-$green-5: hsl(142, 82%, 82%)
-$green-6: hsl(142, 76%, 64%)
-$green-7: hsl(142, 71%, 45%)
-$green-8: hsl(142, 70%, 40%)
-$green-9: hsl(142, 70%, 35%)
-$green-10: hsl(142, 70%, 30%)
-$green-11: hsl(143, 65%, 20%)
-$green-12: hsl(144, 60%, 12%)
+    // Error Scale
+    --lb-error-1: #{$red-1}
+    --lb-error-2: #{$red-2}
+    --lb-error-3: #{$red-3}
+    --lb-error-4: #{$red-4}
+    --lb-error-5: #{$red-5}
+    --lb-error-6: #{$red-6}
+    --lb-error-7: #{$red-7}
+    --lb-error-8: #{$red-8}
+    --lb-error-9: #{$red-9}
+    --lb-error-10: #{$red-10}
+    --lb-error-11: #{$red-11}
+    --lb-error-12: #{$red-12}
 
-// Green Alpha
-$green-a1: hsla(142, 100%, 50%, 0.020)
-$green-a2: hsla(142, 100%, 50%, 0.040)
-$green-a3: hsla(142, 93%, 50%, 0.075)
-$green-a4: hsla(142, 88%, 50%, 0.116)
-$green-a5: hsla(142, 82%, 50%, 0.180)
-$green-a6: hsla(142, 76%, 50%, 0.280)
-$green-a7: hsla(142, 71%, 45%, 1.0)
-$green-a8: hsla(142, 70%, 40%, 1.0)
-$green-a9: hsla(142, 70%, 35%, 1.0)
-$green-a10: hsla(142, 70%, 30%, 1.0)
-$green-a11: hsla(143, 65%, 20%, 1.0)
-$green-a12: hsla(144, 60%, 12%, 1.0)
+    // Info Scale (same as tertiary/blue)
+    --lb-info-1: #{$blue-1}
+    --lb-info-2: #{$blue-2}
+    --lb-info-3: #{$blue-3}
+    --lb-info-4: #{$blue-4}
+    --lb-info-5: #{$blue-5}
+    --lb-info-6: #{$blue-6}
+    --lb-info-7: #{$blue-7}
+    --lb-info-8: #{$blue-8}
+    --lb-info-9: #{$blue-9}
+    --lb-info-10: #{$blue-10}
+    --lb-info-11: #{$blue-11}
+    --lb-info-12: #{$blue-12}
 
-// Green Dark
-$green-dark-1: hsl(146, 30%, 7.4%)
-$green-dark-2: hsl(147, 38%, 10%)
-$green-dark-3: hsl(146, 42%, 13%)
-$green-dark-4: hsl(145, 46%, 16%)
-$green-dark-5: hsl(144, 50%, 19%)
-$green-dark-6: hsl(143, 54%, 23%)
-$green-dark-7: hsl(142, 71%, 45%)
-$green-dark-8: hsl(142, 70%, 40%)
-$green-dark-9: hsl(142, 70%, 35%)
-$green-dark-10: hsl(142, 70%, 40%)
-$green-dark-11: hsl(143, 68%, 60%)
-$green-dark-12: hsl(144, 70%, 85%)
+  // Dark mode scales
+  [data-theme="dark"], .dark
+    // Primary Scale Dark
+    --lb-primary-1: #{$orange-dark-1}
+    --lb-primary-2: #{$orange-dark-2}
+    --lb-primary-3: #{$orange-dark-3}
+    --lb-primary-4: #{$orange-dark-4}
+    --lb-primary-5: #{$orange-dark-5}
+    --lb-primary-6: #{$orange-dark-6}
+    --lb-primary-7: #{$orange-dark-7}
+    --lb-primary-8: #{$orange-dark-8}
+    --lb-primary-9: #{$orange-dark-9}
+    --lb-primary-10: #{$orange-dark-10}
+    --lb-primary-11: #{$orange-dark-11}
+    --lb-primary-12: #{$orange-dark-12}
 
-// Green Dark Alpha
-$green-dark-a1: hsla(142, 100%, 50%, 0.025)
-$green-dark-a2: hsla(142, 100%, 50%, 0.050)
-$green-dark-a3: hsla(142, 100%, 50%, 0.085)
-$green-dark-a4: hsla(142, 100%, 50%, 0.120)
-$green-dark-a5: hsla(142, 100%, 50%, 0.160)
-$green-dark-a6: hsla(142, 100%, 50%, 0.210)
-$green-dark-a7: hsla(142, 71%, 45%, 1.0)
-$green-dark-a8: hsla(142, 70%, 40%, 1.0)
-$green-dark-a9: hsla(142, 70%, 35%, 1.0)
-$green-dark-a10: hsla(142, 70%, 40%, 1.0)
-$green-dark-a11: hsla(143, 68%, 60%, 1.0)
-$green-dark-a12: hsla(144, 70%, 85%, 1.0)
+    // Secondary Scale Dark
+    --lb-secondary-1: #{$teal-dark-1}
+    --lb-secondary-2: #{$teal-dark-2}
+    --lb-secondary-3: #{$teal-dark-3}
+    --lb-secondary-4: #{$teal-dark-4}
+    --lb-secondary-5: #{$teal-dark-5}
+    --lb-secondary-6: #{$teal-dark-6}
+    --lb-secondary-7: #{$teal-dark-7}
+    --lb-secondary-8: #{$teal-dark-8}
+    --lb-secondary-9: #{$teal-dark-9}
+    --lb-secondary-10: #{$teal-dark-10}
+    --lb-secondary-11: #{$teal-dark-11}
+    --lb-secondary-12: #{$teal-dark-12}
 
-// Yellow (for warnings)
-$yellow-1: hsl(55, 100%, 98%)
-$yellow-2: hsl(55, 100%, 95.5%)
-$yellow-3: hsl(55, 100%, 93%)
-$yellow-4: hsl(55, 100%, 90%)
-$yellow-5: hsl(52, 100%, 86%)
-$yellow-6: hsl(50, 100%, 80%)
-$yellow-7: hsl(50, 98%, 64%)
-$yellow-8: hsl(48, 100%, 58%)
-$yellow-9: hsl(47, 100%, 49%)
-$yellow-10: hsl(47, 100%, 44%)
-$yellow-11: hsl(45, 100%, 35%)
-$yellow-12: hsl(42, 100%, 13%)
+    // Tertiary Scale Dark
+    --lb-tertiary-1: #{$blue-dark-1}
+    --lb-tertiary-2: #{$blue-dark-2}
+    --lb-tertiary-3: #{$blue-dark-3}
+    --lb-tertiary-4: #{$blue-dark-4}
+    --lb-tertiary-5: #{$blue-dark-5}
+    --lb-tertiary-6: #{$blue-dark-6}
+    --lb-tertiary-7: #{$blue-dark-7}
+    --lb-tertiary-8: #{$blue-dark-8}
+    --lb-tertiary-9: #{$blue-dark-9}
+    --lb-tertiary-10: #{$blue-dark-10}
+    --lb-tertiary-11: #{$blue-dark-11}
+    --lb-tertiary-12: #{$blue-dark-12}
 
-// Yellow Alpha
-$yellow-a1: hsla(50, 100%, 50%, 0.040)
-$yellow-a2: hsla(50, 100%, 50%, 0.090)
-$yellow-a3: hsla(50, 100%, 50%, 0.140)
-$yellow-a4: hsla(50, 100%, 50%, 0.200)
-$yellow-a5: hsla(52, 100%, 50%, 0.280)
-$yellow-a6: hsla(50, 100%, 50%, 0.400)
-$yellow-a7: hsla(50, 98%, 50%, 0.560)
-$yellow-a8: hsla(48, 100%, 50%, 0.660)
-$yellow-a9: hsla(47, 100%, 49%, 1.0)
-$yellow-a10: hsla(47, 100%, 44%, 1.0)
-$yellow-a11: hsla(45, 100%, 35%, 1.0)
-$yellow-a12: hsla(42, 100%, 13%, 1.0)
+    // Neutral Scale Dark
+    --lb-neutral-1: #{$gray-dark-1}
+    --lb-neutral-2: #{$gray-dark-2}
+    --lb-neutral-3: #{$gray-dark-3}
+    --lb-neutral-4: #{$gray-dark-4}
+    --lb-neutral-5: #{$gray-dark-5}
+    --lb-neutral-6: #{$gray-dark-6}
+    --lb-neutral-7: #{$gray-dark-7}
+    --lb-neutral-8: #{$gray-dark-8}
+    --lb-neutral-9: #{$gray-dark-9}
+    --lb-neutral-10: #{$gray-dark-10}
+    --lb-neutral-11: #{$gray-dark-11}
+    --lb-neutral-12: #{$gray-dark-12}
 
-// Yellow Dark
-$yellow-dark-1: hsl(45, 100%, 5.5%)
-$yellow-dark-2: hsl(46, 100%, 8.5%)
-$yellow-dark-3: hsl(47, 100%, 11%)
-$yellow-dark-4: hsl(48, 100%, 14%)
-$yellow-dark-5: hsl(49, 100%, 18%)
-$yellow-dark-6: hsl(50, 100%, 24%)
-$yellow-dark-7: hsl(50, 98%, 64%)
-$yellow-dark-8: hsl(49, 99%, 56%)
-$yellow-dark-9: hsl(47, 100%, 49%)
-$yellow-dark-10: hsl(47, 100%, 54%)
-$yellow-dark-11: hsl(45, 100%, 70%)
-$yellow-dark-12: hsl(42, 100%, 87%)
+    // Success Scale Dark
+    --lb-success-1: #{$green-dark-1}
+    --lb-success-2: #{$green-dark-2}
+    --lb-success-3: #{$green-dark-3}
+    --lb-success-4: #{$green-dark-4}
+    --lb-success-5: #{$green-dark-5}
+    --lb-success-6: #{$green-dark-6}
+    --lb-success-7: #{$green-dark-7}
+    --lb-success-8: #{$green-dark-8}
+    --lb-success-9: #{$green-dark-9}
+    --lb-success-10: #{$green-dark-10}
+    --lb-success-11: #{$green-dark-11}
+    --lb-success-12: #{$green-dark-12}
 
-// Yellow Dark Alpha
-$yellow-dark-a1: hsla(50, 100%, 50%, 0.055)
-$yellow-dark-a2: hsla(50, 100%, 50%, 0.085)
-$yellow-dark-a3: hsla(50, 100%, 50%, 0.110)
-$yellow-dark-a4: hsla(50, 100%, 50%, 0.140)
-$yellow-dark-a5: hsla(50, 100%, 50%, 0.180)
-$yellow-dark-a6: hsla(50, 100%, 50%, 0.240)
-$yellow-dark-a7: hsla(50, 98%, 50%, 0.640)
-$yellow-dark-a8: hsla(49, 99%, 50%, 0.560)
-$yellow-dark-a9: hsla(47, 100%, 49%, 1.0)
-$yellow-dark-a10: hsla(47, 100%, 54%, 1.0)
-$yellow-dark-a11: hsla(45, 100%, 70%, 1.0)
-$yellow-dark-a12: hsla(42, 100%, 87%, 1.0)
+    // Warning Scale Dark
+    --lb-warning-1: #{$yellow-dark-1}
+    --lb-warning-2: #{$yellow-dark-2}
+    --lb-warning-3: #{$yellow-dark-3}
+    --lb-warning-4: #{$yellow-dark-4}
+    --lb-warning-5: #{$yellow-dark-5}
+    --lb-warning-6: #{$yellow-dark-6}
+    --lb-warning-7: #{$yellow-dark-7}
+    --lb-warning-8: #{$yellow-dark-8}
+    --lb-warning-9: #{$yellow-dark-9}
+    --lb-warning-10: #{$yellow-dark-10}
+    --lb-warning-11: #{$yellow-dark-11}
+    --lb-warning-12: #{$yellow-dark-12}
 
-// === Alpha Variants (for overlays, subtle backgrounds) ===
-// Orange Alpha (Light)
-$orange-a1: hsla(24, 100%, 50%, 0.012)
-$orange-a2: hsla(24, 100%, 50%, 0.024)
-$orange-a3: hsla(24, 100%, 50%, 0.041)
-$orange-a4: hsla(24, 100%, 50%, 0.071)
-$orange-a5: hsla(24, 100%, 50%, 0.096)
-$orange-a6: hsla(24, 100%, 50%, 0.130)
-$orange-a7: hsla(24, 100%, 50%, 0.182)
-$orange-a8: hsla(24, 100%, 50%, 0.255)
-$orange-a9: hsla(24, 100%, 50%, 0.365)
-$orange-a10: hsla(24, 100%, 50%, 0.447)
-$orange-a11: hsla(24, 100%, 50%, 0.592)
-$orange-a12: hsla(24, 100%, 50%, 0.923)
+    // Error Scale Dark
+    --lb-error-1: #{$red-dark-1}
+    --lb-error-2: #{$red-dark-2}
+    --lb-error-3: #{$red-dark-3}
+    --lb-error-4: #{$red-dark-4}
+    --lb-error-5: #{$red-dark-5}
+    --lb-error-6: #{$red-dark-6}
+    --lb-error-7: #{$red-dark-7}
+    --lb-error-8: #{$red-dark-8}
+    --lb-error-9: #{$red-dark-9}
+    --lb-error-10: #{$red-dark-10}
+    --lb-error-11: #{$red-dark-11}
+    --lb-error-12: #{$red-dark-12}
 
-// Orange Alpha (Dark)
-$orange-dark-a1: hsla(24, 100%, 50%, 0.017)
-$orange-dark-a2: hsla(24, 100%, 50%, 0.047)
-$orange-dark-a3: hsla(24, 100%, 50%, 0.090)
-$orange-dark-a4: hsla(24, 100%, 50%, 0.134)
-$orange-dark-a5: hsla(24, 100%, 50%, 0.177)
-$orange-dark-a6: hsla(24, 100%, 50%, 0.228)
-$orange-dark-a7: hsla(24, 100%, 50%, 0.303)
-$orange-dark-a8: hsla(24, 100%, 50%, 0.393)
-$orange-dark-a9: hsla(24, 100%, 50%, 0.498)
-$orange-dark-a10: hsla(24, 100%, 50%, 0.550)
-$orange-dark-a11: hsla(24, 100%, 50%, 0.700)
-$orange-dark-a12: hsla(24, 100%, 50%, 0.880)
+    // Info Scale Dark (same as tertiary/blue)
+    --lb-info-1: #{$blue-dark-1}
+    --lb-info-2: #{$blue-dark-2}
+    --lb-info-3: #{$blue-dark-3}
+    --lb-info-4: #{$blue-dark-4}
+    --lb-info-5: #{$blue-dark-5}
+    --lb-info-6: #{$blue-dark-6}
+    --lb-info-7: #{$blue-dark-7}
+    --lb-info-8: #{$blue-dark-8}
+    --lb-info-9: #{$blue-dark-9}
+    --lb-info-10: #{$blue-dark-10}
+    --lb-info-11: #{$blue-dark-11}
+    --lb-info-12: #{$blue-dark-12}
