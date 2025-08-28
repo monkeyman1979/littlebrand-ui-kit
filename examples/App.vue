@@ -2612,6 +2612,7 @@
 
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue'
+import { generateScale, getContrastText } from '@/utils/color-generator.js'
 import { 
   LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog,
   LbBadge, LbNavigationBar, LbNavigationBarItem, LbBottomSheet, LbChip, LbAvatar, LbProgress, LbDivider, 
@@ -2864,115 +2865,13 @@ const resetSettings = () => {
   }
 }
 
-// Custom theme generation functions
-const hexToHSL = (hex) => {
-  // Convert hex to RGB
-  const r = parseInt(hex.slice(1, 3), 16) / 255
-  const g = parseInt(hex.slice(3, 5), 16) / 255
-  const b = parseInt(hex.slice(5, 7), 16) / 255
-  
-  const max = Math.max(r, g, b)
-  const min = Math.min(r, g, b)
-  let h, s, l = (max + min) / 2
-  
-  if (max === min) {
-    h = s = 0 // achromatic
-  } else {
-    const d = max - min
-    s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
-    
-    switch (max) {
-      case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break
-      case g: h = ((b - r) / d + 2) / 6; break
-      case b: h = ((r - g) / d + 4) / 6; break
-    }
-  }
-  
-  return {
-    h: Math.round(h * 360),
-    s: Math.round(s * 100),
-    l: Math.round(l * 100)
-  }
-}
-
-// Calculate relative luminance of a color
-const getLuminance = (hex) => {
-  // Convert hex to RGB
-  const r = parseInt(hex.slice(1, 3), 16) / 255
-  const g = parseInt(hex.slice(3, 5), 16) / 255
-  const b = parseInt(hex.slice(5, 7), 16) / 255
-  
-  // Apply gamma correction
-  const gammaCorrect = (val) => {
-    return val <= 0.03928 ? val / 12.92 : Math.pow((val + 0.055) / 1.055, 2.4)
-  }
-  
-  const rLinear = gammaCorrect(r)
-  const gLinear = gammaCorrect(g)
-  const bLinear = gammaCorrect(b)
-  
-  // Calculate relative luminance
-  return 0.2126 * rLinear + 0.7152 * gLinear + 0.0722 * bLinear
-}
-
-// Determine if white or dark text should be used
-const getContrastText = (backgroundColor) => {
-  const luminance = getLuminance(backgroundColor)
-  // Use white text if luminance is below 0.5, dark text otherwise
-  return luminance > 0.5 ? '#1a1a1a' : 'white'
-}
-
-// Convert HSL string to hex
-const hslToHex = (hslStr) => {
-  const match = hslStr.match(/hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/)
-  if (!match) return '#000000'
-  
-  const h = parseInt(match[1]) / 360
-  const s = parseInt(match[2]) / 100
-  const l = parseInt(match[3]) / 100
-  
-  const hue2rgb = (p, q, t) => {
-    if (t < 0) t += 1
-    if (t > 1) t -= 1
-    if (t < 1/6) return p + (q - p) * 6 * t
-    if (t < 1/2) return q
-    if (t < 2/3) return p + (q - p) * (2/3 - t) * 6
-    return p
-  }
-  
-  const q = l < 0.5 ? l * (1 + s) : l + s - l * s
-  const p = 2 * l - q
-  
-  const r = Math.round(hue2rgb(p, q, h + 1/3) * 255)
-  const g = Math.round(hue2rgb(p, q, h) * 255)
-  const b = Math.round(hue2rgb(p, q, h - 1/3) * 255)
-  
-  return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)
-}
+// Custom theme generation functions using OKLCH
+// Old HSL functions removed - now using imported OKLCH utilities
 
 const generateColorScale = (baseColor, name) => {
-  const hsl = hexToHSL(baseColor)
+  // Generate OKLCH-based 12-step scale
+  const scale = generateScale(baseColor)
   const tokens = {}
-  
-  // Generate 12-step scale
-  const scale = {}
-  for (let i = 1; i <= 12; i++) {
-    let lightness, saturation
-    
-    if (i <= 9) {
-      // Steps 1-9: progressively darker from very light
-      const ratio = (i - 1) / 8
-      lightness = 98 - (ratio * (98 - hsl.l))
-      saturation = i <= 3 ? hsl.s * 0.3 : i <= 6 ? hsl.s * 0.6 : hsl.s
-    } else {
-      // Steps 10-12: darker than base
-      const ratio = (i - 9) / 3
-      lightness = hsl.l - (ratio * (hsl.l - 15))
-      saturation = Math.min(hsl.s * 1.1, 100)
-    }
-    
-    scale[i] = `hsl(${hsl.h}, ${Math.round(saturation)}%, ${Math.round(lightness)}%)`
-  }
   
   // Generate semantic tokens
   tokens[`--custom-border-${name}-line`] = scale[6]
@@ -2992,10 +2891,10 @@ const generateColorScale = (baseColor, name) => {
   tokens[`--custom-text-${name}-contrast-high`] = scale[12]
   tokens[`--custom-text-${name}-disabled`] = scale[5]
   
-  // Add text-on tokens for filled backgrounds using luminance calculation
-  tokens[`--custom-text-on-${name}`] = getContrastText(hslToHex(scale[9]))
-  tokens[`--custom-text-on-${name}-hover`] = getContrastText(hslToHex(scale[10]))
-  tokens[`--custom-text-on-${name}-active`] = getContrastText(hslToHex(scale[8]))
+  // Add text-on tokens using OKLCH contrast calculation
+  tokens[`--custom-text-on-${name}`] = getContrastText(baseColor)
+  tokens[`--custom-text-on-${name}-hover`] = getContrastText(baseColor)
+  tokens[`--custom-text-on-${name}-active`] = getContrastText(baseColor)
   
   // Add surface tokens for the scale visualization
   for (let i = 1; i <= 12; i++) {
@@ -3017,15 +2916,9 @@ const getStepName = (n) => {
 
 // Get the contrast text color for a scale step
 const getScaleStepTextColor = (colorName, step) => {
-  // Get the CSS variable value from customThemeStyles
-  const varName = `--custom-surface-${colorName}-${step}`
-  const hslValue = customThemeStyles.value[varName]
-  
-  if (!hslValue) return '#000000'
-  
-  // Convert HSL to hex for luminance calculation
-  const hexColor = hslToHex(hslValue)
-  return getContrastText(hexColor)
+  // For OKLCH colors, determine contrast based on step number
+  // Steps 1-6 are light (need dark text), 7-12 are dark (need light text)
+  return step <= 6 ? '#1a1a1a' : 'white'
 }
 
 const updateCustomTheme = () => {
