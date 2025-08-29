@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Replaced hardcoded `white` values with `var(--lb-neutral-1)` for better adaptability
   - Text on colored backgrounds now adapts to custom neutral color schemes
   - Maintains proper contrast while respecting user's neutral color customizations
+  - Updated `applyTheme()` function in color-generator.js to use consistent values with CSS
 
 ## [0.3.3] - 2025-08-28
 
