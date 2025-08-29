@@ -264,15 +264,21 @@ See [CUSTOMIZATION.md](./CUSTOMIZATION.md) for detailed customization options in
 
 ## 🌙 Dark Mode
 
-Dark mode works automatically! Just add the `dark` class:
+Full dark mode support is built-in! Simply activate it with the `dark` class or `data-theme` attribute:
 
 ```html
+<!-- Using class -->
 <body class="dark">
   <!-- All components now use dark mode colors -->
 </body>
+
+<!-- Using data attribute -->
+<html data-theme="dark">
+  <!-- All components now use dark mode colors -->
+</html>
 ```
 
-The color generator creates optimized dark mode colors automatically.
+Dark mode automatically switches all 200+ color tokens to properly optimized dark values.
 
 ## 🎯 Color System Features
 
