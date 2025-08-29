@@ -277,7 +277,7 @@ Background colors for cards, panels, and container surfaces.
 
 ### Text-On Tokens
 
-Text colors for use on filled backgrounds (ensures proper contrast).
+Text colors for use on filled backgrounds. As of v0.3.6, uses stable text variables for consistent contrast across light/dark modes.
 
 ```css
 /* Text on Primary backgrounds */

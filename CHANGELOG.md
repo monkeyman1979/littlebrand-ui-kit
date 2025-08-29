@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.6] - 2025-08-29
+
+### Fixed
+- **Text-On Color Contrast in Dark Mode**
+  - Fixed dark text appearing on dark buttons in dark mode
+  - All text-on colors now use stable text variables (`--lb-text-light-normal` and `--lb-text-dark-normal`)
+  - Text on colored backgrounds maintains proper contrast in both light and dark modes
+  - Warning/yellow colors correctly use dark text for accessibility
+  - Updated color-generator.js to use stable text variables for runtime theme changes
+
+- **BottomSheet Component Background**
+  - Changed background from `--lb-background-surface` to `--lb-background-page`
+  - BottomSheet now blends seamlessly with page background
+  - Provides better visual consistency across light and dark modes
+
 ## [0.3.5] - 2025-08-29
 
 ### Added
