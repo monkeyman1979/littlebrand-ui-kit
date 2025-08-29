@@ -232,46 +232,46 @@
     --lb-surface-neutral-disabled: var(--lb-neutral-3)
     
     // === TEXT-ON TOKENS (for filled backgrounds) ===
-    // These are hardcoded based on typical luminance values
-    // Primary (orange) - typically needs white text
-    --lb-text-on-primary: white
-    --lb-text-on-primary-hover: white
-    --lb-text-on-primary-active: white
+    // Use neutral-1 for light text (adapts to custom neutral colors)
+    // Primary (orange) - typically needs light text
+    --lb-text-on-primary: var(--lb-neutral-1)
+    --lb-text-on-primary-hover: var(--lb-neutral-1)
+    --lb-text-on-primary-active: var(--lb-neutral-1)
     
-    // Secondary (teal) - typically needs white text
-    --lb-text-on-secondary: white
-    --lb-text-on-secondary-hover: white
-    --lb-text-on-secondary-active: white
+    // Secondary (teal) - typically needs light text
+    --lb-text-on-secondary: var(--lb-neutral-1)
+    --lb-text-on-secondary-hover: var(--lb-neutral-1)
+    --lb-text-on-secondary-active: var(--lb-neutral-1)
     
-    // Tertiary (blue) - typically needs white text
-    --lb-text-on-tertiary: white
-    --lb-text-on-tertiary-hover: white
-    --lb-text-on-tertiary-active: white
+    // Tertiary (blue) - typically needs light text
+    --lb-text-on-tertiary: var(--lb-neutral-1)
+    --lb-text-on-tertiary-hover: var(--lb-neutral-1)
+    --lb-text-on-tertiary-active: var(--lb-neutral-1)
     
-    // Success (green) - typically needs white text
-    --lb-text-on-success: white
-    --lb-text-on-success-hover: white
-    --lb-text-on-success-active: white
+    // Success (green) - typically needs light text
+    --lb-text-on-success: var(--lb-neutral-1)
+    --lb-text-on-success-hover: var(--lb-neutral-1)
+    --lb-text-on-success-active: var(--lb-neutral-1)
     
     // Warning (yellow) - needs dark text for contrast
     --lb-text-on-warning: var(--lb-neutral-12)
     --lb-text-on-warning-hover: var(--lb-neutral-12)
     --lb-text-on-warning-active: var(--lb-neutral-12)
     
-    // Error (red) - typically needs white text
-    --lb-text-on-error: white
-    --lb-text-on-error-hover: white
-    --lb-text-on-error-active: white
+    // Error (red) - typically needs light text
+    --lb-text-on-error: var(--lb-neutral-1)
+    --lb-text-on-error-hover: var(--lb-neutral-1)
+    --lb-text-on-error-active: var(--lb-neutral-1)
     
-    // Info (blue) - typically needs white text
-    --lb-text-on-info: white
-    --lb-text-on-info-hover: white
-    --lb-text-on-info-active: white
+    // Info (blue) - typically needs light text
+    --lb-text-on-info: var(--lb-neutral-1)
+    --lb-text-on-info-hover: var(--lb-neutral-1)
+    --lb-text-on-info-active: var(--lb-neutral-1)
     
-    // Neutral (gray) - typically needs white text
-    --lb-text-on-neutral: white
-    --lb-text-on-neutral-hover: white
-    --lb-text-on-neutral-active: white
+    // Neutral (gray) - typically needs light text
+    --lb-text-on-neutral: var(--lb-neutral-1)
+    --lb-text-on-neutral-hover: var(--lb-neutral-1)
+    --lb-text-on-neutral-active: var(--lb-neutral-1)
   
     // === BACKGROUND TOKENS ===
     --lb-background-page: var(--lb-neutral-1)
@@ -384,6 +384,269 @@
   // Dark mode semantic tokens - all reference the dark scale variables
   // which are already defined by the color system
   
+  // === BORDER TOKENS ===
+  // Primary
+  --lb-border-primary-line: var(--lb-primary-6)
+  --lb-border-primary-normal: var(--lb-primary-7)
+  --lb-border-primary-active: var(--lb-primary-9)
+  --lb-border-primary-focus: var(--lb-primary-7)
+  --lb-border-primary-disabled: var(--lb-primary-3)
+  
+  // Secondary
+  --lb-border-secondary-line: var(--lb-secondary-6)
+  --lb-border-secondary-normal: var(--lb-secondary-7)
+  --lb-border-secondary-active: var(--lb-secondary-9)
+  --lb-border-secondary-focus: var(--lb-secondary-7)
+  --lb-border-secondary-disabled: var(--lb-secondary-3)
+  
+  // Tertiary
+  --lb-border-tertiary-line: var(--lb-tertiary-6)
+  --lb-border-tertiary-normal: var(--lb-tertiary-7)
+  --lb-border-tertiary-active: var(--lb-tertiary-9)
+  --lb-border-tertiary-focus: var(--lb-tertiary-7)
+  --lb-border-tertiary-disabled: var(--lb-tertiary-3)
+  
+  // Success
+  --lb-border-success-line: var(--lb-success-6)
+  --lb-border-success-normal: var(--lb-success-7)
+  --lb-border-success-active: var(--lb-success-9)
+  --lb-border-success-focus: var(--lb-success-7)
+  --lb-border-success-disabled: var(--lb-success-3)
+  
+  // Warning
+  --lb-border-warning-line: var(--lb-warning-6)
+  --lb-border-warning-normal: var(--lb-warning-7)
+  --lb-border-warning-active: var(--lb-warning-9)
+  --lb-border-warning-focus: var(--lb-warning-7)
+  --lb-border-warning-disabled: var(--lb-warning-3)
+  
+  // Error
+  --lb-border-error-line: var(--lb-error-6)
+  --lb-border-error-normal: var(--lb-error-7)
+  --lb-border-error-active: var(--lb-error-9)
+  --lb-border-error-focus: var(--lb-error-7)
+  --lb-border-error-disabled: var(--lb-error-3)
+  
+  // Info
+  --lb-border-info-line: var(--lb-info-6)
+  --lb-border-info-normal: var(--lb-info-7)
+  --lb-border-info-active: var(--lb-info-9)
+  --lb-border-info-focus: var(--lb-info-7)
+  --lb-border-info-disabled: var(--lb-info-3)
+  
+  // Neutral
+  --lb-border-neutral-line: var(--lb-neutral-6)
+  --lb-border-neutral-normal: var(--lb-neutral-7)
+  --lb-border-neutral-active: var(--lb-neutral-9)
+  --lb-border-neutral-focus: var(--lb-neutral-7)
+  --lb-border-neutral-disabled: var(--lb-neutral-5)
+  
+  // === FILL TOKENS ===
+  // Primary
+  --lb-fill-primary-normal: var(--lb-primary-9)
+  --lb-fill-primary-hover: var(--lb-primary-10)
+  --lb-fill-primary-active: var(--lb-primary-8)
+  --lb-fill-primary-focus: var(--lb-primary-8)
+  --lb-fill-primary-disabled: var(--lb-primary-4)
+  
+  // Secondary
+  --lb-fill-secondary-normal: var(--lb-secondary-9)
+  --lb-fill-secondary-hover: var(--lb-secondary-10)
+  --lb-fill-secondary-active: var(--lb-secondary-8)
+  --lb-fill-secondary-focus: var(--lb-secondary-8)
+  --lb-fill-secondary-disabled: var(--lb-secondary-4)
+  
+  // Tertiary
+  --lb-fill-tertiary-normal: var(--lb-tertiary-9)
+  --lb-fill-tertiary-hover: var(--lb-tertiary-10)
+  --lb-fill-tertiary-active: var(--lb-tertiary-8)
+  --lb-fill-tertiary-focus: var(--lb-tertiary-8)
+  --lb-fill-tertiary-disabled: var(--lb-tertiary-4)
+  
+  // Success
+  --lb-fill-success-normal: var(--lb-success-9)
+  --lb-fill-success-hover: var(--lb-success-10)
+  --lb-fill-success-active: var(--lb-success-8)
+  --lb-fill-success-focus: var(--lb-success-8)
+  --lb-fill-success-disabled: var(--lb-success-4)
+  
+  // Warning
+  --lb-fill-warning-normal: var(--lb-warning-9)
+  --lb-fill-warning-hover: var(--lb-warning-10)
+  --lb-fill-warning-active: var(--lb-warning-8)
+  --lb-fill-warning-focus: var(--lb-warning-8)
+  --lb-fill-warning-disabled: var(--lb-warning-4)
+  
+  // Error
+  --lb-fill-error-normal: var(--lb-error-9)
+  --lb-fill-error-hover: var(--lb-error-10)
+  --lb-fill-error-active: var(--lb-error-8)
+  --lb-fill-error-focus: var(--lb-error-8)
+  --lb-fill-error-disabled: var(--lb-error-4)
+  
+  // Info
+  --lb-fill-info-normal: var(--lb-info-9)
+  --lb-fill-info-hover: var(--lb-info-10)
+  --lb-fill-info-active: var(--lb-info-8)
+  --lb-fill-info-focus: var(--lb-info-8)
+  --lb-fill-info-disabled: var(--lb-info-4)
+  
+  // Neutral
+  --lb-fill-neutral-normal: var(--lb-neutral-9)
+  --lb-fill-neutral-hover: var(--lb-neutral-10)
+  --lb-fill-neutral-active: var(--lb-neutral-8)
+  --lb-fill-neutral-focus: var(--lb-neutral-8)
+  --lb-fill-neutral-disabled: var(--lb-neutral-4)
+  
+  // === TEXT TOKENS ===
+  // Primary
+  --lb-text-primary-normal: var(--lb-primary-9)
+  --lb-text-primary-contrast-high: var(--lb-primary-12)
+  --lb-text-primary-contrast-low: var(--lb-primary-11)
+  --lb-text-primary-disabled: var(--lb-primary-7)
+  
+  // Secondary
+  --lb-text-secondary-normal: var(--lb-secondary-9)
+  --lb-text-secondary-contrast-high: var(--lb-secondary-12)
+  --lb-text-secondary-contrast-low: var(--lb-secondary-11)
+  --lb-text-secondary-disabled: var(--lb-secondary-7)
+  
+  // Tertiary
+  --lb-text-tertiary-normal: var(--lb-tertiary-9)
+  --lb-text-tertiary-contrast-high: var(--lb-tertiary-12)
+  --lb-text-tertiary-contrast-low: var(--lb-tertiary-11)
+  --lb-text-tertiary-disabled: var(--lb-tertiary-7)
+  
+  // Success
+  --lb-text-success-normal: var(--lb-success-9)
+  --lb-text-success-contrast-high: var(--lb-success-12)
+  --lb-text-success-contrast-low: var(--lb-success-11)
+  --lb-text-success-disabled: var(--lb-success-7)
+  
+  // Warning
+  --lb-text-warning-normal: var(--lb-warning-9)
+  --lb-text-warning-contrast-high: var(--lb-warning-12)
+  --lb-text-warning-contrast-low: var(--lb-warning-11)
+  --lb-text-warning-disabled: var(--lb-warning-7)
+  
+  // Error
+  --lb-text-error-normal: var(--lb-error-9)
+  --lb-text-error-contrast-high: var(--lb-error-12)
+  --lb-text-error-contrast-low: var(--lb-error-11)
+  --lb-text-error-disabled: var(--lb-error-7)
+  
+  // Info
+  --lb-text-info-normal: var(--lb-info-9)
+  --lb-text-info-contrast-high: var(--lb-info-12)
+  --lb-text-info-contrast-low: var(--lb-info-11)
+  --lb-text-info-disabled: var(--lb-info-7)
+  
+  // Neutral
+  --lb-text-neutral-normal: var(--lb-neutral-9)
+  --lb-text-neutral-contrast-high: var(--lb-neutral-12)
+  --lb-text-neutral-contrast-low: var(--lb-neutral-11)
+  --lb-text-neutral-disabled: var(--lb-neutral-7)
+  
+  // === SURFACE TOKENS ===
+  // Primary
+  --lb-surface-primary-normal: var(--lb-primary-2)
+  --lb-surface-primary-hover: var(--lb-primary-3)
+  --lb-surface-primary-active: var(--lb-primary-4)
+  --lb-surface-primary-subtle: var(--lb-primary-1)
+  --lb-surface-primary-raised: var(--lb-primary-1)
+  
+  // Secondary
+  --lb-surface-secondary-normal: var(--lb-secondary-2)
+  --lb-surface-secondary-hover: var(--lb-secondary-3)
+  --lb-surface-secondary-active: var(--lb-secondary-4)
+  --lb-surface-secondary-subtle: var(--lb-secondary-1)
+  --lb-surface-secondary-raised: var(--lb-secondary-1)
+  
+  // Tertiary
+  --lb-surface-tertiary-normal: var(--lb-tertiary-2)
+  --lb-surface-tertiary-hover: var(--lb-tertiary-3)
+  --lb-surface-tertiary-active: var(--lb-tertiary-4)
+  --lb-surface-tertiary-subtle: var(--lb-tertiary-1)
+  --lb-surface-tertiary-raised: var(--lb-tertiary-1)
+  
+  // Success
+  --lb-surface-success-normal: var(--lb-success-2)
+  --lb-surface-success-hover: var(--lb-success-3)
+  --lb-surface-success-active: var(--lb-success-4)
+  --lb-surface-success-subtle: var(--lb-success-1)
+  --lb-surface-success-raised: var(--lb-success-1)
+  
+  // Warning
+  --lb-surface-warning-normal: var(--lb-warning-2)
+  --lb-surface-warning-hover: var(--lb-warning-3)
+  --lb-surface-warning-active: var(--lb-warning-4)
+  --lb-surface-warning-subtle: var(--lb-warning-1)
+  --lb-surface-warning-raised: var(--lb-warning-1)
+  
+  // Error
+  --lb-surface-error-normal: var(--lb-error-2)
+  --lb-surface-error-hover: var(--lb-error-3)
+  --lb-surface-error-active: var(--lb-error-4)
+  --lb-surface-error-subtle: var(--lb-error-1)
+  --lb-surface-error-raised: var(--lb-error-1)
+  
+  // Info
+  --lb-surface-info-normal: var(--lb-info-2)
+  --lb-surface-info-hover: var(--lb-info-3)
+  --lb-surface-info-active: var(--lb-info-4)
+  --lb-surface-info-subtle: var(--lb-info-1)
+  --lb-surface-info-raised: var(--lb-info-1)
+  
+  // Neutral
+  --lb-surface-neutral-normal: var(--lb-neutral-2)
+  --lb-surface-neutral-hover: var(--lb-neutral-3)
+  --lb-surface-neutral-active: var(--lb-neutral-4)
+  --lb-surface-neutral-subtle: var(--lb-neutral-1)
+  --lb-surface-neutral-raised: var(--lb-neutral-1)
+  --lb-surface-neutral-disabled: var(--lb-neutral-3)
+  
+  // === TEXT-ON TOKENS (for filled backgrounds) ===
+  // Use neutral-1 for light text (adapts to custom neutral colors)
+  // Primary (orange)
+  --lb-text-on-primary: var(--lb-neutral-1)
+  --lb-text-on-primary-hover: var(--lb-neutral-1)
+  --lb-text-on-primary-active: var(--lb-neutral-1)
+  
+  // Secondary (teal)
+  --lb-text-on-secondary: var(--lb-neutral-1)
+  --lb-text-on-secondary-hover: var(--lb-neutral-1)
+  --lb-text-on-secondary-active: var(--lb-neutral-1)
+  
+  // Tertiary (blue)
+  --lb-text-on-tertiary: var(--lb-neutral-1)
+  --lb-text-on-tertiary-hover: var(--lb-neutral-1)
+  --lb-text-on-tertiary-active: var(--lb-neutral-1)
+  
+  // Success (green)
+  --lb-text-on-success: var(--lb-neutral-1)
+  --lb-text-on-success-hover: var(--lb-neutral-1)
+  --lb-text-on-success-active: var(--lb-neutral-1)
+  
+  // Warning (yellow) - check contrast, may need neutral-12
+  --lb-text-on-warning: var(--lb-neutral-1)
+  --lb-text-on-warning-hover: var(--lb-neutral-1)
+  --lb-text-on-warning-active: var(--lb-neutral-1)
+  
+  // Error (red)
+  --lb-text-on-error: var(--lb-neutral-1)
+  --lb-text-on-error-hover: var(--lb-neutral-1)
+  --lb-text-on-error-active: var(--lb-neutral-1)
+  
+  // Info (blue)
+  --lb-text-on-info: var(--lb-neutral-1)
+  --lb-text-on-info-hover: var(--lb-neutral-1)
+  --lb-text-on-info-active: var(--lb-neutral-1)
+  
+  // Neutral (gray)
+  --lb-text-on-neutral: var(--lb-neutral-1)
+  --lb-text-on-neutral-hover: var(--lb-neutral-1)
+  --lb-text-on-neutral-active: var(--lb-neutral-1)
+  
   // === BACKGROUND TOKENS ===
   --lb-background-page: var(--lb-neutral-1)
   --lb-background-surface: var(--lb-neutral-2)
@@ -392,7 +655,3 @@
   // === ADDITIONAL TOKENS ===
   --lb-focus-ring-color: var(--lb-primary-7)
   --lb-divider-color: var(--lb-border-neutral-line)
-  
-  // Text-on tokens for dark mode
-  // In dark mode, most colors remain bright enough for white text
-  --lb-text-on-warning: white

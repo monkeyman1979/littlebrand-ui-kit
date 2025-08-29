@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.4] - 2025-08-29
+
+### Added
+- **Complete Dark Mode Implementation**
+  - Full dark mode support with 200+ semantic token mappings
+  - All color tokens (border, fill, text, surface) properly switch between light and dark modes
+  - Dark mode automatically adapts all 8 semantic colors (primary, secondary, tertiary, neutral, success, warning, error, info)
+  - Dark mode remains opt-in - no breaking changes for existing projects
+  - Activation via `data-theme="dark"` attribute or `.dark` class
+
+### Fixed
+- **Text-On Color Tokens**
+  - Replaced hardcoded `white` values with `var(--lb-neutral-1)` for better adaptability
+  - Text on colored backgrounds now adapts to custom neutral color schemes
+  - Maintains proper contrast while respecting user's neutral color customizations
+
 ## [0.3.3] - 2025-08-28
 
 ### Added
