@@ -253,6 +253,35 @@ Want different styles for a specific section?
   --lb-font-size-body-base: 1.25rem
 ```
 
+### Scenario 8: Text on Colored Backgrounds
+
+Need to override the automatic text color on buttons/filled backgrounds?
+
+```sass
+// Force pure white text on primary buttons (instead of adaptive neutral)
+:root
+  --lb-text-on-primary: white
+  --lb-text-on-primary-hover: white
+  --lb-text-on-primary-active: white
+
+// Or force specific colors for each variant
+:root
+  --lb-text-on-primary: #FFFFFF      // Pure white
+  --lb-text-on-secondary: #F0F0F0    // Off-white
+  --lb-text-on-success: white
+  --lb-text-on-warning: #1A1A1A      // Dark gray for yellow backgrounds
+  --lb-text-on-error: white
+  --lb-text-on-info: white
+  --lb-text-on-neutral: white
+
+// Different text colors for dark mode
+[data-theme="dark"], .dark
+  --lb-text-on-primary: #FAFAFA      // Slightly softer than pure white
+  --lb-text-on-warning: white        // White text on warning in dark mode
+```
+
+**Note:** By default, text on colored backgrounds uses `var(--lb-neutral-1)` which adapts to your neutral color scheme. The system also automatically detects contrast and uses dark text when needed (e.g., on yellow/warning backgrounds).
+
 ## 🌙 Dark Mode
 
 ### Default Behavior
