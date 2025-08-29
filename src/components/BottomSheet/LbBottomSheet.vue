@@ -506,7 +506,7 @@ defineExpose({
 // Bottom sheet container
 .lb-bottom-sheet
   position: relative
-  background: var(--lb-background-surface)
+  background: var(--lb-background-page)
   border-radius: base.$radius-lg base.$radius-lg 0 0
   box-shadow: base.$shadow-lg
   width: 100%
