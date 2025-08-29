@@ -375,9 +375,22 @@
     --lb-letter-spacing-normal: normal
     --lb-letter-spacing-wide: 0.025em
     
+    // Line heights
+    --lb-line-height-tight: 1.1
+    --lb-line-height-compact: 1.25
+    --lb-line-height-normal: 1.5
+    --lb-line-height-relaxed: 1.75
+    
     // Display sizes (for hero sections, etc.)
     --lb-display-1: clamp(3rem, 5vw + 1rem, 5rem)
     --lb-display-2: clamp(2.5rem, 4vw + 1rem, 4rem)
+    
+    // Stable neutral text colors (non-flipping for overlays/hero sections)
+    // These maintain consistent lightness regardless of theme mode
+    --lb-text-light-normal: var(--lb-neutral-1)           // Always light
+    --lb-text-light-contrast-low: var(--lb-neutral-2)     // Light, low contrast
+    --lb-text-dark-normal: var(--lb-neutral-12)           // Always dark
+    --lb-text-dark-contrast-low: var(--lb-neutral-11)     // Dark, low contrast
 
 // Dark Theme - Support both data-theme attribute and .dark class
 [data-theme="dark"], .dark
@@ -655,3 +668,10 @@
   // === ADDITIONAL TOKENS ===
   --lb-focus-ring-color: var(--lb-primary-7)
   --lb-divider-color: var(--lb-border-neutral-line)
+  
+  // === STABLE TEXT COLORS (non-flipping) ===
+  // In dark mode, we swap the references to maintain the same appearance
+  --lb-text-light-normal: var(--lb-neutral-12)          // Points to light color
+  --lb-text-light-contrast-low: var(--lb-neutral-11)    // Light, low contrast
+  --lb-text-dark-normal: var(--lb-neutral-1)            // Points to dark color
+  --lb-text-dark-contrast-low: var(--lb-neutral-2)      // Dark, low contrast
