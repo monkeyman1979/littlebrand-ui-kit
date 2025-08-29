@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.5] - 2025-08-29
+
+### Added
+- **Stable Text Color Variables**
+  - New non-flipping text color variables for overlays and hero sections with dark backgrounds
+  - `--lb-text-light-normal` and `--lb-text-light-contrast-low` - Always render as light text regardless of theme mode
+  - `--lb-text-dark-normal` and `--lb-text-dark-contrast-low` - Always render as dark text regardless of theme mode
+  - Variables automatically swap internal references to maintain consistent appearance across light/dark modes
+  - Follows existing naming pattern for consistency with other text tokens (normal, contrast-high, contrast-low)
+
+- **Display Typography Classes**
+  - Added `.display-1` and `.display-2` classes for hero sections and large headings
+  - Both classes use the tightest line height (`--lb-line-height-tight: 1.1`) for maximum visual impact
+  - Responsive font sizing using clamp() for optimal display across all screen sizes
+  - Automatically inherits heading font family, weight, and letter spacing
+
+- **Line Height CSS Variables**
+  - Added complete line height variables to theme system for runtime customization
+  - `--lb-line-height-tight: 1.1` - For display text and hero sections
+  - `--lb-line-height-compact: 1.25` - For headings
+  - `--lb-line-height-normal: 1.5` - For body text
+  - `--lb-line-height-relaxed: 1.75` - For increased readability
+
 ## [0.3.4] - 2025-08-29
 
 ### Added

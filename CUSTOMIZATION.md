@@ -227,6 +227,18 @@ Need bigger text throughout?
   --lb-line-height-normal: 1.6         // More spacing between lines
 ```
 
+Or use the display classes for hero sections (v0.3.5+):
+
+```html
+<h1 class="display-1">Massive Hero Text</h1>
+<h2 class="display-2">Large Subheading</h2>
+```
+
+Both display classes automatically use:
+- Responsive sizing (3-5rem for display-1, 2.5-4rem for display-2)
+- Tight line height (1.1) for visual impact
+- Heading font family and weight
+
 ### Scenario 6: Dark Mode Specific Overrides
 
 Need different values for dark mode?
@@ -281,6 +293,33 @@ Need to override the automatic text color on buttons/filled backgrounds?
 ```
 
 **Note:** By default, text on colored backgrounds uses `var(--lb-neutral-1)` which adapts to your neutral color scheme. The system also automatically detects contrast and uses dark text when needed (e.g., on yellow/warning backgrounds).
+
+### Scenario 9: Hero Sections with Dark Backgrounds
+
+Need light text that stays light in both light and dark modes? Use the stable text variables:
+
+```sass
+// For hero sections, overlays, or any dark background
+.hero-section
+  h1
+    color: var(--lb-text-light-normal)  // Always light text
+    
+  p
+    color: var(--lb-text-light-contrast-low)  // Light with softer contrast
+
+// Or for sections needing dark text on light backgrounds
+.light-section
+  h1
+    color: var(--lb-text-dark-normal)  // Always dark text
+```
+
+**Available stable text variables (v0.3.5+):**
+- `--lb-text-light-normal` - Always renders as light text
+- `--lb-text-light-contrast-low` - Light text with lower contrast
+- `--lb-text-dark-normal` - Always renders as dark text
+- `--lb-text-dark-contrast-low` - Dark text with lower contrast
+
+These variables maintain their appearance regardless of theme mode, perfect for overlays and hero sections.
 
 ## 🌙 Dark Mode
 

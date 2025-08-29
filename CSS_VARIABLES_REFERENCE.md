@@ -204,6 +204,12 @@ Text colors with different contrast levels for accessibility.
 --lb-text-info-contrast-high
 --lb-text-info-contrast-low
 --lb-text-info-disabled
+
+/* Stable Text Colors (non-flipping, v0.3.5+) */
+--lb-text-light-normal         /* Always light text */
+--lb-text-light-contrast-low   /* Always light, lower contrast */
+--lb-text-dark-normal          /* Always dark text */
+--lb-text-dark-contrast-low    /* Always dark, lower contrast */
 ```
 
 ### Surface Tokens
@@ -369,10 +375,10 @@ Text colors for use on filled backgrounds (ensures proper contrast).
 ### Line Heights
 
 ```css
---lb-line-height-tight      /* 1.1 */
---lb-line-height-compact    /* 1.25 */
---lb-line-height-normal     /* 1.5 */
---lb-line-height-relaxed    /* 1.75 */
+--lb-line-height-tight      /* 1.1 - For display/hero text */
+--lb-line-height-compact    /* 1.25 - For headings */
+--lb-line-height-normal     /* 1.5 - For body text */
+--lb-line-height-relaxed    /* 1.75 - For enhanced readability */
 ```
 
 ### Letter Spacing
