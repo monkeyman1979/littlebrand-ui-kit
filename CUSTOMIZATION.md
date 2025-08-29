@@ -292,7 +292,7 @@ Need to override the automatic text color on buttons/filled backgrounds?
   --lb-text-on-warning: white        // White text on warning in dark mode
 ```
 
-**Note:** By default, text on colored backgrounds uses `var(--lb-neutral-1)` which adapts to your neutral color scheme. The system also automatically detects contrast and uses dark text when needed (e.g., on yellow/warning backgrounds).
+**Note:** As of v0.3.6, text on colored backgrounds uses stable text variables (`--lb-text-light-normal` for most colors, `--lb-text-dark-normal` for warning/yellow). This ensures consistent contrast in both light and dark modes. The system automatically detects contrast for runtime theme changes.
 
 ### Scenario 9: Hero Sections with Dark Backgrounds
 
