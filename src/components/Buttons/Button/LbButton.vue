@@ -285,7 +285,7 @@ defineOptions({
       background-color: var(--lb-fill-#{$color}-active)
       color: var(--lb-text-on-#{$color}-active)
     &.disabled
-      background-color: var(--lb-surface-neutral-subtle)
+      background-color: var(--lb-surface-disabled)
       color: var(--lb-text-neutral-disabled)
       
   @else if $variant == 'tonal'
@@ -298,7 +298,7 @@ defineOptions({
     &:active:not(.disabled):not(.loading)
       background-color: var(--lb-surface-#{$color}-active)
     &.disabled
-      background-color: var(--lb-background-surface)
+      background-color: var(--lb-surface-subtle)
       color: var(--lb-text-neutral-disabled)
       
   @else if $variant == 'outline'

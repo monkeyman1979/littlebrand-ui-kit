@@ -185,10 +185,11 @@ export function applyTheme(colors, curve = 'natural') {
       : generateScale(sourceColor, curve)
   }
   
-  // Apply backgrounds
-  root.style.setProperty('--lb-background-page', backgroundScale[1])
-  root.style.setProperty('--lb-background-surface', backgroundScale[2])
-  root.style.setProperty('--lb-background-overlay', isDarkMode ? 
+  // Apply surface tokens
+  root.style.setProperty('--lb-surface-base', backgroundScale[1])
+  root.style.setProperty('--lb-surface-subtle', backgroundScale[2])
+  root.style.setProperty('--lb-surface-disabled', backgroundScale[3])
+  root.style.setProperty('--lb-surface-overlay', isDarkMode ? 
     `oklch(0 0 0 / 0.7)` : `oklch(0 0 0 / 0.5)`)
   
   // Watch for dark mode changes

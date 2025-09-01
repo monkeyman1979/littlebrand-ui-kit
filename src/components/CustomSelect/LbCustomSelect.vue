@@ -566,7 +566,7 @@ defineExpose({
   align-items: center
   justify-content: space-between
   width: 100%
-  background: var(--lb-background-surface)
+  background: var(--lb-surface-subtle)
   border: cv.$select-border-width solid var(--lb-border-neutral-normal)
   border-radius: cv.$select-border-radius
   font-family: inherit
@@ -610,7 +610,7 @@ defineExpose({
     box-shadow: base.$shadow-sm
 
 .disabled .select-trigger
-  background: var(--lb-surface-neutral-subtle)
+  background: var(--lb-surface-disabled)
   color: var(--lb-text-neutral-disabled)
   cursor: not-allowed
   opacity: base.$opacity-60

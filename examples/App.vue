@@ -4726,7 +4726,7 @@ section
     margin-bottom: base.$space-2xl
     
   .approach-card
-    background: var(--lb-background-surface)
+    background: var(--lb-surface-subtle)
     padding: base.$space-xl
     border-radius: base.$radius-md
     border: base.$border-sm solid var(--lb-border-neutral-line)
@@ -4758,7 +4758,7 @@ section
       border: none
   
   .custom-accent-demo
-    background: var(--lb-background-surface)
+    background: var(--lb-surface-subtle)
     padding: base.$space-xl
     border-radius: base.$radius-md
     border: base.$border-sm solid var(--lb-border-neutral-line)
@@ -4777,7 +4777,7 @@ section
         margin-bottom: 0
   
   .interactive-theme-demo
-    background: var(--lb-background-surface)
+    background: var(--lb-surface-subtle)
     padding: base.$space-xl
     border-radius: base.$radius-md
     border: base.$border-sm solid var(--lb-border-neutral-line)
@@ -4854,7 +4854,7 @@ section
         gap: base.$space-xl
         
         .preview-card
-          background: var(--lb-background-surface)
+          background: var(--lb-surface-subtle)
           padding: base.$space-lg
           border-radius: base.$radius-sm
           
@@ -4916,7 +4916,7 @@ section
               margin-bottom: base.$space-lg
   
   .theme-example-buttons
-    background: var(--lb-background-surface)
+    background: var(--lb-surface-subtle)
     padding: base.$space-xl
     border-radius: base.$radius-md
     border: base.$border-sm solid var(--lb-border-neutral-line)

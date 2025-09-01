@@ -177,7 +177,7 @@ defineExpose({
     height: cv.$radio-size  // 20px
     padding: 0
     margin: 0
-    background: var(--lb-background-surface)
+    background: var(--lb-surface-subtle)
     border: cv.$radio-border-width solid var(--lb-border-neutral-normal)
     border-radius: base.$radius-full
     cursor: pointer

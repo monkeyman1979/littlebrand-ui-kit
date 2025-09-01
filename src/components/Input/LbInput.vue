@@ -256,7 +256,7 @@ const handleInput = (event: Event) => {
   // Input styles
   input
     width: 100%
-    background: var(--lb-background-surface)
+    background: var(--lb-surface-subtle)
     border: cv.$input-border-width solid var(--lb-border-neutral-normal)
     border-radius: cv.$input-border-radius
     font-family: inherit
@@ -297,14 +297,14 @@ const handleInput = (event: Event) => {
   
   // Disabled state
   input:disabled
-    background: var(--lb-surface-neutral-subtle)
+    background: var(--lb-surface-disabled)
     color: var(--lb-text-neutral-disabled)
     cursor: not-allowed
     border-color: var(--lb-border-neutral-disabled)
   
   // Readonly state
   input:read-only
-    background: var(--lb-surface-neutral-subtle)
+    background: var(--lb-surface-disabled)
     cursor: default
   
   // Size variations

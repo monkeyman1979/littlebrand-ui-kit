@@ -208,7 +208,7 @@ defineExpose({
   textarea
     width: 100%
     min-height: cv.$textarea-min-height-medium // 96px minimum
-    background: var(--lb-background-surface)
+    background: var(--lb-surface-subtle)
     border: cv.$textarea-border-width solid var(--lb-border-neutral-normal)
     border-radius: cv.$textarea-border-radius
     font-family: inherit
@@ -249,14 +249,14 @@ defineExpose({
   
   // Disabled state
   textarea:disabled
-    background: var(--lb-surface-neutral-subtle)
+    background: var(--lb-surface-disabled)
     color: var(--lb-text-neutral-disabled)
     cursor: not-allowed
     border-color: var(--lb-border-neutral-disabled)
   
   // Readonly state
   textarea:read-only
-    background: var(--lb-surface-neutral-subtle)
+    background: var(--lb-surface-disabled)
     cursor: default
   
   // Size variants - moved outside of textarea to increase specificity

@@ -149,7 +149,7 @@ defineOptions({
   align-items: center
   justify-content: center
   border-radius: cv.$avatar-border-radius
-  background-color: var(--lb-background-surface)
+  background-color: var(--lb-surface-subtle)
   box-shadow: base.$shadow-sm
   flex-shrink: 0
   
@@ -233,7 +233,7 @@ defineOptions({
   .status-indicator
     position: absolute
     border-radius: base.$radius-full
-    border: base.$border-md solid var(--lb-background-surface)
+    border: base.$border-md solid var(--lb-surface-subtle)
     
     &.status-online
       background-color: var(--lb-text-success-normal)

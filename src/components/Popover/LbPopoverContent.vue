@@ -368,7 +368,7 @@ onBeforeUnmount(() => {
   padding: base.$space-md
   
   // Visual
-  background: var(--lb-background-surface)
+  background: var(--lb-surface-subtle)
   border: base.$border-sm solid var(--lb-border-neutral-normal)
   border-radius: base.$radius-md
   box-shadow: base.$shadow-lg

@@ -298,7 +298,7 @@ defineOptions({
   gap: 0.5rem
   gap: base.$space-md
   padding: 0 base.$space-md
-  background: var(--lb-background-surface)
+  background: var(--lb-surface-subtle)
   border: base.$border-sm solid var(--lb-border-neutral-line)
   border-radius: base.$radius-md
   font-family: var(--lb-font-body)
@@ -346,7 +346,7 @@ defineOptions({
   &:disabled
     cursor: not-allowed
     opacity: base.$opacity-60
-    background: var(--lb-surface-neutral-subtle)
+    background: var(--lb-surface-disabled)
 
 .calendar-icon
   display: flex

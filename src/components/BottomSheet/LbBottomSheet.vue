@@ -488,7 +488,7 @@ defineExpose({
   right: 0
   bottom: 0
   z-index: base.$z-modal-backdrop
-  background: var(--lb-background-overlay)
+  background: var(--lb-surface-overlay)
   backdrop-filter: blur(2px)
   overflow-y: auto
   overflow-x: hidden
@@ -506,7 +506,7 @@ defineExpose({
 // Bottom sheet container
 .lb-bottom-sheet
   position: relative
-  background: var(--lb-background-page)
+  background: var(--lb-surface-base)
   border-radius: base.$radius-lg base.$radius-lg 0 0
   box-shadow: base.$shadow-lg
   width: 100%

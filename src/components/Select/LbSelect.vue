@@ -495,7 +495,7 @@ defineOptions({
   align-items: center
   width: 100%
   padding: 0 cv.$select-padding-x-medium
-  background: var(--lb-background-surface)
+  background: var(--lb-surface-subtle)
   border: cv.$select-border-width solid var(--lb-border-neutral-normal)
   border-radius: cv.$select-border-radius
   color: var(--lb-text-neutral-contrast-high)
@@ -524,7 +524,7 @@ defineOptions({
     font-size: cv.$select-font-size-large  // 16px - matches input
   
   &.select-trigger-disabled
-    background: var(--lb-surface-neutral-subtle)
+    background: var(--lb-surface-disabled)
     color: var(--lb-text-neutral-disabled)
     cursor: not-allowed
     opacity: base.$opacity-60
@@ -611,7 +611,7 @@ defineOptions({
   width: 100%
   height: base.$unit-32  // 32px
   padding: 0 base.$space-sm
-  background: var(--lb-background-surface)
+  background: var(--lb-surface-subtle)
   border: cv.$select-border-width solid var(--lb-border-neutral-normal)
   border-radius: base.$radius-sm  // 8px for search inputs inside dropdowns
   color: var(--lb-text-neutral-contrast-high)

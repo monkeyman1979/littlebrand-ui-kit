@@ -518,7 +518,7 @@ onUnmounted(() => {
   width: 100%
   height: base.$size-6xl
   padding: 0 base.$space-sm // 0 8px
-  background: var(--lb-background-surface)
+  background: var(--lb-surface-subtle)
   border: base.$border-sm solid var(--lb-border-neutral-normal)
   border-radius: base.$radius-sm  // 8px for search inputs inside dropdowns
   font-size: typography.$font-size-label-base

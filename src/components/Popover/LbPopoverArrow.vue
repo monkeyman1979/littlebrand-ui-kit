@@ -140,7 +140,7 @@ defineExpose({
   height: 100%
 
 .arrow-path
-  fill: var(--lb-background-surface)
+  fill: var(--lb-surface-subtle)
   stroke: var(--lb-border-neutral-line)
   stroke-width: base.$border-sm
   
@@ -149,6 +149,6 @@ defineExpose({
 
 // Theme-aware arrow colors
 :global([data-theme="dark"]) .arrow-path
-  fill: var(--lb-background-surface)
+  fill: var(--lb-surface-subtle)
   stroke: var(--lb-border-neutral-line)
 </style>
