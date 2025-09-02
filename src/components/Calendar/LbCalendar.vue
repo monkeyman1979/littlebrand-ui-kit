@@ -805,7 +805,7 @@ defineOptions({
     z-index: 1
   
   &:hover:not(:disabled)
-    background: var(--lb-surface-neutral-normal)
+    background: var(--lb-surface-neutral-hover)
   
   &:active:not(:disabled)
     background: var(--lb-surface-neutral-hover)
@@ -831,7 +831,7 @@ defineOptions({
     border: base.$border-sm solid var(--lb-border-primary-normal)
     
     &:hover:not(:disabled)
-      background: var(--lb-surface-neutral-normal)
+      background: var(--lb-surface-neutral-hover)
       border-color: var(--lb-border-primary-active)
     
     &:active:not(:disabled)
