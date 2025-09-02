@@ -5,6 +5,44 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2025-09-02
+
+### Changed
+- **Color Scale Standardization**
+  - Standardized lightness progression across all color scales with mathematical precision
+  - Light mode steps 1-8: Fixed progression (99.8%, 98.8%, 97.3%, 95.8%, 94.3%, 92.8%, 91.3%, 89.8%)
+  - Dark mode: Applied inverse percentage progression for proper contrast
+  - Steps 10-11 now use percentage-based calculations relative to Step 9 for consistency
+  - Updated both hardcoded SASS values and dynamic OKLCH generation functions
+
+- **Component Background Updates**
+  - Calendar, Select, Dropdown, Menu, Popover, and NavigationBar now use `--lb-surface-base` instead of `--lb-surface-subtle`
+  - Creates more consistent visual hierarchy across floating and overlay components
+  - Provides better integration with the overall design system
+
+- **Contextual Hover/Active States**
+  - Implemented smart contextual rules for hover and active states based on background
+  - Components on surface-base backgrounds use surface-neutral-normal for hover
+  - Components on surface-base backgrounds use surface-neutral-hover for active
+  - Ensures proper visual hierarchy and contrast across different background contexts
+
+- **Form Input Backgrounds**
+  - Removed default background colors from Input and Textarea components
+  - Form inputs now have transparent backgrounds in both default and focus states
+  - Creates cleaner, more minimal appearance that adapts to container backgrounds
+
+### Added
+- **Style Optimization Auditor Enhancement**
+  - Added contextual hover/active state validation rules to the style auditor
+  - Auditor now enforces proper visual hierarchy based on component background context
+  - Ensures consistent implementation of the new contextual state system
+
+### Fixed
+- **Dark Mode Color Scale Progression**
+  - Fixed Steps 10-12 in dark mode to use inverse percentages of light mode
+  - Ensures consistent visual progression across light and dark themes
+  - Improved contrast ratios for better accessibility
+
 ## [0.3.6] - 2025-08-29
 
 ### Fixed
