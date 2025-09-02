@@ -495,12 +495,12 @@ defineOptions({
   align-items: center
   width: 100%
   padding: 0 cv.$select-padding-x-medium
-  background: var(--lb-surface-subtle)
+  background: transparent
   border: cv.$select-border-width solid var(--lb-border-neutral-normal)
   border-radius: cv.$select-border-radius
   color: var(--lb-text-neutral-contrast-high)
   cursor: pointer
-  transition: border-color base.$transition, box-shadow base.$transition
+  transition: border-color base.$transition, box-shadow base.$transition, background-color base.$transition
   box-sizing: border-box
   
   // Hover state (only when not focused and not invalid)

@@ -183,6 +183,13 @@
             .scale-step-oklch(v-for="n in 12" :key="`teal-${n}`" :class="`step-${n}`")
               .step-swatch(:style="{ background: getColorForStep('secondary', n) }")
               .step-label Step {{ n }}{{ n === 9 ? ' (Base)' : '' }}
+        
+        .scale-column
+          h4 Neutral Scale (Gray)
+          .color-scale-oklch
+            .scale-step-oklch(v-for="n in 12" :key="`neutral-${n}`" :class="`step-${n}`")
+              .step-swatch(:style="{ background: getColorForStep('neutral', n) }")
+              .step-label Step {{ n }}{{ n === 9 ? ' (Base)' : '' }}
       
       .oklch-benefits
         h3 Benefits of OKLCH
