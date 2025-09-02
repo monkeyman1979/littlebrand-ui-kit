@@ -611,7 +611,7 @@ defineOptions({
   width: 100%
   height: base.$unit-32  // 32px
   padding: 0 base.$space-sm
-  background: var(--lb-surface-subtle)
+  background: var(--lb-surface-base)
   border: cv.$select-border-width solid var(--lb-border-neutral-normal)
   border-radius: base.$radius-sm  // 8px for search inputs inside dropdowns
   color: var(--lb-text-neutral-contrast-high)
@@ -649,10 +649,10 @@ defineOptions({
     padding: base.$space-md base.$space-lg
   
   &:hover:not(.select-option-disabled):not(.select-option-selected)
-    background: var(--lb-surface-neutral-hover)
+    background: var(--lb-surface-neutral-normal)
   
   &.select-option-highlighted:not(.select-option-disabled):not(.select-option-selected)
-    background: var(--lb-surface-neutral-hover)
+    background: var(--lb-surface-neutral-normal)
   
   &.select-option-selected
     background: var(--lb-surface-neutral-hover)

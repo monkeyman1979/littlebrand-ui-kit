@@ -402,20 +402,51 @@ export function generateOklchDarkScale(lightScale, originalColor) {
     return Math.pow(normalized, exp);
   };
   
-  // Generate lightness stops with enhanced range for dark mode
+  // Generate lightness stops with fixed progression matching light mode percentages
+  // Using same percentage differences as light mode but inverted (dark to light)
   const darkLightnessStops = [];
+  
+  // Determine base starting point based on color type
+  let baseStart = 0.170; // Default for most colors
+  
+  // Adjust starting point based on hue like in hardcoded values
+  if (oklch.H >= 30 && oklch.H <= 80) {
+    // Orange range
+    baseStart = 0.100;
+  } else if (oklch.H >= 80 && oklch.H <= 120) {
+    // Yellow range
+    baseStart = 0.110;
+  } else if (oklch.H >= 140 && oklch.H <= 200) {
+    // Green/teal range
+    baseStart = 0.140;
+  } else if (oklch.H >= 200 && oklch.H <= 260) {
+    // Blue range
+    baseStart = 0.175;
+  }
+  
   for (let i = 1; i <= 12; i++) {
-    if (i <= 8) {
-      // Steps 1-8: Dark backgrounds with exponential distribution
-      const t = getExponentialStep(i, 8, 1.8);
-      darkLightnessStops.push(minDarkBackground + (targetLightness9 - minDarkBackground) * t);
+    if (i === 1) {
+      // Step 1: Starting point
+      darkLightnessStops.push(baseStart);
+    } else if (i === 2) {
+      // Step 2: +1% from Step 1 (matching light mode's 1% drop)
+      darkLightnessStops.push(baseStart + 0.010);
+    } else if (i <= 8) {
+      // Steps 3-8: +1.5% increments (matching light mode's 1.5% drops)
+      const increments = (i - 2) * 0.015;
+      darkLightnessStops.push(baseStart + 0.010 + increments);
     } else if (i === 9) {
-      // Step 9: Base color (slightly adjusted for dark mode)
+      // Step 9: Base color (adjusted for dark mode)
       darkLightnessStops.push(targetLightness9);
+    } else if (i === 10) {
+      // Step 10: Inverse of light mode's 97% (1/0.97 ≈ 1.031)
+      darkLightnessStops.push(targetLightness9 * 1.031);
+    } else if (i === 11) {
+      // Step 11: Inverse of light mode's 90% (1/0.90 ≈ 1.111)
+      darkLightnessStops.push(targetLightness9 * 1.111);
     } else {
-      // Steps 10-12: Light text range with exponential distribution
-      const t = getExponentialStep(i - 9, 3, 1.5);
-      darkLightnessStops.push(targetLightness9 + (maxDarkLightness - targetLightness9) * t);
+      // Step 12: Very light for text
+      darkLightnessStops.push(0.85);
     }
   }
   
