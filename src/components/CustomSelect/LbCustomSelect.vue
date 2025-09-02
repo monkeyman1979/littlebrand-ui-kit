@@ -566,13 +566,13 @@ defineExpose({
   align-items: center
   justify-content: space-between
   width: 100%
-  background: var(--lb-background-surface)
+  background: transparent
   border: cv.$select-border-width solid var(--lb-border-neutral-normal)
   border-radius: cv.$select-border-radius
   font-family: inherit
   color: var(--lb-text-neutral-contrast-high)
   cursor: pointer
-  transition: border-color base.$transition, box-shadow base.$transition
+  transition: border-color base.$transition, box-shadow base.$transition, background-color base.$transition
   box-sizing: border-box
   gap: base.$space-sm
   outline: none
@@ -610,7 +610,7 @@ defineExpose({
     box-shadow: base.$shadow-sm
 
 .disabled .select-trigger
-  background: var(--lb-surface-neutral-subtle)
+  background: var(--lb-surface-disabled)
   color: var(--lb-text-neutral-disabled)
   cursor: not-allowed
   opacity: base.$opacity-60

@@ -233,7 +233,7 @@ defineExpose({
     height: cv.$checkbox-size  // 20px
     padding: 0
     margin: 0
-    background: var(--lb-background-surface)
+    background: var(--lb-surface-subtle)
     border: cv.$checkbox-border-width solid var(--lb-border-neutral-normal)
     border-radius: cv.$checkbox-border-radius
     cursor: pointer

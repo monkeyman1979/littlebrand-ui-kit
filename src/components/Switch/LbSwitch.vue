@@ -138,7 +138,7 @@ defineExpose({
     position: relative
     padding: 0
     margin: 0
-    background: var(--lb-background-surface)
+    background: var(--lb-surface-subtle)
     border: base.$border-md solid var(--lb-border-neutral-normal)
     border-radius: cv.$switch-border-radius
     cursor: pointer

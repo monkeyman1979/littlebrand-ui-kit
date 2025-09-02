@@ -130,9 +130,7 @@ declare module 'csstype' {
     /** Primary surface active color */
     '--lb-surface-primary-active'?: string;
     /** Primary surface subtle color */
-    '--lb-surface-primary-subtle'?: string;
     /** Primary surface raised color */
-    '--lb-surface-primary-raised'?: string;
     
     /** Text color on primary background */
     '--lb-text-on-primary'?: string;
@@ -165,8 +163,6 @@ declare module 'csstype' {
     '--lb-surface-secondary-normal'?: string;
     '--lb-surface-secondary-hover'?: string;
     '--lb-surface-secondary-active'?: string;
-    '--lb-surface-secondary-subtle'?: string;
-    '--lb-surface-secondary-raised'?: string;
     
     '--lb-text-on-secondary'?: string;
     '--lb-text-on-secondary-hover'?: string;
@@ -196,8 +192,6 @@ declare module 'csstype' {
     '--lb-surface-tertiary-normal'?: string;
     '--lb-surface-tertiary-hover'?: string;
     '--lb-surface-tertiary-active'?: string;
-    '--lb-surface-tertiary-subtle'?: string;
-    '--lb-surface-tertiary-raised'?: string;
     
     '--lb-text-on-tertiary'?: string;
     '--lb-text-on-tertiary-hover'?: string;
@@ -227,8 +221,6 @@ declare module 'csstype' {
     '--lb-surface-neutral-normal'?: string;
     '--lb-surface-neutral-hover'?: string;
     '--lb-surface-neutral-active'?: string;
-    '--lb-surface-neutral-subtle'?: string;
-    '--lb-surface-neutral-raised'?: string;
     '--lb-surface-neutral-disabled'?: string;
     
     '--lb-text-on-neutral'?: string;
@@ -259,8 +251,6 @@ declare module 'csstype' {
     '--lb-surface-success-normal'?: string;
     '--lb-surface-success-hover'?: string;
     '--lb-surface-success-active'?: string;
-    '--lb-surface-success-subtle'?: string;
-    '--lb-surface-success-raised'?: string;
     
     '--lb-text-on-success'?: string;
     '--lb-text-on-success-hover'?: string;
@@ -290,8 +280,6 @@ declare module 'csstype' {
     '--lb-surface-warning-normal'?: string;
     '--lb-surface-warning-hover'?: string;
     '--lb-surface-warning-active'?: string;
-    '--lb-surface-warning-subtle'?: string;
-    '--lb-surface-warning-raised'?: string;
     
     '--lb-text-on-warning'?: string;
     '--lb-text-on-warning-hover'?: string;
@@ -321,8 +309,6 @@ declare module 'csstype' {
     '--lb-surface-error-normal'?: string;
     '--lb-surface-error-hover'?: string;
     '--lb-surface-error-active'?: string;
-    '--lb-surface-error-subtle'?: string;
-    '--lb-surface-error-raised'?: string;
     
     '--lb-text-on-error'?: string;
     '--lb-text-on-error-hover'?: string;
@@ -352,8 +338,6 @@ declare module 'csstype' {
     '--lb-surface-info-normal'?: string;
     '--lb-surface-info-hover'?: string;
     '--lb-surface-info-active'?: string;
-    '--lb-surface-info-subtle'?: string;
-    '--lb-surface-info-raised'?: string;
     
     '--lb-text-on-info'?: string;
     '--lb-text-on-info-hover'?: string;
@@ -449,15 +433,17 @@ declare module 'csstype' {
     '--lb-input-height-large'?: string;
     
     // ============================================================
-    // BACKGROUND & SPECIAL PROPERTIES
+    // SURFACE & SPECIAL PROPERTIES
     // ============================================================
     
-    /** Main page background color */
-    '--lb-background-page'?: string;
-    /** Surface/card background color */
-    '--lb-background-surface'?: string;
+    /** Main app background color (Step 1) */
+    '--lb-surface-base'?: string;
+    /** Cards/elevated content background (Step 2) */
+    '--lb-surface-subtle'?: string;
+    /** Disabled state background */
+    '--lb-surface-disabled'?: string;
     /** Modal overlay background color */
-    '--lb-background-overlay'?: string;
+    '--lb-surface-overlay'?: string;
     
     /** Focus ring color */
     '--lb-focus-ring-color'?: string;

@@ -693,7 +693,7 @@ defineOptions({
   gap: base.$space-lg  // Gap between header and grid
   width: fit-content  // Size to content
   max-width: 100%  // But don't overflow container
-  background: var(--lb-background-surface)
+  background: var(--lb-surface-base)
   font-family: var(--lb-font-body)
   
   // Standalone variant - with border and padding
@@ -805,10 +805,10 @@ defineOptions({
     z-index: 1
   
   &:hover:not(:disabled)
-    background: var(--lb-surface-neutral-hover)
+    background: var(--lb-surface-neutral-normal)
   
   &:active:not(:disabled)
-    background: var(--lb-surface-neutral-active)
+    background: var(--lb-surface-neutral-hover)
     transform: translateY(1px)
   
   // Current month days
@@ -821,7 +821,7 @@ defineOptions({
     opacity: base.$opacity-60
     
     &:hover:not(:disabled)
-      background: var(--lb-surface-neutral-subtle)
+      background: var(--lb-surface-disabled)
       opacity: base.$opacity-80
   
   // Today's date
@@ -831,11 +831,11 @@ defineOptions({
     border: base.$border-sm solid var(--lb-border-primary-normal)
     
     &:hover:not(:disabled)
-      background: var(--lb-surface-neutral-hover)
+      background: var(--lb-surface-neutral-normal)
       border-color: var(--lb-border-primary-active)
     
     &:active:not(:disabled)
-      background: var(--lb-surface-neutral-active)
+      background: var(--lb-surface-neutral-hover)
       border-color: var(--lb-border-primary-active)
   
   // Selected date

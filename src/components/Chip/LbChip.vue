@@ -151,7 +151,7 @@ defineOptions({
   white-space: nowrap
   user-select: none
   outline: none
-  background-color: var(--lb-background-surface)
+  background-color: var(--lb-surface-subtle)
   color: var(--lb-text-neutral-contrast-high)
   align-self: flex-start  // Prevent stretching in flex containers
   
@@ -199,7 +199,7 @@ defineOptions({
   // Variant styles
   &.variant-assist
     border-color: var(--lb-border-neutral-line)
-    background-color: var(--lb-background-surface)
+    background-color: var(--lb-surface-subtle)
     color: var(--lb-text-neutral-contrast-high)
     
     &:not(.disabled)
@@ -215,7 +215,7 @@ defineOptions({
   
   &.variant-filter
     border-color: var(--lb-border-neutral-line)
-    background-color: var(--lb-background-surface)
+    background-color: var(--lb-surface-subtle)
     color: var(--lb-text-neutral-contrast-high)
     
     &:not(.disabled)
@@ -248,7 +248,7 @@ defineOptions({
   
   &.variant-suggestion
     border-color: var(--lb-border-neutral-line)
-    background-color: var(--lb-background-surface)
+    background-color: var(--lb-surface-subtle)
     color: var(--lb-text-neutral-contrast-low)
     
     &:not(.disabled)
@@ -269,7 +269,7 @@ defineOptions({
     opacity: base.$opacity-60
     
     @include base.hover-supported
-      background-color: var(--lb-background-surface)
+      background-color: var(--lb-surface-subtle)
       border-color: var(--lb-border-neutral-line)
       color: var(--lb-text-neutral-disabled)
       box-shadow: none
@@ -286,7 +286,7 @@ defineOptions({
       cursor: pointer
     
     @include base.hover-supported
-      background-color: var(--lb-background-surface)
+      background-color: var(--lb-surface-subtle)
       box-shadow: none
       transform: none
   
@@ -362,7 +362,7 @@ defineOptions({
   @if $variant == 'assist'
     &.color-#{$color}
       border-color: var(--lb-border-neutral-line)
-      background-color: var(--lb-background-surface)
+      background-color: var(--lb-surface-subtle)
       color: var(--lb-text-neutral-contrast-high)
       
       &:not(.disabled)
@@ -379,7 +379,7 @@ defineOptions({
   @if $variant == 'filter'
     &.color-#{$color}
       border-color: var(--lb-border-neutral-line)
-      background-color: var(--lb-background-surface)
+      background-color: var(--lb-surface-subtle)
       color: var(--lb-text-neutral-contrast-high)
       
       &:not(.disabled)
@@ -414,7 +414,7 @@ defineOptions({
   @if $variant == 'suggestion'
     &.color-#{$color}
       border-color: var(--lb-border-neutral-line)
-      background-color: var(--lb-background-surface)
+      background-color: var(--lb-surface-subtle)
       color: var(--lb-text-neutral-contrast-low)
       
       &:not(.disabled)

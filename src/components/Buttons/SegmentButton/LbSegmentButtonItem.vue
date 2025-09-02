@@ -167,11 +167,11 @@ defineOptions({
   @media (hover: hover)
     &:hover:not(.disabled):not(.active)
       &.color-primary
-        background-color: var(--lb-surface-primary-subtle)
+        background-color: var(--lb-surface-primary-normal)
       &.color-secondary
-        background-color: var(--lb-surface-secondary-subtle)
+        background-color: var(--lb-surface-secondary-normal)
       &.color-neutral
-        background-color: var(--lb-surface-neutral-subtle)
+        background-color: var(--lb-surface-neutral-normal)
 
 
   &.disabled

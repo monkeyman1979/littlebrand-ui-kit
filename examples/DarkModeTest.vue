@@ -63,13 +63,13 @@ onMounted(() => {
 .dark-mode-test
   padding: 2rem
   min-height: 100vh
-  background: var(--lb-background-page)
+  background: var(--lb-surface-base)
   transition: background-color 0.3s ease
 
 .controls
   margin-bottom: 2rem
   padding: 1rem
-  background: var(--lb-background-surface)
+  background: var(--lb-surface-subtle)
   border-radius: var(--lb-radius-md)
   
   h2
@@ -100,7 +100,7 @@ onMounted(() => {
   gap: 2rem
 
 .test-section
-  background: var(--lb-background-surface)
+  background: var(--lb-surface-subtle)
   padding: 1.5rem
   border-radius: var(--lb-radius-md)
   
@@ -164,10 +164,10 @@ onMounted(() => {
     color: var(--lb-text-neutral-normal)
 
 .background-test
-  background: var(--lb-background-page)
+  background: var(--lb-surface-base)
   border: 1px solid var(--lb-border-neutral-line)
 
 .surface-test
-  background: var(--lb-background-surface)
+  background: var(--lb-surface-subtle)
   border: 1px solid var(--lb-border-neutral-line)
 </style>

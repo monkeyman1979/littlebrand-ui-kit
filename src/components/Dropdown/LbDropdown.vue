@@ -228,7 +228,7 @@ defineOptions({
     opacity: base.$opacity-60
 
 .dropdown-content
-  background: var(--lb-background-surface)
+  background: var(--lb-surface-base)
   border: base.$border-sm solid var(--lb-border-neutral-normal)
   border-radius: base.$radius-lg
   box-shadow: base.$shadow-lg

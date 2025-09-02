@@ -166,7 +166,7 @@ defineOptions({
   width: min(cv.$snackbar-max-width, 90%)
   min-height: base.$unit-40  // 40px
   padding: base.$space-sm cv.$snackbar-padding  // 8px vertical, 16px horizontal
-  background-color: var(--lb-background-surface-raised)
+  background-color: var(--lb-surface-subtle)
   border: base.$border-sm solid var(--lb-border-neutral-line)
   border-radius: cv.$snackbar-border-radius
   box-shadow: base.$shadow-lg
@@ -216,7 +216,7 @@ defineOptions({
 .lb-snackbar
   // Default variant
   &.variant-default
-    background-color: var(--lb-surface-neutral-raised)
+    background-color: var(--lb-surface-subtle)
     border-color: var(--lb-border-neutral-line)
     
     .snackbar-message
@@ -224,7 +224,7 @@ defineOptions({
   
   // Success variant
   &.variant-success
-    background-color: var(--lb-surface-success-subtle)
+    background-color: var(--lb-success-1)
     border-color: var(--lb-border-success-line)
     
     .snackbar-message
@@ -232,7 +232,7 @@ defineOptions({
   
   // Error variant
   &.variant-error
-    background-color: var(--lb-surface-error-subtle)
+    background-color: var(--lb-error-1)
     border-color: var(--lb-border-error-line)
     
     .snackbar-message
@@ -240,7 +240,7 @@ defineOptions({
   
   // Warning variant
   &.variant-warning
-    background-color: var(--lb-surface-warning-subtle)
+    background-color: var(--lb-warning-1)
     border-color: var(--lb-border-warning-line)
     
     .snackbar-message
@@ -248,7 +248,7 @@ defineOptions({
   
   // Info variant
   &.variant-info
-    background-color: var(--lb-surface-info-subtle)
+    background-color: var(--lb-info-1)
     border-color: var(--lb-border-info-line)
     
     .snackbar-message

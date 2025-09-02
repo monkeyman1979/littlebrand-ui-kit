@@ -240,7 +240,7 @@ defineExpose({
   position: fixed
   inset: 0
   z-index: base.$z-modal-backdrop
-  background: var(--lb-background-overlay)
+  background: var(--lb-surface-overlay)
   backdrop-filter: blur(2px)
   overflow-y: auto
   -webkit-overflow-scrolling: touch
@@ -261,7 +261,7 @@ defineExpose({
 // Dialog container
 .lb-dialog
   position: relative
-  background: var(--lb-background-surface)
+  background: var(--lb-surface-subtle)
   border-radius: cv.$dialog-border-radius
   box-shadow: base.$shadow-lg
   width: min(cv.$dialog-width-medium, 90%)

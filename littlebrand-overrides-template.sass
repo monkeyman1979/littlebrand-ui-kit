@@ -121,8 +121,6 @@
   // --lb-surface-primary-normal: #color
   // --lb-surface-primary-hover: #color
   // --lb-surface-primary-active: #color
-  // --lb-surface-primary-subtle: #color
-  // --lb-surface-primary-raised: #color
   
   // Text on Primary
   // --lb-text-on-primary: white
@@ -157,8 +155,6 @@
   // --lb-surface-secondary-normal: #color
   // --lb-surface-secondary-hover: #color
   // --lb-surface-secondary-active: #color
-  // --lb-surface-secondary-subtle: #color
-  // --lb-surface-secondary-raised: #color
   
   // Text on Secondary
   // --lb-text-on-secondary: white
@@ -193,8 +189,6 @@
   // --lb-surface-tertiary-normal: #color
   // --lb-surface-tertiary-hover: #color
   // --lb-surface-tertiary-active: #color
-  // --lb-surface-tertiary-subtle: #color
-  // --lb-surface-tertiary-raised: #color
   
   // Text on Tertiary
   // --lb-text-on-tertiary: white
@@ -229,9 +223,6 @@
   // --lb-surface-neutral-normal: #color
   // --lb-surface-neutral-hover: #color
   // --lb-surface-neutral-active: #color
-  // --lb-surface-neutral-subtle: #color
-  // --lb-surface-neutral-raised: #color
-  // --lb-surface-neutral-disabled: #color
   
   // Text on Neutral
   // --lb-text-on-neutral: white
@@ -266,8 +257,6 @@
   // --lb-surface-success-normal: #color
   // --lb-surface-success-hover: #color
   // --lb-surface-success-active: #color
-  // --lb-surface-success-subtle: #color
-  // --lb-surface-success-raised: #color
   
   // Text on Success
   // --lb-text-on-success: white
@@ -302,8 +291,6 @@
   // --lb-surface-warning-normal: #color
   // --lb-surface-warning-hover: #color
   // --lb-surface-warning-active: #color
-  // --lb-surface-warning-subtle: #color
-  // --lb-surface-warning-raised: #color
   
   // Text on Warning (often dark for contrast)
   // --lb-text-on-warning: #333
@@ -338,8 +325,6 @@
   // --lb-surface-error-normal: #color
   // --lb-surface-error-hover: #color
   // --lb-surface-error-active: #color
-  // --lb-surface-error-subtle: #color
-  // --lb-surface-error-raised: #color
   
   // Text on Error
   // --lb-text-on-error: white
@@ -374,8 +359,6 @@
   // --lb-surface-info-normal: #color
   // --lb-surface-info-hover: #color
   // --lb-surface-info-active: #color
-  // --lb-surface-info-subtle: #color
-  // --lb-surface-info-raised: #color
   
   // Text on Info
   // --lb-text-on-info: white
@@ -447,13 +430,14 @@
   // --lb-input-height-large: 44px
   
   // ============================================================
-  // BACKGROUND & SPECIAL
+  // SURFACE & SPECIAL
   // ============================================================
   
-  // Background Colors
-  // --lb-background-page: #color
-  // --lb-background-surface: #color
-  // --lb-background-overlay: rgba(0, 0, 0, 0.5)
+  // Base Surfaces
+  // --lb-surface-base: #color         // Main app background
+  // --lb-surface-subtle: #color       // Cards, elevated content
+  // --lb-surface-disabled: #color     // Disabled state backgrounds
+  // --lb-surface-overlay: rgba(0, 0, 0, 0.5)  // Modal/dialog backdrops
   
   // Special Purpose
   // --lb-focus-ring-color: #color
@@ -468,7 +452,7 @@
 // [data-theme="dark"], .dark
 //   // Add dark mode specific overrides
 //   // --lb-fill-primary-normal: #different-color
-//   // --lb-background-page: #1a1a1a
+//   // --lb-surface-base: #1a1a1a
 
 // ================================================================
 // COMPONENT-SPECIFIC OVERRIDES (Optional)

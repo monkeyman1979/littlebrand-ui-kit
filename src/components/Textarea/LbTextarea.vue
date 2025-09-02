@@ -208,14 +208,14 @@ defineExpose({
   textarea
     width: 100%
     min-height: cv.$textarea-min-height-medium // 96px minimum
-    background: var(--lb-background-surface)
+    background: transparent
     border: cv.$textarea-border-width solid var(--lb-border-neutral-normal)
     border-radius: cv.$textarea-border-radius
     font-family: inherit
     font-size: cv.$textarea-font-size-medium  // Default to 14px
     color: var(--lb-text-neutral-contrast-high)
     line-height: typography.$line-height-relaxed
-    transition: border-color base.$transition, box-shadow base.$transition
+    transition: border-color base.$transition, box-shadow base.$transition, background-color base.$transition
 
     // Placeholder
     &::placeholder
@@ -249,14 +249,14 @@ defineExpose({
   
   // Disabled state
   textarea:disabled
-    background: var(--lb-surface-neutral-subtle)
+    background: var(--lb-surface-disabled)
     color: var(--lb-text-neutral-disabled)
     cursor: not-allowed
     border-color: var(--lb-border-neutral-disabled)
   
   // Readonly state
   textarea:read-only
-    background: var(--lb-surface-neutral-subtle)
+    background: var(--lb-surface-disabled)
     cursor: default
   
   // Size variants - moved outside of textarea to increase specificity

@@ -70,7 +70,7 @@ defineOptions({
   grid-auto-columns: 1fr
   align-items: stretch
   height: 4rem // 64px fixed height
-  background-color: var(--lb-background-surface)
+  background-color: var(--lb-surface-base)
   border-top: base.$border-sm solid var(--lb-border-neutral-line)
   box-shadow: base.$shadow-sm
   z-index: base.$z-dropdown

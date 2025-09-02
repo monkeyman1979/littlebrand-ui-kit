@@ -8,18 +8,17 @@
     h1 LittleBrand UI Kit - Component Showcase
     p.body-large Development testing page (not included in npm package)
   
-  main.app-main
-    section.theme-section
-      h2 Theme Support
-      .theme-toggle
-        LbButton(@click="toggleTheme" variant="filled" color="primary")
-          template(#icon-leading)
-            svg(v-if="!isDark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
-              path(d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z")
-            svg(v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
-              path(d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z")
-          | {{ isDark ? 'Dark Mode' : 'Light Mode' }}
-      
+  // Fixed theme toggle button
+  .theme-toggle-fixed
+    LbButton(@click="toggleTheme" variant="filled" color="primary")
+      template(#icon-leading)
+        svg(v-if="!isDark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+          path(d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z")
+        svg(v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
+          path(d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z")
+      | {{ isDark ? 'Dark Mode' : 'Light Mode' }}
+  
+  main.app-main      
     section.typography-section
         h2 Typography
         .display-1 Display 1
@@ -183,6 +182,13 @@
           .color-scale-oklch
             .scale-step-oklch(v-for="n in 12" :key="`teal-${n}`" :class="`step-${n}`")
               .step-swatch(:style="{ background: getColorForStep('secondary', n) }")
+              .step-label Step {{ n }}{{ n === 9 ? ' (Base)' : '' }}
+        
+        .scale-column
+          h4 Neutral Scale (Gray)
+          .color-scale-oklch
+            .scale-step-oklch(v-for="n in 12" :key="`neutral-${n}`" :class="`step-${n}`")
+              .step-swatch(:style="{ background: getColorForStep('neutral', n) }")
               .step-label Step {{ n }}{{ n === 9 ? ' (Base)' : '' }}
       
       .oklch-benefits
@@ -3703,9 +3709,11 @@ section
   h2
     margin: 0 0 base.$space-md 0
     
-.theme-section
-  .theme-toggle
-    margin-top: base.$space-md
+.theme-toggle-fixed
+  position: fixed
+  top: base.$space-md
+  right: base.$space-md
+  z-index: 1000
         
 .typography-section
   display: flex
@@ -4725,7 +4733,7 @@ section
     margin-bottom: base.$space-2xl
     
   .approach-card
-    background: var(--lb-background-surface)
+    background: var(--lb-surface-subtle)
     padding: base.$space-xl
     border-radius: base.$radius-md
     border: base.$border-sm solid var(--lb-border-neutral-line)
@@ -4757,7 +4765,7 @@ section
       border: none
   
   .custom-accent-demo
-    background: var(--lb-background-surface)
+    background: var(--lb-surface-subtle)
     padding: base.$space-xl
     border-radius: base.$radius-md
     border: base.$border-sm solid var(--lb-border-neutral-line)
@@ -4776,7 +4784,7 @@ section
         margin-bottom: 0
   
   .interactive-theme-demo
-    background: var(--lb-background-surface)
+    background: var(--lb-surface-subtle)
     padding: base.$space-xl
     border-radius: base.$radius-md
     border: base.$border-sm solid var(--lb-border-neutral-line)
@@ -4853,7 +4861,7 @@ section
         gap: base.$space-xl
         
         .preview-card
-          background: var(--lb-background-surface)
+          background: var(--lb-surface-subtle)
           padding: base.$space-lg
           border-radius: base.$radius-sm
           
@@ -4915,7 +4923,7 @@ section
               margin-bottom: base.$space-lg
   
   .theme-example-buttons
-    background: var(--lb-background-surface)
+    background: var(--lb-surface-subtle)
     padding: base.$space-xl
     border-radius: base.$radius-md
     border: base.$border-sm solid var(--lb-border-neutral-line)

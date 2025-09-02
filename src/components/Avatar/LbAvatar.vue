@@ -149,7 +149,7 @@ defineOptions({
   align-items: center
   justify-content: center
   border-radius: cv.$avatar-border-radius
-  background-color: var(--lb-background-surface)
+  background-color: var(--lb-surface-subtle)
   box-shadow: base.$shadow-sm
   flex-shrink: 0
   
@@ -233,7 +233,7 @@ defineOptions({
   .status-indicator
     position: absolute
     border-radius: base.$radius-full
-    border: base.$border-md solid var(--lb-background-surface)
+    border: base.$border-md solid var(--lb-surface-subtle)
     
     &.status-online
       background-color: var(--lb-text-success-normal)
@@ -249,27 +249,27 @@ defineOptions({
 
   // Color variants for fallback
   &.variant-primary .avatar-fallback
-    background-color: var(--lb-surface-primary-normal)
+    background-color: var(--lb-surface-primary-hover)
     color: var(--lb-text-primary-normal)
     
   &.variant-secondary .avatar-fallback
-    background-color: var(--lb-surface-secondary-normal)
+    background-color: var(--lb-surface-secondary-hover)
     color: var(--lb-text-secondary-normal)
     
   &.variant-success .avatar-fallback
-    background-color: var(--lb-surface-success-normal)
+    background-color: var(--lb-surface-success-hover)
     color: var(--lb-text-success-normal)
     
   &.variant-warning .avatar-fallback
-    background-color: var(--lb-surface-warning-normal)
+    background-color: var(--lb-surface-warning-hover)
     color: var(--lb-text-warning-contrast-high)
     
   &.variant-error .avatar-fallback
-    background-color: var(--lb-surface-error-normal)
+    background-color: var(--lb-surface-error-hover)
     color: var(--lb-text-error-normal)
     
   &.variant-info .avatar-fallback
-    background-color: var(--lb-surface-info-normal)
+    background-color: var(--lb-surface-info-hover)
     color: var(--lb-text-info-normal)
 
   // Size-specific styles for text
