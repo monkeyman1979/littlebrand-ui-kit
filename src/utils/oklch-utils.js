@@ -286,20 +286,25 @@ export function generateOklchScale(baseColor, curve = 'natural') {
     return Math.pow(normalized, exp);
   };
   
-  // Generate lightness stops with enhanced range
+  // Generate lightness stops with fixed progression matching neutral scale
   const lightnessStops = [];
   for (let i = 1; i <= 12; i++) {
     if (i <= 8) {
-      // Steps 1-8: Light range with exponential distribution
-      const t = getExponentialStep(9 - i, 8, 2.0);
-      lightnessStops.push(targetLightness9 + (maxLightness - targetLightness9) * t);
+      // Steps 1-8: Use fixed lightness values for consistency
+      const fixedLightness = [0.998, 0.988, 0.973, 0.958, 0.943, 0.928, 0.913, 0.898];
+      lightnessStops.push(fixedLightness[i - 1]);
     } else if (i === 9) {
       // Step 9: Base color
       lightnessStops.push(targetLightness9);
+    } else if (i === 10) {
+      // Step 10: 97% of Step 9
+      lightnessStops.push(targetLightness9 * 0.97);
+    } else if (i === 11) {
+      // Step 11: 90% of Step 9
+      lightnessStops.push(targetLightness9 * 0.90);
     } else {
-      // Steps 10-12: Dark range with exponential distribution
-      const t = getExponentialStep(i - 9, 3, 1.8);
-      lightnessStops.push(targetLightness9 - (targetLightness9 - minDarkness) * t);
+      // Step 12: Very dark
+      lightnessStops.push(minDarkness);
     }
   }
   
@@ -320,8 +325,8 @@ export function generateOklchScale(baseColor, curve = 'natural') {
     ];
   } else { // natural - enhanced variation
     chromaMultipliers = [
-      0.10, 0.25, 0.45, 0.65, 0.80,
-      0.90, 0.95, 1.00, 1.00, 0.95,
+      0.10, 0.25, 0.30, 0.40, 0.50,
+      0.60, 0.70, 0.80, 1.00, 0.95,
       0.80, 0.55
     ];
   }
