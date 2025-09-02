@@ -11,7 +11,7 @@ span.lb-badge(
 import { computed } from 'vue'
 
 // Types
-type Variant = 'default' | 'neutral' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'
+type Variant = 'default' | 'neutral' | 'primary' | 'secondary' | 'tertiary' | 'success' | 'warning' | 'error' | 'info'
 type Size = 'small' | 'medium' | 'large'
 type Position = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'inline'
 
@@ -209,6 +209,10 @@ defineOptions({
 .lb-badge.variant-error
   background-color: var(--lb-fill-error-normal)
   color: var(--lb-text-on-error)
+
+.lb-badge.variant-tertiary
+  background-color: var(--lb-fill-tertiary-normal)
+  color: var(--lb-text-on-tertiary)
 
 .lb-badge.variant-info
   background-color: var(--lb-fill-info-normal)

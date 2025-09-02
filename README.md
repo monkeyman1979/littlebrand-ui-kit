@@ -4,7 +4,7 @@ A modern Vue 3 UI component library with a powerful color generation system. Bui
 
 ## ✨ Features
 
-- 🎨 **Smart Color System** - Provide one color, get 68+ design tokens automatically
+- 🎨 **Radix UI Color System** - Professional color scales with precise OKLCH values
 - 🚀 **Runtime Theming** - Change colors instantly without rebuilding
 - 📦 **20+ Components** - Buttons, forms, dialogs, navigation, and more
 - 🌙 **Dark Mode** - Opt-in dark mode with optimized colors
@@ -13,6 +13,7 @@ A modern Vue 3 UI component library with a powerful color generation system. Bui
 - 💅 **SASS + Pug** - Clean, maintainable component code
 - 📝 **200+ CSS Variables** - Complete control over typography, spacing, and colors
 - 🔤 **Flexible Typography** - Three independent font families for headings, body, and UI elements
+- 🎭 **Alpha Scales** - Complete transparency scales for overlays and subtle backgrounds
 
 ## 📦 Installation
 

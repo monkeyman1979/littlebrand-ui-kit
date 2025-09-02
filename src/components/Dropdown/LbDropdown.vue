@@ -16,6 +16,7 @@
         :style="contentStyles"
         @click.stop
         @keydown="handleKeyDown"
+        @wheel="handleWheel"
       )
         slot(name="content")
 </template>
@@ -139,6 +140,28 @@ const handleKeyDown = (event: KeyboardEvent) => {
   }
 }
 
+const handleWheel = (event: WheelEvent) => {
+  const element = contentRef.value
+  if (!element) return
+  
+  const { scrollTop, scrollHeight, clientHeight } = element
+  const isAtTop = scrollTop === 0
+  const isAtBottom = scrollTop + clientHeight >= scrollHeight - 1
+  
+  // Prevent scroll propagation when at boundaries
+  // Scrolling up while at top
+  if (isAtTop && event.deltaY < 0) {
+    event.preventDefault()
+    return
+  }
+  
+  // Scrolling down while at bottom
+  if (isAtBottom && event.deltaY > 0) {
+    event.preventDefault()
+    return
+  }
+}
+
 // Throttle helper for performance
 let scrollRafId: number | null = null
 let resizeRafId: number | null = null
@@ -235,6 +258,8 @@ defineOptions({
   overflow-y: auto
   overflow-x: hidden
   max-height: 17rem // 272px
+  // Prevent scroll chaining to parent
+  overscroll-behavior-y: contain
   // Width is either matched to trigger or content-based
   width: max-content
   min-width: min-content // Allow content to determine minimum width

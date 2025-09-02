@@ -30,7 +30,7 @@ import { computed, useAttrs } from 'vue'
 
 // Types
 type Variant = 'filled' | 'tonal' | 'outline' | 'ghost' | 'link'
-type Color = 'primary' | 'secondary' | 'neutral' | 'success' | 'warning' | 'error' | 'info'
+type Color = 'primary' | 'secondary' | 'tertiary' | 'neutral' | 'success' | 'warning' | 'error' | 'info'
 type Size = 'small' | 'medium' | 'large'
 type ButtonType = 'button' | 'submit' | 'reset'
 
@@ -354,7 +354,7 @@ defineOptions({
 
 // Generate all variant × color combinations
 $variants: ('filled', 'tonal', 'outline', 'ghost', 'link')
-$color-map: ('primary': 'orange', 'secondary': 'teal', 'neutral': 'neutral', 'success': 'green', 'warning': 'yellow', 'error': 'red', 'info': 'blue')
+$color-map: ('primary': 'orange', 'secondary': 'teal', 'tertiary': 'sky', 'neutral': 'neutral', 'success': 'green', 'warning': 'yellow', 'error': 'red', 'info': 'blue')
 
 @each $variant in $variants
   @each $color, $color-name in $color-map
