@@ -170,26 +170,40 @@
         p Our UI kit uses OKLCH color space for perceptually uniform color scales. Each color has 12 carefully crafted steps that maintain consistent perceived brightness differences.
       
       .color-scales-container
-        .scale-column
-          h4 Orange Scale (Primary)
-          .color-scale-oklch
-            .scale-step-oklch(v-for="n in 12" :key="`orange-${n}`" :class="`step-${n}`")
-              .step-swatch(:style="{ background: getColorForStep('primary', n) }")
-              .step-label Step {{ n }}{{ n === 9 ? ' (Base)' : '' }}
+        .color-scale-row
+          h4 Orange (Primary)
+          .color-scale-horizontal
+            .color-step(v-for="n in 12" :key="`orange-${n}`" :style="{ background: getColorForStep('primary', n) }")
         
-        .scale-column
-          h4 Teal Scale (Secondary)
-          .color-scale-oklch
-            .scale-step-oklch(v-for="n in 12" :key="`teal-${n}`" :class="`step-${n}`")
-              .step-swatch(:style="{ background: getColorForStep('secondary', n) }")
-              .step-label Step {{ n }}{{ n === 9 ? ' (Base)' : '' }}
+        .color-scale-row
+          h4 Teal (Secondary)
+          .color-scale-horizontal
+            .color-step(v-for="n in 12" :key="`teal-${n}`" :style="{ background: getColorForStep('secondary', n) }")
         
-        .scale-column
-          h4 Neutral Scale (Gray)
-          .color-scale-oklch
-            .scale-step-oklch(v-for="n in 12" :key="`neutral-${n}`" :class="`step-${n}`")
-              .step-swatch(:style="{ background: getColorForStep('neutral', n) }")
-              .step-label Step {{ n }}{{ n === 9 ? ' (Base)' : '' }}
+        .color-scale-row
+          h4 Neutral (Gray)
+          .color-scale-horizontal
+            .color-step(v-for="n in 12" :key="`neutral-${n}`" :style="{ background: getColorForStep('neutral', n) }")
+        
+        .color-scale-row
+          h4 Blue (Tertiary/Info)
+          .color-scale-horizontal
+            .color-step(v-for="n in 12" :key="`blue-${n}`" :style="{ background: getColorForStep('tertiary', n) }")
+        
+        .color-scale-row
+          h4 Green (Success)
+          .color-scale-horizontal
+            .color-step(v-for="n in 12" :key="`green-${n}`" :style="{ background: getColorForStep('success', n) }")
+        
+        .color-scale-row
+          h4 Yellow (Warning)
+          .color-scale-horizontal
+            .color-step(v-for="n in 12" :key="`yellow-${n}`" :style="{ background: getColorForStep('warning', n) }")
+        
+        .color-scale-row
+          h4 Red (Error)
+          .color-scale-horizontal
+            .color-step(v-for="n in 12" :key="`red-${n}`" :style="{ background: getColorForStep('error', n) }")
       
       .oklch-benefits
         h3 Benefits of OKLCH
@@ -3905,43 +3919,29 @@ section
       color: var(--lb-text-neutral-contrast-low)
   
   .color-scales-container
-    display: grid
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))
-    gap: base.$space-2xl
+    display: flex
+    flex-direction: column
+    gap: base.$space-lg
     
-    .scale-column
-      h4
-        margin: 0 0 base.$space-md 0
-        color: var(--lb-text-neutral-contrast-high)
-    
-    .color-scale-oklch
+    .color-scale-row
       display: flex
       flex-direction: column
-      gap: 2px
-      padding: base.$space-sm
-      background: var(--lb-surface-neutral-subtle)
-      border-radius: base.$radius-md
+      gap: base.$space-sm
       
-      .scale-step-oklch
-        display: flex
-        align-items: center
-        gap: base.$space-md
-        padding: base.$space-xs
-        
-        &.step-9
-          .step-label
-            font-weight: var(--lb-font-weight-semibold)
-        
-        .step-swatch
-          width: 100%
-          height: 32px
-          border-radius: base.$radius-sm
-          border: base.$border-sm solid var(--lb-border-neutral-line)
-        
-        .step-label
-          min-width: 80px
-          font-size: var(--lb-font-size-label-small)
-          color: var(--lb-text-neutral-contrast-low)
+      h4
+        margin: 0
+        color: var(--lb-text-neutral-contrast-high)
+        font-size: 14px
+        font-weight: var(--lb-font-weight-medium)
+    
+    .color-scale-horizontal
+      display: flex
+      gap: 2px
+      height: 40px
+      
+      .color-step
+        flex: 1
+        min-width: 0
   
   .oklch-benefits
     background: var(--lb-surface-neutral-subtle)
