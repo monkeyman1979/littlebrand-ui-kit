@@ -55,7 +55,7 @@ import { computed, ref, useSlots } from 'vue'
 
 // Types
 type Variant = 'assist' | 'filter' | 'input' | 'suggestion'
-type Color = 'primary' | 'secondary' | 'neutral' | 'success' | 'warning' | 'error' | 'info'
+type Color = 'primary' | 'secondary' | 'tertiary' | 'neutral' | 'success' | 'warning' | 'error' | 'info'
 
 // Props
 const props = withDefaults(defineProps<{
@@ -431,7 +431,7 @@ defineOptions({
 
 // Generate all variant × color combinations
 $variants: ('assist', 'filter', 'input', 'suggestion')
-$colors: ('primary', 'secondary', 'neutral', 'success', 'warning', 'error', 'info')
+$colors: ('primary', 'secondary', 'tertiary', 'neutral', 'success', 'warning', 'error', 'info')
 
 @each $variant in $variants
   @each $color in $colors

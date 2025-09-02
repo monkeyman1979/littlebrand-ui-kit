@@ -2,202 +2,237 @@
 // Single source of truth for all colors using OKLCH color space
 // Enhanced dynamic ranges for better visual distinction between steps
 
-// === Primary (Orange) - Enhanced Dynamic Range ===
-// Base: #FF6600 at step 9
-$orange-1: oklch(0.998 0.010 44)
-$orange-2: oklch(0.988 0.012 44)
-$orange-3: oklch(0.973 0.065 44)
-$orange-4: oklch(0.958 0.095 44)
-$orange-5: oklch(0.943 0.125 43.5)
-$orange-6: oklch(0.928 0.155 43.5)
-$orange-7: oklch(0.913 0.180 43.5)
-$orange-8: oklch(0.898 0.195 43.5)
-$orange-9: oklch(0.696 0.204 43.5)
-$orange-10: oklch(0.675 0.195 43)
-$orange-11: oklch(0.626 0.160 42)
-$orange-12: oklch(0.200 0.120 41)
+// === Primary (Orange) - Radix UI Orange Scale ===
+// Light mode from Radix UI Orange
+$orange-1: oklch(0.992 0.003 0)  // #fefcfb
+$orange-2: oklch(0.98 0.016 73.7)  // #fff7ed
+$orange-3: oklch(0.958 0.037 79.1)  // #ffefd6
+$orange-4: oklch(0.92 0.065 74.4)  // #ffdfb5
+$orange-5: oklch(0.888 0.088 71.3)  // #ffd19a
+$orange-6: oklch(0.854 0.107 66)  // #ffc182
+$orange-7: oklch(0.806 0.112 60)  // #f5ae73
+$orange-8: oklch(0.745 0.132 54.7)  // #ec9455
+$orange-9: oklch(0.691 0.191 45)  // #f76b15
+$orange-10: oklch(0.662 0.195 43.5)  // #ef5f00
+$orange-11: oklch(0.585 0.174 42.7)  // #cc4e00
+$orange-12: oklch(0.35 0.069 40.8)  // #582d1d
 
-// Orange Dark Mode
-$orange-dark-1: oklch(0.170 0.030 43.5)
-$orange-dark-2: oklch(0.200 0.050 43.5)
-$orange-dark-3: oklch(0.250 0.080 43.5)
-$orange-dark-4: oklch(0.300 0.110 43.5)
-$orange-dark-5: oklch(0.350 0.140 43.5)
-$orange-dark-6: oklch(0.400 0.170 43.5)
-$orange-dark-7: oklch(0.450 0.190 43.5)
-$orange-dark-8: oklch(0.500 0.200 43.5)
-$orange-dark-9: oklch(0.696 0.204 43.5)
-$orange-dark-10: oklch(0.718 0.204 43.5)
-$orange-dark-11: oklch(0.850 0.204 43.5)
-$orange-dark-12: oklch(0.980 0.030 43.5)
+// Orange Dark Mode - Radix UI Orange
+$orange-dark-1: oklch(0.187 0.011 60.7)  // #17120e
+$orange-dark-2: oklch(0.208 0.019 62.7)  // #1e160f
+$orange-dark-3: oklch(0.258 0.045 60.8)  // #331e0b
+$orange-dark-4: oklch(0.294 0.071 56.7)  // #462100
+$orange-dark-5: oklch(0.334 0.083 54.4)  // #562800
+$orange-dark-6: oklch(0.385 0.087 55)  // #66350c
+$orange-dark-7: oklch(0.452 0.095 52.7)  // #7e451d
+$orange-dark-8: oklch(0.541 0.116 50)  // #a35829
+$orange-dark-9: oklch(0.691 0.191 45)  // #f76b15
+$orange-dark-10: oklch(0.733 0.182 50.9)  // #ff801f
+$orange-dark-11: oklch(0.789 0.143 56.2)  // #ffa057
+$orange-dark-12: oklch(0.925 0.052 66.2)  // #ffe0c2
 
-// === Secondary (Teal) - Enhanced Dynamic Range ===
-$teal-1: oklch(0.998 0.008 195)
-$teal-2: oklch(0.988 0.010 195)
-$teal-3: oklch(0.973 0.050 195)
-$teal-4: oklch(0.958 0.075 195)
-$teal-5: oklch(0.943 0.105 195)
-$teal-6: oklch(0.928 0.135 195)
-$teal-7: oklch(0.913 0.150 194.8)
-$teal-8: oklch(0.898 0.158 194.8)
-$teal-9: oklch(0.608 0.162 194.8)
-$teal-10: oklch(0.590 0.150 194.5)
-$teal-11: oklch(0.547 0.125 194)
-$teal-12: oklch(0.200 0.085 193)
+// === Secondary (Teal) - Radix UI Teal Scale ===
+// Light mode from Radix UI Teal
+$teal-1: oklch(0.994 0.004 0)  // #fafefd
+$teal-2: oklch(0.982 0.009 179.6)  // #f3fbf9
+$teal-3: oklch(0.96 0.026 181.9)  // #e0f8f3
+$teal-4: oklch(0.934 0.042 179.8)  // #ccf3ea
+$teal-5: oklch(0.9 0.053 181.5)  // #b8eae0
+$teal-6: oklch(0.856 0.064 181.2)  // #a1ded2
+$teal-7: oklch(0.796 0.076 183)  // #83cdc1
+$teal-8: oklch(0.721 0.097 183.3)  // #53b9ab
+$teal-9: oklch(0.649 0.114 182)  // #12a594
+$teal-10: oklch(0.619 0.109 181.3)  // #0d9b8a
+$teal-11: oklch(0.552 0.101 178.8)  // #008573
+$teal-12: oklch(0.327 0.051 185)  // #0d3d38
 
-// Teal Dark Mode
-$teal-dark-1: oklch(0.170 0.020 195)
-$teal-dark-2: oklch(0.200 0.030 195)
-$teal-dark-3: oklch(0.250 0.050 195)
-$teal-dark-4: oklch(0.300 0.070 195)
-$teal-dark-5: oklch(0.350 0.080 195)
-$teal-dark-6: oklch(0.400 0.090 195)
-$teal-dark-7: oklch(0.450 0.100 195)
-$teal-dark-8: oklch(0.500 0.110 195)
-$teal-dark-9: oklch(0.608 0.162 194.8)
-$teal-dark-10: oklch(0.627 0.162 194.8)
-$teal-dark-11: oklch(0.850 0.162 194.8)
-$teal-dark-12: oklch(0.980 0.025 195)
+// Teal Dark Mode - Radix UI Teal
+$teal-dark-1: oklch(0.187 0.012 186.7)  // #0d1514
+$teal-dark-2: oklch(0.216 0.016 189)  // #111c1b
+$teal-dark-3: oklch(0.273 0.038 186.8)  // #0d2d2a
+$teal-dark-4: oklch(0.318 0.054 187.3)  // #023b37
+$teal-dark-5: oklch(0.363 0.06 186.6)  // #084843
+$teal-dark-6: oklch(0.414 0.066 184.7)  // #145750
+$teal-dark-7: oklch(0.473 0.074 185)  // #1c6961
+$teal-dark-8: oklch(0.537 0.086 183.5)  // #207e73
+$teal-dark-9: oklch(0.649 0.114 182)  // #12a594
+$teal-dark-10: oklch(0.688 0.123 180.3)  // #0eb39e
+$teal-dark-11: oklch(0.789 0.147 175.7)  // #0bd8b6
+$teal-dark-12: oklch(0.905 0.072 175.1)  // #adf0dd
 
-// === Tertiary (Blue) - Enhanced Dynamic Range ===
-$blue-1: oklch(0.998 0.012 264)
-$blue-2: oklch(0.988 0.015 264)
-$blue-3: oklch(0.973 0.075 264)
-$blue-4: oklch(0.958 0.110 264)
-$blue-5: oklch(0.943 0.155 264)
-$blue-6: oklch(0.928 0.195 264)
-$blue-7: oklch(0.913 0.220 264.1)
-$blue-8: oklch(0.898 0.230 264.1)
-$blue-9: oklch(0.546 0.236 264.1)
-$blue-10: oklch(0.530 0.225 264)
-$blue-11: oklch(0.491 0.185 263.5)
-$blue-12: oklch(0.200 0.120 263)
+// === Tertiary (Sky) - Radix UI Sky Scale ===
+// Light mode from Radix UI Sky
+$sky-1: oklch(0.994 0.005 211)  // #f9feff
+$sky-2: oklch(0.984 0.012 215.8)  // #f1fcff
+$sky-3: oklch(0.969 0.023 216.7)  // #e4f9ff
+$sky-4: oklch(0.945 0.038 215)  // #d1f4fd
+$sky-5: oklch(0.911 0.053 217.5)  // #bbebf9
+$sky-6: oklch(0.868 0.068 219.9)  // #a1dff3
+$sky-7: oklch(0.808 0.091 221.3)  // #79ceea
+$sky-8: oklch(0.743 0.127 222)  // #2ebde5
+$sky-9: oklch(0.685 0.148 237.3)  // #0ea5e9
+$sky-10: oklch(0.639 0.138 237.8)  // #1096d5
+$sky-11: oklch(0.568 0.129 241.4)  // #0f7ebb
+$sky-12: oklch(0.342 0.066 236.7)  // #0d3d56
 
-// Blue Dark Mode
-$blue-dark-1: oklch(0.170 0.020 240)
-$blue-dark-2: oklch(0.200 0.030 240)
-$blue-dark-3: oklch(0.250 0.050 240)
-$blue-dark-4: oklch(0.300 0.070 240)
-$blue-dark-5: oklch(0.350 0.090 240)
-$blue-dark-6: oklch(0.400 0.110 240)
-$blue-dark-7: oklch(0.450 0.140 240)
-$blue-dark-8: oklch(0.500 0.160 240)
-$blue-dark-9: oklch(0.546 0.236 264.1)
-$blue-dark-10: oklch(0.563 0.236 264.1)
-$blue-dark-11: oklch(0.850 0.236 264.1)
-$blue-dark-12: oklch(0.980 0.025 240)
+// Sky Dark Mode - Radix UI Sky
+$sky-dark-1: oklch(0.19 0.025 259.2)  // #0d141f
+$sky-dark-2: oklch(0.216 0.029 257.5)  // #111a27
+$sky-dark-3: oklch(0.271 0.054 251.3)  // #112840
+$sky-dark-4: oklch(0.321 0.07 248.7)  // #113555
+$sky-dark-5: oklch(0.369 0.082 247.9)  // #154268
+$sky-dark-6: oklch(0.428 0.092 245.8)  // #1b537e
+$sky-dark-7: oklch(0.493 0.102 242.4)  // #206796
+$sky-dark-8: oklch(0.573 0.119 240.4)  // #2380b7
+$sky-dark-9: oklch(0.685 0.148 237.3)  // #0ea5e9
+$sky-dark-10: oklch(0.746 0.124 233.5)  // #2cc2ff
+$sky-dark-11: oklch(0.811 0.089 224.6)  // #73d6ff
+$sky-dark-12: oklch(0.913 0.044 223.6)  // #c1ebff
 
-// === Neutral (Gray) - Enhanced Dynamic Range ===
-$gray-1: oklch(0.998 0.002 225)
-$gray-2: oklch(0.988 0.002 225)
-$gray-3: oklch(0.973 0.005 225)
-$gray-4: oklch(0.958 0.006 225)
-$gray-5: oklch(0.943 0.007 225)
-$gray-6: oklch(0.928 0.008 225)
-$gray-7: oklch(0.913 0.009 225)
-$gray-8: oklch(0.898 0.010 225)
-$gray-9: oklch(0.617 0.010 225)
-$gray-10: oklch(0.598 0.010 225)
-$gray-11: oklch(0.555 0.008 225)
-$gray-12: oklch(0.200 0.005 225)
+// === Info (Blue) - Radix UI Blue Scale ===
+// Light mode from Radix UI Blue
+$blue-1: oklch(0.993 0.003 0)  // #fbfdff
+$blue-2: oklch(0.982 0.009 242.8)  // #f4faff
+$blue-3: oklch(0.96 0.02 238.7)  // #e6f4fe
+$blue-4: oklch(0.938 0.035 234.8)  // #d5efff
+$blue-5: oklch(0.905 0.051 240.3)  // #c2e5ff
+$blue-6: oklch(0.863 0.068 243.3)  // #acd8fc
+$blue-7: oklch(0.81 0.089 243.1)  // #8ec8f6
+$blue-8: oklch(0.734 0.121 243.1)  // #5eb1ef
+$blue-9: oklch(0.649 0.193 251.8)  // #0090ff
+$blue-10: oklch(0.622 0.183 251.7)  // #0588f0
+$blue-11: oklch(0.556 0.162 252.2)  // #0d74ce
+$blue-12: oklch(0.324 0.096 258.8)  // #113264
 
-// Gray Dark Mode
-$gray-dark-1: oklch(0.170 0.003 0)
-$gray-dark-2: oklch(0.200 0.003 0)
-$gray-dark-3: oklch(0.250 0.003 0)
-$gray-dark-4: oklch(0.300 0.003 0)
-$gray-dark-5: oklch(0.350 0.003 0)
-$gray-dark-6: oklch(0.400 0.004 0)
-$gray-dark-7: oklch(0.450 0.004 0)
-$gray-dark-8: oklch(0.500 0.005 0)
-$gray-dark-9: oklch(0.617 0.010 225)
-$gray-dark-10: oklch(0.636 0.010 225)
-$gray-dark-11: oklch(0.850 0.010 225)
-$gray-dark-12: oklch(0.980 0.002 0)
+// Blue Dark Mode - Radix UI Blue
+$blue-dark-1: oklch(0.194 0.025 256.5)  // #0d1520
+$blue-dark-2: oklch(0.213 0.03 261.3)  // #111927
+$blue-dark-3: oklch(0.274 0.066 253.9)  // #0d2847
+$blue-dark-4: oklch(0.32 0.097 252.3)  // #003362
+$blue-dark-5: oklch(0.367 0.106 250.7)  // #004074
+$blue-dark-6: oklch(0.416 0.113 252)  // #104d87
+$blue-dark-7: oklch(0.474 0.122 253.1)  // #205d9e
+$blue-dark-8: oklch(0.541 0.14 253.2)  // #2870bd
+$blue-dark-9: oklch(0.649 0.193 251.8)  // #0090ff
+$blue-dark-10: oklch(0.685 0.163 252.2)  // #3b9eff
+$blue-dark-11: oklch(0.777 0.111 251.6)  // #70b8ff
+$blue-dark-12: oklch(0.913 0.046 251.4)  // #c2e6ff
 
-// === Success (Green) - Enhanced Dynamic Range ===
-$green-1: oklch(0.998 0.010 143)
-$green-2: oklch(0.988 0.012 143)
-$green-3: oklch(0.973 0.062 143)
-$green-4: oklch(0.958 0.090 142.5)
-$green-5: oklch(0.943 0.125 142.5)
-$green-6: oklch(0.928 0.155 142.5)
-$green-7: oklch(0.913 0.170 142.5)
-$green-8: oklch(0.898 0.177 142.5)
-$green-9: oklch(0.622 0.180 142.5)
-$green-10: oklch(0.603 0.168 142)
-$green-11: oklch(0.560 0.140 141.5)
-$green-12: oklch(0.200 0.095 141)
+// === Neutral (Gray) - Radix UI Gray Scale ===
+// Light mode from Radix UI Gray
+$gray-1: oklch(0.991 0 0)  // #fcfcfc
+$gray-2: oklch(0.982 0 0)  // #f9f9f9
+$gray-3: oklch(0.955 0 0)  // #f0f0f0
+$gray-4: oklch(0.931 0 0)  // #e8e8e8
+$gray-5: oklch(0.907 0 0)  // #e0e0e0
+$gray-6: oklch(0.885 0 0)  // #d9d9d9
+$gray-7: oklch(0.851 0 0)  // #cecece
+$gray-8: oklch(0.792 0 0)  // #bbbbbb
+$gray-9: oklch(0.643 0 0)  // #8d8d8d
+$gray-10: oklch(0.61 0 0)  // #838383
+$gray-11: oklch(0.503 0 0)  // #646464
+$gray-12: oklch(0.244 0 0)  // #202020
 
-// Green Dark Mode
-$green-dark-1: oklch(0.170 0.015 145)
-$green-dark-2: oklch(0.200 0.025 145)
-$green-dark-3: oklch(0.250 0.040 145)
-$green-dark-4: oklch(0.300 0.055 145)
-$green-dark-5: oklch(0.350 0.070 145)
-$green-dark-6: oklch(0.400 0.085 145)
-$green-dark-7: oklch(0.450 0.110 145)
-$green-dark-8: oklch(0.500 0.140 145)
-$green-dark-9: oklch(0.622 0.180 142.5)
-$green-dark-10: oklch(0.641 0.180 142.5)
-$green-dark-11: oklch(0.850 0.180 142.5)
-$green-dark-12: oklch(0.980 0.035 145)
+// Gray Dark Mode - Radix UI Gray
+$gray-dark-1: oklch(0.178 0 0)  // #111111
+$gray-dark-2: oklch(0.213 0 0)  // #191919
+$gray-dark-3: oklch(0.252 0 0)  // #222222
+$gray-dark-4: oklch(0.285 0 0)  // #2a2a2a
+$gray-dark-5: oklch(0.313 0 0)  // #313131
+$gray-dark-6: oklch(0.348 0 0)  // #3a3a3a
+$gray-dark-7: oklch(0.402 0 0)  // #484848
+$gray-dark-8: oklch(0.489 0 0)  // #606060
+$gray-dark-9: oklch(0.538 0 0)  // #6e6e6e
+$gray-dark-10: oklch(0.583 0 0)  // #7b7b7b
+$gray-dark-11: oklch(0.77 0 0)  // #b4b4b4
+$gray-dark-12: oklch(0.949 0 0)  // #eeeeee
 
-// === Warning (Yellow) - Enhanced Dynamic Range ===
-$yellow-1: oklch(0.998 0.015 95)
-$yellow-2: oklch(0.988 0.015 95)
-$yellow-3: oklch(0.973 0.075 95)
-$yellow-4: oklch(0.958 0.105 95)
-$yellow-5: oklch(0.943 0.135 95)
-$yellow-6: oklch(0.928 0.155 95)
-$yellow-7: oklch(0.913 0.165 95)
-$yellow-8: oklch(0.898 0.168 95)
-$yellow-9: oklch(0.839 0.170 95)
-$yellow-10: oklch(0.814 0.160 95)
-$yellow-11: oklch(0.755 0.135 95)
-$yellow-12: oklch(0.200 0.085 95)
+// === Success (Green) - Radix UI Green Scale ===
+// Light mode from Radix UI Green
+$green-1: oklch(0.992 0.004 148.3)  // #fbfefb
+$green-2: oklch(0.977 0.011 148.3)  // #f4fbf6
+$green-3: oklch(0.95 0.026 148.8)  // #e6f6eb
+$green-4: oklch(0.92 0.042 145.3)  // #d6f1df
+$green-5: oklch(0.88 0.058 142.9)  // #c4e8d1
+$green-6: oklch(0.833 0.075 142.8)  // #adddc0
+$green-7: oklch(0.771 0.092 145.2)  // #8eceaa
+$green-8: oklch(0.695 0.115 146.3)  // #5bb98b
+$green-9: oklch(0.622 0.132 142.5)  // #30a46c
+$green-10: oklch(0.593 0.126 141.5)  // #2b9a66
+$green-11: oklch(0.518 0.105 141.5)  // #218358
+$green-12: oklch(0.3 0.051 153.3)  // #193b2d
 
-// Yellow Dark Mode
-$yellow-dark-1: oklch(0.170 0.020 95)
-$yellow-dark-2: oklch(0.200 0.040 95)
-$yellow-dark-3: oklch(0.250 0.060 95)
-$yellow-dark-4: oklch(0.300 0.080 95)
-$yellow-dark-5: oklch(0.350 0.100 95)
-$yellow-dark-6: oklch(0.400 0.120 95)
-$yellow-dark-7: oklch(0.450 0.140 95)
-$yellow-dark-8: oklch(0.500 0.155 95)
-$yellow-dark-9: oklch(0.839 0.170 95)
-$yellow-dark-10: oklch(0.865 0.170 95)
-$yellow-dark-11: oklch(0.850 0.170 95)
-$yellow-dark-12: oklch(0.980 0.040 95)
+// Green Dark Mode - Radix UI Green
+$green-dark-1: oklch(0.168 0.01 169.1)  // #0e1512
+$green-dark-2: oklch(0.194 0.014 169.1)  // #121b17
+$green-dark-3: oklch(0.242 0.039 162.4)  // #0f2e22
+$green-dark-4: oklch(0.277 0.058 156.7)  // #0b3b2c
+$green-dark-5: oklch(0.316 0.071 152.7)  // #114837
+$green-dark-6: oklch(0.365 0.078 149.7)  // #1b5745
+$green-dark-7: oklch(0.421 0.085 147.7)  // #246854
+$green-dark-8: oklch(0.491 0.094 146.7)  // #2a7e68
+$green-dark-9: oklch(0.622 0.132 142.5)  // #30a46c
+$green-dark-10: oklch(0.654 0.134 142.9)  // #33b074
+$green-dark-11: oklch(0.79 0.159 145.5)  // #3dd68c
+$green-dark-12: oklch(0.897 0.082 148.1)  // #b1f1cb
 
-// === Error (Red) - Enhanced Dynamic Range ===
-$red-1: oklch(0.998 0.012 29)
-$red-2: oklch(0.988 0.015 29)
-$red-3: oklch(0.973 0.078 29)
-$red-4: oklch(0.958 0.115 29)
-$red-5: oklch(0.943 0.160 29)
-$red-6: oklch(0.928 0.205 29.2)
-$red-7: oklch(0.913 0.235 29.2)
-$red-8: oklch(0.898 0.250 29.2)
-$red-9: oklch(0.625 0.258 29.2)
-$red-10: oklch(0.606 0.245 29)
-$red-11: oklch(0.563 0.205 28.5)
-$red-12: oklch(0.200 0.140 28)
+// === Warning (Yellow) - Radix UI Amber Scale ===
+// Light mode from Radix UI Amber
+$yellow-1: oklch(0.993 0.003 0)  // #fefdfb
+$yellow-2: oklch(0.982 0.019 91.7)  // #fffaed
+$yellow-3: oklch(0.959 0.047 94.5)  // #fff4d5
+$yellow-4: oklch(0.934 0.066 95.2)  // #ffecbc
+$yellow-5: oklch(0.906 0.088 94.7)  // #ffe3a2
+$yellow-6: oklch(0.869 0.115 91.2)  // #ffd386
+$yellow-7: oklch(0.811 0.143 82.7)  // #f3ba63
+$yellow-8: oklch(0.753 0.173 75.8)  // #ee9d2b
+$yellow-9: oklch(0.789 0.183 85.8)  // #ffb224
+$yellow-10: oklch(0.757 0.185 82.5)  // #ffa01c
+$yellow-11: oklch(0.614 0.169 71.7)  // #ad5700
+$yellow-12: oklch(0.336 0.083 68.9)  // #4e2009
 
-// Red Dark Mode
-$red-dark-1: oklch(0.170 0.015 25)
-$red-dark-2: oklch(0.200 0.030 25)
-$red-dark-3: oklch(0.250 0.045 25)
-$red-dark-4: oklch(0.300 0.060 25)
-$red-dark-5: oklch(0.350 0.075 25)
-$red-dark-6: oklch(0.400 0.090 25)
-$red-dark-7: oklch(0.450 0.120 25)
-$red-dark-8: oklch(0.500 0.150 25)
-$red-dark-9: oklch(0.625 0.258 29.2)
-$red-dark-10: oklch(0.644 0.258 29.2)
-$red-dark-11: oklch(0.850 0.258 29.2)
-$red-dark-12: oklch(0.980 0.035 25)
+// Yellow Dark Mode - Radix UI Amber
+$yellow-dark-1: oklch(0.184 0.011 70.1)  // #16120c
+$yellow-dark-2: oklch(0.214 0.018 71.3)  // #1d180f
+$yellow-dark-3: oklch(0.265 0.05 66.2)  // #302008
+$yellow-dark-4: oklch(0.308 0.081 66.4)  // #3f2700
+$yellow-dark-5: oklch(0.351 0.098 66.2)  // #4d3000
+$yellow-dark-6: oklch(0.401 0.107 69.2)  // #5c3d05
+$yellow-dark-7: oklch(0.467 0.115 73.5)  // #714f19
+$yellow-dark-8: oklch(0.537 0.132 76.8)  // #8f6424
+$yellow-dark-9: oklch(0.789 0.183 85.8)  // #ffb224
+$yellow-dark-10: oklch(0.833 0.167 90.4)  // #ffcb47
+$yellow-dark-11: oklch(0.893 0.125 94.2)  // #ffe072
+$yellow-dark-12: oklch(0.967 0.041 93.2)  // #fef3dd
+
+// === Error (Red) - Radix UI Red Scale ===
+// Light mode from Radix UI Red
+$red-1: oklch(0.993 0.003 0)  // #fffcfc
+$red-2: oklch(0.982 0.009 17.3)  // #fff7f7
+$red-3: oklch(0.955 0.021 13.9)  // #feebec
+$red-4: oklch(0.922 0.04 16)  // #ffdbdc
+$red-5: oklch(0.892 0.057 16.9)  // #ffcdce
+$red-6: oklch(0.857 0.074 17.7)  // #fdbdbe
+$red-7: oklch(0.807 0.089 18.3)  // #f4a9aa
+$red-8: oklch(0.744 0.113 18.8)  // #eb8e90
+$red-9: oklch(0.626 0.193 23)  // #e5484d
+$red-10: oklch(0.599 0.195 24)  // #dc3e42
+$red-11: oklch(0.557 0.197 25.2)  // #ce2c31
+$red-12: oklch(0.339 0.109 16.6)  // #641723
+
+// Red Dark Mode - Radix UI Red
+$red-dark-1: oklch(0.188 0.013 18.4)  // #191111
+$red-dark-2: oklch(0.205 0.022 14.1)  // #201314
+$red-dark-3: oklch(0.251 0.065 12.7)  // #3b1219
+$red-dark-4: oklch(0.289 0.095 14.3)  // #500f1c
+$red-dark-5: oklch(0.332 0.107 15.5)  // #611623
+$red-dark-6: oklch(0.381 0.111 16.8)  // #72232d
+$red-dark-7: oklch(0.45 0.121 18.8)  // #8c333a
+$red-dark-8: oklch(0.544 0.146 21.8)  // #b54548
+$red-dark-9: oklch(0.626 0.193 23)  // #e5484d
+$red-dark-10: oklch(0.659 0.178 23.2)  // #f2555a
+$red-dark-11: oklch(0.718 0.152 25.4)  // #ff6369
+$red-dark-12: oklch(0.955 0.021 13.9)  // #feecee
 
 // === Alpha Variants (simplified - removing most as they're not used) ===
 // We'll keep a few for backward compatibility but most aren't needed
@@ -262,19 +297,19 @@ $red-dark-a1: oklch(0.625 0.258 29.2 / 0.030)
     --lb-secondary-11: #{$teal-11}
     --lb-secondary-12: #{$teal-12}
 
-    // Tertiary Scale
-    --lb-tertiary-1: #{$blue-1}
-    --lb-tertiary-2: #{$blue-2}
-    --lb-tertiary-3: #{$blue-3}
-    --lb-tertiary-4: #{$blue-4}
-    --lb-tertiary-5: #{$blue-5}
-    --lb-tertiary-6: #{$blue-6}
-    --lb-tertiary-7: #{$blue-7}
-    --lb-tertiary-8: #{$blue-8}
-    --lb-tertiary-9: #{$blue-9}
-    --lb-tertiary-10: #{$blue-10}
-    --lb-tertiary-11: #{$blue-11}
-    --lb-tertiary-12: #{$blue-12}
+    // Tertiary Scale (Sky)
+    --lb-tertiary-1: #{$sky-1}
+    --lb-tertiary-2: #{$sky-2}
+    --lb-tertiary-3: #{$sky-3}
+    --lb-tertiary-4: #{$sky-4}
+    --lb-tertiary-5: #{$sky-5}
+    --lb-tertiary-6: #{$sky-6}
+    --lb-tertiary-7: #{$sky-7}
+    --lb-tertiary-8: #{$sky-8}
+    --lb-tertiary-9: #{$sky-9}
+    --lb-tertiary-10: #{$sky-10}
+    --lb-tertiary-11: #{$sky-11}
+    --lb-tertiary-12: #{$sky-12}
 
     // Neutral Scale
     --lb-neutral-1: #{$gray-1}
@@ -376,19 +411,19 @@ $red-dark-a1: oklch(0.625 0.258 29.2 / 0.030)
     --lb-secondary-11: #{$teal-dark-11}
     --lb-secondary-12: #{$teal-dark-12}
 
-    // Tertiary Scale Dark
-    --lb-tertiary-1: #{$blue-dark-1}
-    --lb-tertiary-2: #{$blue-dark-2}
-    --lb-tertiary-3: #{$blue-dark-3}
-    --lb-tertiary-4: #{$blue-dark-4}
-    --lb-tertiary-5: #{$blue-dark-5}
-    --lb-tertiary-6: #{$blue-dark-6}
-    --lb-tertiary-7: #{$blue-dark-7}
-    --lb-tertiary-8: #{$blue-dark-8}
-    --lb-tertiary-9: #{$blue-dark-9}
-    --lb-tertiary-10: #{$blue-dark-10}
-    --lb-tertiary-11: #{$blue-dark-11}
-    --lb-tertiary-12: #{$blue-dark-12}
+    // Tertiary Scale Dark (Sky)
+    --lb-tertiary-1: #{$sky-dark-1}
+    --lb-tertiary-2: #{$sky-dark-2}
+    --lb-tertiary-3: #{$sky-dark-3}
+    --lb-tertiary-4: #{$sky-dark-4}
+    --lb-tertiary-5: #{$sky-dark-5}
+    --lb-tertiary-6: #{$sky-dark-6}
+    --lb-tertiary-7: #{$sky-dark-7}
+    --lb-tertiary-8: #{$sky-dark-8}
+    --lb-tertiary-9: #{$sky-dark-9}
+    --lb-tertiary-10: #{$sky-dark-10}
+    --lb-tertiary-11: #{$sky-dark-11}
+    --lb-tertiary-12: #{$sky-dark-12}
 
     // Neutral Scale Dark
     --lb-neutral-1: #{$gray-dark-1}

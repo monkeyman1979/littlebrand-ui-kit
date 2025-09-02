@@ -3,7 +3,7 @@ import type { ComputedRef, Ref } from 'vue'
 // SegmentButton shared types
 export type Size = 'medium'
 export type Width = 'full' | 'auto'
-export type Color = 'primary' | 'secondary' | 'neutral'
+export type Color = 'primary' | 'secondary' | 'tertiary' | 'neutral'
 
 export interface SegmentButtonContext {
   activeValue: Ref<string | number | (string | number)[] | undefined>

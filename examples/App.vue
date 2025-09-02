@@ -181,14 +181,19 @@
             .color-step(v-for="n in 12" :key="`teal-${n}`" :style="{ background: getColorForStep('secondary', n) }")
         
         .color-scale-row
+          h4 Sky (Tertiary)
+          .color-scale-horizontal
+            .color-step(v-for="n in 12" :key="`sky-${n}`" :style="{ background: getColorForStep('tertiary', n) }")
+        
+        .color-scale-row
           h4 Neutral (Gray)
           .color-scale-horizontal
             .color-step(v-for="n in 12" :key="`neutral-${n}`" :style="{ background: getColorForStep('neutral', n) }")
         
         .color-scale-row
-          h4 Blue (Tertiary/Info)
+          h4 Blue (Info)
           .color-scale-horizontal
-            .color-step(v-for="n in 12" :key="`blue-${n}`" :style="{ background: getColorForStep('tertiary', n) }")
+            .color-step(v-for="n in 12" :key="`blue-${n}`" :style="{ background: getColorForStep('info', n) }")
         
         .color-scale-row
           h4 Green (Success)
@@ -1320,6 +1325,7 @@
             LbBadge(variant="default") Default
             LbBadge(variant="primary") Primary
             LbBadge(variant="secondary") Secondary
+            LbBadge(variant="tertiary") Tertiary
             LbBadge(variant="neutral") Neutral
             LbBadge(variant="success") Success
             LbBadge(variant="warning") Warning
@@ -1414,6 +1420,7 @@
           .button-row
             LbChip(variant="filter" color="primary") Primary
             LbChip(variant="filter" color="secondary") Secondary
+            LbChip(variant="filter" color="tertiary") Tertiary
             LbChip(variant="filter" color="neutral") Neutral
             LbChip(variant="filter" color="success") Success
             LbChip(variant="filter" color="warning") Warning
@@ -1935,6 +1942,13 @@
             .segment-row
               h5 Secondary
               LbSegmentButton(v-model="colorExample" color="secondary")
+                LbSegmentButtonItem(value="option1") Option 1
+                LbSegmentButtonItem(value="option2") Option 2
+                LbSegmentButtonItem(value="option3") Option 3
+            
+            .segment-row
+              h5 Tertiary
+              LbSegmentButton(v-model="colorExample" color="tertiary")
                 LbSegmentButtonItem(value="option1") Option 1
                 LbSegmentButtonItem(value="option2") Option 2
                 LbSegmentButtonItem(value="option3") Option 3
@@ -2972,7 +2986,7 @@ const colors = [
 ]
 
 const buttonVariants = ['filled', 'tonal', 'outline', 'ghost']
-const buttonColors = ['primary', 'secondary', 'neutral', 'success', 'warning', 'error', 'info']
+const buttonColors = ['primary', 'secondary', 'tertiary', 'neutral', 'success', 'warning', 'error', 'info']
 
 const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1)
 
@@ -3169,6 +3183,7 @@ const navShowLabels = ref(true)
 const navColorOptions = [
   { value: 'primary', label: 'Primary' },
   { value: 'secondary', label: 'Secondary' },
+  { value: 'tertiary', label: 'Tertiary' },
   { value: 'neutral', label: 'Neutral' },
   { value: 'success', label: 'Success' },
   { value: 'warning', label: 'Warning' },
