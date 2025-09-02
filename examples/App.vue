@@ -170,26 +170,40 @@
         p Our UI kit uses OKLCH color space for perceptually uniform color scales. Each color has 12 carefully crafted steps that maintain consistent perceived brightness differences.
       
       .color-scales-container
-        .scale-column
-          h4 Orange Scale (Primary)
-          .color-scale-oklch
-            .scale-step-oklch(v-for="n in 12" :key="`orange-${n}`" :class="`step-${n}`")
-              .step-swatch(:style="{ background: getColorForStep('primary', n) }")
-              .step-label Step {{ n }}{{ n === 9 ? ' (Base)' : '' }}
+        .color-scale-row
+          h4 Orange (Primary)
+          .color-scale-horizontal
+            .color-step(v-for="n in 12" :key="`orange-${n}`" :style="{ background: getColorForStep('primary', n) }")
         
-        .scale-column
-          h4 Teal Scale (Secondary)
-          .color-scale-oklch
-            .scale-step-oklch(v-for="n in 12" :key="`teal-${n}`" :class="`step-${n}`")
-              .step-swatch(:style="{ background: getColorForStep('secondary', n) }")
-              .step-label Step {{ n }}{{ n === 9 ? ' (Base)' : '' }}
+        .color-scale-row
+          h4 Teal (Secondary)
+          .color-scale-horizontal
+            .color-step(v-for="n in 12" :key="`teal-${n}`" :style="{ background: getColorForStep('secondary', n) }")
         
-        .scale-column
-          h4 Neutral Scale (Gray)
-          .color-scale-oklch
-            .scale-step-oklch(v-for="n in 12" :key="`neutral-${n}`" :class="`step-${n}`")
-              .step-swatch(:style="{ background: getColorForStep('neutral', n) }")
-              .step-label Step {{ n }}{{ n === 9 ? ' (Base)' : '' }}
+        .color-scale-row
+          h4 Neutral (Gray)
+          .color-scale-horizontal
+            .color-step(v-for="n in 12" :key="`neutral-${n}`" :style="{ background: getColorForStep('neutral', n) }")
+        
+        .color-scale-row
+          h4 Blue (Tertiary/Info)
+          .color-scale-horizontal
+            .color-step(v-for="n in 12" :key="`blue-${n}`" :style="{ background: getColorForStep('tertiary', n) }")
+        
+        .color-scale-row
+          h4 Green (Success)
+          .color-scale-horizontal
+            .color-step(v-for="n in 12" :key="`green-${n}`" :style="{ background: getColorForStep('success', n) }")
+        
+        .color-scale-row
+          h4 Yellow (Warning)
+          .color-scale-horizontal
+            .color-step(v-for="n in 12" :key="`yellow-${n}`" :style="{ background: getColorForStep('warning', n) }")
+        
+        .color-scale-row
+          h4 Red (Error)
+          .color-scale-horizontal
+            .color-step(v-for="n in 12" :key="`red-${n}`" :style="{ background: getColorForStep('error', n) }")
       
       .oklch-benefits
         h3 Benefits of OKLCH
@@ -229,120 +243,6 @@
                 .chip-main(:style="{ background: getDarkModeColor(color) }")
                 .chip-label {{ capitalize(color) }}
     
-    section.custom-theme-section
-      h2 Custom Theme Configuration
-      .theme-config-demo
-        h3 Mix & Match Color System
-        p The UI kit now supports flexible theme configuration with three approaches:
-        
-        .config-approaches
-          .approach-card
-            h4 🎨 Single Color Input
-            pre.code-block
-              code.
-                $theme-colors: (
-                  'primary': #6366f1,  // Auto-generates 12-step scale
-                  'secondary': #10b981
-                )
-            p Provide a single color and the system generates a complete 12-step scale with light/dark modes
-          
-          .approach-card
-            h4 📊 Full Scale Control
-            pre.code-block
-              code.
-                $theme-colors: (
-                  'primary': (
-                    1: #eef2ff,  // Lightest
-                    // ... steps 2-11
-                    12: #1e1b4b  // Darkest
-                  )
-                )
-            p Define all 12 steps for precise control over your color scale
-          
-          .approach-card
-            h4 🎯 Use Presets
-            pre.code-block
-              code.
-                $theme-colors: (
-                  'neutral': 'slate',  // Built-in scale
-                  'primary': #ff6900   // Custom brand
-                )
-            p Mix built-in preset scales with custom colors
-        
-        .interactive-theme-demo
-          h4 🎨 Interactive Theme Playground
-          p Try changing the colors below to see how the theme system generates a complete color scale:
-          
-          .color-controls
-            .color-control
-              label Primary Color
-              .color-input-wrapper
-                input(type="color" v-model="customPrimary" @input="updateCustomTheme")
-                span {{ customPrimary }}
-            
-            .color-control
-              label Secondary Color
-              .color-input-wrapper
-                input(type="color" v-model="customSecondary" @input="updateCustomTheme")
-                span {{ customSecondary }}
-            
-            .color-control
-              label Accent Color
-              .color-input-wrapper
-                input(type="color" v-model="customAccent" @input="updateCustomTheme")
-                span {{ customAccent }}
-          
-          .theme-preview(:style="customThemeStyles")
-            .preview-header
-              h5 Live Preview
-              .preview-badge(:style="{ background: 'var(--custom-fill-primary-normal)', color: 'white' }") Dynamic Theme
-            
-            .preview-grid
-              .preview-card
-                .color-scale
-                  .scale-title Primary Scale
-                  .scale-row
-                    .scale-step(v-for="n in 12" :key="n" :style="{ background: `var(--custom-surface-primary-${getStepName(n)})` }")
-                      span(:style="{ color: getScaleStepTextColor('primary', n) }") {{ n }}
-                
-                .preview-buttons
-                  button.preview-btn(:style="{ background: 'var(--custom-fill-primary-normal)', color: 'var(--custom-text-on-primary)' }") Primary Button
-                  button.preview-btn(:style="{ background: 'var(--custom-fill-primary-hover)', color: 'var(--custom-text-on-primary-hover)' }") Hover State
-                  button.preview-btn(:style="{ border: '2px solid var(--custom-border-primary-normal)', color: 'var(--custom-text-primary-normal)', background: 'transparent' }") Outline
-              
-              .preview-card
-                .color-scale
-                  .scale-title Secondary Scale
-                  .scale-row
-                    .scale-step(v-for="n in 12" :key="n" :style="{ background: `var(--custom-surface-secondary-${getStepName(n)})` }")
-                      span(:style="{ color: getScaleStepTextColor('secondary', n) }") {{ n }}
-                
-                .preview-buttons
-                  button.preview-btn(:style="{ background: 'var(--custom-fill-secondary-normal)', color: 'var(--custom-text-on-secondary)' }") Secondary Button
-                  button.preview-btn(:style="{ background: 'var(--custom-fill-secondary-hover)', color: 'var(--custom-text-on-secondary-hover)' }") Hover State
-                  button.preview-btn(:style="{ border: '2px solid var(--custom-border-secondary-normal)', color: 'var(--custom-text-secondary-normal)', background: 'transparent' }") Outline
-              
-              .preview-card.accent-card
-                .color-scale
-                  .scale-title Accent Scale
-                  .scale-row
-                    .scale-step(v-for="n in 12" :key="n" :style="{ background: `var(--custom-surface-accent-${getStepName(n)})` }")
-                      span(:style="{ color: getScaleStepTextColor('accent', n) }") {{ n }}
-                
-                .preview-surface(:style="{ background: 'var(--custom-surface-accent-normal)', border: '1px solid var(--custom-border-accent-normal)' }")
-                  p(:style="{ color: 'var(--custom-text-accent-contrast-high)' }") Accent Surface
-                  small(:style="{ color: 'var(--custom-text-accent-contrast-low)' }") With proper contrast
-        
-        .custom-accent-demo
-          h4 Custom Accent Colors
-          p Beyond semantic colors, add unlimited custom accents:
-          pre.code-block
-            code.
-              'accent-purple': #9333ea,
-              'brand-gold': #eab308
-          p These generate all token variations: --lb-fill-accent-purple-normal, etc.
-
-          
     section.components-section
       h2 Components
       
@@ -2618,7 +2518,6 @@
 
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue'
-import { generateScale, getContrastText } from '@/utils/color-generator.js'
 import { 
   LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog,
   LbBadge, LbNavigationBar, LbNavigationBarItem, LbBottomSheet, LbChip, LbAvatar, LbProgress, LbDivider, 
@@ -2629,10 +2528,6 @@ import {
 const isDark = ref(false)
 
 // Custom theme interactive demo
-const customPrimary = ref('#6366f1')
-const customSecondary = ref('#10b981')
-const customAccent = ref('#ec4899')
-const customThemeStyles = ref({})
 
 // Font weight testing variables
 const fontWeightLabel = ref(500)
@@ -2831,7 +2726,10 @@ const newProject = ref({
 const visibilityOptions = [
   { value: 'public', label: 'Public' },
   { value: 'private', label: 'Private' },
-  { value: 'internal', label: 'Internal' }
+  { value: 'internal', label: 'Internal' },
+  { value: 'team', label: 'Team' },
+  { value: 'organization', label: 'Organization' },
+  { value: 'restricted', label: 'Restricted' }
 ]
 
 // Dialog handlers
@@ -2871,55 +2769,6 @@ const resetSettings = () => {
   }
 }
 
-// Custom theme generation functions using OKLCH
-// Old HSL functions removed - now using imported OKLCH utilities
-
-const generateColorScale = (baseColor, name) => {
-  // Generate OKLCH-based 12-step scale
-  const scale = generateScale(baseColor)
-  const tokens = {}
-  
-  // Generate semantic tokens
-  tokens[`--custom-border-${name}-line`] = scale[6]
-  tokens[`--custom-border-${name}-normal`] = scale[7]
-  tokens[`--custom-border-${name}-active`] = scale[8]
-  tokens[`--custom-border-${name}-focus`] = scale[7]
-  tokens[`--custom-border-${name}-disabled`] = scale[5]
-  
-  tokens[`--custom-fill-${name}-normal`] = scale[9]
-  tokens[`--custom-fill-${name}-hover`] = scale[10]
-  tokens[`--custom-fill-${name}-active`] = scale[8]
-  tokens[`--custom-fill-${name}-focus`] = scale[8]
-  tokens[`--custom-fill-${name}-disabled`] = scale[4]
-  
-  tokens[`--custom-text-${name}-normal`] = scale[9]
-  tokens[`--custom-text-${name}-contrast-low`] = scale[11]
-  tokens[`--custom-text-${name}-contrast-high`] = scale[12]
-  tokens[`--custom-text-${name}-disabled`] = scale[5]
-  
-  // Add text-on tokens using OKLCH contrast calculation
-  tokens[`--custom-text-on-${name}`] = getContrastText(baseColor)
-  tokens[`--custom-text-on-${name}-hover`] = getContrastText(baseColor)
-  tokens[`--custom-text-on-${name}-active`] = getContrastText(baseColor)
-  
-  // Add surface tokens for the scale visualization
-  for (let i = 1; i <= 12; i++) {
-    tokens[`--custom-surface-${name}-${getStepName(i)}`] = scale[i]
-  }
-  
-  tokens[`--custom-surface-${name}-normal`] = scale[2]
-  tokens[`--custom-surface-${name}-hover`] = scale[3]
-  tokens[`--custom-surface-${name}-active`] = scale[4]
-  tokens[`--custom-surface-${name}-subtle`] = scale[1]
-  
-  return tokens
-}
-
-const getStepName = (n) => {
-  // For scale visualization
-  return n.toString()
-}
-
 // Get the contrast text color for a scale step
 const getScaleStepTextColor = (colorName, step) => {
   // For OKLCH colors, determine contrast based on step number
@@ -2927,22 +2776,6 @@ const getScaleStepTextColor = (colorName, step) => {
   return step <= 6 ? '#1a1a1a' : 'white'
 }
 
-const updateCustomTheme = () => {
-  const primaryTokens = generateColorScale(customPrimary.value, 'primary')
-  const secondaryTokens = generateColorScale(customSecondary.value, 'secondary')
-  const accentTokens = generateColorScale(customAccent.value, 'accent')
-  
-  customThemeStyles.value = {
-    ...primaryTokens,
-    ...secondaryTokens,
-    ...accentTokens
-  }
-}
-
-// Initialize custom theme
-onMounted(() => {
-  updateCustomTheme()
-})
 
 // Async search handler
 let searchTimeout
@@ -3905,43 +3738,29 @@ section
       color: var(--lb-text-neutral-contrast-low)
   
   .color-scales-container
-    display: grid
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))
-    gap: base.$space-2xl
+    display: flex
+    flex-direction: column
+    gap: base.$space-lg
     
-    .scale-column
-      h4
-        margin: 0 0 base.$space-md 0
-        color: var(--lb-text-neutral-contrast-high)
-    
-    .color-scale-oklch
+    .color-scale-row
       display: flex
       flex-direction: column
-      gap: 2px
-      padding: base.$space-sm
-      background: var(--lb-surface-neutral-subtle)
-      border-radius: base.$radius-md
+      gap: base.$space-sm
       
-      .scale-step-oklch
-        display: flex
-        align-items: center
-        gap: base.$space-md
-        padding: base.$space-xs
-        
-        &.step-9
-          .step-label
-            font-weight: var(--lb-font-weight-semibold)
-        
-        .step-swatch
-          width: 100%
-          height: 32px
-          border-radius: base.$radius-sm
-          border: base.$border-sm solid var(--lb-border-neutral-line)
-        
-        .step-label
-          min-width: 80px
-          font-size: var(--lb-font-size-label-small)
-          color: var(--lb-text-neutral-contrast-low)
+      h4
+        margin: 0
+        color: var(--lb-text-neutral-contrast-high)
+        font-size: 14px
+        font-weight: var(--lb-font-weight-medium)
+    
+    .color-scale-horizontal
+      display: flex
+      gap: 2px
+      height: 40px
+      
+      .color-step
+        flex: 1
+        min-width: 0
   
   .oklch-benefits
     background: var(--lb-surface-neutral-subtle)
@@ -4709,268 +4528,5 @@ section
     gap: var(--lb-space-sm)
 
 
-// Custom Theme Section Styles
-.custom-theme-section
-  margin-bottom: base.$space-6xl
-  
-  .theme-config-demo
-    background: var(--lb-surface-neutral-subtle)
-    padding: base.$space-2xl
-    border-radius: base.$radius-lg
-    
-    h3
-      color: var(--lb-text-primary-contrast-high)
-      margin-bottom: base.$space-lg
-    
-    > p
-      color: var(--lb-text-neutral-contrast-low)
-      margin-bottom: base.$space-xl
-  
-  .config-approaches
-    display: grid
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))
-    gap: base.$space-xl
-    margin-bottom: base.$space-2xl
-    
-  .approach-card
-    background: var(--lb-surface-subtle)
-    padding: base.$space-xl
-    border-radius: base.$radius-md
-    border: base.$border-sm solid var(--lb-border-neutral-line)
-    
-    h4
-      color: var(--lb-text-neutral-contrast-high)
-      margin-bottom: base.$space-md
-      font-size: 1.125rem
-    
-    p
-      color: var(--lb-text-neutral-contrast-low)
-      font-size: 0.875rem
-      margin-top: base.$space-md
-  
-  .code-block
-    background: var(--lb-surface-neutral-normal)
-    padding: base.$space-md
-    border-radius: base.$radius-sm
-    overflow-x: auto
-    margin: 0
-    
-    code
-      font-family: ui-monospace, SFMono-Regular, 'SF Mono', Consolas, monospace
-      font-size: 0.75rem
-      color: var(--lb-text-neutral-contrast-high)
-      white-space: pre
-      background: none
-      padding: 0
-      border: none
-  
-  .custom-accent-demo
-    background: var(--lb-surface-subtle)
-    padding: base.$space-xl
-    border-radius: base.$radius-md
-    border: base.$border-sm solid var(--lb-border-neutral-line)
-    margin-bottom: base.$space-xl
-    
-    h4
-      color: var(--lb-text-neutral-contrast-high)
-      margin-bottom: base.$space-md
-    
-    p
-      color: var(--lb-text-neutral-contrast-low)
-      font-size: 0.875rem
-      margin-bottom: base.$space-md
-      
-      &:last-child
-        margin-bottom: 0
-  
-  .interactive-theme-demo
-    background: var(--lb-surface-subtle)
-    padding: base.$space-xl
-    border-radius: base.$radius-md
-    border: base.$border-sm solid var(--lb-border-neutral-line)
-    margin-bottom: base.$space-xl
-    
-    h4
-      color: var(--lb-text-primary-contrast-high)
-      margin-bottom: base.$space-md
-      font-size: 1.25rem
-    
-    > p
-      color: var(--lb-text-neutral-contrast-low)
-      margin-bottom: base.$space-xl
-    
-    .color-controls
-      display: grid
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))
-      gap: base.$space-lg
-      margin-bottom: base.$space-2xl
-      
-      .color-control
-        label
-          display: block
-          color: var(--lb-text-neutral-contrast-high)
-          font-weight: 500
-          margin-bottom: base.$space-xs
-          font-size: 0.875rem
-        
-        .color-input-wrapper
-          display: flex
-          align-items: center
-          gap: base.$space-md
-          
-          input[type="color"]
-            width: 60px
-            height: 40px
-            border: base.$border-sm solid var(--lb-border-neutral-normal)
-            border-radius: base.$radius-sm
-            cursor: pointer
-            
-            &:hover
-              border-color: var(--lb-border-neutral-active)
-          
-          span
-            font-family: ui-monospace, SFMono-Regular, monospace
-            font-size: 0.875rem
-            color: var(--lb-text-neutral-contrast-low)
-    
-    .theme-preview
-      background: var(--lb-surface-neutral-subtle)
-      border: base.$border-sm solid var(--lb-border-neutral-line)
-      border-radius: base.$radius-md
-      padding: base.$space-xl
-      
-      .preview-header
-        display: flex
-        justify-content: space-between
-        align-items: center
-        margin-bottom: base.$space-xl
-        
-        h5
-          margin: 0
-          color: var(--lb-text-neutral-contrast-high)
-          font-size: 1.125rem
-        
-        .preview-badge
-          padding: base.$space-xs base.$space-md
-          border-radius: base.$radius-full
-          font-size: 0.75rem
-          font-weight: 600
-      
-      .preview-grid
-        display: grid
-        gap: base.$space-xl
-        
-        .preview-card
-          background: var(--lb-surface-subtle)
-          padding: base.$space-lg
-          border-radius: base.$radius-sm
-          
-          .scale-title
-            font-size: 0.875rem
-            font-weight: 600
-            color: var(--lb-text-neutral-contrast-high)
-            margin-bottom: base.$space-md
-          
-          .scale-row
-            display: grid
-            grid-template-columns: repeat(12, 1fr)
-            gap: 2px
-            margin-bottom: base.$space-lg
-            
-            .scale-step
-              aspect-ratio: 1
-              border-radius: base.$radius-xs
-              display: flex
-              align-items: center
-              justify-content: center
-              position: relative
-              
-              span
-                font-size: 0.625rem
-                font-weight: 600
-          
-          .preview-buttons
-            display: flex
-            gap: base.$space-md
-            flex-wrap: wrap
-            
-            .preview-btn
-              padding: base.$space-sm base.$space-lg
-              border-radius: base.$radius-sm
-              font-size: 0.875rem
-              font-weight: 500
-              border: none
-              cursor: pointer
-              transition: all base.$transition
-              
-              &:hover
-                transform: translateY(-1px)
-                box-shadow: base.$shadow-md
-          
-          .preview-surface
-            padding: base.$space-lg
-            border-radius: base.$radius-sm
-            
-            p
-              margin: 0
-              font-weight: 500
-            
-            small
-              font-size: 0.75rem
-          
-          &.accent-card
-            .scale-row
-              margin-bottom: base.$space-lg
-  
-  .theme-example-buttons
-    background: var(--lb-surface-subtle)
-    padding: base.$space-xl
-    border-radius: base.$radius-md
-    border: base.$border-sm solid var(--lb-border-neutral-line)
-    
-    h4
-      color: var(--lb-text-neutral-contrast-high)
-      margin-bottom: base.$space-lg
-    
-    .button-row
-      display: flex
-      gap: base.$space-md
-      flex-wrap: wrap
-      margin-bottom: base.$space-md
-    
-    button
-      padding: base.$space-sm base.$space-lg
-      border-radius: base.$radius-sm
-      font-weight: 500
-      font-size: 0.875rem
-      border: none
-      cursor: pointer
-      transition: all base.$transition
-      
-      &.custom-primary
-        background: #6366f1
-        color: white
-        
-        &:hover
-          background: #4f46e5
-      
-      &.custom-secondary
-        background: #10b981
-        color: white
-        
-        &:hover
-          background: #059669
-      
-      &.custom-accent
-        background: #ec4899
-        color: white
-        
-        &:hover
-          background: #db2777
-    
-    .hint
-      color: var(--lb-text-neutral-contrast-low)
-      font-size: 0.75rem
-      margin: 0
 
 </style>
