@@ -2,7 +2,7 @@
 LbDropdown.lb-select(
   ref="dropdownRef"
   v-model="isOpen"
-  :match-width="true"
+  :match-width="matchWidth"
   :placement="placement"
   :disabled="disabled"
   @open="handleOpen"
@@ -103,6 +103,7 @@ export interface LbSelectProps {
   searchPlaceholder?: string
   size?: 'medium' | 'large'
   placement?: 'bottom' | 'top' | 'auto'
+  matchWidth?: boolean
   ariaLabel?: string
   ariaDescribedby?: string
 }
@@ -118,6 +119,7 @@ const props = withDefaults(defineProps<LbSelectProps>(), {
   searchable: false,
   searchPlaceholder: 'Search...',
   placement: 'bottom',
+  matchWidth: true,
 })
 
 // Emits
