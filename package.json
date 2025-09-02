@@ -62,6 +62,7 @@
     "vue": "^3.5.18"
   },
   "dependencies": {
-    "@vueuse/core": "^13.8.0"
+    "@vueuse/core": "^13.8.0",
+    "culori": "^4.0.2"
   }
 }

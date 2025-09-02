@@ -24,6 +24,7 @@
           v-model="selectedMonth"
           :options="monthOptions"
           :size="effectiveSize"
+          :match-width="false"
           :aria-label="monthSelectAriaLabel"
           @change="handleMonthChange"
         )
@@ -728,10 +729,23 @@ defineOptions({
   
   .month-select
     flex: 1
+    
+    // Allow month dropdown to expand more for comfortable reading
+    :deep(.dropdown-content)
+      min-width: 180px  // Comfortable minimum width
+      max-width: 220px  // Allow expansion up to this limit
   
   .year-select
     flex: none
     width: auto
+
+// Size-specific adjustments for larger calendars
+.lb-calendar.size-large
+  .calendar-selects
+    .month-select
+      :deep(.dropdown-content)
+        min-width: 200px  // More space for large calendars
+        max-width: 240px  // Allow even more expansion
 
 .calendar-grid
   display: flex

@@ -170,6 +170,8 @@ defineOptions({
         background-color: var(--lb-surface-primary-normal)
       &.color-secondary
         background-color: var(--lb-surface-secondary-normal)
+      &.color-tertiary
+        background-color: var(--lb-surface-tertiary-normal)
       &.color-neutral
         background-color: var(--lb-surface-neutral-normal)
 
@@ -197,6 +199,16 @@ defineOptions({
     @media (hover: hover)
       &:hover:not(.disabled)
         background: var(--lb-surface-secondary-active)
+        
+  // Active state - Tertiary color variant
+  &.color-tertiary.active
+    background: var(--lb-surface-tertiary-hover)
+    color: var(--lb-text-tertiary-contrast-low)
+    z-index: 1
+
+    @media (hover: hover)
+      &:hover:not(.disabled)
+        background: var(--lb-surface-tertiary-active)
         
   // Active state - Neutral color variant
   &.color-neutral.active
