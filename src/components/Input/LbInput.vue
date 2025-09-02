@@ -256,12 +256,12 @@ const handleInput = (event: Event) => {
   // Input styles
   input
     width: 100%
-    background: var(--lb-surface-subtle)
+    background: transparent
     border: cv.$input-border-width solid var(--lb-border-neutral-normal)
     border-radius: cv.$input-border-radius
     font-family: inherit
     color: var(--lb-text-neutral-contrast-high)
-    transition: border-color base.$transition
+    transition: border-color base.$transition, background-color base.$transition
     box-sizing: border-box
     
     // Placeholder
