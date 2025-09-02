@@ -1,8 +1,8 @@
 /**
  * LittleBrand UI Kit - OKLCH Color Utilities
  * 
- * Conversion utilities for OKLCH color space
- * OKLCH provides better perceptual uniformity than HSL
+ * Professional color scale generator with Radix UI quality
+ * Uses OKLCH color space for perceptual uniformity
  */
 
 /**
@@ -205,51 +205,113 @@ export function adjustChroma(L, C, H, amount) {
 }
 
 /**
- * Determine optimal lightness range based on color properties
+ * Radix-inspired lightness curves for professional color scales
+ * Based on analysis of Radix UI color system
  */
-function getOptimalLightnessRange(oklch) {
-  const { L, C, H } = oklch;
-  
-  // Determine color category based on hue
-  let minDarkness = 0.10; // Default minimum darkness
-  
-  // Yellow/amber range (80-120°) - can't go as dark
-  if (H >= 80 && H <= 120) {
-    minDarkness = 0.20;
+const RADIX_LIGHTNESS_CURVES = {
+  light: {
+    // Fixed lightness values for consistency
+    1: 0.994,
+    2: 0.982,
+    3: 0.960,
+    4: 0.935,
+    5: 0.905,
+    6: 0.860,
+    7: 0.800,
+    8: 0.735,
+    // Step 9 is the input color
+    10: (step9) => step9 * 0.95,
+    11: (step9) => step9 * 0.85,
+    12: (step9, hue) => {
+      // Hue-specific darkness for optimal contrast
+      if (hue >= 30 && hue <= 80) return 0.35;  // Orange
+      if (hue >= 80 && hue <= 120) return 0.38; // Yellow
+      if (hue >= 140 && hue <= 200) return 0.32; // Green/Teal
+      if (hue >= 200 && hue <= 260) return 0.32; // Blue
+      return 0.33; // Default
+    }
+  },
+  dark: {
+    // Starting darkness varies by hue
+    1: (hue) => {
+      if (hue >= 30 && hue <= 80) return 0.187;  // Orange
+      if (hue >= 80 && hue <= 120) return 0.185; // Yellow
+      if (hue >= 140 && hue <= 200) return 0.187; // Green/Teal
+      if (hue >= 200 && hue <= 260) return 0.194; // Blue
+      return 0.190; // Default
+    },
+    2: (step1) => step1 + 0.025,
+    3: (step1) => step1 + 0.070,
+    4: (step1) => step1 + 0.110,
+    5: (step1) => step1 + 0.155,
+    6: (step1) => step1 + 0.210,
+    7: (step1) => step1 + 0.270,
+    8: (step1) => step1 + 0.345,
+    // Step 9 is the input color
+    10: (step9) => Math.min(step9 * 1.06, 0.75),
+    11: (step9) => Math.min(step9 * 1.20, 0.82),
+    12: (hue) => {
+      // Very light for text
+      if (hue >= 30 && hue <= 80) return 0.925;  // Orange
+      if (hue >= 80 && hue <= 120) return 0.920; // Yellow
+      return 0.910; // Default
+    }
   }
-  // Green/teal range (140-200°) - moderate darkness
-  else if (H >= 140 && H <= 200) {
-    minDarkness = 0.15;
-  }
-  // Blue range (200-260°) - can go quite dark
-  else if (H >= 200 && H <= 260) {
-    minDarkness = 0.18;
-  }
-  // Red/pink range (0-30° or 330-360°) - moderate darkness
-  else if ((H >= 0 && H <= 30) || (H >= 330 && H <= 360)) {
-    minDarkness = 0.18;
-  }
-  // Orange range (30-80°) - can go darker
-  else if (H >= 30 && H <= 80) {
-    minDarkness = 0.20;
-  }
-  // Purple/violet range (260-330°) - can go quite dark
-  else if (H >= 260 && H <= 330) {
-    minDarkness = 0.15;
-  }
-  
-  // Adjust based on chroma - high chroma colors can't go as dark
-  if (C > 0.15) {
-    minDarkness = Math.min(minDarkness + 0.05, 0.25);
-  }
-  
-  return minDarkness;
-}
+};
 
 /**
- * Generate a 12-step color scale in OKLCH with enhanced dynamic range
+ * Radix-inspired chroma patterns for smooth progression
  */
-export function generateOklchScale(baseColor, curve = 'natural') {
+const RADIX_CHROMA_PATTERNS = {
+  light: [
+    0.02,  // Step 1: Very low
+    0.08,  // Step 2: Subtle increase
+    0.18,  // Step 3: Building
+    0.32,  // Step 4: Growing
+    0.45,  // Step 5: Mid-range
+    0.60,  // Step 6: Increasing
+    0.75,  // Step 7: Near peak
+    0.90,  // Step 8: Almost full
+    1.00,  // Step 9: Full chroma (input)
+    1.02,  // Step 10: Slight boost
+    0.90,  // Step 11: Reduced for contrast
+    0.40   // Step 12: Much lower for dark text
+  ],
+  dark: [
+    0.06,  // Step 1: Very low for dark bg
+    0.10,  // Step 2: Subtle
+    0.22,  // Step 3: Building
+    0.35,  // Step 4: Growing
+    0.45,  // Step 5: Mid-range
+    0.52,  // Step 6: Increasing
+    0.60,  // Step 7: Building to peak
+    0.75,  // Step 8: Near peak
+    1.00,  // Step 9: Full chroma (input)
+    0.95,  // Step 10: Slight reduction
+    0.85,  // Step 11: Reduced for light text
+    0.30   // Step 12: Much lower for light text
+  ]
+};
+
+/**
+ * Radix alpha values for consistent transparency
+ */
+const RADIX_ALPHA_VALUES = {
+  light: [
+    0.012, 0.024, 0.041, 0.062, 0.090, 0.121,
+    0.156, 0.220, 0.439, 0.478, 0.565, 0.830
+  ],
+  dark: [
+    0.015, 0.031, 0.055, 0.085, 0.114, 0.148,
+    0.187, 0.268, 0.470, 0.516, 0.615, 0.860
+  ]
+};
+
+/**
+ * Generate a Radix-quality 12-step color scale in OKLCH
+ * Produces professional color scales matching Radix UI quality
+ */
+export function generateOklchScale(baseColor, mode = 'light') {
   let oklch;
   
   // Handle different input types
@@ -264,102 +326,59 @@ export function generateOklchScale(baseColor, curve = 'natural') {
   }
   
   const scale = {};
+  const curves = RADIX_LIGHTNESS_CURVES[mode];
+  const chromaPattern = RADIX_CHROMA_PATTERNS[mode];
   
-  // Get optimal darkness for this color
-  const minDarkness = getOptimalLightnessRange(oklch);
-  
-  // Ensure step 9 is in a usable range (0.4-0.7 lightness)
-  let targetLightness9 = oklch.L;
-  if (oklch.L > 0.7) {
-    targetLightness9 = 0.65;
-  } else if (oklch.L < 0.4) {
-    targetLightness9 = 0.45;
+  // Calculate step 1 for dark mode
+  let step1Lightness;
+  if (mode === 'dark') {
+    step1Lightness = curves[1](oklch.H);
   }
   
-  // Calculate enhanced dynamic range
-  const maxLightness = 0.995; // Nearly white
-  const lightnessRange = maxLightness - minDarkness;
-  
-  // Create exponential curve for better distribution
-  const getExponentialStep = (step, total, exp = 2.2) => {
-    const normalized = (step - 1) / (total - 1);
-    return Math.pow(normalized, exp);
-  };
-  
-  // Generate lightness stops with fixed progression matching neutral scale
-  const lightnessStops = [];
+  // Generate each step with Radix-quality curves
   for (let i = 1; i <= 12; i++) {
-    if (i <= 8) {
-      // Steps 1-8: Use fixed lightness values for consistency
-      const fixedLightness = [0.998, 0.988, 0.973, 0.958, 0.943, 0.928, 0.913, 0.898];
-      lightnessStops.push(fixedLightness[i - 1]);
-    } else if (i === 9) {
-      // Step 9: Base color
-      lightnessStops.push(targetLightness9);
-    } else if (i === 10) {
-      // Step 10: 97% of Step 9
-      lightnessStops.push(targetLightness9 * 0.97);
-    } else if (i === 11) {
-      // Step 11: 90% of Step 9
-      lightnessStops.push(targetLightness9 * 0.90);
-    } else {
-      // Step 12: Very dark
-      lightnessStops.push(minDarkness);
-    }
-  }
-  
-  // Enhanced chroma multipliers with more variation
-  let chromaMultipliers;
-  
-  if (curve === 'vivid') {
-    chromaMultipliers = [
-      0.10, 0.20, 0.40, 0.60, 0.80,
-      0.95, 1.05, 1.10, 1.00, 1.05,
-      0.85, 0.60
-    ];
-  } else if (curve === 'muted') {
-    chromaMultipliers = [
-      0.08, 0.15, 0.25, 0.40, 0.55,
-      0.70, 0.80, 0.85, 0.85, 0.80,
-      0.65, 0.45
-    ];
-  } else { // natural - enhanced variation
-    chromaMultipliers = [
-      0.10, 0.25, 0.30, 0.40, 0.50,
-      0.60, 0.70, 0.80, 1.00, 0.95,
-      0.80, 0.55
-    ];
-  }
-  
-  // Generate each step with subtle hue shifts for warmth/coolness
-  for (let i = 1; i <= 12; i++) {
-    const lightness = lightnessStops[i - 1];
-    const chromaMultiplier = chromaMultipliers[i - 1];
-    let chroma = oklch.C * chromaMultiplier;
-    let hue = oklch.H;
+    let lightness, chroma, hue = oklch.H;
     
-    // Subtle hue shifts at extremes
-    if (i <= 2) {
-      // Very light: shift slightly warmer
-      hue = oklch.H + 1;
-    } else if (i >= 11) {
-      // Very dark: shift slightly cooler
-      hue = oklch.H - 2;
-    }
-    
-    // Reduce chroma at extremes for better appearance
-    if (lightness > 0.9 || lightness < 0.2) {
-      chroma = chroma * 0.7;
-    }
-    
-    // Step 9 keeps original properties
     if (i === 9) {
+      // Step 9 is always the exact input color
+      lightness = oklch.L;
       chroma = oklch.C;
-      hue = oklch.H;
+    } else if (i <= 8 && mode === 'light') {
+      // Light mode: use fixed lightness values
+      lightness = curves[i];
+      chroma = oklch.C * chromaPattern[i - 1];
+    } else if (i <= 8 && mode === 'dark') {
+      // Dark mode: calculate from step 1
+      if (i === 1) {
+        lightness = step1Lightness;
+      } else {
+        lightness = curves[i](step1Lightness);
+      }
+      chroma = oklch.C * chromaPattern[i - 1];
+    } else if (i === 10 || i === 11) {
+      // Steps 10-11: relative to step 9
+      lightness = curves[i](oklch.L);
+      chroma = oklch.C * chromaPattern[i - 1];
+    } else if (i === 12) {
+      // Step 12: specific handling
+      lightness = mode === 'light' ? curves[i](oklch.L, oklch.H) : curves[i](oklch.H);
+      chroma = oklch.C * chromaPattern[i - 1];
     }
     
-    // Cap chroma for practical use
-    chroma = Math.min(chroma, 0.35);
+    // Apply subtle hue shifts at extremes (Radix pattern)
+    if (mode === 'light') {
+      if (i <= 2) hue = oklch.H + 2;  // Slightly warmer
+      if (i >= 11) hue = oklch.H - 3; // Slightly cooler
+    } else {
+      if (i <= 2) hue = oklch.H - 2;  // Slightly cooler
+      if (i >= 11) hue = oklch.H + 3; // Slightly warmer
+    }
+    
+    // Ensure values are in valid ranges
+    lightness = Math.max(0, Math.min(1, lightness));
+    chroma = Math.max(0, Math.min(0.4, chroma));
+    if (hue < 0) hue += 360;
+    if (hue > 360) hue -= 360;
     
     scale[i] = formatOklchCSS(lightness, chroma, hue);
   }
@@ -368,133 +387,15 @@ export function generateOklchScale(baseColor, curve = 'natural') {
 }
 
 /**
- * Generate dark mode scale in OKLCH with enhanced dynamic range
+ * Generate dark mode scale using Radix patterns
  */
 export function generateOklchDarkScale(lightScale, originalColor) {
-  let oklch;
-  
-  if (typeof originalColor === 'string') {
-    oklch = hexToOklch(originalColor);
-  } else {
-    oklch = originalColor;
-  }
-  
-  const darkScale = {};
-  
-  // Get optimal darkness for this color (same as light mode)
-  const minDarkness = getOptimalLightnessRange(oklch);
-  
-  // For dark mode, we invert: dark backgrounds to light text
-  const maxDarkLightness = 0.95; // Nearly white for text
-  const minDarkBackground = Math.min(minDarkness, 0.12); // Very dark background
-  
-  // Ensure step 9 is in a usable range
-  let targetLightness9 = oklch.L;
-  if (oklch.L > 0.65) {
-    targetLightness9 = 0.60;
-  } else if (oklch.L < 0.45) {
-    targetLightness9 = 0.50;
-  }
-  
-  // Create exponential curve for better distribution
-  const getExponentialStep = (step, total, exp = 2.2) => {
-    const normalized = (step - 1) / (total - 1);
-    return Math.pow(normalized, exp);
-  };
-  
-  // Generate lightness stops with fixed progression matching light mode percentages
-  // Using same percentage differences as light mode but inverted (dark to light)
-  const darkLightnessStops = [];
-  
-  // Determine base starting point based on color type
-  let baseStart = 0.170; // Default for most colors
-  
-  // Adjust starting point based on hue like in hardcoded values
-  if (oklch.H >= 30 && oklch.H <= 80) {
-    // Orange range
-    baseStart = 0.100;
-  } else if (oklch.H >= 80 && oklch.H <= 120) {
-    // Yellow range
-    baseStart = 0.110;
-  } else if (oklch.H >= 140 && oklch.H <= 200) {
-    // Green/teal range
-    baseStart = 0.140;
-  } else if (oklch.H >= 200 && oklch.H <= 260) {
-    // Blue range
-    baseStart = 0.175;
-  }
-  
-  for (let i = 1; i <= 12; i++) {
-    if (i === 1) {
-      // Step 1: Starting point
-      darkLightnessStops.push(baseStart);
-    } else if (i === 2) {
-      // Step 2: +1% from Step 1 (matching light mode's 1% drop)
-      darkLightnessStops.push(baseStart + 0.010);
-    } else if (i <= 8) {
-      // Steps 3-8: +1.5% increments (matching light mode's 1.5% drops)
-      const increments = (i - 2) * 0.015;
-      darkLightnessStops.push(baseStart + 0.010 + increments);
-    } else if (i === 9) {
-      // Step 9: Base color (adjusted for dark mode)
-      darkLightnessStops.push(targetLightness9);
-    } else if (i === 10) {
-      // Step 10: Inverse of light mode's 97% (1/0.97 ≈ 1.031)
-      darkLightnessStops.push(targetLightness9 * 1.031);
-    } else if (i === 11) {
-      // Step 11: Inverse of light mode's 90% (1/0.90 ≈ 1.111)
-      darkLightnessStops.push(targetLightness9 * 1.111);
-    } else {
-      // Step 12: Very light for text
-      darkLightnessStops.push(0.85);
-    }
-  }
-  
-  // Enhanced dark mode chroma multipliers with more variation
-  const darkChromaMultipliers = [
-    0.30, 0.40, 0.50, 0.60, 0.70,  // Lower chroma for dark backgrounds
-    0.85, 0.95, 1.05, 1.00, 1.00,  // Full chroma in mid-range
-    0.80, 0.60  // Reduced chroma for light text
-  ];
-  
-  // Generate dark scale with subtle hue shifts
-  for (let i = 1; i <= 12; i++) {
-    const lightness = darkLightnessStops[i - 1];
-    const chromaMultiplier = darkChromaMultipliers[i - 1];
-    let chroma = oklch.C * chromaMultiplier;
-    let hue = oklch.H;
-    
-    // Subtle hue shifts at extremes (opposite of light mode)
-    if (i <= 2) {
-      // Very dark: shift slightly cooler
-      hue = oklch.H - 1;
-    } else if (i >= 11) {
-      // Very light: shift slightly warmer
-      hue = oklch.H + 2;
-    }
-    
-    // Reduce chroma at extremes for better appearance
-    if (lightness > 0.85 || lightness < 0.15) {
-      chroma = chroma * 0.7;
-    }
-    
-    // Step 9 keeps original chroma
-    if (i === 9) {
-      chroma = oklch.C;
-      hue = oklch.H;
-    }
-    
-    // Cap chroma for practical use
-    chroma = Math.min(chroma, 0.35);
-    
-    darkScale[i] = formatOklchCSS(lightness, chroma, hue);
-  }
-  
-  return darkScale;
+  // Dark mode uses same algorithm with 'dark' mode parameter
+  return generateOklchScale(originalColor, 'dark');
 }
 
 /**
- * Generate alpha scale in OKLCH
+ * Generate alpha scale with Radix-quality transparency
  */
 export function generateOklchAlphaScale(baseColor, mode = 'light') {
   let oklch;
@@ -506,23 +407,32 @@ export function generateOklchAlphaScale(baseColor, mode = 'light') {
   }
   
   const alphaScale = {};
+  const alphas = RADIX_ALPHA_VALUES[mode];
   
-  // Alpha values for light and dark modes
-  const lightAlphas = [
-    0.012, 0.027, 0.047, 0.071, 0.090, 0.114,
-    0.141, 0.220, 0.439, 0.478, 0.565, 0.910
-  ];
+  // Adjust base color for better alpha appearance
+  let alphaLightness = oklch.L;
+  let alphaChroma = oklch.C;
   
-  const darkAlphas = [
-    0.017, 0.034, 0.056, 0.085, 0.110, 0.135,
-    0.165, 0.250, 0.480, 0.520, 0.620, 0.930
-  ];
-  
-  const alphas = mode === 'dark' ? darkAlphas : lightAlphas;
+  if (mode === 'light') {
+    // For light mode, use slightly darker version for better visibility
+    alphaLightness = oklch.L * 0.85;
+  } else {
+    // For dark mode, use slightly lighter version
+    alphaLightness = Math.min(oklch.L * 1.15, 0.9);
+  }
   
   for (let i = 1; i <= 12; i++) {
     const alpha = alphas[i - 1];
-    alphaScale[i] = formatOklchCSS(oklch.L, oklch.C, oklch.H, alpha);
+    
+    // Adjust chroma based on step for visual consistency
+    let stepChroma = alphaChroma;
+    if (i <= 3) {
+      stepChroma = alphaChroma * 0.7; // Reduced for subtle steps
+    } else if (i >= 10) {
+      stepChroma = alphaChroma * 0.9; // Slightly reduced for strong steps
+    }
+    
+    alphaScale[i] = formatOklchCSS(alphaLightness, stepChroma, oklch.H, alpha);
   }
   
   return alphaScale;

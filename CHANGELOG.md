@@ -5,6 +5,54 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2025-09-02
+
+### Added
+- **Radix UI Color System Integration**
+  - Converted all color scales to exact Radix UI values in OKLCH format
+  - Added complete 12-step scales for Orange, Teal, Sky, Blue, Gray, Green, Amber, and Red
+  - Implemented Sky as new Tertiary color option across all components
+  - Blue now dedicated to Info semantic color
+  - All colors include precise OKLCH values with original hex in comments for reference
+
+- **Professional Color Generator Upgrade**
+  - Implemented Radix-inspired lightness curves for professional color scales
+  - Added smooth chroma progression patterns matching Radix UI quality
+  - Generator now preserves exact input color at step 9
+  - Includes hue-specific adjustments for optimal appearance
+  - Supports generation of solid, dark mode, and alpha scales
+
+- **Complete Alpha Scales**
+  - Added full 12-step alpha scales for all semantic colors
+  - Light mode: 0.012 to 0.830 transparency progression
+  - Dark mode: 0.015 to 0.860 transparency progression
+  - Perfect for overlays, borders, and subtle backgrounds
+  - Consistent visual weight across different color hues
+
+- **Favicon Support**
+  - Added SVG and ICO favicons with UI kit branding
+  - Orange background with abstract UI component shapes
+  - Properly configured in index.html
+
+### Fixed
+- **Calendar Component**
+  - Fixed month dropdown truncation issue
+  - Prevented scroll propagation when scrolling within dropdowns
+  - Increased month dropdown width for better readability
+  - Added `matchWidth` prop to Select component for flexible dropdown sizing
+
+### Changed
+- **Color System Architecture**
+  - All colors now use precise OKLCH values from Radix UI
+  - Improved color accuracy and consistency across the system
+  - Better perceptual uniformity in color progressions
+  - Enhanced contrast ratios for accessibility
+
+### Technical
+- Added culori as dependency for accurate color space conversions
+- Updated oklch-utils.js with Radix-quality generation algorithms
+- Cleaned up temporary conversion scripts
+
 ## [0.4.0] - 2025-09-02
 
 ### Changed
