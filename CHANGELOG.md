@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.6] - 2025-09-03
+
+### Fixed
+- **Critical: applyTheme() Bug Fix**
+  - Fixed "Cannot read properties of undefined (reading '10')" error
+  - Root cause: `generateScale` was passing 'natural' as mode instead of 'light'/'dark'
+  - Added proper mode validation in `generateOklchScale`
+  - Added comprehensive error handling and fallbacks throughout color generation
+  - Now works correctly with minimal configuration (just primary/secondary colors)
+  - Prevents crashes and provides graceful fallbacks for invalid inputs
+
 ## [0.5.5] - 2025-09-03
 
 ### Added
