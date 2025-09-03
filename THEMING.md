@@ -197,15 +197,15 @@ For fine-grained control, override specific CSS variables:
   /* Or use hex colors that convert to OKLCH automatically */
   --lb-text-primary-normal: #ff6b6b;
   
-  /* Background customization */
-  --lb-background-page: oklch(0.98 0.005 30);
-  --lb-background-surface: oklch(0.96 0.01 30);
+  /* Surface customization */
+  --lb-surface-base: oklch(0.98 0.005 30);
+  --lb-surface-subtle: oklch(0.96 0.01 30);
 }
 
 /* Dark mode specific overrides */
 [data-theme="dark"], .dark {
   --lb-fill-primary-normal: oklch(0.75 0.12 30);
-  --lb-background-page: oklch(0.08 0.005 30);
+  --lb-surface-base: oklch(0.08 0.005 30);
 }
 ```
 
@@ -431,14 +431,15 @@ The system automatically generates dark mode colors by:
 }
 ```
 
-### Background Layering
+### Surface Layering
 
-The system provides three background layers:
-- `--lb-background-page`: Main viewport background
-- `--lb-background-surface`: Cards, panels (one level up)
-- `--lb-background-overlay`: Modal backdrops
+The system provides surface layers for visual hierarchy:
+- `--lb-surface-base`: Main app background
+- `--lb-surface-subtle`: Cards, elevated content
+- `--lb-surface-disabled`: Disabled state backgrounds
+- `--lb-surface-overlay`: Modal/dialog backdrops
 
-In light mode: Both page and surface are light
+In light mode: Progressive elevation through subtle color variations
 In dark mode: Progressive elevation through lighter shades
 
 ## Best Practices

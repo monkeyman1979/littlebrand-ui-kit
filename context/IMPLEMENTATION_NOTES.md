@@ -197,7 +197,7 @@ body {
 
 ### Issue: Components Not Using Theme Variables
 **Solution**: Use the UI kit's CSS variables for consistent theming:
-- Backgrounds: `var(--lb-background-page)`, `var(--lb-surface-neutral-subtle)`
+- Backgrounds: `var(--lb-surface-base)`, `var(--lb-surface-subtle)`
 - Text: `var(--lb-text-neutral-contrast-high)`, `var(--lb-text-neutral-normal)`
 - Borders: `var(--lb-border-neutral-line)`
 - Spacing: `var(--lb-space-sm)`, `var(--lb-space-md)`
