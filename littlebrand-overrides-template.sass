@@ -292,10 +292,10 @@
   // --lb-surface-warning-hover: #color
   // --lb-surface-warning-active: #color
   
-  // Text on Warning (often dark for contrast)
-  // --lb-text-on-warning: #333
-  // --lb-text-on-warning-hover: #333
-  // --lb-text-on-warning-active: #333
+  // Text on Warning (uses dark text for contrast)
+  // --lb-text-on-warning: black
+  // --lb-text-on-warning-hover: black
+  // --lb-text-on-warning-active: black
   
   // ============================================================
   // COLOR TOKENS - ERROR
@@ -366,18 +366,19 @@
   // --lb-text-on-info-active: white
   
   // ============================================================
-  // STABLE TEXT COLORS (Non-flipping, v0.3.5+)
+  // STABLE TEXT COLORS (Non-flipping)
   // ============================================================
   // These maintain their appearance regardless of theme mode.
-  // Perfect for hero sections with dark backgrounds.
+  // Perfect for hero sections with dark backgrounds or when you need
+  // consistent text colors that don't change with theme.
   
   // Light Text (always light)
-  // --lb-text-light-normal: var(--lb-neutral-1)         // Standard light text
-  // --lb-text-light-contrast-low: var(--lb-neutral-2)   // Light with lower contrast
+  // --lb-text-light-normal: #color              // Standard light text
+  // --lb-text-light-contrast-low: #color        // Light with lower contrast
   
   // Dark Text (always dark)
-  // --lb-text-dark-normal: var(--lb-neutral-12)         // Standard dark text
-  // --lb-text-dark-contrast-low: var(--lb-neutral-11)   // Dark with lower contrast
+  // --lb-text-dark-normal: #color               // Standard dark text
+  // --lb-text-dark-contrast-low: #color         // Dark with lower contrast
   
   // ============================================================
   // SPACING & SIZING
@@ -433,15 +434,15 @@
   // SURFACE & SPECIAL
   // ============================================================
   
-  // Base Surfaces
+  // Base Surfaces (general UI surfaces)
   // --lb-surface-base: #color         // Main app background
   // --lb-surface-subtle: #color       // Cards, elevated content
   // --lb-surface-disabled: #color     // Disabled state backgrounds
   // --lb-surface-overlay: rgba(0, 0, 0, 0.5)  // Modal/dialog backdrops
   
   // Special Purpose
-  // --lb-focus-ring-color: #color
-  // --lb-divider-color: #color
+  // --lb-focus-ring-color: #color     // Focus ring for accessibility
+  // --lb-divider-color: #color        // Divider/separator lines
 
 // ================================================================
 // DARK MODE OVERRIDES (Optional)

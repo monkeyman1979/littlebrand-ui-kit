@@ -251,7 +251,7 @@ Need different values for dark mode?
 // Dark mode overrides
 [data-theme="dark"], .dark
   --lb-fill-primary-normal: #8B5CF6  // Brighter in dark mode
-  --lb-background-page: #0A0A0A      // Darker background
+  --lb-surface-base: #0A0A0A         // Darker background
 ```
 
 ### Scenario 7: Component-Level Overrides
@@ -420,12 +420,12 @@ All color variables automatically switch when dark mode is active. You can also 
 // Light mode overrides
 :root
   --lb-fill-primary-normal: #6B46C1
-  --lb-background-page: #FFFFFF
+  --lb-surface-base: #FFFFFF
 
 // Dark mode specific overrides
 [data-theme="dark"], .dark
   --lb-fill-primary-normal: #8B5CF6  // Brighter purple in dark
-  --lb-background-page: #0A0A0A      // Darker background
+  --lb-surface-base: #0A0A0A         // Darker background
 ```
 
 ### Summary

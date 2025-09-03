@@ -56,8 +56,8 @@ html:not(.dark) .inverted-section {
   color: #F8FAFC;
   
   /* Override CSS variables for all child components */
-  --lb-background-page: #0F1114;
-  --lb-background-surface: #1A1D23;
+  --lb-surface-base: #0F1114;
+  --lb-surface-subtle: #1A1D23;
   --lb-surface-neutral-subtle: #1E2228;
   --lb-surface-neutral-normal: #252931;
   --lb-surface-neutral-hover: #2C313A;
@@ -78,8 +78,8 @@ html.dark .inverted-section {
   color: #1A1D23;
   
   /* Override CSS variables for all child components */
-  --lb-background-page: #FFFFFF;
-  --lb-background-surface: #FBFCFD;
+  --lb-surface-base: #FFFFFF;
+  --lb-surface-subtle: #FBFCFD;
   --lb-surface-neutral-subtle: #FBFCFD;
   --lb-surface-neutral-normal: #F7F9FB;
   --lb-surface-neutral-hover: #EFF2F5;
