@@ -29,6 +29,7 @@
             variant="ghost"
             color="neutral"
             icon-only
+            muted
             :disabled="disabled"
             aria-label="More options"
           )
@@ -86,6 +87,7 @@
           variant="ghost"
           color="neutral"
           icon-only
+          muted
           :disabled="disabled"
           aria-label="Record voice message"
           @click="handlePrimaryAction"
@@ -354,7 +356,7 @@ defineOptions({
   
   &:focus-within
     border-color: var(--lb-border-neutral-active)
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1)
+    box-shadow: var(--lb-shadow-sm)
   
   &.disabled
     background: var(--lb-surface-disabled)

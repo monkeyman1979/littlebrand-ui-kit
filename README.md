@@ -238,6 +238,7 @@ See [CUSTOMIZATION.md](./CUSTOMIZATION.md) for detailed customization options in
 - `LbRadio` - Radio button groups
 - `LbSwitch` - Toggle switch
 - `LbFormField` - Form field wrapper with label
+- `LbChatInput` - Chat/LLM-style input with auto-grow and actions
 
 ### Button Components
 - `LbButton` - Multiple variants (filled, outline, ghost, tonal, link)

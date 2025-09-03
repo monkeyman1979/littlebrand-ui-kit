@@ -49,12 +49,14 @@ const props = withDefaults(defineProps<{
   to?: string | object
   target?: string
   rel?: string
+  muted?: boolean
 }>(), {
   variant: 'filled',
   color: 'primary',
   size: 'medium',
   type: 'button',
-  iconPosition: 'leading'
+  iconPosition: 'leading',
+  muted: false
 })
 
 // Emits
@@ -73,7 +75,8 @@ const buttonClasses = computed(() => [
     'full-width': props.fullWidth,
     'loading': props.loading,
     'disabled': props.disabled,
-    'icon-only': props.iconOnly
+    'icon-only': props.iconOnly,
+    'muted': props.muted
   }
 ])
 
@@ -360,6 +363,20 @@ $color-map: ('primary': 'orange', 'secondary': 'teal', 'tertiary': 'sky', 'neutr
   @each $color, $color-name in $color-map
     .lb-button.#{$variant}-#{$color}
       @include button-variant($variant, $color, $color-name)
+
+// Muted state for subtle buttons
+.lb-button.muted
+  &.ghost-neutral,
+  &.tonal-neutral
+    color: var(--lb-text-neutral-contrast-low)
+    
+    &:not(.disabled):not(.loading)
+      @include base.hover-supported
+        color: var(--lb-text-neutral-contrast-high)
+        
+    .icon-leading,
+    .icon-trailing
+      color: inherit
 
 // Light mode specific warning text colors
 :root:not([data-theme="dark"])
