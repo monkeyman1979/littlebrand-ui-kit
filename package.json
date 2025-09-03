@@ -1,6 +1,6 @@
 {
   "name": "littlebrand-ui-kit",
-  "version": "0.5.0",
+  "version": "0.5.5",
   "description": "Clean, semantic Vue.js UI kit using Pug & SASS. Zero utility classes, CSS Grid-first, fully themeable.",
   "type": "module",
   "files": [
