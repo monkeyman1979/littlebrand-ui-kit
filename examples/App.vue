@@ -530,43 +530,18 @@
             )
               template(#actions)
                 LbButton(
-                  variant="ghost"
-                  color="neutral"
-                  size="medium"
-                  icon-only
-                  @click="toggleEmojiPicker"
-                  aria-label="Add emoji"
-                )
-                  template(#icon-leading)
-                    svg(
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    )
-                      circle(cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5")
-                      path(d="M6.5 7.5C6.5 8.05228 6.94772 8.5 7.5 8.5C8.05228 8.5 8.5 8.05228 8.5 7.5C8.5 6.94772 8.05228 6.5 7.5 6.5C6.94772 6.5 6.5 6.94772 6.5 7.5Z" fill="currentColor")
-                      path(d="M11.5 7.5C11.5 8.05228 11.9477 8.5 12.5 8.5C13.0523 8.5 13.5 8.05228 13.5 7.5C13.5 6.94772 13.0523 6.5 12.5 6.5C11.9477 6.5 11.5 6.94772 11.5 7.5Z" fill="currentColor")
-                      path(d="M6 12C6 12 7.5 14 10 14C12.5 14 14 12 14 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round")
+                  :variant="isLiveMode ? 'tonal' : 'ghost'"
+                  :color="isLiveMode ? 'secondary' : 'neutral'"
+                  size="small"
+                  @click="isLiveMode = !isLiveMode"
+                ) Live
                 
                 LbButton(
-                  variant="ghost"
-                  color="neutral"
-                  size="medium"
-                  icon-only
-                  @click="toggleFormatting"
-                  aria-label="Format text"
-                )
-                  template(#icon-leading)
-                    svg(
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    )
-                      path(d="M3 6h14M8 2v16M12 2v16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round")
+                  :variant="isAssistantMode ? 'tonal' : 'ghost'"
+                  :color="isAssistantMode ? 'secondary' : 'neutral'"
+                  size="small"
+                  @click="isAssistantMode = !isAssistantMode"
+                ) Assistant
         
         .demo-group
           h4 Different States
@@ -2703,6 +2678,10 @@ const chatInputDisabled = ref('')
 const chatInputMaxRows = ref('')
 const chatMessages = ref([])
 
+// Toggle states for custom action buttons
+const isLiveMode = ref(false)
+const isAssistantMode = ref(true)
+
 // Chat input menu items
 const chatMenuItems = ref([
   {
@@ -2958,13 +2937,6 @@ const handleMenuAction = (action, item) => {
   })
 }
 
-const toggleEmojiPicker = () => {
-  console.log('Emoji picker toggled')
-}
-
-const toggleFormatting = () => {
-  console.log('Text formatting toggled')
-}
 
 // Form demo values
 const formData = ref({

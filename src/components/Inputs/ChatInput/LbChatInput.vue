@@ -28,7 +28,6 @@
           LbButton(
             variant="ghost"
             color="neutral"
-            size="medium"
             icon-only
             :disabled="disabled"
             aria-label="More options"
@@ -62,7 +61,6 @@
           key="send"
           variant="tonal"
           color="neutral"
-          size="medium"
           icon-only
           :disabled="disabled"
           aria-label="Send message"
@@ -91,7 +89,6 @@
           key="mic"
           variant="ghost"
           color="neutral"
-          size="medium"
           icon-only
           :disabled="disabled"
           aria-label="Record voice message"
@@ -356,7 +353,7 @@ defineOptions({
     background: transparent
     border: none
     font-family: inherit
-    font-size: 1rem
+    font-size: var(--lb-font-size-body-small)
     color: var(--lb-text-neutral-contrast-high)
     line-height: var(--lb-line-height-relaxed)
     resize: none
@@ -370,13 +367,14 @@ defineOptions({
 .actions-row
   display: flex
   align-items: center
-  justify-content: space-between
+  justify-content: flex-end
   gap: var(--lb-space-xs)
-  padding: var(--lb-space-xs) var(--lb-space-sm) var(--lb-space-sm)
+  padding: var(--lb-space-xs)
 
 .plus-menu
   display: flex
   align-items: center
+  margin-right: auto
 
 .actions-middle
   display: flex
