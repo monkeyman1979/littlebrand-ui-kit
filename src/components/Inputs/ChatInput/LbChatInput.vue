@@ -34,9 +34,7 @@
           )
             template(#icon-leading)
               svg(
-                width="var(--lb-icon-size-md)"
-                height="var(--lb-icon-size-md)"
-                viewBox="0 0 20 20"
+                                viewBox="0 0 20 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               )
@@ -69,9 +67,7 @@
           template(#icon-leading)
             //- Horizontal arrow icon
             svg(
-              width="var(--lb-icon-size-md)"
-              height="var(--lb-icon-size-md)"
-              viewBox="0 0 20 20"
+                            viewBox="0 0 20 20"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             )
@@ -83,9 +79,9 @@
                 stroke-linejoin="round"
               )
         
-        //- Microphone button when empty
+        //- Microphone button when empty (if showVoice is true)
         LbButton(
-          v-else
+          v-else-if="showVoice"
           key="mic"
           variant="ghost"
           color="neutral"
@@ -96,14 +92,37 @@
         )
           template(#icon-leading)
             svg(
-              width="var(--lb-icon-size-md)"
-              height="var(--lb-icon-size-md)"
               viewBox="0 0 20 20"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             )
               path(
                 d="M10 1.25V12.5M10 12.5C8.61929 12.5 7.5 11.3807 7.5 10V5C7.5 3.61929 8.61929 2.5 10 2.5C11.3807 2.5 12.5 3.61929 12.5 5V10C12.5 11.3807 11.3807 12.5 10 12.5ZM5 8.75V10C5 13.1066 7.39339 15.625 10.5 15.625H9.5C12.6066 15.625 15 13.1066 15 10V8.75M10 15.625V18.75M7.5 18.75H12.5"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              )
+        
+        //- Send button when empty (if showVoice is false)
+        LbButton(
+          v-else
+          key="send-empty"
+          variant="tonal"
+          color="neutral"
+          icon-only
+          :disabled="true"
+          aria-label="Send message"
+        )
+          template(#icon-leading)
+            //- Horizontal arrow icon (same as active send)
+            svg(
+                            viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            )
+              path(
+                d="M3 10L17 10M17 10L13 6M17 10L13 14"
                 stroke="currentColor"
                 stroke-width="1.5"
                 stroke-linecap="round"
@@ -131,6 +150,7 @@ export interface Props {
   disabled?: boolean
   menuItems?: ChatInputMenuItem[]
   ariaDescribedby?: string
+  showVoice?: boolean
 }
 
 // Props
@@ -139,7 +159,8 @@ const props = withDefaults(defineProps<Props>(), {
   placeholder: 'Type a message...',
   maxRows: 10,
   disabled: false,
-  menuItems: () => []
+  menuItems: () => [],
+  showVoice: false
 })
 
 // Emits
@@ -250,7 +271,7 @@ const handleBlur = (event: FocusEvent) => {
 const handlePrimaryAction = () => {
   if (hasText.value) {
     handleSend()
-  } else {
+  } else if (props.showVoice) {
     handleVoice()
   }
 }
@@ -348,14 +369,13 @@ defineOptions({
   
   textarea
     width: 100%
-    min-height: var(--lb-input-height-medium)
+    min-height: var(--lb-space-5xl)
     padding: var(--lb-space-sm) var(--lb-space-md)
     background: transparent
     border: none
     font-family: inherit
-    font-size: var(--lb-font-size-body-small)
+    font-size: var(--lb-font-size-body-base)
     color: var(--lb-text-neutral-contrast-high)
-    line-height: var(--lb-line-height-relaxed)
     resize: none
     outline: none
     overflow-y: hidden

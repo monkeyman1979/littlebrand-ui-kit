@@ -502,7 +502,6 @@
               v-model="chatInputBasic"
               placeholder="Type a message..."
               @send="handleChatSend"
-              @voice="handleVoiceRecord"
             )
         
         .demo-group
@@ -513,7 +512,6 @@
               placeholder="Chat with menu options..."
               :menu-items="chatMenuItems"
               @send="handleChatSend"
-              @voice="handleVoiceRecord"
               @menu-action="handleMenuAction"
             )
         
@@ -525,21 +523,20 @@
               placeholder="Chat with custom actions..."
               :menu-items="chatMenuItems"
               @send="handleChatSend"
-              @voice="handleVoiceRecord"
               @menu-action="handleMenuAction"
             )
               template(#actions)
                 LbButton(
                   :variant="isLiveMode ? 'tonal' : 'ghost'"
                   :color="isLiveMode ? 'secondary' : 'neutral'"
-                  size="small"
+                  size="medium"
                   @click="isLiveMode = !isLiveMode"
                 ) Live
                 
                 LbButton(
                   :variant="isAssistantMode ? 'tonal' : 'ghost'"
                   :color="isAssistantMode ? 'secondary' : 'neutral'"
-                  size="small"
+                  size="medium"
                   @click="isAssistantMode = !isAssistantMode"
                 ) Assistant
         
@@ -553,6 +550,17 @@
             )
         
         .demo-group
+          h4 With Voice Button
+          .input-row
+            LbChatInput(
+              v-model="chatInputWithVoice"
+              placeholder="Input with voice button..."
+              :show-voice="true"
+              @send="handleChatSend"
+              @voice="handleVoiceRecord"
+            )
+        
+        .demo-group
           h4 Max Rows Configuration
           .input-row
             LbChatInput(
@@ -560,7 +568,6 @@
               placeholder="Max 3 rows - will scroll after..."
               :max-rows="3"
               @send="handleChatSend"
-              @voice="handleVoiceRecord"
             )
         
         .demo-group
@@ -2674,7 +2681,8 @@ const textareaAutoResize3 = ref('')
 const chatInputBasic = ref('')
 const chatInputWithMenu = ref('')
 const chatInputWithActions = ref('')
-const chatInputDisabled = ref('')
+const chatInputDisabled = ref('This chat input is disabled')
+const chatInputWithVoice = ref('')
 const chatInputMaxRows = ref('')
 const chatMessages = ref([])
 

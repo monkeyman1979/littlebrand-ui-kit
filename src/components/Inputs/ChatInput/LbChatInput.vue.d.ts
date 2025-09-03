@@ -41,6 +41,12 @@ export interface LbChatInputProps {
    * ARIA describedby attribute
    */
   ariaDescribedby?: string
+  
+  /**
+   * Whether to show the voice/microphone button when input is empty
+   * @default false
+   */
+  showVoice?: boolean
 }
 
 export interface LbChatInputSlots {
