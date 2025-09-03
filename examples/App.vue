@@ -493,6 +493,113 @@
             LbHintText(id="textarea-bio-hint") Write a short bio. Max 200 characters.
       
       .component-demo
+        h3 Chat Input
+        
+        .demo-group
+          h4 Basic Usage
+          .input-row
+            LbChatInput(
+              v-model="chatInputBasic"
+              placeholder="Type a message..."
+              @send="handleChatSend"
+            )
+        
+        .demo-group
+          h4 With Custom Menu Items
+          .input-row
+            LbChatInput(
+              v-model="chatInputWithMenu"
+              placeholder="Chat with menu options..."
+              :menu-items="chatMenuItems"
+              @send="handleChatSend"
+              @menu-action="handleMenuAction"
+            )
+        
+        .demo-group
+          h4 With Custom Actions Slot
+          .input-row
+            LbChatInput(
+              v-model="chatInputWithActions"
+              placeholder="Chat with custom actions..."
+              :menu-items="chatMenuItems"
+              @send="handleChatSend"
+              @menu-action="handleMenuAction"
+            )
+              template(#actions)
+                LbButton(
+                  :variant="isLiveMode ? 'tonal' : 'ghost'"
+                  :color="isLiveMode ? 'secondary' : 'neutral'"
+                  :muted="!isLiveMode"
+                  size="medium"
+                  @click="isLiveMode = !isLiveMode"
+                ) Live
+                
+                LbButton(
+                  :variant="isAssistantMode ? 'tonal' : 'ghost'"
+                  :color="isAssistantMode ? 'secondary' : 'neutral'"
+                  :muted="!isAssistantMode"
+                  size="medium"
+                  @click="isAssistantMode = !isAssistantMode"
+                ) Assistant
+        
+        .demo-group
+          h4 Different States
+          .input-row
+            LbChatInput(
+              v-model="chatInputDisabled"
+              placeholder="Disabled chat input..."
+              :disabled="true"
+            )
+        
+        .demo-group
+          h4 With Voice Button
+          .input-row
+            LbChatInput(
+              v-model="chatInputWithVoice"
+              placeholder="Input with voice button..."
+              :show-voice="true"
+              :menu-items="chatMenuItems"
+              @send="handleChatSend"
+              @voice="handleVoiceRecord"
+              @menu-action="handleMenuAction"
+            )
+              template(#actions)
+                LbButton(
+                  :variant="isLiveMode2 ? 'tonal' : 'ghost'"
+                  :color="isLiveMode2 ? 'secondary' : 'neutral'"
+                  :muted="!isLiveMode2"
+                  size="medium"
+                  @click="isLiveMode2 = !isLiveMode2"
+                ) Live
+                
+                LbButton(
+                  :variant="isAssistantMode2 ? 'tonal' : 'ghost'"
+                  :color="isAssistantMode2 ? 'secondary' : 'neutral'"
+                  :muted="!isAssistantMode2"
+                  size="medium"
+                  @click="isAssistantMode2 = !isAssistantMode2"
+                ) Assistant
+        
+        .demo-group
+          h4 Max Rows Configuration
+          .input-row
+            LbChatInput(
+              v-model="chatInputMaxRows"
+              placeholder="Max 3 rows - will scroll after..."
+              :max-rows="3"
+              @send="handleChatSend"
+            )
+        
+        .demo-group
+          h4 Message Output
+          .chat-output(v-if="chatMessages.length > 0")
+            h5 Sent Messages:
+            .message-list
+              .message(v-for="(message, index) in chatMessages" :key="index")
+                .message-content {{ message.content }}
+                .message-type {{ message.type }}
+      
+      .component-demo
         h3 Form Components
         
         .demo-group
@@ -1463,6 +1570,14 @@
               variant="filter"
               v-model:selected="filter.selected"
             ) {{ filter.label }}
+        
+        .demo-group
+          h4 Muted Chips (Subtle)
+          .button-row
+            LbChip(variant="assist" color="neutral" muted) Muted Assist
+            LbChip(variant="filter" color="neutral" muted) Muted Filter
+            LbChip(variant="input" color="neutral" muted deletable @delete="handleChipDelete") Muted Input
+            LbChip(variant="suggestion" color="neutral" muted) Muted Suggestion
         
         .demo-group
           h4 Chips with Functional Dropdown
@@ -2533,7 +2648,7 @@
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue'
 import { 
-  LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog,
+  LbButton, LbInput, LbChatInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog,
   LbBadge, LbNavigationBar, LbNavigationBarItem, LbBottomSheet, LbChip, LbAvatar, LbProgress, LbDivider, 
   LbSegmentButton, LbSegmentButtonItem, useSnackbar, LbSnackbar, LbPopover, LbPopoverTrigger, LbPopoverContent, LbPopoverArrow,
   LbDropdown, LbMenu, LbCalendar, LbDatePicker
@@ -2589,6 +2704,33 @@ const textareaInvalid = ref('')
 const textareaAutoResize1 = ref('')
 const textareaAutoResize2 = ref('')
 const textareaAutoResize3 = ref('')
+
+// Chat input demo values
+const chatInputBasic = ref('')
+const chatInputWithMenu = ref('')
+const chatInputWithActions = ref('')
+const chatInputDisabled = ref('This chat input is disabled')
+const chatInputWithVoice = ref('')
+const chatInputMaxRows = ref('')
+const chatMessages = ref([])
+
+// Toggle states for custom action buttons
+const isLiveMode = ref(false)
+const isAssistantMode = ref(true)
+const isLiveMode2 = ref(false)
+const isAssistantMode2 = ref(true)
+
+// Chat input menu items
+const chatMenuItems = ref([
+  {
+    label: 'Upload Files',
+    action: 'upload-files'
+  },
+  {
+    label: 'Take a Photo',
+    action: 'take-photo'
+  }
+])
 
 // Checkbox demo values
 const checkboxUnchecked = ref(false)
@@ -2805,6 +2947,35 @@ const handleAsyncSearch = () => {
   }
 }
 
+// Chat input methods
+const handleChatSend = (text) => {
+  console.log('Chat message sent:', text)
+  chatMessages.value.push({
+    content: text,
+    type: 'sent',
+    timestamp: new Date().toISOString()
+  })
+}
+
+const handleVoiceRecord = () => {
+  console.log('Voice recording started')
+  chatMessages.value.push({
+    content: '[Voice message recorded]',
+    type: 'voice',
+    timestamp: new Date().toISOString()
+  })
+}
+
+const handleMenuAction = (action, item) => {
+  console.log('Menu action triggered:', action, item)
+  chatMessages.value.push({
+    content: `[${item.label} action performed]`,
+    type: 'action',
+    timestamp: new Date().toISOString()
+  })
+}
+
+
 // Form demo values
 const formData = ref({
   name: '',
@@ -2978,6 +3149,7 @@ const resetForm = () => {
 const colors = [
   { name: 'Primary', var: '--lb-fill-primary-normal' },
   { name: 'Secondary', var: '--lb-fill-secondary-normal' },
+  { name: 'Tertiary', var: '--lb-fill-tertiary-normal' },
   { name: 'Neutral', var: '--lb-fill-neutral-normal' },
   { name: 'Error', var: '--lb-fill-error-normal' },
   { name: 'Success', var: '--lb-fill-success-normal' },
@@ -3607,7 +3779,7 @@ section
           background: var(--lb-surface-primary-normal)
           color: var(--lb-text-primary-contrast-high)
           padding: base.$space-xs base.$space-sm
-          border-radius: base.$radius-sm
+          border-radius: var(--lb-radius-sm)
           font-family: var(--lb-font-mono)
           font-size: 0.875rem
           min-width: 3rem
@@ -3845,7 +4017,7 @@ section
             
             .chip-main
               height: 48px
-              border-radius: base.$radius-sm
+              border-radius: var(--lb-radius-sm)
               margin-bottom: base.$space-xs
             
             .chip-label
@@ -4267,7 +4439,7 @@ section
     margin-top: base.$space-md
     padding: base.$space-md
     background: var(--lb-surface-neutral-subtle)
-    border-radius: base.$radius-sm
+    border-radius: var(--lb-radius-sm)
     
     p
       margin: 0
@@ -4542,6 +4714,39 @@ section
     justify-content: flex-end
     gap: var(--lb-space-sm)
 
+// Chat input demo styles
+.chat-output
+  margin-top: var(--lb-space-md)
+  padding: var(--lb-space-md)
+  background: var(--lb-surface-neutral-subtle)
+  border: var(--lb-border-sm) solid var(--lb-border-neutral-line)
+  border-radius: var(--lb-radius-md)
+  
+  h5
+    margin: 0 0 var(--lb-space-sm)
+    font-size: var(--lb-font-size-label-base)
+    color: var(--lb-text-neutral-contrast-high)
 
+.message-list
+  display: flex
+  flex-direction: column
+  gap: var(--lb-space-xs)
+  
+.message
+  padding: var(--lb-space-xs) var(--lb-space-sm)
+  background: var(--lb-surface-base)
+  border: var(--lb-border-sm) solid var(--lb-border-neutral-line)
+  border-radius: var(--lb-radius-sm)
+  
+  .message-content
+    font-size: var(--lb-font-size-body-small)
+    color: var(--lb-text-neutral-contrast-high)
+    margin-bottom: var(--lb-space-2xs)
+    
+  .message-type
+    font-size: var(--lb-font-size-label-xsmall)
+    color: var(--lb-text-neutral-contrast-low)
+    text-transform: uppercase
+    letter-spacing: 0.5px
 
 </style>

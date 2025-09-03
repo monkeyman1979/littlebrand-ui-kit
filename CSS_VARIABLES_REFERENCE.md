@@ -448,14 +448,15 @@ Text colors for use on filled backgrounds. As of v0.3.6, uses stable text variab
 --lb-input-height-large     /* 44px */
 ```
 
-## Background & Special
+## Surface & Special
 
-### Background Colors
+### Surface Colors
 
 ```css
---lb-background-page       /* Main page background */
---lb-background-surface    /* Card/panel background */
---lb-background-overlay    /* Modal overlay background */
+--lb-surface-base         /* Main app background */
+--lb-surface-subtle       /* Cards, elevated content */
+--lb-surface-disabled     /* Disabled state backgrounds */
+--lb-surface-overlay      /* Modal/dialog backdrops */
 ```
 
 ### Special Purpose

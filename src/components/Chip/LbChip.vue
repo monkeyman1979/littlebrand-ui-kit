@@ -66,6 +66,7 @@ const props = withDefaults(defineProps<{
   clickable?: boolean
   deletable?: boolean
   hasDropdown?: boolean
+  muted?: boolean
 }>(), {
   variant: 'assist',
   color: 'primary',
@@ -73,7 +74,8 @@ const props = withDefaults(defineProps<{
   disabled: false,
   clickable: true,
   deletable: false,
-  hasDropdown: false
+  hasDropdown: false,
+  muted: false
 })
 
 // Emits
@@ -100,7 +102,8 @@ const chipClasses = computed(() => [
     'deletable': props.deletable,
     'has-leading-icon': !!slots.leadingIcon || !!slots.leadingAvatar || (props.variant === 'filter' && props.selected && !slots.leadingIcon && !slots.leadingAvatar),
     'has-trailing-icon': !!slots.trailingIcon || props.deletable || props.hasDropdown,
-    'has-dropdown': props.hasDropdown
+    'has-dropdown': props.hasDropdown,
+    'muted': props.muted
   }
 ])
 
@@ -274,6 +277,20 @@ defineOptions({
       color: var(--lb-text-neutral-disabled)
       box-shadow: none
       transform: none
+  
+  // Muted state for subtle chips
+  &.muted
+    color: var(--lb-text-neutral-contrast-low)
+    
+    &:not(.disabled)
+      @include base.hover-supported
+        color: var(--lb-text-neutral-contrast-high)
+    
+    .lb-chip__leading-icon,
+    .lb-chip__trailing-icon,
+    .lb-chip__delete,
+    .lb-chip__dropdown-icon
+      color: inherit
   
   // Non-clickable chips - no interactive states
   &:not(.clickable)

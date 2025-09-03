@@ -212,7 +212,7 @@ defineExpose({
     border: cv.$textarea-border-width solid var(--lb-border-neutral-normal)
     border-radius: cv.$textarea-border-radius
     font-family: inherit
-    font-size: cv.$textarea-font-size-medium  // Default to 14px
+    font-size: var(--lb-font-size-body-base)  // 1rem
     color: var(--lb-text-neutral-contrast-high)
     line-height: typography.$line-height-relaxed
     transition: border-color base.$transition, box-shadow base.$transition, background-color base.$transition
@@ -262,12 +262,12 @@ defineExpose({
   // Size variants - moved outside of textarea to increase specificity
   &.size-medium textarea
     min-height: cv.$textarea-min-height-medium  // 96px
-    font-size: cv.$textarea-font-size-medium  // 14px
+    font-size: var(--lb-font-size-body-base)  // 1rem
     padding: cv.$textarea-padding-y cv.$textarea-padding-x
   
   &.size-large textarea
     min-height: cv.$textarea-min-height-large  // 120px
-    font-size: cv.$textarea-font-size-large  // 16px
+    font-size: var(--lb-font-size-body-base)  // 1rem
     padding: cv.$textarea-padding-y cv.$textarea-padding-x  // 8px 12px
   
   

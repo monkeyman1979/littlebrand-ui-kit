@@ -85,14 +85,14 @@ The `applyTheme()` function in the UI kit correctly generates surface colors for
 
 **Light mode (lines 385-387):**
 ```javascript
-root.style.setProperty('--lb-background-page', 'white')
-root.style.setProperty('--lb-background-surface', '#fafafa')
+root.style.setProperty('--lb-surface-base', 'white')
+root.style.setProperty('--lb-surface-subtle', '#fafafa')
 ```
 
 **Dark mode (lines 391-395):**
 ```javascript
-'--lb-background-page': '#0a0a0a',
-'--lb-background-surface': '#1a1a1a',
+'--lb-surface-base': '#0a0a0a',
+'--lb-surface-subtle': '#1a1a1a',
 ```
 
 These hardcoded values ignore the custom neutral color completely. They should be derived from the neutral color scale (e.g., `neutral[1]` for page background, `neutral[2]` for surface background) to properly respect custom neutral colors.
@@ -125,8 +125,8 @@ applyTheme({
 
 1. **Default Behavior (90% of use cases):**
    - If `background` is not specified, it defaults to `'neutral'`
-   - `--lb-background-page` would use `neutral[1]` (lightest tint)
-   - `--lb-background-surface` would use `neutral[2]` (slightly darker)
+   - `--lb-surface-base` would use `neutral[1]` (lightest tint)
+   - `--lb-surface-subtle` would use `neutral[2]` (slightly darker)
    - Dark mode would use the corresponding dark scale values
    - This ensures backgrounds harmonize with the neutral color automatically
 

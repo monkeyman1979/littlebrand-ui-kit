@@ -5,6 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.5] - 2025-09-03
+
+### Added
+- **LbChatInput Component**
+  - New chat input component for LLM-style interfaces
+  - Auto-growing textarea with configurable max rows (default: 10)
+  - Smart action button that toggles between microphone and send
+  - Plus menu with dropdown for attachments/actions
+  - Flexible middle slot for custom action buttons
+  - Keyboard support: Enter to send, Shift+Enter for new line
+  - Optional voice input with `showVoice` prop
+
+- **Muted Prop for Visual Hierarchy**
+  - Added `muted` prop to LbButton component for subtle buttons
+  - Added `muted` prop to LbChip component for less prominent chips
+  - Muted elements use `--lb-text-neutral-contrast-low` color
+  - Hover states transition to `--lb-text-neutral-contrast-high`
+  - Applied to auxiliary buttons in chat input (plus, microphone)
+
+### Changed
+- **Typography Consistency**
+  - Standardized font size to 1rem for LbTextarea component
+  - Chat input uses consistent 1rem font size for better readability
+
+### Fixed
+- **Style Compliance**
+  - Replaced hardcoded box-shadow with CSS variable (--lb-shadow-sm)
+  - Removed margin usage in chat input, using flexbox for layout
+  - Fixed SVG icon sizing issues by removing hardcoded dimensions
+
 ## [0.5.0] - 2025-09-02
 
 ### Added

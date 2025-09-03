@@ -2,7 +2,7 @@ import type { DefineComponent, VNode } from 'vue'
 
 export interface LbButtonProps {
   variant?: 'filled' | 'tonal' | 'outline' | 'ghost' | 'link'
-  color?: 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'
+  color?: 'primary' | 'secondary' | 'tertiary' | 'neutral' | 'success' | 'warning' | 'error' | 'info'
   size?: 'small' | 'medium' | 'large'
   type?: 'button' | 'submit' | 'reset'
   disabled?: boolean
@@ -11,9 +11,11 @@ export interface LbButtonProps {
   iconPosition?: 'leading' | 'trailing'
   iconOnly?: boolean
   href?: string
+  to?: string | object
   target?: string
   rel?: string
   tag?: string
+  muted?: boolean
 }
 
 export interface LbButtonEmits {

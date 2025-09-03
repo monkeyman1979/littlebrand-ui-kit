@@ -13,6 +13,7 @@ import LbDatePicker from './components/DatePicker'
 import LbChip from './components/Chip'
 import LbDivider from './components/Divider'
 import LbInput from './components/Input'
+import LbChatInput from './components/Inputs/ChatInput'
 import LbLabel from './components/Label'
 import LbHintText from './components/HintText'
 import LbTextarea from './components/Textarea'
@@ -41,7 +42,7 @@ import {
 } from './utils/color-generator.js'
 
 // Export individual components for tree-shaking
-export { LbAvatar, LbBadge, LbButton, LbSegmentButton, LbSegmentButtonItem, LbCalendar, LbDatePicker, LbChip, LbDivider, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbCustomSelect, LbFormField, LbDialog, LbBottomSheet, LbNavigationBar, LbNavigationBarItem, LbProgress, LbSnackbar, LbSnackbarProvider, useSnackbar, createSnackbarHelpers, LbPopover, LbPopoverTrigger, LbPopoverContent, LbPopoverArrow, LbMenu, LbDropdown }
+export { LbAvatar, LbBadge, LbButton, LbSegmentButton, LbSegmentButtonItem, LbCalendar, LbDatePicker, LbChip, LbDivider, LbInput, LbChatInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbCustomSelect, LbFormField, LbDialog, LbBottomSheet, LbNavigationBar, LbNavigationBarItem, LbProgress, LbSnackbar, LbSnackbarProvider, useSnackbar, createSnackbarHelpers, LbPopover, LbPopoverTrigger, LbPopoverContent, LbPopoverArrow, LbMenu, LbDropdown }
 
 // Export color utilities
 export { 
@@ -66,6 +67,7 @@ const LittleBrandUI = {
     app.component('LbChip', LbChip)
     app.component('LbDivider', LbDivider)
     app.component('LbInput', LbInput)
+    app.component('LbChatInput', LbChatInput)
     app.component('LbLabel', LbLabel)
     app.component('LbHintText', LbHintText)
     app.component('LbTextarea', LbTextarea)
