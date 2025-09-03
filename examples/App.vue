@@ -529,6 +529,7 @@
                 LbButton(
                   :variant="isLiveMode ? 'tonal' : 'ghost'"
                   :color="isLiveMode ? 'secondary' : 'neutral'"
+                  :muted="!isLiveMode"
                   size="medium"
                   @click="isLiveMode = !isLiveMode"
                 ) Live
@@ -536,6 +537,7 @@
                 LbButton(
                   :variant="isAssistantMode ? 'tonal' : 'ghost'"
                   :color="isAssistantMode ? 'secondary' : 'neutral'"
+                  :muted="!isAssistantMode"
                   size="medium"
                   @click="isAssistantMode = !isAssistantMode"
                 ) Assistant
@@ -556,9 +558,27 @@
               v-model="chatInputWithVoice"
               placeholder="Input with voice button..."
               :show-voice="true"
+              :menu-items="chatMenuItems"
               @send="handleChatSend"
               @voice="handleVoiceRecord"
+              @menu-action="handleMenuAction"
             )
+              template(#actions)
+                LbButton(
+                  :variant="isLiveMode2 ? 'tonal' : 'ghost'"
+                  :color="isLiveMode2 ? 'secondary' : 'neutral'"
+                  :muted="!isLiveMode2"
+                  size="medium"
+                  @click="isLiveMode2 = !isLiveMode2"
+                ) Live
+                
+                LbButton(
+                  :variant="isAssistantMode2 ? 'tonal' : 'ghost'"
+                  :color="isAssistantMode2 ? 'secondary' : 'neutral'"
+                  :muted="!isAssistantMode2"
+                  size="medium"
+                  @click="isAssistantMode2 = !isAssistantMode2"
+                ) Assistant
         
         .demo-group
           h4 Max Rows Configuration
@@ -1550,6 +1570,14 @@
               variant="filter"
               v-model:selected="filter.selected"
             ) {{ filter.label }}
+        
+        .demo-group
+          h4 Muted Chips (Subtle)
+          .button-row
+            LbChip(variant="assist" color="neutral" muted) Muted Assist
+            LbChip(variant="filter" color="neutral" muted) Muted Filter
+            LbChip(variant="input" color="neutral" muted deletable @delete="handleChipDelete") Muted Input
+            LbChip(variant="suggestion" color="neutral" muted) Muted Suggestion
         
         .demo-group
           h4 Chips with Functional Dropdown
@@ -2689,6 +2717,8 @@ const chatMessages = ref([])
 // Toggle states for custom action buttons
 const isLiveMode = ref(false)
 const isAssistantMode = ref(true)
+const isLiveMode2 = ref(false)
+const isAssistantMode2 = ref(true)
 
 // Chat input menu items
 const chatMenuItems = ref([
