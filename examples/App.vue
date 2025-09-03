@@ -493,6 +493,111 @@
             LbHintText(id="textarea-bio-hint") Write a short bio. Max 200 characters.
       
       .component-demo
+        h3 Chat Input
+        
+        .demo-group
+          h4 Basic Usage
+          .input-row
+            LbChatInput(
+              v-model="chatInputBasic"
+              placeholder="Type a message..."
+              @send="handleChatSend"
+              @voice="handleVoiceRecord"
+            )
+        
+        .demo-group
+          h4 With Custom Menu Items
+          .input-row
+            LbChatInput(
+              v-model="chatInputWithMenu"
+              placeholder="Chat with menu options..."
+              :menu-items="chatMenuItems"
+              @send="handleChatSend"
+              @voice="handleVoiceRecord"
+              @menu-action="handleMenuAction"
+            )
+        
+        .demo-group
+          h4 With Custom Actions Slot
+          .input-row
+            LbChatInput(
+              v-model="chatInputWithActions"
+              placeholder="Chat with custom actions..."
+              :menu-items="chatMenuItems"
+              @send="handleChatSend"
+              @voice="handleVoiceRecord"
+              @menu-action="handleMenuAction"
+            )
+              template(#actions)
+                LbButton(
+                  variant="ghost"
+                  color="neutral"
+                  size="medium"
+                  icon-only
+                  @click="toggleEmojiPicker"
+                  aria-label="Add emoji"
+                )
+                  template(#icon-leading)
+                    svg(
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    )
+                      circle(cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5")
+                      path(d="M6.5 7.5C6.5 8.05228 6.94772 8.5 7.5 8.5C8.05228 8.5 8.5 8.05228 8.5 7.5C8.5 6.94772 8.05228 6.5 7.5 6.5C6.94772 6.5 6.5 6.94772 6.5 7.5Z" fill="currentColor")
+                      path(d="M11.5 7.5C11.5 8.05228 11.9477 8.5 12.5 8.5C13.0523 8.5 13.5 8.05228 13.5 7.5C13.5 6.94772 13.0523 6.5 12.5 6.5C11.9477 6.5 11.5 6.94772 11.5 7.5Z" fill="currentColor")
+                      path(d="M6 12C6 12 7.5 14 10 14C12.5 14 14 12 14 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round")
+                
+                LbButton(
+                  variant="ghost"
+                  color="neutral"
+                  size="medium"
+                  icon-only
+                  @click="toggleFormatting"
+                  aria-label="Format text"
+                )
+                  template(#icon-leading)
+                    svg(
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    )
+                      path(d="M3 6h14M8 2v16M12 2v16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round")
+        
+        .demo-group
+          h4 Different States
+          .input-row
+            LbChatInput(
+              v-model="chatInputDisabled"
+              placeholder="Disabled chat input..."
+              :disabled="true"
+            )
+        
+        .demo-group
+          h4 Max Rows Configuration
+          .input-row
+            LbChatInput(
+              v-model="chatInputMaxRows"
+              placeholder="Max 3 rows - will scroll after..."
+              :max-rows="3"
+              @send="handleChatSend"
+              @voice="handleVoiceRecord"
+            )
+        
+        .demo-group
+          h4 Message Output
+          .chat-output(v-if="chatMessages.length > 0")
+            h5 Sent Messages:
+            .message-list
+              .message(v-for="(message, index) in chatMessages" :key="index")
+                .message-content {{ message.content }}
+                .message-type {{ message.type }}
+      
+      .component-demo
         h3 Form Components
         
         .demo-group
@@ -2533,7 +2638,7 @@
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue'
 import { 
-  LbButton, LbInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog,
+  LbButton, LbInput, LbChatInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog,
   LbBadge, LbNavigationBar, LbNavigationBarItem, LbBottomSheet, LbChip, LbAvatar, LbProgress, LbDivider, 
   LbSegmentButton, LbSegmentButtonItem, useSnackbar, LbSnackbar, LbPopover, LbPopoverTrigger, LbPopoverContent, LbPopoverArrow,
   LbDropdown, LbMenu, LbCalendar, LbDatePicker
@@ -2589,6 +2694,26 @@ const textareaInvalid = ref('')
 const textareaAutoResize1 = ref('')
 const textareaAutoResize2 = ref('')
 const textareaAutoResize3 = ref('')
+
+// Chat input demo values
+const chatInputBasic = ref('')
+const chatInputWithMenu = ref('')
+const chatInputWithActions = ref('')
+const chatInputDisabled = ref('')
+const chatInputMaxRows = ref('')
+const chatMessages = ref([])
+
+// Chat input menu items
+const chatMenuItems = ref([
+  {
+    label: 'Upload Files',
+    action: 'upload-files'
+  },
+  {
+    label: 'Take a Photo',
+    action: 'take-photo'
+  }
+])
 
 // Checkbox demo values
 const checkboxUnchecked = ref(false)
@@ -2803,6 +2928,42 @@ const handleAsyncSearch = () => {
   } else {
     isSearching.value = false
   }
+}
+
+// Chat input methods
+const handleChatSend = (text) => {
+  console.log('Chat message sent:', text)
+  chatMessages.value.push({
+    content: text,
+    type: 'sent',
+    timestamp: new Date().toISOString()
+  })
+}
+
+const handleVoiceRecord = () => {
+  console.log('Voice recording started')
+  chatMessages.value.push({
+    content: '[Voice message recorded]',
+    type: 'voice',
+    timestamp: new Date().toISOString()
+  })
+}
+
+const handleMenuAction = (action, item) => {
+  console.log('Menu action triggered:', action, item)
+  chatMessages.value.push({
+    content: `[${item.label} action performed]`,
+    type: 'action',
+    timestamp: new Date().toISOString()
+  })
+}
+
+const toggleEmojiPicker = () => {
+  console.log('Emoji picker toggled')
+}
+
+const toggleFormatting = () => {
+  console.log('Text formatting toggled')
 }
 
 // Form demo values
@@ -3608,7 +3769,7 @@ section
           background: var(--lb-surface-primary-normal)
           color: var(--lb-text-primary-contrast-high)
           padding: base.$space-xs base.$space-sm
-          border-radius: base.$radius-sm
+          border-radius: var(--lb-radius-sm)
           font-family: var(--lb-font-mono)
           font-size: 0.875rem
           min-width: 3rem
@@ -3846,7 +4007,7 @@ section
             
             .chip-main
               height: 48px
-              border-radius: base.$radius-sm
+              border-radius: var(--lb-radius-sm)
               margin-bottom: base.$space-xs
             
             .chip-label
@@ -4268,7 +4429,7 @@ section
     margin-top: base.$space-md
     padding: base.$space-md
     background: var(--lb-surface-neutral-subtle)
-    border-radius: base.$radius-sm
+    border-radius: var(--lb-radius-sm)
     
     p
       margin: 0
@@ -4543,6 +4704,39 @@ section
     justify-content: flex-end
     gap: var(--lb-space-sm)
 
+// Chat input demo styles
+.chat-output
+  margin-top: var(--lb-space-md)
+  padding: var(--lb-space-md)
+  background: var(--lb-surface-neutral-subtle)
+  border: var(--lb-border-sm) solid var(--lb-border-neutral-line)
+  border-radius: var(--lb-radius-md)
+  
+  h5
+    margin: 0 0 var(--lb-space-sm)
+    font-size: var(--lb-font-size-label-base)
+    color: var(--lb-text-neutral-contrast-high)
 
+.message-list
+  display: flex
+  flex-direction: column
+  gap: var(--lb-space-xs)
+  
+.message
+  padding: var(--lb-space-xs) var(--lb-space-sm)
+  background: var(--lb-surface-base)
+  border: var(--lb-border-sm) solid var(--lb-border-neutral-line)
+  border-radius: var(--lb-radius-sm)
+  
+  .message-content
+    font-size: var(--lb-font-size-body-small)
+    color: var(--lb-text-neutral-contrast-high)
+    margin-bottom: var(--lb-space-2xs)
+    
+  .message-type
+    font-size: var(--lb-font-size-label-xsmall)
+    color: var(--lb-text-neutral-contrast-low)
+    text-transform: uppercase
+    letter-spacing: 0.5px
 
 </style>
