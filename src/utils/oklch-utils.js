@@ -308,6 +308,19 @@ const RADIX_ALPHA_VALUES = {
 };
 
 /**
+ * Generate a fallback scale for error cases
+ */
+function generateFallbackScale() {
+  const scale = {};
+  // Generate a neutral gray scale as fallback
+  for (let i = 1; i <= 12; i++) {
+    const lightness = 1 - (i - 1) * 0.075;
+    scale[i] = formatOklchCSS(lightness, 0.01, 0);
+  }
+  return scale;
+}
+
+/**
  * Generate a Radix-quality 12-step color scale in OKLCH
  * Produces professional color scales matching Radix UI quality
  */
@@ -317,15 +330,27 @@ export function generateOklchScale(baseColor, mode = 'light') {
   // Handle different input types
   if (typeof baseColor === 'string') {
     oklch = hexToOklch(baseColor);
-  } else if (baseColor.L !== undefined) {
+    if (!oklch) {
+      console.error('generateOklchScale: Failed to parse hex color:', baseColor);
+      return generateFallbackScale();
+    }
+  } else if (baseColor && baseColor.L !== undefined) {
     oklch = baseColor;
-  } else if (baseColor.r !== undefined) {
+  } else if (baseColor && baseColor.r !== undefined) {
     oklch = rgbToOklch(baseColor.r, baseColor.g, baseColor.b);
   } else {
-    throw new Error('Invalid color input');
+    console.error('generateOklchScale: Invalid color input:', baseColor);
+    return generateFallbackScale();
   }
   
   const scale = {};
+  
+  // Validate mode parameter
+  if (mode !== 'light' && mode !== 'dark') {
+    console.warn(`generateOklchScale: Invalid mode '${mode}', defaulting to 'light'`);
+    mode = 'light';
+  }
+  
   const curves = RADIX_LIGHTNESS_CURVES[mode];
   const chromaPattern = RADIX_CHROMA_PATTERNS[mode];
   
@@ -390,6 +415,12 @@ export function generateOklchScale(baseColor, mode = 'light') {
  * Generate dark mode scale using Radix patterns
  */
 export function generateOklchDarkScale(lightScale, originalColor) {
+  // Validate input
+  if (!originalColor) {
+    console.error('generateOklchDarkScale: Missing original color');
+    return generateFallbackScale();
+  }
+  
   // Dark mode uses same algorithm with 'dark' mode parameter
   return generateOklchScale(originalColor, 'dark');
 }
@@ -402,8 +433,16 @@ export function generateOklchAlphaScale(baseColor, mode = 'light') {
   
   if (typeof baseColor === 'string') {
     oklch = hexToOklch(baseColor);
-  } else {
+    if (!oklch) {
+      console.error('generateOklchAlphaScale: Failed to parse hex color:', baseColor);
+      // Return empty object as alpha scales are optional
+      return {};
+    }
+  } else if (baseColor && baseColor.L !== undefined) {
     oklch = baseColor;
+  } else {
+    console.error('generateOklchAlphaScale: Invalid color input:', baseColor);
+    return {};
   }
   
   const alphaScale = {};

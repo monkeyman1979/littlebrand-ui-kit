@@ -214,7 +214,7 @@ defineExpose({
     font-family: inherit
     font-size: var(--lb-font-size-body-base)  // 1rem
     color: var(--lb-text-neutral-contrast-high)
-    line-height: typography.$line-height-relaxed
+    line-height: var(--lb-line-height-normal)
     transition: border-color base.$transition, box-shadow base.$transition, background-color base.$transition
 
     // Placeholder

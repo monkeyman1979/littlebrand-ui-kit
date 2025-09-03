@@ -16,14 +16,16 @@ export * from './oklch-utils.js'
  * Uses OKLCH for perceptually uniform scales
  */
 export function generateScale(hexColor, curve = 'natural') {
-  return oklchUtils.generateOklchScale(hexColor, curve)
+  // Note: curve parameter is for future use, currently only using light mode
+  return oklchUtils.generateOklchScale(hexColor, 'light')
 }
 
 /**
  * Generate dark mode scale
  */
 export function generateDarkScale(lightScale, originalHex) {
-  return oklchUtils.generateOklchDarkScale(lightScale, originalHex)
+  // Ensure we generate a proper dark scale
+  return oklchUtils.generateOklchScale(originalHex, 'dark')
 }
 
 /**
@@ -39,30 +41,42 @@ export function generateAlphaScale(hexColor, mode = 'light') {
 export function generateSemanticTokens(name, scale, darkScale = null) {
   const tokens = {}
   
+  // Validate scale exists and has required properties
+  if (!scale || typeof scale !== 'object') {
+    console.warn(`generateSemanticTokens: Invalid scale for ${name}`)
+    return tokens
+  }
+  
+  // Helper function to safely get scale value with fallback
+  const getScaleValue = (step, fallback = 'oklch(0.5 0.1 0)') => {
+    return scale[step] || fallback
+  }
+  
   // Border tokens
-  tokens[`--lb-border-${name}-line`] = scale[6]
-  tokens[`--lb-border-${name}-normal`] = scale[7]
-  tokens[`--lb-border-${name}-active`] = scale[8]
-  tokens[`--lb-border-${name}-focus`] = scale[7]
-  tokens[`--lb-border-${name}-disabled`] = scale[5]
-  tokens[`--lb-border-${name}-subtle`] = scale[4]
+  tokens[`--lb-border-${name}-line`] = getScaleValue(6)
+  tokens[`--lb-border-${name}-normal`] = getScaleValue(7)
+  tokens[`--lb-border-${name}-active`] = getScaleValue(8)
+  tokens[`--lb-border-${name}-focus`] = getScaleValue(7)
+  tokens[`--lb-border-${name}-disabled`] = getScaleValue(5)
+  tokens[`--lb-border-${name}-subtle`] = getScaleValue(4)
   
   // Fill tokens
-  tokens[`--lb-fill-${name}-normal`] = scale[9]
-  tokens[`--lb-fill-${name}-hover`] = scale[10]
-  tokens[`--lb-fill-${name}-active`] = scale[8]
-  tokens[`--lb-fill-${name}-focus`] = scale[8]
-  tokens[`--lb-fill-${name}-disabled`] = scale[4]
+  tokens[`--lb-fill-${name}-normal`] = getScaleValue(9)
+  tokens[`--lb-fill-${name}-hover`] = getScaleValue(10)
+  tokens[`--lb-fill-${name}-active`] = getScaleValue(8)
+  tokens[`--lb-fill-${name}-focus`] = getScaleValue(8)
+  tokens[`--lb-fill-${name}-disabled`] = getScaleValue(4)
   
   // Text tokens
-  tokens[`--lb-text-${name}-normal`] = scale[9]
-  tokens[`--lb-text-${name}-contrast-low`] = scale[11]
-  tokens[`--lb-text-${name}-contrast-high`] = scale[12]
-  tokens[`--lb-text-${name}-disabled`] = scale[7]
+  tokens[`--lb-text-${name}-normal`] = getScaleValue(9)
+  tokens[`--lb-text-${name}-contrast-low`] = getScaleValue(11)
+  tokens[`--lb-text-${name}-contrast-high`] = getScaleValue(12)
+  tokens[`--lb-text-${name}-disabled`] = getScaleValue(7)
   
   // Text-on tokens (determine if light or dark text needed)
   // Parse OKLCH lightness from scale[9]
-  const match = scale[9].match(/oklch\(([\d.]+)/)
+  const scaleValue9 = getScaleValue(9)
+  const match = scaleValue9.match(/oklch\(([\d.]+)/)
   const lightness = match ? parseFloat(match[1]) : 0.5
   
   // Improved OKLCH contrast calculation using stable text variables
@@ -83,12 +97,12 @@ export function generateSemanticTokens(name, scale, darkScale = null) {
   tokens[`--lb-text-on-${name}-active`] = textColor
   
   // Surface tokens
-  tokens[`--lb-surface-${name}-normal`] = scale[2]
-  tokens[`--lb-surface-${name}-hover`] = scale[3]
-  tokens[`--lb-surface-${name}-active`] = scale[4]
-  tokens[`--lb-surface-${name}-subtle`] = scale[1]
-  tokens[`--lb-surface-${name}-raised`] = scale[1]
-  tokens[`--lb-surface-${name}-disabled`] = scale[3]
+  tokens[`--lb-surface-${name}-normal`] = getScaleValue(2)
+  tokens[`--lb-surface-${name}-hover`] = getScaleValue(3)
+  tokens[`--lb-surface-${name}-active`] = getScaleValue(4)
+  tokens[`--lb-surface-${name}-subtle`] = getScaleValue(1)
+  tokens[`--lb-surface-${name}-raised`] = getScaleValue(1)
+  tokens[`--lb-surface-${name}-disabled`] = getScaleValue(3)
   
   return tokens
 }
@@ -136,59 +150,123 @@ export function applyTheme(colors, curve = 'natural') {
   
   // Generate and apply each color
   Object.entries(finalColors).forEach(([name, hexColor]) => {
-    // Generate scales
-    const lightScale = generateScale(hexColor, curve)
-    const darkScale = generateDarkScale(lightScale, hexColor)
-    const alphaLight = generateAlphaScale(hexColor, 'light')
-    const alphaDark = generateAlphaScale(hexColor, 'dark')
-    
-    // Generate semantic tokens
-    const lightTokens = generateSemanticTokens(name, lightScale)
-    const darkTokens = generateSemanticTokens(name, darkScale)
-    
-    // Apply appropriate tokens based on current mode
-    const tokens = isDarkMode ? darkTokens : lightTokens
-    const alpha = isDarkMode ? alphaDark : alphaLight
-    const scale = isDarkMode ? darkScale : lightScale
-    
-    // Apply tokens
-    Object.entries(tokens).forEach(([property, value]) => {
-      root.style.setProperty(property, value)
-    })
-    
-    // Apply raw scale values
-    Object.entries(scale).forEach(([step, value]) => {
-      root.style.setProperty(`--lb-${name}-${step}`, value)
-    })
-    
-    // Apply alpha values
-    Object.entries(alpha).forEach(([step, value]) => {
-      root.style.setProperty(`--lb-${name}-alpha-${step}`, value)
-    })
+    try {
+      // Validate hex color
+      if (!hexColor || typeof hexColor !== 'string' || !hexColor.match(/^#[0-9A-Fa-f]{6}$/)) {
+        console.warn(`applyTheme: Invalid hex color for ${name}: ${hexColor}`)
+        return
+      }
+      
+      // Generate scales with error handling
+      let lightScale, darkScale, alphaLight, alphaDark
+      
+      try {
+        lightScale = generateScale(hexColor, curve)
+      } catch (err) {
+        console.warn(`applyTheme: Failed to generate light scale for ${name}:`, err)
+        return
+      }
+      
+      try {
+        darkScale = generateDarkScale(lightScale, hexColor)
+      } catch (err) {
+        console.warn(`applyTheme: Failed to generate dark scale for ${name}:`, err)
+        darkScale = lightScale // Fallback to light scale
+      }
+      
+      try {
+        alphaLight = generateAlphaScale(hexColor, 'light')
+      } catch (err) {
+        console.warn(`applyTheme: Failed to generate light alpha scale for ${name}:`, err)
+        alphaLight = {} // Empty object fallback
+      }
+      
+      try {
+        alphaDark = generateAlphaScale(hexColor, 'dark')
+      } catch (err) {
+        console.warn(`applyTheme: Failed to generate dark alpha scale for ${name}:`, err)
+        alphaDark = {} // Empty object fallback
+      }
+      
+      // Generate semantic tokens
+      const lightTokens = generateSemanticTokens(name, lightScale)
+      const darkTokens = generateSemanticTokens(name, darkScale)
+      
+      // Apply appropriate tokens based on current mode
+      const tokens = isDarkMode ? darkTokens : lightTokens
+      const alpha = isDarkMode ? alphaDark : alphaLight
+      const scale = isDarkMode ? darkScale : lightScale
+      
+      // Apply tokens
+      if (tokens && typeof tokens === 'object') {
+        Object.entries(tokens).forEach(([property, value]) => {
+          if (value) {
+            root.style.setProperty(property, value)
+          }
+        })
+      }
+      
+      // Apply raw scale values
+      if (scale && typeof scale === 'object') {
+        Object.entries(scale).forEach(([step, value]) => {
+          if (value) {
+            root.style.setProperty(`--lb-${name}-${step}`, value)
+          }
+        })
+      }
+      
+      // Apply alpha values
+      if (alpha && typeof alpha === 'object') {
+        Object.entries(alpha).forEach(([step, value]) => {
+          if (value) {
+            root.style.setProperty(`--lb-${name}-alpha-${step}`, value)
+          }
+        })
+      }
+    } catch (err) {
+      console.error(`applyTheme: Failed to process color ${name}:`, err)
+    }
   })
   
   // Handle background tokens
   const backgroundSource = colors.background || 'neutral'
   let backgroundScale = null
   
-  // Determine which scale to use for backgrounds
-  if (typeof backgroundSource === 'string' && backgroundSource.startsWith('#')) {
-    // Generate a scale from a custom hex color
-    backgroundScale = isDarkMode 
-      ? generateDarkScale(null, backgroundSource)
-      : generateScale(backgroundSource, curve)
-  } else {
-    // Use an existing color scale
-    const sourceColor = finalColors[backgroundSource] || finalColors.neutral
-    backgroundScale = isDarkMode 
-      ? generateDarkScale(null, sourceColor)
-      : generateScale(sourceColor, curve)
+  try {
+    // Determine which scale to use for backgrounds
+    if (typeof backgroundSource === 'string' && backgroundSource.startsWith('#')) {
+      // Generate a scale from a custom hex color
+      backgroundScale = isDarkMode 
+        ? generateDarkScale(null, backgroundSource)
+        : generateScale(backgroundSource, curve)
+    } else {
+      // Use an existing color scale
+      const sourceColor = finalColors[backgroundSource] || finalColors.neutral
+      backgroundScale = isDarkMode 
+        ? generateDarkScale(null, sourceColor)
+        : generateScale(sourceColor, curve)
+    }
+    
+    // Apply surface tokens with validation
+    if (backgroundScale && typeof backgroundScale === 'object') {
+      if (backgroundScale[1]) {
+        root.style.setProperty('--lb-surface-base', backgroundScale[1])
+      }
+      if (backgroundScale[2]) {
+        root.style.setProperty('--lb-surface-subtle', backgroundScale[2])
+      }
+      if (backgroundScale[3]) {
+        root.style.setProperty('--lb-surface-disabled', backgroundScale[3])
+      }
+    }
+  } catch (err) {
+    console.warn('applyTheme: Failed to generate background scale:', err)
+    // Apply fallback surface colors
+    root.style.setProperty('--lb-surface-base', 'oklch(0.98 0.01 0)')
+    root.style.setProperty('--lb-surface-subtle', 'oklch(0.96 0.01 0)')
+    root.style.setProperty('--lb-surface-disabled', 'oklch(0.94 0.01 0)')
   }
   
-  // Apply surface tokens
-  root.style.setProperty('--lb-surface-base', backgroundScale[1])
-  root.style.setProperty('--lb-surface-subtle', backgroundScale[2])
-  root.style.setProperty('--lb-surface-disabled', backgroundScale[3])
   root.style.setProperty('--lb-surface-overlay', isDarkMode ? 
     `oklch(0 0 0 / 0.7)` : `oklch(0 0 0 / 0.5)`)
   
