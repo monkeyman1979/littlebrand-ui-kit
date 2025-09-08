@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.7] - 2025-09-08
+
+### Added
+- **Typography Enhancement**
+  - Added `--lb-font-size-body-xlarge` CSS variable with responsive clamp sizing
+  - New `.body-xlarge` CSS class for extra-large body text
+  - Responsive size: clamp(1.25rem, 0.284vw + 0.5rem, 1.5rem) (20px-24px)
+  - Added to override template for customization
+
+### Changed
+- Updated `.body-large` and `.body-xlarge` classes to use normal line-height instead of relaxed
+
 ## [0.5.6] - 2025-09-03
 
 ### Fixed
