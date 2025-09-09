@@ -29,8 +29,9 @@
         h4 Heading 4
         h5 Heading 5
         h6 Heading 6
-        p This is a regular paragraph with normal text.
+        p.body-xlarge This is extra large body text for display.
         p.body-large This is large body text for emphasis.
+        p This is a regular paragraph with normal text.
         p.body-small This is small body text for fine print.
         p.label.label-large Large Label (16px)
         p.label Base Label (14px)
@@ -134,6 +135,7 @@
             h4 Body Text Weight
             p This is a regular paragraph demonstrating the body font weight. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             p.body-large Large body text with adjusted weight
+            p.body-xlarge Extra large body text with adjusted weight
             p.body-small Small body text with adjusted weight
             LbSnackbar(id="font-weight-demo" :model-value="true" message="Snackbar uses body font weight" variant="info" position="relative" :auto-hide="false")
           
@@ -1523,16 +1525,49 @@
             LbChip(variant="assist" :clickable="false" color="neutral") Category Label
         
         .demo-group
-          h4 Chip Colors
+          h4 Chip Colors - Assist/Tonal Style (Non-interactive)
           .button-row
-            LbChip(variant="filter" color="primary") Primary
-            LbChip(variant="filter" color="secondary") Secondary
-            LbChip(variant="filter" color="tertiary") Tertiary
-            LbChip(variant="filter" color="neutral") Neutral
-            LbChip(variant="filter" color="success") Success
-            LbChip(variant="filter" color="warning") Warning
-            LbChip(variant="filter" color="error") Error
-            LbChip(variant="filter" color="info") Info
+            LbChip(variant="assist" :clickable="false" color="primary") Primary
+            LbChip(variant="assist" :clickable="false" color="secondary") Secondary
+            LbChip(variant="assist" :clickable="false" color="tertiary") Tertiary
+            LbChip(variant="assist" :clickable="false" color="neutral") Neutral
+            LbChip(variant="assist" :clickable="false" color="success") Success
+            LbChip(variant="assist" :clickable="false" color="warning") Warning
+            LbChip(variant="assist" :clickable="false" color="error") Error
+            LbChip(variant="assist" :clickable="false" color="info") Info
+          
+          h4.mt-3 Chip Colors - Input/Filled Style (Non-interactive)
+          .button-row
+            LbChip(variant="input" :clickable="false" color="primary") Primary
+            LbChip(variant="input" :clickable="false" color="secondary") Secondary
+            LbChip(variant="input" :clickable="false" color="tertiary") Tertiary
+            LbChip(variant="input" :clickable="false" color="neutral") Neutral
+            LbChip(variant="input" :clickable="false" color="success") Success
+            LbChip(variant="input" :clickable="false" color="warning") Warning
+            LbChip(variant="input" :clickable="false" color="error") Error
+            LbChip(variant="input" :clickable="false" color="info") Info
+          
+          h4.mt-3 Chip Colors - Outline Style (Non-interactive)
+          .button-row
+            LbChip(variant="outline" :clickable="false" color="primary") Primary
+            LbChip(variant="outline" :clickable="false" color="secondary") Secondary
+            LbChip(variant="outline" :clickable="false" color="tertiary") Tertiary
+            LbChip(variant="outline" :clickable="false" color="neutral") Neutral
+            LbChip(variant="outline" :clickable="false" color="success") Success
+            LbChip(variant="outline" :clickable="false" color="warning") Warning
+            LbChip(variant="outline" :clickable="false" color="error") Error
+            LbChip(variant="outline" :clickable="false" color="info") Info
+          
+          h4.mt-3 Chip Colors - Outline Style (Interactive with Hover)
+          .button-row
+            LbChip(variant="outline" color="primary" @click="handleChipClick") Primary
+            LbChip(variant="outline" color="secondary" @click="handleChipClick") Secondary
+            LbChip(variant="outline" color="tertiary" @click="handleChipClick") Tertiary
+            LbChip(variant="outline" color="neutral" @click="handleChipClick") Neutral
+            LbChip(variant="outline" color="success" @click="handleChipClick") Success
+            LbChip(variant="outline" color="warning" @click="handleChipClick") Warning
+            LbChip(variant="outline" color="error" @click="handleChipClick") Error
+            LbChip(variant="outline" color="info" @click="handleChipClick") Info
         
         .demo-group
           h4 With Leading Avatar
