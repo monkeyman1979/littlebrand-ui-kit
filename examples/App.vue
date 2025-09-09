@@ -29,8 +29,9 @@
         h4 Heading 4
         h5 Heading 5
         h6 Heading 6
-        p This is a regular paragraph with normal text.
+        p.body-xlarge This is extra large body text for display.
         p.body-large This is large body text for emphasis.
+        p This is a regular paragraph with normal text.
         p.body-small This is small body text for fine print.
         p.label.label-large Large Label (16px)
         p.label Base Label (14px)
@@ -134,6 +135,7 @@
             h4 Body Text Weight
             p This is a regular paragraph demonstrating the body font weight. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             p.body-large Large body text with adjusted weight
+            p.body-xlarge Extra large body text with adjusted weight
             p.body-small Small body text with adjusted weight
             LbSnackbar(id="font-weight-demo" :model-value="true" message="Snackbar uses body font weight" variant="info" position="relative" :auto-hide="false")
           
