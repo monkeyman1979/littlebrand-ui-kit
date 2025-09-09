@@ -54,7 +54,7 @@ button.lb-chip(
 import { computed, ref, useSlots } from 'vue'
 
 // Types
-type Variant = 'assist' | 'filter' | 'input' | 'suggestion'
+type Variant = 'assist' | 'filter' | 'input' | 'suggestion' | 'outline'
 type Color = 'primary' | 'secondary' | 'tertiary' | 'neutral' | 'success' | 'warning' | 'error' | 'info'
 
 // Props
@@ -201,70 +201,36 @@ defineOptions({
   
   // Variant styles
   &.variant-assist
-    border-color: var(--lb-border-neutral-line)
-    background-color: var(--lb-surface-subtle)
-    color: var(--lb-text-neutral-contrast-high)
+    // Base styles handled by mixin
     
     &:not(.disabled)
       @include base.hover-supported
-        background-color: var(--lb-surface-primary-normal)
-        border-color: var(--lb-border-primary-normal)
-        color: var(--lb-text-primary-normal)
         box-shadow: base.$shadow-sm
       
     &:active:not(.disabled)
-      background-color: var(--lb-surface-primary-hover)
       transform: translateY(1px)
   
   &.variant-filter
-    border-color: var(--lb-border-neutral-line)
-    background-color: var(--lb-surface-subtle)
-    color: var(--lb-text-neutral-contrast-high)
-    
-    &:not(.disabled)
-      @include base.hover-supported
-        background-color: var(--lb-surface-primary-normal)
-        border-color: var(--lb-border-primary-normal)
-        color: var(--lb-text-primary-normal)
-      
-    &.selected
-      background-color: var(--lb-surface-primary-hover)
-      border-color: var(--lb-border-primary-normal)
-      color: var(--lb-text-primary-normal)
-      
-      &:not(.disabled)
-        @include base.hover-supported
-          background-color: var(--lb-surface-primary-active)
+    // Base styles handled by mixin and override below
+    // Selected state handled by mixin
   
   &.variant-input
-    background-color: var(--lb-fill-primary-normal)
-    border-color: var(--lb-border-primary-normal)
-    color: var(--lb-text-on-primary)
+    // Base styles handled by mixin
     
     &:not(.disabled)
       @include base.hover-supported
-        background-color: var(--lb-fill-primary-hover)
         box-shadow: base.$shadow-sm
-      
-    &:active:not(.disabled)
-      background-color: var(--lb-fill-primary-active)
   
   &.variant-suggestion
-    border-color: var(--lb-border-neutral-line)
-    background-color: var(--lb-surface-subtle)
-    color: var(--lb-text-neutral-contrast-low)
+    // Base styles handled by mixin
     
     &:not(.disabled)
       @include base.hover-supported
-        background-color: var(--lb-surface-neutral-hover)
-        border-color: var(--lb-border-neutral-normal)
-        color: var(--lb-text-neutral-contrast-high)
         box-shadow: base.$shadow-sm
-      
-    &:active:not(.disabled)
-      background-color: var(--lb-surface-primary-normal)
-      border-color: var(--lb-border-primary-normal)
-      color: var(--lb-text-primary-normal)
+  
+  &.variant-outline
+    // Base styles handled by mixin
+    // Transparent background with colored border
   
   // Disabled state
   &.disabled
@@ -376,46 +342,38 @@ defineOptions({
 
 // Chip variant color mixin
 @mixin chip-variant($variant, $color)
-  @if $variant == 'assist'
-    &.color-#{$color}
-      border-color: var(--lb-border-neutral-line)
-      background-color: var(--lb-surface-subtle)
-      color: var(--lb-text-neutral-contrast-high)
+  &.color-#{$color}
+    @if $variant == 'assist'
+      // Assist chips show their color
+      border-color: var(--lb-border-#{$color}-line)
+      background-color: var(--lb-surface-#{$color}-normal)
+      color: var(--lb-text-#{$color}-normal)
       
       &:not(.disabled)
         @include base.hover-supported
-          background-color: var(--lb-surface-#{$color}-normal)
+          background-color: var(--lb-surface-#{$color}-hover)
           border-color: var(--lb-border-#{$color}-normal)
-          color: var(--lb-text-#{$color}-normal)
           box-shadow: base.$shadow-sm
         
       &:active:not(.disabled)
-        background-color: var(--lb-surface-#{$color}-hover)
+        background-color: var(--lb-surface-#{$color}-active)
         transform: translateY(1px)
-  
-  @if $variant == 'filter'
-    &.color-#{$color}
-      border-color: var(--lb-border-neutral-line)
-      background-color: var(--lb-surface-subtle)
-      color: var(--lb-text-neutral-contrast-high)
-      
-      &:not(.disabled)
-        @include base.hover-supported
-          background-color: var(--lb-surface-#{$color}-normal)
-          border-color: var(--lb-border-#{$color}-normal)
-          color: var(--lb-text-#{$color}-normal)
-        
+    
+    @if $variant == 'filter'
+      // Filter chips are neutral by default, but we'll override this later
+      // The selected state will use the color
       &.selected
-        background-color: var(--lb-surface-#{$color}-hover)
+        background-color: var(--lb-surface-#{$color}-normal)
         border-color: var(--lb-border-#{$color}-normal)
         color: var(--lb-text-#{$color}-normal)
         
         &:not(.disabled)
           @include base.hover-supported
-            background-color: var(--lb-surface-#{$color}-active)
-  
-  @if $variant == 'input'
-    &.color-#{$color}
+            background-color: var(--lb-surface-#{$color}-hover)
+            border-color: var(--lb-border-#{$color}-active)
+    
+    @if $variant == 'input'
+      // Input chips show their color (filled style)
       background-color: var(--lb-fill-#{$color}-normal)
       border-color: var(--lb-border-#{$color}-normal)
       color: var(--lb-text-on-#{$color})
@@ -427,27 +385,40 @@ defineOptions({
         
       &:active:not(.disabled)
         background-color: var(--lb-fill-#{$color}-active)
-  
-  @if $variant == 'suggestion'
-    &.color-#{$color}
-      border-color: var(--lb-border-neutral-line)
-      background-color: var(--lb-surface-subtle)
-      color: var(--lb-text-neutral-contrast-low)
+    
+    @if $variant == 'suggestion'
+      // Suggestion chips show their color
+      border-color: var(--lb-border-#{$color}-line)
+      background-color: var(--lb-surface-#{$color}-normal)
+      color: var(--lb-text-#{$color}-normal)
       
       &:not(.disabled)
         @include base.hover-supported
-          background-color: var(--lb-surface-neutral-hover)
-          border-color: var(--lb-border-neutral-normal)
-          color: var(--lb-text-neutral-contrast-high)
+          background-color: var(--lb-surface-#{$color}-hover)
+          border-color: var(--lb-border-#{$color}-normal)
           box-shadow: base.$shadow-sm
         
       &:active:not(.disabled)
-        background-color: var(--lb-surface-#{$color}-normal)
-        border-color: var(--lb-border-#{$color}-normal)
-        color: var(--lb-text-#{$color}-normal)
+        background-color: var(--lb-surface-#{$color}-active)
+        border-color: var(--lb-border-#{$color}-active)
+    
+    @if $variant == 'outline'
+      // Outline chips - transparent background with colored border
+      background-color: transparent
+      border-color: var(--lb-border-#{$color}-normal)
+      color: var(--lb-text-#{$color}-normal)
+      
+      &.clickable:not(.disabled)
+        @include base.hover-supported
+          background-color: var(--lb-surface-#{$color}-normal)
+          border-color: var(--lb-border-#{$color}-normal)
+        
+      &.clickable:active:not(.disabled)
+        background-color: var(--lb-surface-#{$color}-hover)
+        border-color: var(--lb-border-#{$color}-active)
 
 // Generate all variant × color combinations
-$variants: ('assist', 'filter', 'input', 'suggestion')
+$variants: ('assist', 'filter', 'input', 'suggestion', 'outline')
 $colors: ('primary', 'secondary', 'tertiary', 'neutral', 'success', 'warning', 'error', 'info')
 
 @each $variant in $variants
@@ -463,4 +434,16 @@ $colors: ('primary', 'secondary', 'tertiary', 'neutral', 'success', 'warning', '
   @each $color in $colors
     &.color-#{$color} .icon-selected
       color: var(--lb-text-#{$color}-normal)
+
+// Filter chips special behavior: neutral by default
+.lb-chip.variant-filter
+  &:not(.selected)
+    background-color: var(--lb-surface-subtle)
+    border-color: var(--lb-border-neutral-line)
+    color: var(--lb-text-neutral-contrast-high)
+    
+    &:not(.disabled)
+      @include base.hover-supported
+        background-color: var(--lb-surface-neutral-hover)
+        border-color: var(--lb-border-neutral-normal)
 </style>

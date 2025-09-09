@@ -5,6 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.8] - 2025-09-09
+
+### Added
+- **Chip Component Enhancements**
+  - Added `outline` variant for chips with transparent background and colored border
+  - Outline chips fill with color on hover for better interaction feedback
+  - All chip variants now support any color prop (primary, secondary, tertiary, neutral, success, warning, error, info)
+
+### Changed
+- **Typography Scale Updates**
+  - Improved visual hierarchy with larger heading sizes:
+    - h1: 40px-56px (was 32px-48px)
+    - h2: 32px-48px (was 28px-40px)
+    - h3: 28px-40px (was 24px-32px)
+    - h4: 24px-28px (was 20px-24px)
+    - h5: 20px-24px (was 18px-20px)
+  - Display sizes increased for better impact:
+    - Display 1: 56px-96px (was 48px-80px)
+    - Display 2: 48px-72px (was 40px-64px)
+  - Added extra large body text demos to typography showcase
+
+### Fixed
+- **Chip Component Color System**
+  - Fixed chip colors not displaying correctly (all appeared neutral)
+  - Removed hardcoded primary color overrides that were blocking color variants
+  - Filter chips now correctly show neutral by default and display color when selected
+  - Non-interactive chips properly show colors without hover states
+  - Icon colors now match their parent chip's color variant
+
 ## [0.5.7] - 2025-09-08
 
 ### Added
