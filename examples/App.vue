@@ -1523,16 +1523,49 @@
             LbChip(variant="assist" :clickable="false" color="neutral") Category Label
         
         .demo-group
-          h4 Chip Colors
+          h4 Chip Colors - Assist/Tonal Style (Non-interactive)
           .button-row
-            LbChip(variant="filter" color="primary") Primary
-            LbChip(variant="filter" color="secondary") Secondary
-            LbChip(variant="filter" color="tertiary") Tertiary
-            LbChip(variant="filter" color="neutral") Neutral
-            LbChip(variant="filter" color="success") Success
-            LbChip(variant="filter" color="warning") Warning
-            LbChip(variant="filter" color="error") Error
-            LbChip(variant="filter" color="info") Info
+            LbChip(variant="assist" :clickable="false" color="primary") Primary
+            LbChip(variant="assist" :clickable="false" color="secondary") Secondary
+            LbChip(variant="assist" :clickable="false" color="tertiary") Tertiary
+            LbChip(variant="assist" :clickable="false" color="neutral") Neutral
+            LbChip(variant="assist" :clickable="false" color="success") Success
+            LbChip(variant="assist" :clickable="false" color="warning") Warning
+            LbChip(variant="assist" :clickable="false" color="error") Error
+            LbChip(variant="assist" :clickable="false" color="info") Info
+          
+          h4.mt-3 Chip Colors - Input/Filled Style (Non-interactive)
+          .button-row
+            LbChip(variant="input" :clickable="false" color="primary") Primary
+            LbChip(variant="input" :clickable="false" color="secondary") Secondary
+            LbChip(variant="input" :clickable="false" color="tertiary") Tertiary
+            LbChip(variant="input" :clickable="false" color="neutral") Neutral
+            LbChip(variant="input" :clickable="false" color="success") Success
+            LbChip(variant="input" :clickable="false" color="warning") Warning
+            LbChip(variant="input" :clickable="false" color="error") Error
+            LbChip(variant="input" :clickable="false" color="info") Info
+          
+          h4.mt-3 Chip Colors - Outline Style (Non-interactive)
+          .button-row
+            LbChip(variant="outline" :clickable="false" color="primary") Primary
+            LbChip(variant="outline" :clickable="false" color="secondary") Secondary
+            LbChip(variant="outline" :clickable="false" color="tertiary") Tertiary
+            LbChip(variant="outline" :clickable="false" color="neutral") Neutral
+            LbChip(variant="outline" :clickable="false" color="success") Success
+            LbChip(variant="outline" :clickable="false" color="warning") Warning
+            LbChip(variant="outline" :clickable="false" color="error") Error
+            LbChip(variant="outline" :clickable="false" color="info") Info
+          
+          h4.mt-3 Chip Colors - Outline Style (Interactive with Hover)
+          .button-row
+            LbChip(variant="outline" color="primary" @click="handleChipClick") Primary
+            LbChip(variant="outline" color="secondary" @click="handleChipClick") Secondary
+            LbChip(variant="outline" color="tertiary" @click="handleChipClick") Tertiary
+            LbChip(variant="outline" color="neutral" @click="handleChipClick") Neutral
+            LbChip(variant="outline" color="success" @click="handleChipClick") Success
+            LbChip(variant="outline" color="warning" @click="handleChipClick") Warning
+            LbChip(variant="outline" color="error" @click="handleChipClick") Error
+            LbChip(variant="outline" color="info" @click="handleChipClick") Info
         
         .demo-group
           h4 With Leading Avatar
