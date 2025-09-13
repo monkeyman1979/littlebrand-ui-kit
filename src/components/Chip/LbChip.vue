@@ -3,7 +3,7 @@ button.lb-chip(
   :class="chipClasses"
   :disabled="disabled"
   :role="clickable ? 'button' : null"
-  :aria-pressed="variant === 'filter' ? selected.toString() : null"
+  :aria-pressed="type === 'filter' ? selected.toString() : null"
   :aria-expanded="hasDropdown ? 'false' : null"
   :tabindex="disabled || !clickable ? -1 : 0"
   @click="handleClick"
@@ -19,7 +19,7 @@ button.lb-chip(
     slot(name="leadingIcon")
   
   //- Selected checkmark for filter chips
-  span.icon-selected(v-if="variant === 'filter' && selected && !$slots.leadingIcon && !$slots.leadingAvatar")
+  span.icon-selected(v-if="type === 'filter' && selected && !$slots.leadingIcon && !$slots.leadingAvatar")
     svg(viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg")
       path(d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" fill="currentColor")
   
@@ -54,11 +54,13 @@ button.lb-chip(
 import { computed, ref, useSlots } from 'vue'
 
 // Types
-type Variant = 'assist' | 'filter' | 'input' | 'suggestion' | 'outline'
+type Type = 'assist' | 'filter' | 'input'
+type Variant = 'filled' | 'tonal' | 'outline'
 type Color = 'primary' | 'secondary' | 'tertiary' | 'neutral' | 'success' | 'warning' | 'error' | 'info'
 
 // Props
 const props = withDefaults(defineProps<{
+  type?: Type
   variant?: Variant
   color?: Color
   selected?: boolean
@@ -68,7 +70,8 @@ const props = withDefaults(defineProps<{
   hasDropdown?: boolean
   muted?: boolean
 }>(), {
-  variant: 'assist',
+  type: 'assist',
+  variant: 'tonal',
   color: 'primary',
   selected: false,
   disabled: false,
@@ -93,14 +96,15 @@ const internalSelected = ref(props.selected)
 
 // Computed
 const chipClasses = computed(() => [
+  `type-${props.type}`,
   `variant-${props.variant}`,
   `color-${props.color}`,
   {
-    'selected': props.variant === 'filter' && props.selected,
+    'selected': props.type === 'filter' && props.selected,
     'disabled': props.disabled,
     'clickable': props.clickable,
     'deletable': props.deletable,
-    'has-leading-icon': !!slots.leadingIcon || !!slots.leadingAvatar || (props.variant === 'filter' && props.selected && !slots.leadingIcon && !slots.leadingAvatar),
+    'has-leading-icon': !!slots.leadingIcon || !!slots.leadingAvatar || (props.type === 'filter' && props.selected && !slots.leadingIcon && !slots.leadingAvatar),
     'has-trailing-icon': !!slots.trailingIcon || props.deletable || props.hasDropdown,
     'has-dropdown': props.hasDropdown,
     'muted': props.muted
@@ -112,7 +116,7 @@ const handleClick = (event: Event) => {
   if (props.disabled || !props.clickable) return
   
   // Handle filter chip selection toggle
-  if (props.variant === 'filter') {
+  if (props.type === 'filter') {
     const newSelected = !props.selected
     emit('update:selected', newSelected)
   }
@@ -133,23 +137,21 @@ defineOptions({
 </script>
 
 <style lang="sass" scoped>
-@use '@/styles/base' as base
-@use '@/styles/component-variables' as cv
-@use '@/styles/typography' as typography
+// Using CSS custom properties instead of SASS variables for runtime customization
 
 .lb-chip
   position: relative
   display: inline-flex
   align-items: center
-  gap: base.$space-xs
-  border: base.$border-sm solid var(--lb-border-neutral-line)
-  border-radius: cv.$chip-border-radius
+  gap: var(--lb-space-xs)
+  border: var(--lb-border-sm) solid var(--lb-border-neutral-line)
+  border-radius: var(--lb-chip-border-radius)
   font-family: var(--lb-font-label)
   font-weight: var(--lb-font-weight-label)
-  line-height: typography.$line-height-compact
-  letter-spacing: typography.$letter-spacing-tight
+  line-height: var(--lb-line-height-compact)
+  letter-spacing: var(--lb-letter-spacing-tight)
   cursor: pointer
-  transition: all base.$transition
+  transition: all var(--lb-transition-normal)
   text-decoration: none
   white-space: nowrap
   user-select: none
@@ -159,21 +161,21 @@ defineOptions({
   align-self: flex-start  // Prevent stretching in flex containers
   
   &:focus-visible
-    outline: base.$focus-ring-width solid var(--lb-focus-ring-color)
-    outline-offset: base.$focus-ring-offset
+    outline: var(--lb-border-md) solid var(--lb-focus-ring-color)
+    outline-offset: var(--lb-space-2xs)
     transition: none
   
   // Fixed size (32px height)
-  height: cv.$chip-height  // 32px
-  padding: 0 cv.$chip-padding-x  // 12px
-  font-size: cv.$chip-font-size  // 14px
-  gap: base.$space-xs
+  height: var(--lb-chip-height)  // 32px
+  padding: 0 var(--lb-chip-padding-x)  // 12px
+  font-size: var(--lb-chip-font-size)  // 14px
+  gap: var(--lb-space-xs)
   
   &.has-leading-icon
-    padding-left: base.$space-sm  // 8px
+    padding-left: var(--lb-space-sm)  // 8px
   
   &.has-trailing-icon
-    padding-right: base.$space-sm  // 8px
+    padding-right: var(--lb-space-sm)  // 8px
   
   // Icon sizes - fixed for single chip size
   .icon-leading,
@@ -182,8 +184,8 @@ defineOptions({
   .icon-dropdown,
   .delete-button
     svg
-      width: cv.$chip-icon-size  // 16px
-      height: cv.$chip-icon-size  // 16px
+      width: var(--lb-chip-icon-size)  // 16px
+      height: var(--lb-chip-icon-size)  // 16px
   
   // Avatar container - fixed size
   .avatar-container
@@ -191,53 +193,31 @@ defineOptions({
     align-items: center
     justify-content: center
     flex-shrink: 0
-    width: base.$unit-24  // 24px
-    height: base.$unit-24  // 24px
-    margin: calc(base.$space-xs * -1) 0
+    width: var(--lb-chip-avatar-size, 1.5rem)  // 24px
+    height: var(--lb-chip-avatar-size, 1.5rem)  // 24px
+    margin: calc(var(--lb-space-xs) * -1) 0
     
     :deep(.lb-avatar)
-      width: base.$unit-24
-      height: base.$unit-24
+      width: var(--lb-chip-avatar-size, 1.5rem)
+      height: var(--lb-chip-avatar-size, 1.5rem)
   
-  // Variant styles
-  &.variant-assist
-    // Base styles handled by mixin
+  // Type styles (functional behavior)
+  &.type-assist
+    // Interactive chips for user actions
     
-    &:not(.disabled)
-      @include base.hover-supported
-        box-shadow: base.$shadow-sm
-      
-    &:active:not(.disabled)
-      transform: translateY(1px)
+  &.type-filter
+    // Chips with selected state for filtering
+    // Special behavior handled below
   
-  &.variant-filter
-    // Base styles handled by mixin and override below
-    // Selected state handled by mixin
-  
-  &.variant-input
-    // Base styles handled by mixin
-    
-    &:not(.disabled)
-      @include base.hover-supported
-        box-shadow: base.$shadow-sm
-  
-  &.variant-suggestion
-    // Base styles handled by mixin
-    
-    &:not(.disabled)
-      @include base.hover-supported
-        box-shadow: base.$shadow-sm
-  
-  &.variant-outline
-    // Base styles handled by mixin
-    // Transparent background with colored border
+  &.type-input
+    // Chips for user selections (often deletable)
   
   // Disabled state
   &.disabled
     cursor: not-allowed
-    opacity: base.$opacity-60
+    opacity: var(--lb-opacity-60)
     
-    @include base.hover-supported
+    &:hover
       background-color: var(--lb-surface-subtle)
       border-color: var(--lb-border-neutral-line)
       color: var(--lb-text-neutral-disabled)
@@ -249,7 +229,7 @@ defineOptions({
     color: var(--lb-text-neutral-contrast-low)
     
     &:not(.disabled)
-      @include base.hover-supported
+      &:hover
         color: var(--lb-text-neutral-contrast-high)
     
     .lb-chip__leading-icon,
@@ -268,7 +248,7 @@ defineOptions({
       pointer-events: auto
       cursor: pointer
     
-    @include base.hover-supported
+    &:hover
       background-color: var(--lb-surface-subtle)
       box-shadow: none
       transform: none
@@ -290,12 +270,13 @@ defineOptions({
     color: var(--lb-text-primary-normal)
   
   .icon-dropdown
-    opacity: base.$opacity-70
+    opacity: var(--lb-opacity-70)
     
   .lb-chip:not(.disabled)
-    @include base.hover-supported
-      .icon-dropdown
-        opacity: base.$opacity-100
+    @media (hover: hover)
+      &:hover
+        .icon-dropdown
+          opacity: var(--lb-opacity-100)
   
   // Content
   .content
@@ -305,7 +286,7 @@ defineOptions({
     min-width: 0
     overflow: hidden
     text-overflow: ellipsis
-    padding: 0 base.$space-xs
+    padding: 0 var(--lb-space-xs)
   
   // Delete button
   .delete-button
@@ -317,99 +298,66 @@ defineOptions({
     background: none
     color: currentColor
     cursor: pointer
-    padding: base.$space-2xs
-    margin: calc(base.$space-2xs * -1)
-    border-radius: base.$radius-full
-    transition: all base.$transition
-    opacity: base.$opacity-70
+    padding: var(--lb-space-2xs)
+    margin: calc(var(--lb-space-2xs) * -1)
+    border-radius: var(--lb-radius-full)
+    transition: all var(--lb-transition-normal)
+    opacity: var(--lb-opacity-70)
     
     &:not(:disabled)
-      @include base.hover-supported
-        opacity: base.$opacity-100
-        background-color: var(--lb-surface-error-normal)
-        color: var(--lb-text-error-normal)
+      &:hover
+        opacity: var(--lb-opacity-100)
       
     &:active:not(:disabled)
-      background-color: var(--lb-surface-error-hover)
       transform: scale(0.95)
       
     &:disabled
       cursor: not-allowed
-      opacity: base.$opacity-40
+      opacity: var(--lb-opacity-40)
     
     svg
       display: block
 
-// Chip variant color mixin
-@mixin chip-variant($variant, $color)
-  &.color-#{$color}
-    @if $variant == 'assist'
-      // Assist chips show their color
+// Chip visual variant mixin
+@mixin chip-visual-variant($variant, $color)
+  &.variant-#{$variant}.color-#{$color}
+    @if $variant == 'tonal'
+      // Tonal variant - subtle surface colors
       border-color: var(--lb-border-#{$color}-line)
       background-color: var(--lb-surface-#{$color}-normal)
       color: var(--lb-text-#{$color}-normal)
       
       &:not(.disabled)
-        @include base.hover-supported
+        &:hover
           background-color: var(--lb-surface-#{$color}-hover)
           border-color: var(--lb-border-#{$color}-normal)
-          box-shadow: base.$shadow-sm
+          box-shadow: var(--lb-shadow-sm)
         
       &:active:not(.disabled)
         background-color: var(--lb-surface-#{$color}-active)
-        transform: translateY(1px)
     
-    @if $variant == 'filter'
-      // Filter chips are neutral by default, but we'll override this later
-      // The selected state will use the color
-      &.selected
-        background-color: var(--lb-surface-#{$color}-normal)
-        border-color: var(--lb-border-#{$color}-normal)
-        color: var(--lb-text-#{$color}-normal)
-        
-        &:not(.disabled)
-          @include base.hover-supported
-            background-color: var(--lb-surface-#{$color}-hover)
-            border-color: var(--lb-border-#{$color}-active)
-    
-    @if $variant == 'input'
-      // Input chips show their color (filled style)
+    @if $variant == 'filled'
+      // Filled variant - prominent filled colors
       background-color: var(--lb-fill-#{$color}-normal)
       border-color: var(--lb-border-#{$color}-normal)
       color: var(--lb-text-on-#{$color})
       
       &:not(.disabled)
-        @include base.hover-supported
+        &:hover
           background-color: var(--lb-fill-#{$color}-hover)
-          box-shadow: base.$shadow-sm
+          box-shadow: var(--lb-shadow-sm)
         
       &:active:not(.disabled)
         background-color: var(--lb-fill-#{$color}-active)
     
-    @if $variant == 'suggestion'
-      // Suggestion chips show their color
-      border-color: var(--lb-border-#{$color}-line)
-      background-color: var(--lb-surface-#{$color}-normal)
-      color: var(--lb-text-#{$color}-normal)
-      
-      &:not(.disabled)
-        @include base.hover-supported
-          background-color: var(--lb-surface-#{$color}-hover)
-          border-color: var(--lb-border-#{$color}-normal)
-          box-shadow: base.$shadow-sm
-        
-      &:active:not(.disabled)
-        background-color: var(--lb-surface-#{$color}-active)
-        border-color: var(--lb-border-#{$color}-active)
-    
     @if $variant == 'outline'
-      // Outline chips - transparent background with colored border
+      // Outline variant - transparent background with colored border
       background-color: transparent
       border-color: var(--lb-border-#{$color}-normal)
       color: var(--lb-text-#{$color}-normal)
       
       &.clickable:not(.disabled)
-        @include base.hover-supported
+        &:hover
           background-color: var(--lb-surface-#{$color}-normal)
           border-color: var(--lb-border-#{$color}-normal)
         
@@ -417,33 +365,101 @@ defineOptions({
         background-color: var(--lb-surface-#{$color}-hover)
         border-color: var(--lb-border-#{$color}-active)
 
-// Generate all variant × color combinations
-$variants: ('assist', 'filter', 'input', 'suggestion', 'outline')
+// Generate all visual variant × color combinations
+$visual-variants: ('tonal', 'filled', 'outline')
 $colors: ('primary', 'secondary', 'tertiary', 'neutral', 'success', 'warning', 'error', 'info')
 
-@each $variant in $variants
+@each $variant in $visual-variants
   @each $color in $colors
-    .lb-chip.variant-#{$variant}
-      @include chip-variant($variant, $color)
+    .lb-chip
+      @include chip-visual-variant($variant, $color)
+
+// Special override for neutral color: use high contrast text for better visibility
+.lb-chip.type-filter.selected
+  &.variant-tonal.color-neutral,
+  &.variant-outline.color-neutral
+    color: var(--lb-text-neutral-contrast-high)
+    
+    &:not(.disabled)
+      &:hover
+        color: var(--lb-text-neutral-contrast-high)
+    
+    &:active:not(.disabled)
+      color: var(--lb-text-neutral-contrast-high)
+  
+  // Filled variant uses text-on-neutral which is light
+  &.variant-filled.color-neutral
+    color: var(--lb-text-on-neutral)
+
+// Delete button color-specific hover states
+// Use alpha scale tokens for consistent transparent overlays
+@each $color in $colors
+  .lb-chip.color-#{$color} .delete-button
+    &:not(:disabled)
+      &:hover
+        background-color: var(--lb-neutral-a4)  // ~6% opacity for subtle hover
+    
+    &:active:not(:disabled)
+      background-color: var(--lb-neutral-a6)  // ~12% opacity for active state
 
 // Update icon-selected color to use the current color variant
 .lb-chip
   .icon-selected
     color: var(--lb-text-primary-normal)
     
+  // For tonal and outline variants, use the color's text
   @each $color in $colors
-    &.color-#{$color} .icon-selected
+    &.variant-tonal.color-#{$color} .icon-selected,
+    &.variant-outline.color-#{$color} .icon-selected
       color: var(--lb-text-#{$color}-normal)
-
-// Filter chips special behavior: neutral by default
-.lb-chip.variant-filter
-  &:not(.selected)
-    background-color: var(--lb-surface-subtle)
-    border-color: var(--lb-border-neutral-line)
-    color: var(--lb-text-neutral-contrast-high)
     
-    &:not(.disabled)
-      @include base.hover-supported
-        background-color: var(--lb-surface-neutral-hover)
-        border-color: var(--lb-border-neutral-normal)
+    // For filled variant, use the text-on color for better contrast
+    &.variant-filled.color-#{$color} .icon-selected
+      color: var(--lb-text-on-#{$color})
+  
+  // Special case for neutral: use high contrast text for better visibility
+  &.variant-tonal.color-neutral .icon-selected,
+  &.variant-outline.color-neutral .icon-selected
+    color: var(--lb-text-neutral-contrast-high)
+  
+  &.variant-filled.color-neutral .icon-selected
+    color: var(--lb-text-on-neutral)  // Uses light text
+
+// Filter chips special behavior: neutral by default, color on hover, full color when selected
+// Using high specificity to override variant/color combinations without !important
+@each $variant in $visual-variants
+  @each $color in $colors
+    .lb-chip.type-filter.variant-#{$variant}.color-#{$color}
+      &:not(.selected)
+        // Always neutral when not selected (default state)
+        @if $variant == 'outline'
+          background-color: transparent  // Outline should stay transparent
+        @else
+          background-color: var(--lb-surface-subtle)
+        border-color: var(--lb-border-neutral-line)
+        color: var(--lb-text-neutral-contrast-high)
+        
+        // Show the color on hover (if color is provided)
+        &:not(.disabled)
+          &:hover
+            @if $variant == 'tonal'
+              background-color: var(--lb-surface-#{$color}-hover)
+              border-color: var(--lb-border-#{$color}-normal)
+              @if $color == 'neutral'
+                color: var(--lb-text-neutral-contrast-high)
+              @else
+                color: var(--lb-text-#{$color}-normal)
+            @else if $variant == 'filled'
+              background-color: var(--lb-fill-#{$color}-hover)
+              border-color: var(--lb-border-#{$color}-normal)
+              color: var(--lb-text-on-#{$color})
+            @else if $variant == 'outline'
+              background-color: var(--lb-surface-#{$color}-normal)
+              border-color: var(--lb-border-#{$color}-normal)
+              @if $color == 'neutral'
+                color: var(--lb-text-neutral-contrast-high)
+              @else
+                color: var(--lb-text-#{$color}-normal)
+      
+      // When selected, the variant and color styles will apply normally
 </style>

@@ -124,7 +124,7 @@
               LbButton(variant="filled" color="primary") Primary Button
               LbButton(variant="outline" color="secondary") Secondary Button
               LbButton(variant="ghost" color="neutral") Ghost Button
-              LbChip(color="primary" variant="filled" removable) Chip Component
+              LbChip(type="input" color="primary" variant="filled" deletable) Chip Component
               LbLabel Label Component
               .form-preview
                 LbCheckbox(v-model="fontTestCheckbox") Checkbox with Label
@@ -232,7 +232,7 @@
             span Changing lightness doesn't affect perceived hue
       
       .theme-mode-comparison
-        h3 Light & Dark Mode Support
+        h3 Light &amp; Dark Mode Support
         p The OKLCH system automatically adapts for dark mode with optimized lightness curves:
         
         .mode-preview-grid
@@ -1502,131 +1502,211 @@
       
       .component-demo
         h3 Chip
-        p Material Design 3 style chips for filtering and selection
+        p Chips for user actions, filtering, and input with flexible color and style options
         
         .demo-group
-          h4 Chip Variants
-          .button-row
-            LbChip(variant="assist" @click="handleChipClick")
-              template(#leadingIcon)
-                svg(viewBox="0 0 24 24" fill="currentColor" width="18" height="18")
-                  path(d="M19.5 21a3 3 0 003-3V9a3 3 0 00-3-3h-5.379a.75.75 0 01-.53-.22L11.47 3.66A2.25 2.25 0 009.879 3H4.5a3 3 0 00-3 3v12a3 3 0 003 3h15zm.624-8.719a.75.75 0 00-.124-.418l-.625-1a.75.75 0 00-.635-.363h-3.19a.75.75 0 00-.447.146l-.688.52a.75.75 0 01-.447.145H11a.75.75 0 100 1.5h2.968c.288 0 .571-.079.82-.229l.688-.52a.75.75 0 01.447-.145h2.786l.331.53a.75.75 0 11-1.267.79l-.281-.45v5.191a.75.75 0 101.5 0v-6a.747.747 0 00.002-.062z")
-              | Assist
-            
-            LbChip(
-              variant="filter" 
-              v-model:selected="filterChipSelected"
-            ) Filter
-            
-            LbChip(variant="input" deletable @delete="handleChipDelete") Input
-            
-            LbChip(variant="suggestion" @click="handleChipClick") Suggestion
-            
-            LbChip(variant="assist" :clickable="false" color="neutral") Category Label
-        
-        .demo-group
-          h4 Chip Colors - Assist/Tonal Style (Non-interactive)
-          .button-row
-            LbChip(variant="assist" :clickable="false" color="primary") Primary
-            LbChip(variant="assist" :clickable="false" color="secondary") Secondary
-            LbChip(variant="assist" :clickable="false" color="tertiary") Tertiary
-            LbChip(variant="assist" :clickable="false" color="neutral") Neutral
-            LbChip(variant="assist" :clickable="false" color="success") Success
-            LbChip(variant="assist" :clickable="false" color="warning") Warning
-            LbChip(variant="assist" :clickable="false" color="error") Error
-            LbChip(variant="assist" :clickable="false" color="info") Info
+          h4 Assist Type - User Actions
+          p.demo-note Chips for triggering actions. All colors and variants work as expected.
           
-          h4.mt-3 Chip Colors - Input/Filled Style (Non-interactive)
+          h5 Tonal Variant
           .button-row
-            LbChip(variant="input" :clickable="false" color="primary") Primary
-            LbChip(variant="input" :clickable="false" color="secondary") Secondary
-            LbChip(variant="input" :clickable="false" color="tertiary") Tertiary
-            LbChip(variant="input" :clickable="false" color="neutral") Neutral
-            LbChip(variant="input" :clickable="false" color="success") Success
-            LbChip(variant="input" :clickable="false" color="warning") Warning
-            LbChip(variant="input" :clickable="false" color="error") Error
-            LbChip(variant="input" :clickable="false" color="info") Info
+            LbChip(type="assist" variant="tonal" color="primary" @click="handleChipClick") Primary
+            LbChip(type="assist" variant="tonal" color="secondary" @click="handleChipClick") Secondary
+            LbChip(type="assist" variant="tonal" color="tertiary" @click="handleChipClick") Tertiary
+            LbChip(type="assist" variant="tonal" color="neutral" @click="handleChipClick") Neutral
+            LbChip(type="assist" variant="tonal" color="success" @click="handleChipClick") Success
+            LbChip(type="assist" variant="tonal" color="warning" @click="handleChipClick") Warning
+            LbChip(type="assist" variant="tonal" color="error" @click="handleChipClick") Error
+            LbChip(type="assist" variant="tonal" color="info" @click="handleChipClick") Info
           
-          h4.mt-3 Chip Colors - Outline Style (Non-interactive)
+          h5 Filled Variant
           .button-row
-            LbChip(variant="outline" :clickable="false" color="primary") Primary
-            LbChip(variant="outline" :clickable="false" color="secondary") Secondary
-            LbChip(variant="outline" :clickable="false" color="tertiary") Tertiary
-            LbChip(variant="outline" :clickable="false" color="neutral") Neutral
-            LbChip(variant="outline" :clickable="false" color="success") Success
-            LbChip(variant="outline" :clickable="false" color="warning") Warning
-            LbChip(variant="outline" :clickable="false" color="error") Error
-            LbChip(variant="outline" :clickable="false" color="info") Info
+            LbChip(type="assist" variant="filled" color="primary" @click="handleChipClick") Primary
+            LbChip(type="assist" variant="filled" color="secondary" @click="handleChipClick") Secondary
+            LbChip(type="assist" variant="filled" color="tertiary" @click="handleChipClick") Tertiary
+            LbChip(type="assist" variant="filled" color="neutral" @click="handleChipClick") Neutral
+            LbChip(type="assist" variant="filled" color="success" @click="handleChipClick") Success
+            LbChip(type="assist" variant="filled" color="warning" @click="handleChipClick") Warning
+            LbChip(type="assist" variant="filled" color="error" @click="handleChipClick") Error
+            LbChip(type="assist" variant="filled" color="info" @click="handleChipClick") Info
           
-          h4.mt-3 Chip Colors - Outline Style (Interactive with Hover)
+          h5 Outline Variant
           .button-row
-            LbChip(variant="outline" color="primary" @click="handleChipClick") Primary
-            LbChip(variant="outline" color="secondary" @click="handleChipClick") Secondary
-            LbChip(variant="outline" color="tertiary" @click="handleChipClick") Tertiary
-            LbChip(variant="outline" color="neutral" @click="handleChipClick") Neutral
-            LbChip(variant="outline" color="success" @click="handleChipClick") Success
-            LbChip(variant="outline" color="warning" @click="handleChipClick") Warning
-            LbChip(variant="outline" color="error" @click="handleChipClick") Error
-            LbChip(variant="outline" color="info" @click="handleChipClick") Info
+            LbChip(type="assist" variant="outline" color="primary" @click="handleChipClick") Primary
+            LbChip(type="assist" variant="outline" color="secondary" @click="handleChipClick") Secondary
+            LbChip(type="assist" variant="outline" color="tertiary" @click="handleChipClick") Tertiary
+            LbChip(type="assist" variant="outline" color="neutral" @click="handleChipClick") Neutral
+            LbChip(type="assist" variant="outline" color="success" @click="handleChipClick") Success
+            LbChip(type="assist" variant="outline" color="warning" @click="handleChipClick") Warning
+            LbChip(type="assist" variant="outline" color="error" @click="handleChipClick") Error
+            LbChip(type="assist" variant="outline" color="info" @click="handleChipClick") Info
         
         .demo-group
-          h4 With Leading Avatar
+          h4 Filter Type - Selection & Filtering
+          p.demo-note Chips for filtering content. Neutral by default, shows color on hover, full color when selected.
+          
+          h5 Filter Chips with Colors (Unselected - hover to see color)
           .button-row
-            LbChip(variant="input" deletable @delete="handleChipDelete")
-              template(#leadingAvatar)
-                LbAvatar(src="https://picsum.photos/seed/chip1/100/100" alt="User" size="xs")
-              | John Doe
-            
-            LbChip(variant="input" deletable @delete="handleChipDelete")
-              template(#leadingAvatar)
-                LbAvatar(name="Jane Smith" size="xs")
-              | Jane Smith
-        
-        .demo-group
-          h4 With Dropdown (Visual Only)
-          .button-row
-            LbChip(variant="filter" :has-dropdown="true" @click="handleChipClick") 
-              template(#leadingIcon)
-                svg(viewBox="0 0 24 24" fill="currentColor" width="18" height="18")
-                  path(d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z")
-                  path(d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z")
-              | Edit filters
-            
-            LbChip(variant="assist" :has-dropdown="true" @click="handleChipClick") View options
-            
-            LbChip(variant="suggestion" :has-dropdown="true" @click="handleChipClick") Pick date
-        
-        .demo-group
-          h4 Filter Chips Example
+            LbChip(type="filter" variant="tonal" color="neutral") Neutral
+            LbChip(type="filter" variant="tonal" color="primary") Primary
+            LbChip(type="filter" variant="tonal" color="secondary") Secondary
+            LbChip(type="filter" variant="filled" color="success") Success
+            LbChip(type="filter" variant="filled" color="warning") Warning
+            LbChip(type="filter" variant="outline" color="error") Error
+            LbChip(type="filter" variant="outline" color="info") Info
+          
+          h5 Interactive Filter Chips (Click to select)
           .button-row
             LbChip(
               v-for="filter in filterOptions"
               :key="filter.value"
-              variant="filter"
+              type="filter"
+              variant="tonal"
+              :color="filter.color || 'primary'"
               v-model:selected="filter.selected"
             ) {{ filter.label }}
-        
-        .demo-group
-          h4 Muted Chips (Subtle)
+            LbChip(type="filter" variant="tonal" color="neutral" v-model:selected="filterStates.neutralTonal") Neutral
+          .demo-note Active filters: {{ activeFilters }}
+          
+          h5 Filter Chips - Outline Variant (Click to toggle)
           .button-row
-            LbChip(variant="assist" color="neutral" muted) Muted Assist
-            LbChip(variant="filter" color="neutral" muted) Muted Filter
-            LbChip(variant="input" color="neutral" muted deletable @delete="handleChipDelete") Muted Input
-            LbChip(variant="suggestion" color="neutral" muted) Muted Suggestion
+            LbChip(type="filter" variant="outline" color="neutral" v-model:selected="filterStates.outlineNeutral") Neutral
+            LbChip(type="filter" variant="outline" color="primary" v-model:selected="filterStates.outline1") Primary
+            LbChip(type="filter" variant="outline" color="secondary" v-model:selected="filterStates.outline2") Secondary
+            LbChip(type="filter" variant="outline" color="success" v-model:selected="filterStates.outline3") Success
+            LbChip(type="filter" variant="outline" color="error" v-model:selected="filterStates.outline4") Error
+          
+          h5 Filter Chips - Filled Variant (Click to toggle)
+          .button-row
+            LbChip(type="filter" variant="filled" color="neutral" v-model:selected="filterStates.filledNeutral") Neutral
+            LbChip(type="filter" variant="filled" color="primary" v-model:selected="filterStates.filled1") Primary
+            LbChip(type="filter" variant="filled" color="secondary" v-model:selected="filterStates.filled2") Secondary
+            LbChip(type="filter" variant="filled" color="success" v-model:selected="filterStates.filled3") Success
+            LbChip(type="filter" variant="filled" color="error" v-model:selected="filterStates.filled4") Error
         
         .demo-group
-          h4 Chips with Functional Dropdown
+          h4 Input Type - Tags & User Input
+          p.demo-note Chips for user selections and tags. Usually deletable. All colors and variants work.
+          
+          h5 Tonal Variant (with delete)
+          .button-row
+            LbChip(type="input" variant="tonal" color="primary" deletable @delete="handleChipDelete") Primary
+            LbChip(type="input" variant="tonal" color="secondary" deletable @delete="handleChipDelete") Secondary
+            LbChip(type="input" variant="tonal" color="tertiary" deletable @delete="handleChipDelete") Tertiary
+            LbChip(type="input" variant="tonal" color="neutral" deletable @delete="handleChipDelete") Neutral
+            LbChip(type="input" variant="tonal" color="success" deletable @delete="handleChipDelete") Success
+            LbChip(type="input" variant="tonal" color="warning" deletable @delete="handleChipDelete") Warning
+            LbChip(type="input" variant="tonal" color="error" deletable @delete="handleChipDelete") Error
+            LbChip(type="input" variant="tonal" color="info" deletable @delete="handleChipDelete") Info
+          
+          h5 Filled Variant (with delete)
+          .button-row
+            LbChip(type="input" variant="filled" color="primary" deletable @delete="handleChipDelete") Primary
+            LbChip(type="input" variant="filled" color="secondary" deletable @delete="handleChipDelete") Secondary
+            LbChip(type="input" variant="filled" color="tertiary" deletable @delete="handleChipDelete") Tertiary
+            LbChip(type="input" variant="filled" color="neutral" deletable @delete="handleChipDelete") Neutral
+            LbChip(type="input" variant="filled" color="success" deletable @delete="handleChipDelete") Success
+            LbChip(type="input" variant="filled" color="warning" deletable @delete="handleChipDelete") Warning
+            LbChip(type="input" variant="filled" color="error" deletable @delete="handleChipDelete") Error
+            LbChip(type="input" variant="filled" color="info" deletable @delete="handleChipDelete") Info
+          
+          h5 Outline Variant (with delete)
+          .button-row
+            LbChip(type="input" variant="outline" color="primary" deletable @delete="handleChipDelete") Primary
+            LbChip(type="input" variant="outline" color="secondary" deletable @delete="handleChipDelete") Secondary
+            LbChip(type="input" variant="outline" color="tertiary" deletable @delete="handleChipDelete") Tertiary
+            LbChip(type="input" variant="outline" color="neutral" deletable @delete="handleChipDelete") Neutral
+            LbChip(type="input" variant="outline" color="success" deletable @delete="handleChipDelete") Success
+            LbChip(type="input" variant="outline" color="warning" deletable @delete="handleChipDelete") Warning
+            LbChip(type="input" variant="outline" color="error" deletable @delete="handleChipDelete") Error
+            LbChip(type="input" variant="outline" color="info" deletable @delete="handleChipDelete") Info
+          
+          h5 Dynamic Tags Example
+          .button-row
+            LbChip(
+              v-for="(tag, index) in tags"
+              :key="tag"
+              type="input"
+              variant="filled"
+              color="primary"
+              deletable
+              @delete="removeTag(index)"
+            ) {{ tag }}
+            LbButton(variant="ghost" size="small" @click="addTag")
+              template(#icon-leading)
+                svg(viewBox="0 0 24 24" fill="currentColor" width="20" height="20")
+                  path(d="M12 4.5a.75.75 0 01.75.75v6h6a.75.75 0 010 1.5h-6v6a.75.75 0 01-1.5 0v-6h-6a.75.75 0 010-1.5h6v-6A.75.75 0 0112 4.5z")
+              | Add Tag
+        
+        .demo-group
+          h4 Special Features
+          
+          h5 With Leading Icons
+          .button-row
+            LbChip(type="assist" variant="tonal" color="primary" @click="handleChipClick")
+              template(#leadingIcon)
+                svg(viewBox="0 0 24 24" fill="currentColor" width="18" height="18")
+                  path(d="M19.5 21a3 3 0 003-3V9a3 3 0 00-3-3h-5.379a.75.75 0 01-.53-.22L11.47 3.66A2.25 2.25 0 009.879 3H4.5a3 3 0 00-3 3v12a3 3 0 003 3h15zm.624-8.719a.75.75 0 00-.124-.418l-.625-1a.75.75 0 00-.635-.363h-3.19a.75.75 0 00-.447.146l-.688.52a.75.75 0 01-.447.145H11a.75.75 0 100 1.5h2.968c.288 0 .571-.079.82-.229l.688-.52a.75.75 0 01.447-.145h2.786l.331.53a.75.75 0 11-1.267.79l-.281-.45v5.191a.75.75 0 101.5 0v-6a.747.747 0 00.002-.062z")
+              | Files
+            LbChip(type="filter" variant="outline" color="secondary")
+              template(#leadingIcon)
+                svg(viewBox="0 0 24 24" fill="currentColor" width="18" height="18")
+                  path(d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z")
+                  path(d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z")
+              | Edit
+            LbChip(type="input" variant="filled" color="success" deletable)
+              template(#leadingIcon)
+                svg(viewBox="0 0 24 24" fill="currentColor" width="18" height="18")
+                  path(d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z")
+              | Complete
+          
+          h5 With Leading Avatar
+          .button-row
+            LbChip(type="input" variant="filled" color="primary" deletable @delete="handleChipDelete")
+              template(#leadingAvatar)
+                LbAvatar(src="https://picsum.photos/seed/chip1/100/100" alt="User" size="xs")
+              | John Doe
+            
+            LbChip(type="input" variant="tonal" color="secondary" deletable @delete="handleChipDelete")
+              template(#leadingAvatar)
+                LbAvatar(name="Jane Smith" size="xs")
+              | Jane Smith
+            
+            LbChip(type="assist" variant="outline" color="tertiary")
+              template(#leadingAvatar)
+                LbAvatar(name="AI" size="xs" variant="tertiary")
+              | Assistant
+          
+          h5 With Dropdown Indicator
+          .button-row
+            LbChip(type="filter" variant="tonal" :has-dropdown="true" @click="handleChipClick") 
+              | Sort by
+            
+            LbChip(type="assist" variant="filled" color="primary" :has-dropdown="true" @click="handleChipClick") 
+              | View options
+            
+            LbChip(type="assist" variant="outline" color="secondary" :has-dropdown="true" @click="handleChipClick") 
+              | Date range
+          
+          h5 States
+          .button-row
+            LbChip(type="assist" color="neutral" muted) Muted
+            LbChip(type="assist" color="neutral" disabled) Disabled
+            LbChip(type="assist" color="neutral" :clickable="false") Non-clickable
+        
+        .demo-group
+          h4 Functional Examples with Dropdowns
           .button-row
             //- Filter chip with dropdown menu
             LbMenu(v-model="selectedSort" :options="sortMenuOptions")
               template(#trigger)
-                LbChip(variant="filter" :has-dropdown="true") 
+                LbChip(type="filter" variant="tonal" color="primary" :has-dropdown="true") 
                   | Sort: {{ selectedSortLabel }}
             
             //- Assist chip with dropdown for more actions
             LbMenu(v-model="selectedChipAction" :options="chipActionMenuOptions" @select="handleChipActionSelect")
               template(#trigger)
-                LbChip(variant="assist" :has-dropdown="true")
+                LbChip(type="assist" variant="filled" color="secondary" :has-dropdown="true")
                   template(#leadingIcon)
                     svg(viewBox="0 0 24 24" fill="currentColor" width="18" height="18")
                       path(d="M10.5 6a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm0 6a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm0 6a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z")
@@ -1635,35 +1715,11 @@
             //- Date picker chip with dropdown
             LbMenu(v-model="selectedChipDate" :options="dateMenuOptions")
               template(#trigger)
-                LbChip(variant="suggestion" :has-dropdown="true")
+                LbChip(type="assist" variant="outline" color="info" :has-dropdown="true")
                   template(#leadingIcon)
                     svg(viewBox="0 0 24 24" fill="currentColor" width="18" height="18")
                       path(d="M17 3h4a1 1 0 011 1v16a1 1 0 01-1 1H3a1 1 0 01-1-1V4a1 1 0 011-1h4V1h2v2h6V1h2v2zm3 8H4v8h16v-8zm-5-6h-2v1h-2V5H9v1H7V5H4v4h16V5h-3v1h-2V5z")
                   | {{ selectedChipDateLabel }}
-          .demo-note Active filters: {{ activeFilters }}
-        
-        .demo-group
-          h4 Input Chips (Tags)
-          .button-row
-            LbChip(
-              v-for="(tag, index) in tags"
-              :key="tag"
-              variant="input"
-              deletable
-              @delete="removeTag(index)"
-            ) {{ tag }}
-            LbButton(variant="ghost" size="medium" @click="addTag")
-              template(#icon-leading)
-                svg(viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2")
-                  path(d="M12 4v16m8-8H4")
-              | Add Tag
-        
-        .demo-group
-          h4 States
-          .button-row
-            LbChip Enabled
-            LbChip(disabled) Disabled
-            LbChip(:clickable="false") Non-clickable
       
       .component-demo
         h3 Bottom Sheet
@@ -3253,11 +3309,26 @@ const badgeCount = ref(5)
 // Chip demo data
 const filterChipSelected = ref(false)
 const filterOptions = ref([
-  { value: 'new', label: 'New', selected: true },
-  { value: 'popular', label: 'Popular', selected: false },
-  { value: 'trending', label: 'Trending', selected: true },
-  { value: 'featured', label: 'Featured', selected: false }
+  { value: 'new', label: 'New', selected: true, color: 'primary' },
+  { value: 'popular', label: 'Popular', selected: false, color: 'secondary' },
+  { value: 'trending', label: 'Trending', selected: true, color: 'success' },
+  { value: 'featured', label: 'Featured', selected: false, color: 'warning' }
 ])
+
+// Filter chip individual states for demo
+const filterStates = ref({
+  neutralTonal: false,
+  outlineNeutral: false,
+  outline1: false,
+  outline2: false,
+  outline3: false,
+  outline4: false,
+  filledNeutral: false,
+  filled1: false,
+  filled2: false,
+  filled3: false,
+  filled4: false
+})
 
 // Progress demo data
 const linearProgress1 = ref(45)
