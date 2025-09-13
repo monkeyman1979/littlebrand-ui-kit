@@ -5,6 +5,40 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.9] - 2025-09-13
+
+### Changed
+- **Chip Component Architecture Refactor**
+  - Separated functional behavior (type) from visual appearance (variant)
+  - Types: `assist` (user actions), `filter` (selection/filtering), `input` (tags/user input)
+  - Variants: `tonal` (subtle surface), `filled` (prominent), `outline` (transparent with border)
+  - Removed deprecated `suggestion` variant
+  - All combinations of type × variant × color now work correctly
+
+### Added
+- **Design System Tokens**
+  - Added size scale tokens (`--lb-size-*`) for consistent dimensions
+  - Added shadow tokens (`--lb-shadow-sm/md/lg`) for elevation
+  - Added alpha scale tokens (`--lb-neutral-a*`) for transparent overlays
+  - Added chip-specific tokens (`--lb-chip-height`, `--lb-chip-padding-x`, etc.)
+
+### Fixed
+- **Chip Component Styling**
+  - Replaced all hardcoded values with CSS custom properties for full runtime customization
+  - Fixed filter chips to show neutral by default, color on hover, full color when selected
+  - Fixed neutral chip text visibility using high-contrast text instead of muted colors
+  - Fixed outline filter chips to have transparent backgrounds
+  - Fixed delete button hover states to use chip's color with alpha overlays
+  - Removed all SASS variable dependencies and @include statements
+  - Fixed CSS comment syntax issues breaking custom property definitions
+
+### Improved
+- **Chip Component Behavior**
+  - Filter chips now provide better visual feedback with neutral → hover preview → selected states
+  - Neutral chips use `--lb-text-neutral-contrast-high` for better readability
+  - Delete buttons use consistent alpha-based hover states across all color variants
+  - Removed transform animations for cleaner interactions
+
 ## [0.5.8] - 2025-09-09
 
 ### Added

@@ -255,7 +255,7 @@ See [CUSTOMIZATION.md](./CUSTOMIZATION.md) for detailed customization options in
 ### Display Components
 - `LbAvatar` - User avatars
 - `LbBadge` - Status badges
-- `LbChip` - Tag chips
+- `LbChip` - Versatile chips for actions, filtering, and input (assist/filter/input types with tonal/filled/outline variants)
 - `LbDivider` - Content dividers
 - `LbProgress` - Progress indicators
 
