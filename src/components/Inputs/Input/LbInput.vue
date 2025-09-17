@@ -25,10 +25,8 @@
     .icon.icon-loading(v-if="loading")
       slot(name="icon-loading")
         svg.spinner(
-          width="16" 
-          height="16" 
-          viewBox="0 0 16 16" 
-          fill="none" 
+          viewBox="0 0 16 16"
+          fill="none"
           xmlns="http://www.w3.org/2000/svg"
         )
           circle(
@@ -50,11 +48,9 @@
     )
       slot(v-if="!showPassword" name="icon-password-show")
         //- Eye open icon (default)
-        svg(
-          width="16" 
-          height="16" 
-          viewBox="0 0 16 16" 
-          fill="none" 
+        svg.icon-password-svg(
+          viewBox="0 0 16 16"
+          fill="none"
           xmlns="http://www.w3.org/2000/svg"
         )
           path(
@@ -73,11 +69,9 @@
           )
       slot(v-else name="icon-password-hide")
         //- Eye closed icon (default)
-        svg(
-          width="16" 
-          height="16" 
-          viewBox="0 0 16 16" 
-          fill="none" 
+        svg.icon-password-svg(
+          viewBox="0 0 16 16"
+          fill="none"
           xmlns="http://www.w3.org/2000/svg"
         )
           path(
@@ -96,18 +90,16 @@
       aria-label="Clear input"
     )
       slot(name="icon-clear")
-        svg(
-          width="16" 
-          height="16" 
-          viewBox="0 0 16 16" 
-          fill="none" 
+        svg.icon-clear-svg(
+          viewBox="0 0 16 16"
+          fill="none"
           xmlns="http://www.w3.org/2000/svg"
         )
           circle(cx="8" cy="8" r="8" fill="currentColor" opacity="0.2")
           path(
-            d="M10.5 5.5L5.5 10.5M5.5 5.5l5 5" 
-            stroke="currentColor" 
-            stroke-width="1.5" 
+            d="M10.5 5.5L5.5 10.5M5.5 5.5l5 5"
+            stroke="currentColor"
+            stroke-width="1.5"
             stroke-linecap="round"
           )
     
@@ -404,10 +396,23 @@ const handleInput = (event: Event) => {
     width: cv.$input-height-large
     height: cv.$input-height-large
   
+  // Icon SVG sizing
+  .icon-clear-svg,
+  .icon-password-svg,
+  .spinner
+    width: var(--lb-icon-size-md)  // 20px for medium
+    height: var(--lb-icon-size-md)
+
+  &.size-large .icon-clear-svg,
+  &.size-large .icon-password-svg,
+  &.size-large .spinner
+    width: var(--lb-icon-size-lg)  // 24px for large
+    height: var(--lb-icon-size-lg)
+
   // Loading spinner animation
   .spinner
     animation: lb-spin 1s linear infinite
-    
+
     circle
       stroke-dasharray: 41.89
       stroke-dashoffset: 31.42
