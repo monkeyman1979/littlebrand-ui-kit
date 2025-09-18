@@ -4126,7 +4126,7 @@ section
         
         h5
           margin: 0 0 base.$space-md 0
-          font-size: var(--lb-font-size-label-large)
+          font-size: var(--lb-font-size-label-lg)
         
         .preview-colors
           display: flex
@@ -4141,7 +4141,7 @@ section
               margin-bottom: base.$space-xs
             
             .chip-label
-              font-size: var(--lb-font-size-label-small)
+              font-size: var(--lb-font-size-label-sm)
               text-align: center
               
               .light-preview &
@@ -4370,7 +4370,7 @@ section
       color: var(--lb-text-neutral-disabled)
     
     span
-      font-size: var(--lb-font-size-label-small)
+      font-size: var(--lb-font-size-label-sm)
 
 .avatar-badge-item
   position: relative
@@ -4696,7 +4696,7 @@ section
     padding: var(--lb-space-sm)
     background: var(--lb-surface-neutral-subtle)
     border-radius: var(--lb-radius-md)
-    font-size: var(--lb-font-size-body-small)
+    font-size: var(--lb-font-size-body-sm)
     color: var(--lb-text-neutral-contrast-high)
     
     p
@@ -4743,7 +4743,7 @@ section
       &.hint-text
         margin-top: var(--lb-space-xs)
         color: var(--lb-text-neutral-contrast-low)
-        font-size: var(--lb-font-size-label-small)
+        font-size: var(--lb-font-size-label-sm)
       
       &:not(:last-child)
         margin-bottom: var(--lb-space-xs)
@@ -4815,9 +4815,9 @@ section
       margin-bottom: var(--lb-space-2xs)
     
     .item-email
-      font-size: var(--lb-font-size-label-small)
+      font-size: var(--lb-font-size-label-sm)
       color: var(--lb-text-neutral-contrast-low)
-    font-size: var(--lb-font-size-label-large)
+    font-size: var(--lb-font-size-label-lg)
     color: var(--lb-text-neutral-contrast-high)
   
   .form-field
@@ -4859,12 +4859,12 @@ section
   border-radius: var(--lb-radius-sm)
   
   .message-content
-    font-size: var(--lb-font-size-body-small)
+    font-size: var(--lb-font-size-body-sm)
     color: var(--lb-text-neutral-contrast-high)
     margin-bottom: var(--lb-space-2xs)
     
   .message-type
-    font-size: var(--lb-font-size-label-xsmall)
+    font-size: var(--lb-font-size-label-xs)
     color: var(--lb-text-neutral-contrast-low)
     text-transform: uppercase
     letter-spacing: 0.5px
