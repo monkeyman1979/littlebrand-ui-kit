@@ -1693,7 +1693,20 @@
             LbChip(type="assist" color="neutral" muted) Muted
             LbChip(type="assist" color="neutral" disabled) Disabled
             LbChip(type="assist" color="neutral" :clickable="false") Non-clickable
-        
+
+          h5 Rounded (Full Border Radius)
+          .button-row
+            LbChip(rounded type="assist" variant="tonal" color="primary" @click="handleChipClick") Primary
+            LbChip(rounded type="assist" variant="filled" color="secondary" @click="handleChipClick") Secondary
+            LbChip(rounded type="assist" variant="outline" color="tertiary" @click="handleChipClick") Tertiary
+            LbChip(rounded type="filter" variant="tonal" color="success" v-model:selected="filterStates.roundedFilter") Filter
+            LbChip(rounded type="input" variant="filled" color="error" deletable @delete="handleChipDelete") Deletable
+            LbChip(rounded type="assist" variant="tonal" color="info" :has-dropdown="true")
+              template(#leadingIcon)
+                svg(viewBox="0 0 24 24" fill="currentColor" width="18" height="18")
+                  path(d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z")
+              | With Icon
+
         .demo-group
           h4 Functional Examples with Dropdowns
           .button-row
@@ -3327,7 +3340,8 @@ const filterStates = ref({
   filled1: false,
   filled2: false,
   filled3: false,
-  filled4: false
+  filled4: false,
+  roundedFilter: false
 })
 
 // Progress demo data
