@@ -1,13 +1,14 @@
 {
   "name": "littlebrand-ui-kit",
-  "version": "0.5.9",
+  "version": "0.6.0",
   "description": "Clean, semantic Vue.js UI kit using Pug & SASS. Zero utility classes, CSS Grid-first, fully themeable.",
   "type": "module",
   "files": [
     "dist",
     "src/components",
     "src/styles",
-    "src/utils"
+    "src/utils",
+    "TOKENS.md"
   ],
   "main": "./dist/littlebrand-ui.umd.js",
   "module": "./dist/littlebrand-ui.js",
@@ -21,10 +22,11 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node scripts/extract-tokens.js && vite build",
     "preview": "vite preview",
     "lint": "echo 'No linting configured yet'",
-    "typecheck": "echo 'No type checking configured yet'"
+    "typecheck": "echo 'No type checking configured yet'",
+    "extract-tokens": "node scripts/extract-tokens.js"
   },
   "repository": {
     "type": "git",
