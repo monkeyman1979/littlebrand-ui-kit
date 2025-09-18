@@ -69,6 +69,7 @@ const props = withDefaults(defineProps<{
   deletable?: boolean
   hasDropdown?: boolean
   muted?: boolean
+  rounded?: boolean
 }>(), {
   type: 'assist',
   variant: 'tonal',
@@ -78,7 +79,8 @@ const props = withDefaults(defineProps<{
   clickable: true,
   deletable: false,
   hasDropdown: false,
-  muted: false
+  muted: false,
+  rounded: false
 })
 
 // Emits
@@ -107,7 +109,8 @@ const chipClasses = computed(() => [
     'has-leading-icon': !!slots.leadingIcon || !!slots.leadingAvatar || (props.type === 'filter' && props.selected && !slots.leadingIcon && !slots.leadingAvatar),
     'has-trailing-icon': !!slots.trailingIcon || props.deletable || props.hasDropdown,
     'has-dropdown': props.hasDropdown,
-    'muted': props.muted
+    'muted': props.muted,
+    'rounded': props.rounded
   }
 ])
 
@@ -149,7 +152,6 @@ defineOptions({
   font-family: var(--lb-font-label)
   font-weight: var(--lb-font-weight-label)
   line-height: var(--lb-line-height-compact)
-  letter-spacing: var(--lb-letter-spacing-tight)
   cursor: pointer
   transition: all var(--lb-transition-normal)
   text-decoration: none
@@ -159,7 +161,10 @@ defineOptions({
   background-color: var(--lb-surface-subtle)
   color: var(--lb-text-neutral-contrast-high)
   align-self: flex-start  // Prevent stretching in flex containers
-  
+
+  &.rounded
+    border-radius: var(--lb-radius-full)
+
   &:focus-visible
     outline: var(--lb-border-md) solid var(--lb-focus-ring-color)
     outline-offset: var(--lb-space-2xs)
