@@ -90,7 +90,7 @@ Example usage:
 Input, Select, Checkbox, Radio, Switch, Textarea
 - Support `invalid`, `disabled`, `required` states
 - Integrate with LbFormField for labels and hints
-- Use consistent height variables: `--lb-input-height-medium/large`
+- Use consistent height variables: `--lb-input-height-md/lg`
 
 #### Button Components
 LbButton, LbSegmentButton

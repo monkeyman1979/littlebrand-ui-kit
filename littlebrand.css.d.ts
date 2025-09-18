@@ -59,20 +59,22 @@ declare module 'csstype' {
     '--lb-line-height-relaxed'?: number | string;
     
     /** Small body text size (0.875rem) */
-    '--lb-font-size-body-small'?: string;
+    '--lb-font-size-body-sm'?: string;
     /** Base body text size (1rem) */
     '--lb-font-size-body-base'?: string;
     /** Large body text size (1.125rem) */
-    '--lb-font-size-body-large'?: string;
+    '--lb-font-size-body-lg'?: string;
+    /** Extra large body text size (responsive) */
+    '--lb-font-size-body-xl'?: string;
     
     /** Extra small label size (0.625rem) */
-    '--lb-font-size-label-xsmall'?: string;
+    '--lb-font-size-label-xs'?: string;
     /** Small label size (0.75rem) */
-    '--lb-font-size-label-small'?: string;
+    '--lb-font-size-label-sm'?: string;
     /** Base label size (0.875rem) */
     '--lb-font-size-label-base'?: string;
     /** Large label size (1rem) */
-    '--lb-font-size-label-large'?: string;
+    '--lb-font-size-label-lg'?: string;
     
     /** Display 1 size (responsive) */
     '--lb-display-1'?: string;
@@ -427,10 +429,10 @@ declare module 'csstype' {
     /** Medium border width (2px) */
     '--lb-border-md'?: string;
     
-    /** Medium input height (40px) */
-    '--lb-input-height-medium'?: string;
-    /** Large input height (44px) */
-    '--lb-input-height-large'?: string;
+    /** Medium input height (40px via --lb-size-6xl) */
+    '--lb-input-height-md'?: string;
+    /** Large input height (48px via --lb-size-7xl) */
+    '--lb-input-height-lg'?: string;
     
     // ============================================================
     // SURFACE & SPECIAL PROPERTIES
