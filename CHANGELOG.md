@@ -5,6 +5,42 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.0] - 2025-09-18
+
+### Added
+- **Automatic Token Documentation**
+  - Added `scripts/extract-tokens.js` to automatically generate TOKENS.md from source
+  - TOKENS.md now lists all 280+ available CSS custom properties
+  - Integrated token extraction into build process
+  - Enables AI assistants to know exactly what tokens are available
+
+- **Chip Component Enhancements**
+  - Added `rounded` prop for fully rounded chip style
+  - Reduced horizontal padding from 16px to 12px for better visual balance
+
+### Changed
+- **BREAKING: Token Naming Standardization**
+  - Renamed all size tokens to use consistent shorthand notation:
+    - `--lb-font-size-body-small` → `--lb-font-size-body-sm`
+    - `--lb-font-size-body-large` → `--lb-font-size-body-lg`
+    - `--lb-font-size-body-xlarge` → `--lb-font-size-body-xl`
+    - `--lb-font-size-label-xsmall` → `--lb-font-size-label-xs`
+    - `--lb-font-size-label-small` → `--lb-font-size-label-sm`
+    - `--lb-font-size-label-large` → `--lb-font-size-label-lg`
+    - `--lb-input-height-medium` → `--lb-input-height-md`
+    - `--lb-input-height-large` → `--lb-input-height-lg`
+
+- **Input Height Improvements**
+  - Input heights now use size variables instead of hardcoded pixels
+  - Large input height corrected from 44px to 48px
+  - `--lb-input-height-md: var(--lb-size-6xl)` (40px)
+  - `--lb-input-height-lg: var(--lb-size-7xl)` (48px)
+
+### Fixed
+- **Typography Improvements**
+  - Removed letter-spacing from body and label typography for better readability
+  - Input trailing icons now scale properly with input sizes
+
 ## [0.5.9] - 2025-09-13
 
 ### Changed
