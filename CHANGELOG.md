@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.0] - 2025-09-25
+
+### Changed
+- **BREAKING: Text Color Token Contrast Adjustments**
+  - Swapped the color step values for better semantic accuracy:
+    - `--lb-text-{color}-normal` now uses step 11 (was step 9) for higher contrast
+    - `--lb-text-{color}-contrast-low` now uses step 9 (was step 11) for lower contrast
+  - This change affects all color variants: primary, secondary, tertiary, success, warning, error, info, and neutral
+  - **Migration Guide**: If you relied on the previous contrast levels, you may need to switch between `normal` and `contrast-low` variants in your implementations
+
 ## [0.6.0] - 2025-09-18
 
 ### Added
