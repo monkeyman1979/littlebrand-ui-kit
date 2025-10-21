@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<evaluation>
+  <qa_pair>
+    <question>Search for components that support validation states (invalid, disabled, or required props). Among these, which component has the most slots available for customization? Provide only the component name.</question>
+    <answer>LbInput</answer>
+  </qa_pair>
+
+  <qa_pair>
+    <question>Find all components in the Form Components category. Count how many of them emit an 'update:modelValue' event. What is the count?</question>
+    <answer>7</answer>
+  </qa_pair>
+
+  <qa_pair>
+    <question>Look up the design token used for medium border radius. What is the exact pixel value defined for this token? Provide only the number without 'px'.</question>
+    <answer>8</answer>
+  </qa_pair>
+
+  <qa_pair>
+    <question>Search for components that have a 'color' prop. Among those components, which one supports the most color variant options? Count the distinct color values in the options array and provide the component name that has the highest count.</question>
+    <answer>LbButton</answer>
+  </qa_pair>
+
+  <qa_pair>
+    <question>Find the design token category that contains the most individual tokens. What is the category name?</question>
+    <answer>Text</answer>
+  </qa_pair>
+
+  <qa_pair>
+    <question>Get information about the LbButton component. How many different variant options does it support? Provide only the number.</question>
+    <answer>5</answer>
+  </qa_pair>
+
+  <qa_pair>
+    <question>Search for typography-related tokens. Among font weight tokens, what is the numerical value (as a string) of the 'semibold' font weight?</question>
+    <answer>600</answer>
+  </qa_pair>
+
+  <qa_pair>
+    <question>Find components that include 'icon' in their slot names. Which component category do the majority of these components belong to? Answer with the exact category name.</question>
+    <answer>Form Components</answer>
+  </qa_pair>
+
+  <qa_pair>
+    <question>Look up spacing tokens. What is the pixel value of the largest spacing size (10xl)? Provide only the number without 'px'.</question>
+    <answer>128</answer>
+  </qa_pair>
+
+  <qa_pair>
+    <question>Search for components that have a 'variant' prop. Count how many unique variant values exist across all these components (counting each unique string only once, regardless of which component it appears in). What is the total count?</question>
+    <answer>8</answer>
+  </qa_pair>
+</evaluation>
