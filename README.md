@@ -14,6 +14,7 @@ A modern Vue 3 UI component library with a powerful color generation system. Bui
 - 📝 **200+ CSS Variables** - Complete control over typography, spacing, and colors
 - 🔤 **Flexible Typography** - Three independent font families for headings, body, and UI elements
 - 🎭 **Alpha Scales** - Complete transparency scales for overlays and subtle backgrounds
+- 🤖 **MCP Server Integration** - Built-in AI assistant tools for accurate component and token discovery
 
 ## 📦 Installation
 
@@ -361,6 +362,50 @@ applyTheme({
   --lb-shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
 }
 ```
+
+## 🤖 AI Assistant Integration
+
+LittleBrand UI Kit includes an integrated **Model Context Protocol (MCP) server** that enables AI assistants like Claude to accurately discover components, design tokens, and generate code without hallucinating prop names or variable names.
+
+### Why Use the MCP Server?
+
+**Problem**: LLMs often guess wrong component props and design token variable names.
+
+**Solution**: The MCP server provides a source of truth that AI assistants can query for:
+- Exact component prop names, types, and options
+- Design token variable names and values
+- Usage examples and documentation
+- Code generation with accurate syntax
+
+### Quick Setup
+
+The MCP server is automatically included when you install `littlebrand-ui-kit`.
+
+**For Claude Desktop**, add to your config file:
+
+```json
+{
+  "mcpServers": {
+    "littlebrand": {
+      "command": "npx",
+      "args": ["littlebrand-mcp"]
+    }
+  }
+}
+```
+
+**For Claude Code**, create a project skill that references the MCP tools.
+
+### Available MCP Tools
+
+- **Component Discovery**: `lb_list_components`, `lb_search_components`, `lb_get_component_info`
+- **Design Tokens**: `lb_list_tokens`, `lb_search_tokens`, `lb_get_token_info`
+- **Code Generation**: `lb_generate_component_example`, `lb_generate_theme_config`
+- **Documentation**: `lb_get_installation_guide`, `lb_get_theming_guide`
+
+### Learn More
+
+See the complete [MCP Server Documentation](./MCP_SERVER.md) for detailed setup instructions, usage examples, and technical details.
 
 ## 🛠️ Development
 
