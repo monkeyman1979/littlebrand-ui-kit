@@ -8,8 +8,14 @@
     "src/components",
     "src/styles",
     "src/utils",
-    "TOKENS.md"
+    "TOKENS.md",
+    "mcp-server/dist",
+    "mcp-server/package.json",
+    "mcp-server/README.md"
   ],
+  "bin": {
+    "littlebrand-mcp": "./mcp-server/dist/index.js"
+  },
   "main": "./dist/littlebrand-ui.umd.js",
   "module": "./dist/littlebrand-ui.js",
   "exports": {
@@ -22,11 +28,16 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/extract-tokens.js && vite build",
+    "prebuild": "npm run extract",
+    "build": "vite build && npm run build:mcp",
     "preview": "vite preview",
     "lint": "echo 'No linting configured yet'",
     "typecheck": "echo 'No type checking configured yet'",
-    "extract-tokens": "node scripts/extract-tokens.js"
+    "extract": "npm run extract:tokens && npm run extract:components && npm run sync:versions",
+    "extract:tokens": "node scripts/extract-tokens.js",
+    "extract:components": "node scripts/extract-components.js",
+    "sync:versions": "node scripts/sync-versions.js",
+    "build:mcp": "cd mcp-server && npm install && npm run build"
   },
   "repository": {
     "type": "git",
@@ -58,6 +69,7 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.1",
     "@vue/compiler-sfc": "^3.5.18",
+    "glob": "^11.0.0",
     "pug": "^3.0.3",
     "sass": "^1.89.2",
     "vite": "^7.0.6",
