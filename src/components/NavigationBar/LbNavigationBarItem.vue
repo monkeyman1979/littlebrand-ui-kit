@@ -110,8 +110,8 @@ defineOptions({
   
   // Only apply hover styles on devices that support hover (non-touch)
   @media (hover: hover)
-    &:hover:not(.disabled)
-      background-color: var(--lb-surface-neutral-hover)
+    &:hover:not(.disabled):not(.active)
+      background-color: var(--lb-surface-neutral-normal-alpha)
   
   &:active:not(.disabled)
     transform: scale(0.98)
@@ -147,31 +147,37 @@ defineOptions({
     max-width: 100%
     transition: color base.$transition
 
-// Color variants - Active states
+// Color variants - Active states with backgrounds (alpha-4)
 .lb-navigation-bar-item
   &.active.color-primary
-    color: var(--lb-fill-primary-normal)
-  
-  &.active.color-secondary
-    color: var(--lb-fill-secondary-normal)
-  
-  &.active.color-tertiary
-    color: var(--lb-fill-tertiary-normal)
-  
-  &.active.color-neutral
-    color: var(--lb-text-neutral-contrast-high)
-  
-  &.active.color-success
-    color: var(--lb-text-success-normal)
-  
-  &.active.color-warning
-    color: var(--lb-text-warning-normal)
-  
-  &.active.color-error
-    color: var(--lb-text-error-normal)
-  
-  &.active.color-info
-    color: var(--lb-fill-info-normal)
+    background-color: var(--lb-surface-primary-hover-alpha)
+    color: var(--lb-text-primary-contrast-high)
 
-// Remove all background colors for active states - only change icon/text color
+  &.active.color-secondary
+    background-color: var(--lb-surface-secondary-hover-alpha)
+    color: var(--lb-text-secondary-contrast-high)
+
+  &.active.color-tertiary
+    background-color: var(--lb-surface-tertiary-hover-alpha)
+    color: var(--lb-text-tertiary-contrast-high)
+
+  &.active.color-neutral
+    background-color: var(--lb-surface-neutral-hover-alpha)
+    color: var(--lb-text-neutral-contrast-high)
+
+  &.active.color-success
+    background-color: var(--lb-surface-success-hover-alpha)
+    color: var(--lb-text-success-contrast-high)
+
+  &.active.color-warning
+    background-color: var(--lb-surface-warning-hover-alpha)
+    color: var(--lb-text-warning-contrast-high)
+
+  &.active.color-error
+    background-color: var(--lb-surface-error-hover-alpha)
+    color: var(--lb-text-error-contrast-high)
+
+  &.active.color-info
+    background-color: var(--lb-surface-info-hover-alpha)
+    color: var(--lb-text-info-contrast-high)
 </style>

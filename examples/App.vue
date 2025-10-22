@@ -2560,11 +2560,31 @@
             LbMenu(disabled :options="basicMenuOptions")
               template(#trigger)
                 LbButton(disabled) Disabled Menu
-            
+
             LbMenu(v-model="selectedWithDisabled" :options="optionsWithDisabled")
               template(#trigger)
                 LbButton(variant="outline") {{ selectedWithDisabled || 'Some Disabled' }}
-      
+
+        .demo-group
+          h4 Active Color Variants
+          p The activeColor prop changes the highlight color for selected menu items.
+          .button-row
+            LbMenu(v-model="selectedMenuPrimary" :options="basicMenuOptions" active-color="primary")
+              template(#trigger)
+                LbButton(variant="tonal" color="primary") Primary Active
+
+            LbMenu(v-model="selectedMenuSecondary" :options="basicMenuOptions" active-color="secondary")
+              template(#trigger)
+                LbButton(variant="tonal" color="secondary") Secondary Active
+
+            LbMenu(v-model="selectedMenuSuccess" :options="basicMenuOptions" active-color="success")
+              template(#trigger)
+                LbButton(variant="tonal" color="success") Success Active
+
+            LbMenu(v-model="selectedMenuError" :options="basicMenuOptions" active-color="error")
+              template(#trigger)
+                LbButton(variant="tonal" color="error") Error Active
+
       .component-demo
         h3 Calendar
         p Date selection component with month/year navigation and keyboard support
@@ -2751,14 +2771,35 @@
 
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue'
-import { 
+import {
   LbButton, LbInput, LbChatInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog,
-  LbBadge, LbNavigationBar, LbNavigationBarItem, LbBottomSheet, LbChip, LbAvatar, LbProgress, LbDivider, 
+  LbBadge, LbNavigationBar, LbNavigationBarItem, LbBottomSheet, LbChip, LbAvatar, LbProgress, LbDivider,
   LbSegmentButton, LbSegmentButtonItem, useSnackbar, LbSnackbar, LbPopover, LbPopoverTrigger, LbPopoverContent, LbPopoverArrow,
   LbDropdown, LbMenu, LbCalendar, LbDatePicker
 } from '../src'
+import { applyTheme } from '../src/utils/color-generator.js'
 
 const isDark = ref(false)
+
+// Default theme colors
+const themeColors = {
+  primary: '#ff8800',
+  secondary: '#00bfa5',
+  tertiary: '#3b82f6',
+  success: '#22c55e',
+  warning: '#f59e0b',
+  error: '#ef4444',
+  info: '#3b82f6',
+  neutral: '#6b7280'
+}
+
+// Apply theme initially
+applyTheme(themeColors)
+
+// Watch dark mode changes and reapply theme
+watch(isDark, () => {
+  applyTheme(themeColors)
+})
 
 // Custom theme interactive demo
 
@@ -3268,7 +3309,11 @@ const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1)
 
 const toggleTheme = () => {
   isDark.value = !isDark.value
-  document.documentElement.setAttribute('data-theme', isDark.value ? 'dark' : 'light')
+  if (isDark.value) {
+    document.documentElement.classList.add('dark')
+  } else {
+    document.documentElement.classList.remove('dark')
+  }
 }
 
 // OKLCH demo helper methods
@@ -3602,6 +3647,10 @@ const selectedMenuItem = ref('')
 const selectedColor = ref('primary')
 const selectedMonth = ref(new Date().getMonth())
 const selectedYear = ref(new Date().getFullYear())
+const selectedMenuPrimary = ref('Option 1')
+const selectedMenuSecondary = ref('Option 2')
+const selectedMenuSuccess = ref('Option 3')
+const selectedMenuError = ref('Option 4')
 const selectedUser = ref('')
 const selectedAction = ref('')
 const selectedWithDisabled = ref('')
@@ -3790,7 +3839,7 @@ onMounted(() => {
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
   if (prefersDark) {
     isDark.value = true
-    document.documentElement.setAttribute('data-theme', 'dark')
+    document.documentElement.classList.add('dark')
   }
   
   // Animate progress values for demonstration
@@ -4109,20 +4158,20 @@ section
       .mode-preview
         padding: base.$space-lg
         border-radius: base.$radius-md
-        
+
         &.light-preview
           background: white
           border: base.$border-sm solid var(--lb-border-neutral-line)
-          
+
           h5
-            color: var(--lb-text-neutral-contrast-high)
-        
+            color: var(--lb-text-dark-normal)
+
         &.dark-preview
           background: oklch(0.17 0.003 0)
           border: base.$border-sm solid oklch(0.378 0.004 0)
-          
+
           h5
-            color: oklch(0.93 0.002 0)
+            color: var(--lb-text-light-normal)
         
         h5
           margin: 0 0 base.$space-md 0
@@ -4143,12 +4192,12 @@ section
             .chip-label
               font-size: var(--lb-font-size-label-sm)
               text-align: center
-              
+
               .light-preview &
-                color: var(--lb-text-neutral-normal)
-              
+                color: var(--lb-text-dark-normal)
+
               .dark-preview &
-                color: oklch(0.639 0.005 0)
+                color: var(--lb-text-light-normal)
       
 .components-section
   display: flex
