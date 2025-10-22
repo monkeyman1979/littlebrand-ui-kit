@@ -57,7 +57,7 @@ LbDropdown.lb-menu(
               )
                 .item-content
                   span.item-label(v-html="getHighlightedLabel(item)")
-                  .item-checkmark(v-if="isSelected(item)")
+                  .item-checkmark(v-if="isSelected(item)" :class="`color-${activeColor}`")
                     svg(
                       width="16"
                       height="16"
@@ -614,8 +614,14 @@ onUnmounted(() => {
   justify-content: center
   width: base.$unit-18  // 18px
   height: base.$unit-18  // 18px
-  color: var(--lb-text-neutral-contrast-low)
   flex-shrink: 0
+
+  // Color variants for checkmark icon
+  &.color-neutral
+    color: var(--lb-text-neutral-contrast-high)
+
+  &.color-primary
+    color: var(--lb-text-primary-contrast-high)
 
 .menu-divider
   width: 100%
