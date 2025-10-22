@@ -164,7 +164,7 @@ defineOptions({
   display: flex
   align-items: stretch
   width: min(cv.$snackbar-max-width, 90%)
-  min-height: base.$unit-40  // 40px
+  min-height: base.$size-7xl  // 48px
   padding: base.$space-sm cv.$snackbar-padding  // 8px vertical, 16px horizontal
   background-color: var(--lb-surface-subtle)
   border: base.$border-sm solid var(--lb-border-neutral-line)
@@ -218,41 +218,41 @@ defineOptions({
   &.variant-default
     background-color: var(--lb-surface-subtle)
     border-color: var(--lb-border-neutral-line)
-    
+
     .snackbar-message
       color: var(--lb-text-neutral-contrast-high)
-  
+
   // Success variant
   &.variant-success
-    background-color: var(--lb-success-1)
+    background-color: var(--lb-surface-success-normal)
     border-color: var(--lb-border-success-line)
-    
+
     .snackbar-message
-      color: var(--lb-text-success-normal)
-  
+      color: var(--lb-text-success-contrast-high)
+
   // Error variant
   &.variant-error
-    background-color: var(--lb-error-1)
+    background-color: var(--lb-surface-error-normal)
     border-color: var(--lb-border-error-line)
-    
+
     .snackbar-message
-      color: var(--lb-text-error-normal)
-  
+      color: var(--lb-text-error-contrast-high)
+
   // Warning variant
   &.variant-warning
-    background-color: var(--lb-warning-1)
+    background-color: var(--lb-surface-warning-normal)
     border-color: var(--lb-border-warning-line)
-    
+
     .snackbar-message
       color: var(--lb-text-warning-contrast-high)
-  
+
   // Info variant
   &.variant-info
-    background-color: var(--lb-info-1)
+    background-color: var(--lb-surface-info-normal)
     border-color: var(--lb-border-info-line)
-    
+
     .snackbar-message
-      color: var(--lb-text-info-normal)
+      color: var(--lb-text-info-contrast-high)
 
 // Dark mode adjustments are handled by the token system
 </style>

@@ -53,19 +53,18 @@ export function generateSemanticTokens(name, scale, darkScale = null) {
   }
   
   // Border tokens
-  tokens[`--lb-border-${name}-line`] = getScaleValue(6)
+  tokens[`--lb-border-${name}-line`] = getScaleValue(5)
   tokens[`--lb-border-${name}-normal`] = getScaleValue(7)
-  tokens[`--lb-border-${name}-active`] = getScaleValue(8)
+  tokens[`--lb-border-${name}-active`] = getScaleValue(9)
   tokens[`--lb-border-${name}-focus`] = getScaleValue(7)
-  tokens[`--lb-border-${name}-disabled`] = getScaleValue(5)
+  tokens[`--lb-border-${name}-disabled`] = name === 'neutral' ? `var(--lb-${name}-alpha-2)` : `var(--lb-${name}-alpha-4)`
   tokens[`--lb-border-${name}-subtle`] = getScaleValue(4)
-  
+
   // Fill tokens
   tokens[`--lb-fill-${name}-normal`] = getScaleValue(9)
   tokens[`--lb-fill-${name}-hover`] = getScaleValue(10)
   tokens[`--lb-fill-${name}-active`] = getScaleValue(8)
-  tokens[`--lb-fill-${name}-focus`] = getScaleValue(8)
-  tokens[`--lb-fill-${name}-disabled`] = getScaleValue(4)
+  tokens[`--lb-fill-${name}-disabled`] = name === 'neutral' ? `var(--lb-${name}-alpha-2)` : `var(--lb-${name}-alpha-4)`
   
   // Text tokens
   tokens[`--lb-text-${name}-normal`] = getScaleValue(9)
@@ -206,7 +205,7 @@ export function applyTheme(colors, curve = 'natural') {
         })
       }
       
-      // Apply raw scale values
+      // Apply raw scale values (current mode)
       if (scale && typeof scale === 'object') {
         Object.entries(scale).forEach(([step, value]) => {
           if (value) {
@@ -214,12 +213,46 @@ export function applyTheme(colors, curve = 'natural') {
           }
         })
       }
-      
-      // Apply alpha values
+
+      // Apply BOTH light and dark scales (for inverse tokens)
+      if (lightScale && typeof lightScale === 'object') {
+        Object.entries(lightScale).forEach(([step, value]) => {
+          if (value) {
+            root.style.setProperty(`--lb-${name}-light-${step}`, value)
+          }
+        })
+      }
+
+      if (darkScale && typeof darkScale === 'object') {
+        Object.entries(darkScale).forEach(([step, value]) => {
+          if (value) {
+            root.style.setProperty(`--lb-${name}-dark-${step}`, value)
+          }
+        })
+      }
+
+      // Apply alpha values (current mode)
       if (alpha && typeof alpha === 'object') {
         Object.entries(alpha).forEach(([step, value]) => {
           if (value) {
             root.style.setProperty(`--lb-${name}-alpha-${step}`, value)
+          }
+        })
+      }
+
+      // Apply BOTH light and dark alpha scales (for potential future use)
+      if (alphaLight && typeof alphaLight === 'object') {
+        Object.entries(alphaLight).forEach(([step, value]) => {
+          if (value) {
+            root.style.setProperty(`--lb-${name}-light-alpha-${step}`, value)
+          }
+        })
+      }
+
+      if (alphaDark && typeof alphaDark === 'object') {
+        Object.entries(alphaDark).forEach(([step, value]) => {
+          if (value) {
+            root.style.setProperty(`--lb-${name}-dark-alpha-${step}`, value)
           }
         })
       }

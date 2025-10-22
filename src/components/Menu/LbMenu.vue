@@ -103,6 +103,7 @@ export interface LbMenuProps {
   placement?: MenuPlacement
   virtualScrolling?: boolean
   itemHeight?: number
+  activeColor?: 'primary' | 'secondary' | 'tertiary' | 'neutral' | 'success' | 'warning' | 'error' | 'info'
 }
 
 // Props
@@ -116,6 +117,7 @@ const props = withDefaults(defineProps<LbMenuProps>(), {
   placement: 'bottom-start',
   virtualScrolling: true,
   itemHeight: 40, // 40px (--lb-size-6xl) - used for virtual scrolling calculations
+  activeColor: 'neutral'
 })
 
 // Emits
@@ -226,7 +228,8 @@ const getItemKey = (item: MenuItem & { originalIndex?: number }, index: number) 
 const getItemClasses = (item: MenuItem, index: number) => ({
   'menu-item-selected': isSelected(item),
   'menu-item-highlighted': highlightedIndex.value === index,
-  'menu-item-disabled': item.disabled
+  'menu-item-disabled': item.disabled,
+  [`color-${props.activeColor}`]: isSelected(item)
 })
 
 const isSelected = (item: MenuItem) => {
@@ -565,17 +568,44 @@ onUnmounted(() => {
   gap: base.$space-sm // 8px
 
   &:hover:not(.menu-item-disabled):not(.menu-item-selected)
-    background: var(--lb-surface-neutral-normal)
+    background: var(--lb-surface-neutral-hover-alpha)
 
   &.menu-item-highlighted:not(.menu-item-disabled):not(.menu-item-selected)
-    background: var(--lb-surface-neutral-normal)
+    background: var(--lb-surface-neutral-hover-alpha)
 
   &.menu-item-selected
-    background: var(--lb-surface-neutral-hover)
-    color: var(--lb-text-neutral-contrast-high)
+    // Color variants for selected state
+    &.color-primary
+      background: var(--lb-surface-primary-hover-alpha)
+      color: var(--lb-text-primary-contrast-high)
 
-    &:hover
-      background: var(--lb-surface-neutral-hover)
+    &.color-secondary
+      background: var(--lb-surface-secondary-hover-alpha)
+      color: var(--lb-text-secondary-contrast-high)
+
+    &.color-tertiary
+      background: var(--lb-surface-tertiary-hover-alpha)
+      color: var(--lb-text-tertiary-contrast-high)
+
+    &.color-neutral
+      background: var(--lb-surface-neutral-hover-alpha)
+      color: var(--lb-text-neutral-contrast-high)
+
+    &.color-success
+      background: var(--lb-surface-success-hover-alpha)
+      color: var(--lb-text-success-contrast-high)
+
+    &.color-warning
+      background: var(--lb-surface-warning-hover-alpha)
+      color: var(--lb-text-warning-contrast-high)
+
+    &.color-error
+      background: var(--lb-surface-error-hover-alpha)
+      color: var(--lb-text-error-contrast-high)
+
+    &.color-info
+      background: var(--lb-surface-info-hover-alpha)
+      color: var(--lb-text-info-contrast-high)
 
   &.menu-item-disabled
     color: var(--lb-text-neutral-disabled)
