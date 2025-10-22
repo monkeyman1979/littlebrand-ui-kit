@@ -56,8 +56,27 @@ LbDropdown.lb-menu(
                 :highlighted="highlightedIndex === index"
               )
                 .item-content
+                  //- Leading icon slot
+                  span.icon-leading(v-if="$slots['item-icon-leading']")
+                    slot(
+                      name="item-icon-leading"
+                      :item="item"
+                      :selected="isSelected(item)"
+                    )
+
+                  //- Label (stretches to fill available space)
                   span.item-label(v-html="getHighlightedLabel(item)")
-                  .item-checkmark(v-if="isSelected(item)" :class="`color-${activeColor}`")
+
+                  //- Trailing icon slot
+                  span.icon-trailing(v-if="$slots['item-icon-trailing']")
+                    slot(
+                      name="item-icon-trailing"
+                      :item="item"
+                      :selected="isSelected(item)"
+                    )
+
+                  //- Default trailing checkmark when selected (only if no custom trailing icon)
+                  span.icon-trailing(v-else-if="isSelected(item)" :class="`color-${activeColor}`")
                     svg(
                       width="16"
                       height="16"
@@ -90,6 +109,8 @@ export interface MenuItem {
   label: string
   disabled?: boolean
   type?: 'item' | 'divider'
+  iconLeading?: string  // For future use with icon components
+  iconTrailing?: string // For future use with icon components
 }
 
 export interface LbMenuProps {
@@ -591,9 +612,29 @@ onUnmounted(() => {
 .item-content
   display: flex
   align-items: center
-  justify-content: space-between
   width: 100%
   gap: base.$space-sm // 8px
+
+.icon-leading,
+.icon-trailing
+  display: flex
+  align-items: center
+  justify-content: center
+  flex-shrink: 0
+  width: base.$unit-20  // 20px
+  height: base.$unit-20  // 20px
+
+  // Color variants for trailing icon (checkmark)
+  &.color-neutral
+    color: var(--lb-text-neutral-contrast-high)
+
+  &.color-primary
+    color: var(--lb-text-primary-contrast-high)
+
+  // Default color for leading icons
+  :deep(svg)
+    width: 100%
+    height: 100%
 
 .item-label
   flex: 1
@@ -601,27 +642,13 @@ onUnmounted(() => {
   overflow: hidden
   text-overflow: ellipsis
   white-space: nowrap
+  min-width: 0  // Important for text-overflow to work in flex
 
   :deep(mark)
     background: var(--lb-surface-warning-normal)
     color: var(--lb-text-warning-contrast-high)
     padding: 0 base.$space-2xs // 0 2px
     border-radius: base.$radius-xs
-
-.item-checkmark
-  display: flex
-  align-items: center
-  justify-content: center
-  width: base.$unit-18  // 18px
-  height: base.$unit-18  // 18px
-  flex-shrink: 0
-
-  // Color variants for checkmark icon
-  &.color-neutral
-    color: var(--lb-text-neutral-contrast-high)
-
-  &.color-primary
-    color: var(--lb-text-primary-contrast-high)
 
 .menu-divider
   width: 100%

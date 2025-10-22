@@ -2577,6 +2577,21 @@
               template(#trigger)
                 LbButton(variant="tonal" color="primary") Primary Active
 
+        .demo-group
+          h4 Menu Items with Icons
+          p Menu items support leading and trailing icon slots. Text stretches to fill available space.
+          .button-row
+            LbMenu(v-model="selectedMenuWithIcons" :options="basicMenuOptions" active-color="primary")
+              template(#trigger)
+                LbButton(variant="outline") Menu with Icons
+
+              template(#item-icon-leading="{ item }")
+                svg(viewBox="0 0 20 20" fill="currentColor")
+                  path(v-if="item.value === 'Option 1'" d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z")
+                  path(v-else-if="item.value === 'Option 2'" d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z")
+                  path(v-else-if="item.value === 'Option 3'" d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z")
+                  path(v-else d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z")
+
       .component-demo
         h3 Calendar
         p Date selection component with month/year navigation and keyboard support
@@ -3635,6 +3650,7 @@ const selectedMonth = ref(new Date().getMonth())
 const selectedYear = ref(new Date().getFullYear())
 const selectedMenuNeutral = ref('Option 1')
 const selectedMenuPrimary = ref('Option 2')
+const selectedMenuWithIcons = ref('Option 1')
 const selectedUser = ref('')
 const selectedAction = ref('')
 const selectedWithDisabled = ref('')
