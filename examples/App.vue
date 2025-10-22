@@ -147,7 +147,28 @@
             h4 Heading Level 4
             h5 Heading Level 5
             h6 Heading Level 6
-      
+
+    section.text-contrast-demo-section
+      h2 Text Contrast Levels
+      p.body-large Visual comparison of text token contrast levels across all colors
+
+      .text-contrast-grid
+        .contrast-demo-card(v-for="colorName in textContrastColors" :key="colorName")
+          h4.contrast-card-title {{ colorName.charAt(0).toUpperCase() + colorName.slice(1) }}
+          .contrast-examples
+            .contrast-item(:style="{ color: `var(--lb-text-${colorName}-contrast-high)` }")
+              span.contrast-label Contrast High
+              span.contrast-step (Step 12)
+            .contrast-item(:style="{ color: `var(--lb-text-${colorName}-normal)` }")
+              span.contrast-label Normal
+              span.contrast-step (Step 11)
+            .contrast-item(:style="{ color: `var(--lb-text-${colorName}-contrast-low)` }")
+              span.contrast-label Contrast Low
+              span.contrast-step (Step 9)
+            .contrast-item(:style="{ color: `var(--lb-text-${colorName}-disabled)` }")
+              span.contrast-label Disabled
+              span.contrast-step (Step 7)
+
     section.color-section
       h2 Color Palette
       .color-grid
@@ -3309,6 +3330,9 @@ const colors = [
   { name: 'Info', var: '--lb-fill-info-normal' },
 ]
 
+// Text contrast demo colors
+const textContrastColors = ['neutral', 'primary', 'secondary', 'tertiary', 'success', 'warning', 'error', 'info']
+
 const buttonVariants = ['filled', 'tonal', 'outline', 'ghost']
 const buttonColors = ['primary', 'secondary', 'tertiary', 'neutral', 'success', 'warning', 'error', 'info']
 
@@ -4044,7 +4068,48 @@ section
           padding: base.$space-md
           background: var(--lb-surface-neutral-subtle)
           border-radius: base.$radius-md
-    
+
+.text-contrast-demo-section
+  .text-contrast-grid
+    display: grid
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))
+    gap: base.$space-lg
+    margin-top: base.$space-lg
+
+  .contrast-demo-card
+    background: var(--lb-surface-base)
+    border: base.$border-sm solid var(--lb-border-neutral-line)
+    border-radius: base.$radius-lg
+    padding: base.$space-md
+
+    .contrast-card-title
+      margin: 0 0 base.$space-md 0
+      font-size: typography.$font-size-label-base
+      font-weight: var(--lb-font-weight-label)
+      color: var(--lb-text-neutral-contrast-high)
+
+  .contrast-examples
+    display: flex
+    flex-direction: column
+    gap: base.$space-xs
+
+  .contrast-item
+    display: flex
+    justify-content: space-between
+    align-items: center
+    padding: base.$space-sm base.$space-md
+    background: transparent
+    border-radius: base.$radius-md
+    font-size: typography.$font-size-label-base
+    min-height: base.$unit-40
+
+    .contrast-label
+      font-weight: var(--lb-font-weight-body)
+
+    .contrast-step
+      font-size: typography.$font-size-label-small
+      opacity: base.$opacity-60
+
 .color-section
   .color-grid
     display: grid
