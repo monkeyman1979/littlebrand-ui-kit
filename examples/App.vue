@@ -2809,25 +2809,26 @@ import { applyTheme } from '../src/utils/color-generator.js'
 
 const isDark = ref(false)
 
-// Default theme colors
-const themeColors = {
-  primary: '#ff8800',
-  secondary: '#00bfa5',
-  tertiary: '#3b82f6',
-  success: '#22c55e',
-  warning: '#f59e0b',
-  error: '#ef4444',
-  info: '#3b82f6',
-  neutral: '#6b7280'
-}
+// Default theme colors (for demonstration of dynamic theming)
+// Commented out to use the enhanced SASS color values instead
+// const themeColors = {
+//   primary: '#ff8800',
+//   secondary: '#00bfa5',
+//   tertiary: '#3b82f6',
+//   success: '#22c55e',
+//   warning: '#f59e0b',
+//   error: '#ef4444',
+//   info: '#3b82f6',
+//   neutral: '#6b7280'
+// }
 
 // Apply theme initially
-applyTheme(themeColors)
+// applyTheme(themeColors)
 
 // Watch dark mode changes and reapply theme
-watch(isDark, () => {
-  applyTheme(themeColors)
-})
+// watch(isDark, () => {
+//   applyTheme(themeColors)
+// })
 
 // Custom theme interactive demo
 
