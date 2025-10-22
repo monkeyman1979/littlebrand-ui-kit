@@ -11,7 +11,7 @@ A modern Vue 3 UI component library with a powerful color generation system. Bui
 - 🎯 **Zero Config** - Works out of the box with beautiful defaults
 - 🌳 **Tree-Shakeable** - Only bundle what you use
 - 💅 **SASS + Pug** - Clean, maintainable component code
-- 📝 **200+ CSS Variables** - Complete control over typography, spacing, and colors
+- 📝 **312 CSS Variables** - Complete control over typography, spacing, and colors
 - 🔤 **Flexible Typography** - Three independent font families for headings, body, and UI elements
 - 🎭 **Alpha Scales** - Complete transparency scales for overlays and subtle backgrounds
 - 🤖 **MCP Server Integration** - Built-in AI assistant tools for accurate component and token discovery
@@ -281,7 +281,7 @@ Full dark mode support is built-in! Simply activate it with the `dark` class or 
 </html>
 ```
 
-Dark mode automatically switches all 200+ color tokens to properly optimized dark values.
+Dark mode automatically switches all 312 tokens to properly optimized dark values.
 
 ## 🎯 Color System Features
 
@@ -434,7 +434,7 @@ Contributions are welcome! Please read our contributing guidelines before submit
 ## 📚 Documentation
 
 - **[Customization Guide](./CUSTOMIZATION.md)** - Complete customization documentation
-- **[CSS Variables Reference](./CSS_VARIABLES_REFERENCE.md)** - All 200+ customizable variables
+- **[CSS Variables Reference](./CSS_VARIABLES_REFERENCE.md)** - All 312 customizable variables
 - **[Typography Guide](./TYPOGRAPHY_CUSTOMIZATION_GUIDE.md)** - Font setup and typography
 - **[Override Template](./littlebrand-overrides-template.sass)** - Ready-to-use starter file
 

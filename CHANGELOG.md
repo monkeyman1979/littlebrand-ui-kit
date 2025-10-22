@@ -5,6 +5,60 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.0] - 2025-10-22
+
+### Added
+- **LbMenu Icon Slot Support**
+  - Added `item-icon-leading` slot for custom leading icons on menu items
+  - Added `item-icon-trailing` slot for custom trailing icons on menu items
+  - Slots receive `item` and `selected` props for contextual rendering
+  - Text content now flexes to fill space between icons
+
+- **Text Contrast Demo Section**
+  - Added visual comparison demo in examples showing all text contrast levels
+  - Displays Contrast High (step 12), Normal (step 11), Contrast Low (step 9), and Disabled (step 7)
+  - Available for all 8 color variants
+
+### Changed
+- **Enhanced Color System - Step 11 Improvements**
+  - Step 11 (text-normal) now uses LittleBrand-enhanced values for better contrast
+  - Light mode: Step 11 is 0.106 lighter than step 12 (prevents disabled appearance)
+  - Dark mode: Step 11 is 0.089 darker than step 12
+  - **This enhancement is now the default** for all users calling `applyTheme()`
+  - Provides better text hierarchy while maintaining readability
+
+- **BREAKING: Simplified Active Color Props**
+  - `LbMenu.activeColor` now only supports `'neutral' | 'primary'` (was 8 colors)
+  - `LbNavigationBar.activeColor` now only supports `'neutral' | 'primary'` (was 8 colors)
+  - Removed 6 unused color variant styles from both components for practical use
+
+- **Border Token Updates**
+  - Dropdown and Menu components now use use `--lb-border-neutral-line` (step 5)
+  - Previously used `--lb-border-neutral-normal` (step 7) which was too prominent
+  - Creates more subtle, refined borders
+
+### Fixed
+- **Text Color Token Hierarchy**
+  - Menu items now use `--lb-text-neutral-normal` for default state (step 11)
+  - Active menu items use `--lb-text-{color}-contrast-high` (step 12)
+  - NavigationBar items follow same pattern for consistency
+  - Previously mixed normal/contrast-low states inconsistently
+
+- **Snackbar Padding**
+  - Right padding now uses `base.$space-sm` (8px) for balanced spacing
+  - Previously used `cv.$snackbar-padding` (16px) on all sides
+
+- **MCP Server Component Extraction**
+  - Fixed slot extraction regex to properly handle hyphenated slot names
+  - Icon slots now correctly appear in MCP server documentation
+  - Improved slot detection for multi-line function signatures
+
+### Improved
+- **Token System**
+  - Updated to 312 CSS tokens (from 300+)
+  - TOKENS.md automatically regenerated with latest values
+  - MCP server token data synchronized
+
 ## [0.7.0] - 2025-09-25
 
 ### Changed

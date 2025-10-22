@@ -101,21 +101,22 @@ function parseComponentDeclaration(filePath) {
   }
 
   // Extract Slots interface
-  const slotsMatch = content.match(/export interface (\w+Slots)\s*{([^}]+)}/s);
+  const slotsMatch = content.match(/export interface (\w+Slots)\s*{([\s\S]*?)}\s*(?:export|$)/);
   if (slotsMatch) {
     const slotsBody = slotsMatch[2];
-    const slotLines = slotsBody.split('\n').filter(line => line.trim() && !line.includes('//'));
 
-    slotLines.forEach(line => {
-      const match = line.match(/['"]?([^'":\s]+)['"]?\s*\(/);
-      if (match) {
-        const slotName = match[1];
-        component.slots.push({
-          name: slotName,
-          description: `${slotName} slot`
-        });
-      }
-    });
+    // Match slot definitions at the start of a line (not nested properties)
+    // Format: slotName: ... or 'slot-name': ... or "slot-name": ...
+    const slotRegex = /^\s*(['"]?)([a-zA-Z0-9-_]+)\1\s*\??:\s*\(/gm;
+    let match;
+
+    while ((match = slotRegex.exec(slotsBody)) !== null) {
+      const slotName = match[2];
+      component.slots.push({
+        name: slotName,
+        description: `${slotName} slot`
+      });
+    }
   }
 
   // Extract Emits interface

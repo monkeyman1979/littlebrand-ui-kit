@@ -3,7 +3,7 @@
 This file contains all available CSS custom properties (tokens) in the LittleBrand UI Kit.
 Use these tokens in your styles instead of hardcoded values.
 
-Generated on: 2025-10-21
+Generated on: 2025-10-22
 
 ## Border Tokens
 
@@ -54,42 +54,34 @@ Generated on: 2025-10-21
 
 - `--lb-fill-error-active`
 - `--lb-fill-error-disabled`
-- `--lb-fill-error-focus`
 - `--lb-fill-error-hover`
 - `--lb-fill-error-normal`
 - `--lb-fill-info-active`
 - `--lb-fill-info-disabled`
-- `--lb-fill-info-focus`
 - `--lb-fill-info-hover`
 - `--lb-fill-info-normal`
 - `--lb-fill-neutral-active`
 - `--lb-fill-neutral-disabled`
-- `--lb-fill-neutral-focus`
 - `--lb-fill-neutral-hover`
 - `--lb-fill-neutral-normal`
 - `--lb-fill-primary-active`
 - `--lb-fill-primary-disabled`
-- `--lb-fill-primary-focus`
 - `--lb-fill-primary-hover`
 - `--lb-fill-primary-normal`
 - `--lb-fill-secondary-active`
 - `--lb-fill-secondary-disabled`
-- `--lb-fill-secondary-focus`
 - `--lb-fill-secondary-hover`
 - `--lb-fill-secondary-normal`
 - `--lb-fill-success-active`
 - `--lb-fill-success-disabled`
-- `--lb-fill-success-focus`
 - `--lb-fill-success-hover`
 - `--lb-fill-success-normal`
 - `--lb-fill-tertiary-active`
 - `--lb-fill-tertiary-disabled`
-- `--lb-fill-tertiary-focus`
 - `--lb-fill-tertiary-hover`
 - `--lb-fill-tertiary-normal`
 - `--lb-fill-warning-active`
 - `--lb-fill-warning-disabled`
-- `--lb-fill-warning-focus`
 - `--lb-fill-warning-hover`
 - `--lb-fill-warning-normal`
 
@@ -161,31 +153,71 @@ Generated on: 2025-10-21
 - `--lb-surface-base`
 - `--lb-surface-disabled`
 - `--lb-surface-error-active`
+- `--lb-surface-error-active-alpha`
+- `--lb-surface-error-base-inverse`
 - `--lb-surface-error-hover`
+- `--lb-surface-error-hover-alpha`
 - `--lb-surface-error-normal`
+- `--lb-surface-error-normal-alpha`
+- `--lb-surface-error-subtle-inverse`
 - `--lb-surface-info-active`
+- `--lb-surface-info-active-alpha`
+- `--lb-surface-info-base-inverse`
 - `--lb-surface-info-hover`
+- `--lb-surface-info-hover-alpha`
 - `--lb-surface-info-normal`
+- `--lb-surface-info-normal-alpha`
+- `--lb-surface-info-subtle-inverse`
 - `--lb-surface-neutral-active`
+- `--lb-surface-neutral-active-alpha`
+- `--lb-surface-neutral-base-inverse`
 - `--lb-surface-neutral-hover`
+- `--lb-surface-neutral-hover-alpha`
 - `--lb-surface-neutral-normal`
+- `--lb-surface-neutral-normal-alpha`
+- `--lb-surface-neutral-subtle-inverse`
 - `--lb-surface-overlay`
 - `--lb-surface-primary-active`
+- `--lb-surface-primary-active-alpha`
+- `--lb-surface-primary-base-inverse`
 - `--lb-surface-primary-hover`
+- `--lb-surface-primary-hover-alpha`
 - `--lb-surface-primary-normal`
+- `--lb-surface-primary-normal-alpha`
+- `--lb-surface-primary-subtle-inverse`
 - `--lb-surface-secondary-active`
+- `--lb-surface-secondary-active-alpha`
+- `--lb-surface-secondary-base-inverse`
 - `--lb-surface-secondary-hover`
+- `--lb-surface-secondary-hover-alpha`
 - `--lb-surface-secondary-normal`
+- `--lb-surface-secondary-normal-alpha`
+- `--lb-surface-secondary-subtle-inverse`
 - `--lb-surface-subtle`
 - `--lb-surface-success-active`
+- `--lb-surface-success-active-alpha`
+- `--lb-surface-success-base-inverse`
 - `--lb-surface-success-hover`
+- `--lb-surface-success-hover-alpha`
 - `--lb-surface-success-normal`
+- `--lb-surface-success-normal-alpha`
+- `--lb-surface-success-subtle-inverse`
 - `--lb-surface-tertiary-active`
+- `--lb-surface-tertiary-active-alpha`
+- `--lb-surface-tertiary-base-inverse`
 - `--lb-surface-tertiary-hover`
+- `--lb-surface-tertiary-hover-alpha`
 - `--lb-surface-tertiary-normal`
+- `--lb-surface-tertiary-normal-alpha`
+- `--lb-surface-tertiary-subtle-inverse`
 - `--lb-surface-warning-active`
+- `--lb-surface-warning-active-alpha`
+- `--lb-surface-warning-base-inverse`
 - `--lb-surface-warning-hover`
+- `--lb-surface-warning-hover-alpha`
 - `--lb-surface-warning-normal`
+- `--lb-surface-warning-normal-alpha`
+- `--lb-surface-warning-subtle-inverse`
 
 ## Input Tokens
 

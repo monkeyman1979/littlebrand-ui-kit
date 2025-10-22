@@ -24,15 +24,24 @@ export interface LbMenuProps {
   placement?: MenuPlacement
   virtualScrolling?: boolean
   itemHeight?: number
+  activeColor?: 'neutral' | 'primary'
 }
 
 export interface LbMenuSlots {
   trigger: () => any
-  item?: (props: { 
+  item?: (props: {
     item: MenuItem
     index: number
     selected: boolean
     highlighted: boolean
+  }) => any
+  'item-icon-leading'?: (props: {
+    item: MenuItem
+    selected: boolean
+  }) => any
+  'item-icon-trailing'?: (props: {
+    item: MenuItem
+    selected: boolean
   }) => any
 }
 

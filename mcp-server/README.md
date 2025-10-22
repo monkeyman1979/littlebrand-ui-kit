@@ -12,7 +12,7 @@ This MCP server provides 10 powerful tools for working with LittleBrand UI Kit:
 - **`lb_get_component_info`** - Get comprehensive documentation for any component
 
 ### Design Token System
-- **`lb_list_tokens`** - Browse 300+ design tokens (colors, spacing, typography)
+- **`lb_list_tokens`** - Browse 312 design tokens (colors, spacing, typography)
 - **`lb_search_tokens`** - Search tokens by name or description
 - **`lb_get_token_info`** - Get detailed information about specific tokens
 
@@ -95,7 +95,7 @@ npm run dev
 
 - **`src/index.ts`** - Main server with tool registrations
 - **`src/data/components.ts`** - Component metadata (33+ components)
-- **`src/data/tokens.ts`** - Design token metadata (300+ tokens)
+- **`src/data/tokens.ts`** - Design token metadata (312 tokens)
 - **`dist/`** - Compiled JavaScript output
 
 ## Available Components
