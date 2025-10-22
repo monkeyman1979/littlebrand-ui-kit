@@ -99,7 +99,7 @@ defineOptions({
   border-radius: 0
   cursor: pointer
   transition: all base.$transition
-  color: var(--lb-text-neutral-contrast-low)
+  color: var(--lb-text-normal)  // Default: text-normal for non-active items
   outline: none
   position: relative
   width: 100%
@@ -151,9 +151,9 @@ defineOptions({
 .lb-navigation-bar-item
   &.active.color-neutral
     background-color: var(--lb-surface-neutral-hover-alpha)
-    color: var(--lb-text-neutral-contrast-high)
+    color: var(--lb-text-neutral-contrast-high)  // High contrast when active
 
   &.active.color-primary
     background-color: var(--lb-surface-primary-hover-alpha)
-    color: var(--lb-text-primary-contrast-high)
+    color: var(--lb-text-primary-contrast-high)  // High contrast when active
 </style>
