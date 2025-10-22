@@ -2567,23 +2567,15 @@
 
         .demo-group
           h4 Active Color Variants
-          p The activeColor prop changes the highlight color for selected menu items.
+          p The activeColor prop changes the highlight color for selected menu items (neutral or primary).
           .button-row
+            LbMenu(v-model="selectedMenuNeutral" :options="basicMenuOptions" active-color="neutral")
+              template(#trigger)
+                LbButton(variant="tonal" color="neutral") Neutral Active
+
             LbMenu(v-model="selectedMenuPrimary" :options="basicMenuOptions" active-color="primary")
               template(#trigger)
                 LbButton(variant="tonal" color="primary") Primary Active
-
-            LbMenu(v-model="selectedMenuSecondary" :options="basicMenuOptions" active-color="secondary")
-              template(#trigger)
-                LbButton(variant="tonal" color="secondary") Secondary Active
-
-            LbMenu(v-model="selectedMenuSuccess" :options="basicMenuOptions" active-color="success")
-              template(#trigger)
-                LbButton(variant="tonal" color="success") Success Active
-
-            LbMenu(v-model="selectedMenuError" :options="basicMenuOptions" active-color="error")
-              template(#trigger)
-                LbButton(variant="tonal" color="error") Error Active
 
       .component-demo
         h3 Calendar
@@ -3518,14 +3510,8 @@ const navActiveColor = ref('primary')
 const navShowLabels = ref(true)
 
 const navColorOptions = [
-  { value: 'primary', label: 'Primary' },
-  { value: 'secondary', label: 'Secondary' },
-  { value: 'tertiary', label: 'Tertiary' },
   { value: 'neutral', label: 'Neutral' },
-  { value: 'success', label: 'Success' },
-  { value: 'warning', label: 'Warning' },
-  { value: 'error', label: 'Error' },
-  { value: 'info', label: 'Info' }
+  { value: 'primary', label: 'Primary' }
 ]
 
 // Snackbar demo data
@@ -3647,10 +3633,8 @@ const selectedMenuItem = ref('')
 const selectedColor = ref('primary')
 const selectedMonth = ref(new Date().getMonth())
 const selectedYear = ref(new Date().getFullYear())
-const selectedMenuPrimary = ref('Option 1')
-const selectedMenuSecondary = ref('Option 2')
-const selectedMenuSuccess = ref('Option 3')
-const selectedMenuError = ref('Option 4')
+const selectedMenuNeutral = ref('Option 1')
+const selectedMenuPrimary = ref('Option 2')
 const selectedUser = ref('')
 const selectedAction = ref('')
 const selectedWithDisabled = ref('')

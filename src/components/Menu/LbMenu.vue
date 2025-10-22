@@ -103,7 +103,7 @@ export interface LbMenuProps {
   placement?: MenuPlacement
   virtualScrolling?: boolean
   itemHeight?: number
-  activeColor?: 'primary' | 'secondary' | 'tertiary' | 'neutral' | 'success' | 'warning' | 'error' | 'info'
+  activeColor?: 'neutral' | 'primary'
 }
 
 // Props
@@ -575,37 +575,13 @@ onUnmounted(() => {
 
   &.menu-item-selected
     // Color variants for selected state
-    &.color-primary
-      background: var(--lb-surface-primary-hover-alpha)
-      color: var(--lb-text-primary-contrast-high)
-
-    &.color-secondary
-      background: var(--lb-surface-secondary-hover-alpha)
-      color: var(--lb-text-secondary-contrast-high)
-
-    &.color-tertiary
-      background: var(--lb-surface-tertiary-hover-alpha)
-      color: var(--lb-text-tertiary-contrast-high)
-
     &.color-neutral
       background: var(--lb-surface-neutral-hover-alpha)
       color: var(--lb-text-neutral-contrast-high)
 
-    &.color-success
-      background: var(--lb-surface-success-hover-alpha)
-      color: var(--lb-text-success-contrast-high)
-
-    &.color-warning
-      background: var(--lb-surface-warning-hover-alpha)
-      color: var(--lb-text-warning-contrast-high)
-
-    &.color-error
-      background: var(--lb-surface-error-hover-alpha)
-      color: var(--lb-text-error-contrast-high)
-
-    &.color-info
-      background: var(--lb-surface-info-hover-alpha)
-      color: var(--lb-text-info-contrast-high)
+    &.color-primary
+      background: var(--lb-surface-primary-hover-alpha)
+      color: var(--lb-text-primary-contrast-high)
 
   &.menu-item-disabled
     color: var(--lb-text-neutral-disabled)
