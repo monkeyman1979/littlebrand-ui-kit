@@ -353,17 +353,27 @@ export function generateOklchScale(baseColor, mode = 'light') {
   
   const curves = RADIX_LIGHTNESS_CURVES[mode];
   const chromaPattern = RADIX_CHROMA_PATTERNS[mode];
-  
+
   // Calculate step 1 for dark mode
   let step1Lightness;
   if (mode === 'dark') {
     step1Lightness = curves[1](oklch.H);
   }
-  
+
+  // LittleBrand enhancement: Pre-calculate step 12 lightness for step 11 calculation
+  // This ensures step 11 is closer to step 12 for better text contrast
+  const step12Lightness = mode === 'light' ? curves[12](oklch.L, oklch.H) : curves[12](oklch.H);
+
+  // LittleBrand enhancement: Define fixed gap between step 11 and step 12
+  // These values prevent step 11 from appearing disabled while maintaining clear hierarchy
+  // Light mode: step 11 is 0.106 lighter than step 12
+  // Dark mode: step 11 is 0.089 darker than step 12
+  const LITTLEBRAND_STEP11_GAP = mode === 'light' ? 0.106 : -0.089;
+
   // Generate each step with Radix-quality curves
   for (let i = 1; i <= 12; i++) {
     let lightness, chroma, hue = oklch.H;
-    
+
     if (i === 9) {
       // Step 9 is always the exact input color
       lightness = oklch.L;
@@ -380,13 +390,18 @@ export function generateOklchScale(baseColor, mode = 'light') {
         lightness = curves[i](step1Lightness);
       }
       chroma = oklch.C * chromaPattern[i - 1];
-    } else if (i === 10 || i === 11) {
-      // Steps 10-11: relative to step 9
+    } else if (i === 10) {
+      // Step 10: relative to step 9
       lightness = curves[i](oklch.L);
       chroma = oklch.C * chromaPattern[i - 1];
+    } else if (i === 11) {
+      // Step 11: LittleBrand enhancement - closer to step 12 for better contrast
+      // Uses fixed gap from step 12 to prevent "disabled" appearance
+      lightness = step12Lightness + LITTLEBRAND_STEP11_GAP;
+      chroma = oklch.C * chromaPattern[i - 1];
     } else if (i === 12) {
-      // Step 12: specific handling
-      lightness = mode === 'light' ? curves[i](oklch.L, oklch.H) : curves[i](oklch.H);
+      // Step 12: specific handling (already calculated above for step 11)
+      lightness = step12Lightness;
       chroma = oklch.C * chromaPattern[i - 1];
     }
     

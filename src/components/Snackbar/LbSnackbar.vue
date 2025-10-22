@@ -165,7 +165,7 @@ defineOptions({
   align-items: stretch
   width: min(cv.$snackbar-max-width, 90%)
   min-height: base.$size-7xl  // 48px
-  padding: base.$space-sm cv.$snackbar-padding  // 8px vertical, 16px horizontal
+  padding: base.$space-sm base.$space-sm base.$space-sm cv.$snackbar-padding  // 8px top/right/bottom, 16px left
   background-color: var(--lb-surface-subtle)
   border: base.$border-sm solid var(--lb-border-neutral-line)
   border-radius: cv.$snackbar-border-radius
