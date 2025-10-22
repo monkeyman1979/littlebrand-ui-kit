@@ -252,7 +252,7 @@ defineOptions({
 
 .dropdown-content
   background: var(--lb-surface-base)
-  border: base.$border-sm solid var(--lb-border-neutral-normal)
+  border: base.$border-sm solid var(--lb-border-neutral-line)
   border-radius: base.$radius-lg
   box-shadow: base.$shadow-lg
   overflow-y: auto

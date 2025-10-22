@@ -532,7 +532,7 @@ onUnmounted(() => {
 
 .menu-search
   padding: base.$space-sm base.$space-sm base.$space-xs
-  border-bottom: base.$border-sm solid var(--lb-border-neutral-normal)
+  border-bottom: base.$border-sm solid var(--lb-border-neutral-line)
   
   form
     margin: 0
@@ -543,7 +543,7 @@ onUnmounted(() => {
   height: base.$size-6xl
   padding: 0 base.$space-sm // 0 8px
   background: var(--lb-surface-base)
-  border: base.$border-sm solid var(--lb-border-neutral-normal)
+  border: base.$border-sm solid var(--lb-border-neutral-line)
   border-radius: base.$radius-sm  // 8px for search inputs inside dropdowns
   font-size: typography.$font-size-label-base
   color: var(--lb-text-neutral-contrast-high)
