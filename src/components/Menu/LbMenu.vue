@@ -582,7 +582,7 @@ onUnmounted(() => {
   border: none
   border-radius: base.$radius-md
   font-size: typography.$font-size-label-base
-  color: var(--lb-text-neutral-contrast-high)
+  color: var(--lb-text-normal)  // Default: text-normal for non-selected items
   cursor: pointer
   transition: background-color base.$transition, color base.$transition
   box-sizing: border-box
@@ -598,11 +598,11 @@ onUnmounted(() => {
     // Color variants for selected state
     &.color-neutral
       background: var(--lb-surface-neutral-hover-alpha)
-      color: var(--lb-text-neutral-contrast-high)
+      color: var(--lb-text-neutral-contrast-high)  // High contrast when selected
 
     &.color-primary
       background: var(--lb-surface-primary-hover-alpha)
-      color: var(--lb-text-primary-contrast-high)
+      color: var(--lb-text-primary-contrast-high)  // High contrast when selected
 
   &.menu-item-disabled
     color: var(--lb-text-neutral-disabled)
@@ -623,15 +623,15 @@ onUnmounted(() => {
   flex-shrink: 0
   width: base.$unit-20  // 20px
   height: base.$unit-20  // 20px
+  color: inherit  // Inherit color from parent menu-item (text-normal by default)
 
-  // Color variants for trailing icon (checkmark)
+  // Color variants for trailing icon (checkmark when selected)
   &.color-neutral
     color: var(--lb-text-neutral-contrast-high)
 
   &.color-primary
     color: var(--lb-text-primary-contrast-high)
 
-  // Default color for leading icons
   :deep(svg)
     width: 100%
     height: 100%
