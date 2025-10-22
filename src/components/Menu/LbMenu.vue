@@ -582,7 +582,7 @@ onUnmounted(() => {
   border: none
   border-radius: base.$radius-md
   font-size: typography.$font-size-label-base
-  color: var(--lb-text-normal)  // Default: text-normal for non-selected items
+  color: var(--lb-text-neutral-normal)  // Default and hover: text-neutral-normal
   cursor: pointer
   transition: background-color base.$transition, color base.$transition
   box-sizing: border-box
@@ -595,14 +595,14 @@ onUnmounted(() => {
     background: var(--lb-surface-neutral-hover-alpha)
 
   &.menu-item-selected
-    // Color variants for selected state
+    // Color variants for active/selected state
     &.color-neutral
       background: var(--lb-surface-neutral-hover-alpha)
-      color: var(--lb-text-neutral-contrast-high)  // High contrast when selected
+      color: var(--lb-text-neutral-contrast-high)  // Active: text-neutral-contrast-high
 
     &.color-primary
       background: var(--lb-surface-primary-hover-alpha)
-      color: var(--lb-text-primary-contrast-high)  // High contrast when selected
+      color: var(--lb-text-primary-contrast-high)  // Active: text-primary-contrast-high
 
   &.menu-item-disabled
     color: var(--lb-text-neutral-disabled)
@@ -623,14 +623,14 @@ onUnmounted(() => {
   flex-shrink: 0
   width: base.$unit-20  // 20px
   height: base.$unit-20  // 20px
-  color: inherit  // Inherit color from parent menu-item (text-normal by default)
+  color: inherit  // Inherit from parent (text-neutral-normal by default, contrast-high when active)
 
-  // Color variants for trailing icon (checkmark when selected)
+  // Color variants for trailing icon (checkmark when selected/active)
   &.color-neutral
-    color: var(--lb-text-neutral-contrast-high)
+    color: var(--lb-text-neutral-contrast-high)  // Active: contrast-high
 
   &.color-primary
-    color: var(--lb-text-primary-contrast-high)
+    color: var(--lb-text-primary-contrast-high)  // Active: contrast-high
 
   :deep(svg)
     width: 100%
