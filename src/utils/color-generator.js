@@ -67,8 +67,8 @@ export function generateSemanticTokens(name, scale, darkScale = null) {
   tokens[`--lb-fill-${name}-disabled`] = name === 'neutral' ? `var(--lb-${name}-alpha-2)` : `var(--lb-${name}-alpha-4)`
   
   // Text tokens
-  tokens[`--lb-text-${name}-normal`] = getScaleValue(9)
-  tokens[`--lb-text-${name}-contrast-low`] = getScaleValue(11)
+  tokens[`--lb-text-${name}-normal`] = getScaleValue(11)  // Fixed: was 9, should be 11
+  tokens[`--lb-text-${name}-contrast-low`] = getScaleValue(9)  // Fixed: was 11, should be 9
   tokens[`--lb-text-${name}-contrast-high`] = getScaleValue(12)
   tokens[`--lb-text-${name}-disabled`] = getScaleValue(7)
   

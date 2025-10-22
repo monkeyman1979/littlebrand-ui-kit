@@ -99,7 +99,7 @@ defineOptions({
   border-radius: 0
   cursor: pointer
   transition: all base.$transition
-  color: var(--lb-text-neutral-contrast-low)
+  color: var(--lb-text-neutral-normal)  // Default and hover: text-neutral-normal
   outline: none
   position: relative
   width: 100%
@@ -149,35 +149,11 @@ defineOptions({
 
 // Color variants - Active states with backgrounds (alpha-4)
 .lb-navigation-bar-item
-  &.active.color-primary
-    background-color: var(--lb-surface-primary-hover-alpha)
-    color: var(--lb-text-primary-contrast-high)
-
-  &.active.color-secondary
-    background-color: var(--lb-surface-secondary-hover-alpha)
-    color: var(--lb-text-secondary-contrast-high)
-
-  &.active.color-tertiary
-    background-color: var(--lb-surface-tertiary-hover-alpha)
-    color: var(--lb-text-tertiary-contrast-high)
-
   &.active.color-neutral
     background-color: var(--lb-surface-neutral-hover-alpha)
-    color: var(--lb-text-neutral-contrast-high)
+    color: var(--lb-text-neutral-contrast-high)  // Active: text-neutral-contrast-high
 
-  &.active.color-success
-    background-color: var(--lb-surface-success-hover-alpha)
-    color: var(--lb-text-success-contrast-high)
-
-  &.active.color-warning
-    background-color: var(--lb-surface-warning-hover-alpha)
-    color: var(--lb-text-warning-contrast-high)
-
-  &.active.color-error
-    background-color: var(--lb-surface-error-hover-alpha)
-    color: var(--lb-text-error-contrast-high)
-
-  &.active.color-info
-    background-color: var(--lb-surface-info-hover-alpha)
-    color: var(--lb-text-info-contrast-high)
+  &.active.color-primary
+    background-color: var(--lb-surface-primary-hover-alpha)
+    color: var(--lb-text-primary-contrast-high)  // Active: text-primary-contrast-high
 </style>

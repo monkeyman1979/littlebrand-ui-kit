@@ -147,7 +147,28 @@
             h4 Heading Level 4
             h5 Heading Level 5
             h6 Heading Level 6
-      
+
+    section.text-contrast-demo-section
+      h2 Text Contrast Levels
+      p.body-large Visual comparison of text token contrast levels across all colors
+
+      .text-contrast-grid
+        .contrast-demo-card(v-for="colorName in textContrastColors" :key="colorName")
+          h4.contrast-card-title {{ colorName.charAt(0).toUpperCase() + colorName.slice(1) }}
+          .contrast-examples
+            .contrast-item(:style="{ color: `var(--lb-text-${colorName}-contrast-high)` }")
+              span.contrast-label Contrast High
+              span.contrast-step (Step 12)
+            .contrast-item(:style="{ color: `var(--lb-text-${colorName}-normal)` }")
+              span.contrast-label Normal
+              span.contrast-step (Step 11)
+            .contrast-item(:style="{ color: `var(--lb-text-${colorName}-contrast-low)` }")
+              span.contrast-label Contrast Low
+              span.contrast-step (Step 9)
+            .contrast-item(:style="{ color: `var(--lb-text-${colorName}-disabled)` }")
+              span.contrast-label Disabled
+              span.contrast-step (Step 7)
+
     section.color-section
       h2 Color Palette
       .color-grid
@@ -2567,23 +2588,30 @@
 
         .demo-group
           h4 Active Color Variants
-          p The activeColor prop changes the highlight color for selected menu items.
+          p The activeColor prop changes the highlight color for selected menu items (neutral or primary).
           .button-row
+            LbMenu(v-model="selectedMenuNeutral" :options="basicMenuOptions" active-color="neutral")
+              template(#trigger)
+                LbButton(variant="tonal" color="neutral") Neutral Active
+
             LbMenu(v-model="selectedMenuPrimary" :options="basicMenuOptions" active-color="primary")
               template(#trigger)
                 LbButton(variant="tonal" color="primary") Primary Active
 
-            LbMenu(v-model="selectedMenuSecondary" :options="basicMenuOptions" active-color="secondary")
+        .demo-group
+          h4 Menu Items with Icons
+          p Menu items support leading and trailing icon slots. Text stretches to fill available space.
+          .button-row
+            LbMenu(v-model="selectedMenuWithIcons" :options="basicMenuOptions" active-color="primary")
               template(#trigger)
-                LbButton(variant="tonal" color="secondary") Secondary Active
+                LbButton(variant="outline") Menu with Icons
 
-            LbMenu(v-model="selectedMenuSuccess" :options="basicMenuOptions" active-color="success")
-              template(#trigger)
-                LbButton(variant="tonal" color="success") Success Active
-
-            LbMenu(v-model="selectedMenuError" :options="basicMenuOptions" active-color="error")
-              template(#trigger)
-                LbButton(variant="tonal" color="error") Error Active
+              template(#item-icon-leading="{ item }")
+                svg(viewBox="0 0 20 20" fill="currentColor")
+                  path(v-if="item.value === 'Option 1'" d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z")
+                  path(v-else-if="item.value === 'Option 2'" d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z")
+                  path(v-else-if="item.value === 'Option 3'" d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z")
+                  path(v-else d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z")
 
       .component-demo
         h3 Calendar
@@ -2781,7 +2809,8 @@ import { applyTheme } from '../src/utils/color-generator.js'
 
 const isDark = ref(false)
 
-// Default theme colors
+// Default theme colors (for demonstration of dynamic theming)
+// Now uses LittleBrand enhanced step 11 values by default
 const themeColors = {
   primary: '#ff8800',
   secondary: '#00bfa5',
@@ -3302,6 +3331,9 @@ const colors = [
   { name: 'Info', var: '--lb-fill-info-normal' },
 ]
 
+// Text contrast demo colors
+const textContrastColors = ['neutral', 'primary', 'secondary', 'tertiary', 'success', 'warning', 'error', 'info']
+
 const buttonVariants = ['filled', 'tonal', 'outline', 'ghost']
 const buttonColors = ['primary', 'secondary', 'tertiary', 'neutral', 'success', 'warning', 'error', 'info']
 
@@ -3518,14 +3550,8 @@ const navActiveColor = ref('primary')
 const navShowLabels = ref(true)
 
 const navColorOptions = [
-  { value: 'primary', label: 'Primary' },
-  { value: 'secondary', label: 'Secondary' },
-  { value: 'tertiary', label: 'Tertiary' },
   { value: 'neutral', label: 'Neutral' },
-  { value: 'success', label: 'Success' },
-  { value: 'warning', label: 'Warning' },
-  { value: 'error', label: 'Error' },
-  { value: 'info', label: 'Info' }
+  { value: 'primary', label: 'Primary' }
 ]
 
 // Snackbar demo data
@@ -3647,10 +3673,9 @@ const selectedMenuItem = ref('')
 const selectedColor = ref('primary')
 const selectedMonth = ref(new Date().getMonth())
 const selectedYear = ref(new Date().getFullYear())
-const selectedMenuPrimary = ref('Option 1')
-const selectedMenuSecondary = ref('Option 2')
-const selectedMenuSuccess = ref('Option 3')
-const selectedMenuError = ref('Option 4')
+const selectedMenuNeutral = ref('Option 1')
+const selectedMenuPrimary = ref('Option 2')
+const selectedMenuWithIcons = ref('Option 1')
 const selectedUser = ref('')
 const selectedAction = ref('')
 const selectedWithDisabled = ref('')
@@ -4044,7 +4069,48 @@ section
           padding: base.$space-md
           background: var(--lb-surface-neutral-subtle)
           border-radius: base.$radius-md
-    
+
+.text-contrast-demo-section
+  .text-contrast-grid
+    display: grid
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr))
+    gap: base.$space-lg
+    margin-top: base.$space-lg
+
+  .contrast-demo-card
+    background: var(--lb-surface-base)
+    border: base.$border-sm solid var(--lb-border-neutral-line)
+    border-radius: base.$radius-lg
+    padding: base.$space-md
+
+    .contrast-card-title
+      margin: 0 0 base.$space-md 0
+      font-size: typography.$font-size-label-base
+      font-weight: var(--lb-font-weight-label)
+      color: var(--lb-text-neutral-contrast-high)
+
+  .contrast-examples
+    display: flex
+    flex-direction: column
+    gap: base.$space-xs
+
+  .contrast-item
+    display: flex
+    justify-content: space-between
+    align-items: center
+    padding: base.$space-sm base.$space-md
+    background: transparent
+    border-radius: base.$radius-md
+    font-size: typography.$font-size-label-base
+    min-height: base.$unit-40
+
+    .contrast-label
+      font-weight: var(--lb-font-weight-body)
+
+    .contrast-step
+      font-size: typography.$font-size-label-small
+      opacity: base.$opacity-60
+
 .color-section
   .color-grid
     display: grid

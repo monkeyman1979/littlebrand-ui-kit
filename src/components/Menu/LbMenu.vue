@@ -56,8 +56,27 @@ LbDropdown.lb-menu(
                 :highlighted="highlightedIndex === index"
               )
                 .item-content
+                  //- Leading icon slot
+                  span.icon-leading(v-if="$slots['item-icon-leading']")
+                    slot(
+                      name="item-icon-leading"
+                      :item="item"
+                      :selected="isSelected(item)"
+                    )
+
+                  //- Label (stretches to fill available space)
                   span.item-label(v-html="getHighlightedLabel(item)")
-                  .item-checkmark(v-if="isSelected(item)")
+
+                  //- Trailing icon slot
+                  span.icon-trailing(v-if="$slots['item-icon-trailing']")
+                    slot(
+                      name="item-icon-trailing"
+                      :item="item"
+                      :selected="isSelected(item)"
+                    )
+
+                  //- Default trailing checkmark when selected (only if no custom trailing icon)
+                  span.icon-trailing(v-else-if="isSelected(item)" :class="`color-${activeColor}`")
                     svg(
                       width="16"
                       height="16"
@@ -90,6 +109,8 @@ export interface MenuItem {
   label: string
   disabled?: boolean
   type?: 'item' | 'divider'
+  iconLeading?: string  // For future use with icon components
+  iconTrailing?: string // For future use with icon components
 }
 
 export interface LbMenuProps {
@@ -103,7 +124,7 @@ export interface LbMenuProps {
   placement?: MenuPlacement
   virtualScrolling?: boolean
   itemHeight?: number
-  activeColor?: 'primary' | 'secondary' | 'tertiary' | 'neutral' | 'success' | 'warning' | 'error' | 'info'
+  activeColor?: 'neutral' | 'primary'
 }
 
 // Props
@@ -511,7 +532,7 @@ onUnmounted(() => {
 
 .menu-search
   padding: base.$space-sm base.$space-sm base.$space-xs
-  border-bottom: base.$border-sm solid var(--lb-border-neutral-normal)
+  border-bottom: base.$border-sm solid var(--lb-border-neutral-line)
   
   form
     margin: 0
@@ -522,7 +543,7 @@ onUnmounted(() => {
   height: base.$size-6xl
   padding: 0 base.$space-sm // 0 8px
   background: var(--lb-surface-base)
-  border: base.$border-sm solid var(--lb-border-neutral-normal)
+  border: base.$border-sm solid var(--lb-border-neutral-line)
   border-radius: base.$radius-sm  // 8px for search inputs inside dropdowns
   font-size: typography.$font-size-label-base
   color: var(--lb-text-neutral-contrast-high)
@@ -561,7 +582,7 @@ onUnmounted(() => {
   border: none
   border-radius: base.$radius-md
   font-size: typography.$font-size-label-base
-  color: var(--lb-text-neutral-contrast-high)
+  color: var(--lb-text-neutral-normal)  // Default and hover: text-neutral-normal
   cursor: pointer
   transition: background-color base.$transition, color base.$transition
   box-sizing: border-box
@@ -574,38 +595,14 @@ onUnmounted(() => {
     background: var(--lb-surface-neutral-hover-alpha)
 
   &.menu-item-selected
-    // Color variants for selected state
-    &.color-primary
-      background: var(--lb-surface-primary-hover-alpha)
-      color: var(--lb-text-primary-contrast-high)
-
-    &.color-secondary
-      background: var(--lb-surface-secondary-hover-alpha)
-      color: var(--lb-text-secondary-contrast-high)
-
-    &.color-tertiary
-      background: var(--lb-surface-tertiary-hover-alpha)
-      color: var(--lb-text-tertiary-contrast-high)
-
+    // Color variants for active/selected state
     &.color-neutral
       background: var(--lb-surface-neutral-hover-alpha)
-      color: var(--lb-text-neutral-contrast-high)
+      color: var(--lb-text-neutral-contrast-high)  // Active: text-neutral-contrast-high
 
-    &.color-success
-      background: var(--lb-surface-success-hover-alpha)
-      color: var(--lb-text-success-contrast-high)
-
-    &.color-warning
-      background: var(--lb-surface-warning-hover-alpha)
-      color: var(--lb-text-warning-contrast-high)
-
-    &.color-error
-      background: var(--lb-surface-error-hover-alpha)
-      color: var(--lb-text-error-contrast-high)
-
-    &.color-info
-      background: var(--lb-surface-info-hover-alpha)
-      color: var(--lb-text-info-contrast-high)
+    &.color-primary
+      background: var(--lb-surface-primary-hover-alpha)
+      color: var(--lb-text-primary-contrast-high)  // Active: text-primary-contrast-high
 
   &.menu-item-disabled
     color: var(--lb-text-neutral-disabled)
@@ -615,9 +612,29 @@ onUnmounted(() => {
 .item-content
   display: flex
   align-items: center
-  justify-content: space-between
   width: 100%
   gap: base.$space-sm // 8px
+
+.icon-leading,
+.icon-trailing
+  display: flex
+  align-items: center
+  justify-content: center
+  flex-shrink: 0
+  width: base.$unit-20  // 20px
+  height: base.$unit-20  // 20px
+  color: inherit  // Inherit from parent (text-neutral-normal by default, contrast-high when active)
+
+  // Color variants for trailing icon (checkmark when selected/active)
+  &.color-neutral
+    color: var(--lb-text-neutral-contrast-high)  // Active: contrast-high
+
+  &.color-primary
+    color: var(--lb-text-primary-contrast-high)  // Active: contrast-high
+
+  :deep(svg)
+    width: 100%
+    height: 100%
 
 .item-label
   flex: 1
@@ -625,21 +642,13 @@ onUnmounted(() => {
   overflow: hidden
   text-overflow: ellipsis
   white-space: nowrap
+  min-width: 0  // Important for text-overflow to work in flex
 
   :deep(mark)
     background: var(--lb-surface-warning-normal)
     color: var(--lb-text-warning-contrast-high)
     padding: 0 base.$space-2xs // 0 2px
     border-radius: base.$radius-xs
-
-.item-checkmark
-  display: flex
-  align-items: center
-  justify-content: center
-  width: base.$unit-18  // 18px
-  height: base.$unit-18  // 18px
-  color: var(--lb-text-neutral-contrast-low)
-  flex-shrink: 0
 
 .menu-divider
   width: 100%
