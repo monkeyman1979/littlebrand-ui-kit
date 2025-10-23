@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.1] - 2025-10-23
+
+### Fixed
+- **MCP Server Runtime Dependencies**
+  - Added `@modelcontextprotocol/sdk` and `zod` to main package dependencies
+  - MCP server now works immediately after `npm install littlebrand-ui-kit`
+  - No additional installation steps required for AI assistant integration
+
+### Changed
+- **MCP Server Setup Instructions**
+  - Updated README.md with project-relative path configuration
+  - Simplified setup to use `./node_modules/littlebrand-ui-kit/mcp-server/dist/index.js`
+  - Added separate instructions for Claude Code and Claude Desktop
+  - MCP server version now always matches installed UI kit version
+
+### Added
+- **MCP Setup Documentation**
+  - Added detailed setup guide in README.md for Claude Code and Claude Desktop
+  - Added verification steps for testing MCP server connection
+  - Enhanced CLAUDE.md with color system and MCP integration details
+
 ## [0.8.0] - 2025-10-22
 
 ### Added
