@@ -258,6 +258,7 @@ defineOptions({
     align-items: center
     justify-content: center
     flex-shrink: 0
+    transition: color base.$transition
     
   .spinner
     animation: lb-spin 1s linear infinite
@@ -280,63 +281,111 @@ defineOptions({
   @if $variant == 'filled'
     background-color: var(--lb-fill-#{$color}-normal)
     color: var(--lb-text-on-#{$color})
+    .icon-leading,
+    .icon-trailing
+      color: var(--lb-text-on-#{$color})
     &:not(.disabled):not(.loading)
       @include base.hover-supported
         background-color: var(--lb-fill-#{$color}-hover)
         color: var(--lb-text-on-#{$color}-hover)
+        .icon-leading,
+        .icon-trailing
+          color: var(--lb-text-on-#{$color}-hover)
     &:active:not(.disabled):not(.loading)
       background-color: var(--lb-fill-#{$color}-active)
       color: var(--lb-text-on-#{$color}-active)
+      .icon-leading,
+      .icon-trailing
+        color: var(--lb-text-on-#{$color}-active)
     &.disabled
       background-color: var(--lb-surface-disabled)
       color: var(--lb-text-neutral-disabled)
+      .icon-leading,
+      .icon-trailing
+        color: var(--lb-text-neutral-disabled)
       
   @else if $variant == 'tonal'
     background-color: var(--lb-surface-#{$color}-normal)
-    color: if($color == 'neutral', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-normal))
+    color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
+    .icon-leading,
+    .icon-trailing
+      color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-normal), var(--lb-text-#{$color}-normal))
     &:not(.disabled):not(.loading)
       @include base.hover-supported
         background-color: var(--lb-surface-#{$color}-hover)
-        color: if($color == 'warning' or $color == 'neutral', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-normal))
+        color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
+        .icon-leading,
+        .icon-trailing
+          color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
     &:active:not(.disabled):not(.loading)
       background-color: var(--lb-surface-#{$color}-active)
+      .icon-leading,
+      .icon-trailing
+        color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
     &.disabled
       background-color: var(--lb-surface-subtle)
       color: var(--lb-text-neutral-disabled)
+      .icon-leading,
+      .icon-trailing
+        color: var(--lb-text-neutral-disabled)
       
   @else if $variant == 'outline'
     background-color: transparent
-    color: if($color == 'neutral', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-normal))
+    color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
     box-shadow: inset 0 0 0 base.$border-sm var(--lb-border-#{$color}-normal)
+    .icon-leading,
+    .icon-trailing
+      color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-normal), var(--lb-text-#{$color}-normal))
     &:not(.disabled):not(.loading)
       @include base.hover-supported
         background-color: var(--lb-fill-#{$color}-normal)
         color: var(--lb-text-on-#{$color})
         box-shadow: none
+        .icon-leading,
+        .icon-trailing
+          color: var(--lb-text-on-#{$color})
     &:active:not(.disabled):not(.loading)
       background-color: var(--lb-fill-#{$color}-active)
       color: var(--lb-text-on-#{$color}-active)
       box-shadow: none
+      .icon-leading,
+      .icon-trailing
+        color: var(--lb-text-on-#{$color}-active)
     &.disabled
       color: var(--lb-text-neutral-disabled)
       box-shadow: inset 0 0 0 base.$border-md var(--lb-border-neutral-line)
+      .icon-leading,
+      .icon-trailing
+        color: var(--lb-text-neutral-disabled)
       
   @else if $variant == 'ghost'
     background-color: transparent
-    color: if($color == 'neutral', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-normal))
+    color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
+    .icon-leading,
+    .icon-trailing
+      color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-normal), var(--lb-text-#{$color}-normal))
     &:not(.disabled):not(.loading)
       @include base.hover-supported
         background-color: var(--lb-surface-#{$color}-normal)
-        color: if($color == 'warning' or $color == 'neutral', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-normal))
+        color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
+        .icon-leading,
+        .icon-trailing
+          color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
     &:active:not(.disabled):not(.loading)
       background-color: var(--lb-surface-#{$color}-hover)
       transform: translateY(1px)
+      .icon-leading,
+      .icon-trailing
+        color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
     &.disabled
       color: var(--lb-text-neutral-disabled)
+      .icon-leading,
+      .icon-trailing
+        color: var(--lb-text-neutral-disabled)
       
   @else if $variant == 'link'
     background-color: transparent
-    color: var(--lb-text-#{$color}-normal)
+    color: var(--lb-text-#{$color}-contrast-low)
     padding: 0
     height: auto
     border: none
@@ -345,15 +394,24 @@ defineOptions({
     display: inline-flex
     align-items: center
     gap: base.$space-2xs
+    .icon-leading,
+    .icon-trailing
+      color: var(--lb-text-#{$color}-normal)
     &:not(.disabled):not(.loading)
       @include base.hover-supported
         text-decoration: underline
-        color: if($color == 'warning', var(--lb-text-warning-contrast-high), var(--lb-text-#{$color}-normal))
+        color: var(--lb-#{$color}-10)
+        .icon-leading,
+        .icon-trailing
+          color: var(--lb-text-#{$color}-contrast-high)
     &:active:not(.disabled):not(.loading)
       opacity: base.$opacity-80
     &.disabled
       color: var(--lb-text-neutral-disabled)
       cursor: not-allowed
+      .icon-leading,
+      .icon-trailing
+        color: var(--lb-text-neutral-disabled)
 
 // Generate all variant × color combinations
 $variants: ('filled', 'tonal', 'outline', 'ghost', 'link')
@@ -369,22 +427,49 @@ $color-map: ('primary': 'orange', 'secondary': 'teal', 'tertiary': 'sky', 'neutr
   &.ghost-neutral,
   &.tonal-neutral
     color: var(--lb-text-neutral-contrast-low)
-    
+
+    .icon-leading,
+    .icon-trailing
+      color: var(--lb-text-neutral-contrast-low)
+
     &:not(.disabled):not(.loading)
       @include base.hover-supported
         color: var(--lb-text-neutral-contrast-high)
-        
-    .icon-leading,
-    .icon-trailing
-      color: inherit
+        .icon-leading,
+        .icon-trailing
+          color: var(--lb-text-neutral-normal)
 
 // Light mode specific warning text colors
 :root:not([data-theme="dark"])
   .lb-button.tonal-warning,
   .lb-button.outline-warning,
-  .lb-button.ghost-warning,
-  .lb-button.link-warning
+  .lb-button.ghost-warning
     color: var(--lb-text-warning-contrast-high)
+    .icon-leading,
+    .icon-trailing
+      color: var(--lb-text-warning-normal)
+    &:not(.disabled):not(.loading)
+      @include base.hover-supported
+        .icon-leading,
+        .icon-trailing
+          color: var(--lb-text-warning-contrast-high)
+    &:active:not(.disabled):not(.loading)
+      .icon-leading,
+      .icon-trailing
+        color: var(--lb-text-warning-contrast-high)
+
+  // Link warning follows the standard link pattern (step 9 → 10)
+  .lb-button.link-warning
+    color: var(--lb-text-warning-contrast-low)
+    .icon-leading,
+    .icon-trailing
+      color: var(--lb-text-warning-normal)
+    &:not(.disabled):not(.loading)
+      @include base.hover-supported
+        color: var(--lb-warning-10)
+        .icon-leading,
+        .icon-trailing
+          color: var(--lb-text-warning-contrast-high)
 
 // Animations
 @keyframes lb-spin

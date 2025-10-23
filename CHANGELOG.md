@@ -5,6 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.2] - 2025-10-23
+
+### Added
+- **Surface Base and Subtle Tokens**
+  - Added `--lb-surface-{color}-base` (step 1) tokens for all color variants
+  - Added `--lb-surface-{color}-subtle` (step 2) tokens for all color variants
+  - Available for: primary, secondary, tertiary, success, warning, error, info, and neutral
+  - Perfect for very subtle colored backgrounds on cards, containers, and sections
+  - Total tokens increased from 312 to 328
+
+### Changed
+- **Button Icon Color Hierarchy**
+  - Icons now use `text-normal` (step 11) by default instead of `text-contrast-high` (step 12)
+  - Icons transition to `text-contrast-high` (step 12) on hover and active states
+  - Label text remains at `text-contrast-high` for maximum readability
+  - Applies to leading icons, trailing icons, and icon-only buttons
+  - Creates softer, more refined appearance while maintaining interactive feedback
+
+- **Link Button Color Refinement**
+  - Link variant now uses `text-contrast-low` (step 9) for more consistent brand color
+  - Hover state uses step 10 for brighter feedback
+  - Fixes brownish-orange appearance in light mode for primary color
+  - Icons follow standard button pattern (step 11 → step 12 on hover)
+  - Better brand color consistency between light and dark modes
+
+- **MCP Server Data**
+  - Updated token data with new surface tokens (328 total)
+  - Regenerated component metadata
+
 ## [0.8.1] - 2025-10-23
 
 ### Fixed
