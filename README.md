@@ -379,22 +379,58 @@ LittleBrand UI Kit includes an integrated **Model Context Protocol (MCP) server*
 
 ### Quick Setup
 
-The MCP server is automatically included when you install `littlebrand-ui-kit`.
+The MCP server is automatically included when you install `littlebrand-ui-kit`. All dependencies are bundled, so no additional installation is needed!
 
-**For Claude Desktop**, add to your config file:
+#### For Claude Code (Project-Specific)
+
+Create `.claude/config.json` in your project root:
 
 ```json
 {
   "mcpServers": {
-    "littlebrand": {
-      "command": "npx",
-      "args": ["littlebrand-mcp"]
+    "littlebrand-ui-kit": {
+      "command": "node",
+      "args": [
+        "./node_modules/littlebrand-ui-kit/mcp-server/dist/index.js"
+      ]
     }
   }
 }
 ```
 
-**For Claude Code**, create a project skill that references the MCP tools.
+Then restart Claude Code. The MCP server will load automatically and provide access to all LittleBrand components and tokens.
+
+#### For Claude Desktop
+
+Add to your Claude Desktop config file:
+
+**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+**Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+
+```json
+{
+  "mcpServers": {
+    "littlebrand-ui-kit": {
+      "command": "node",
+      "args": [
+        "/absolute/path/to/your-project/node_modules/littlebrand-ui-kit/mcp-server/dist/index.js"
+      ]
+    }
+  }
+}
+```
+
+Replace `/absolute/path/to/your-project/` with your actual project path.
+
+#### For Global Access (Optional)
+
+If you want the MCP server available across all projects, you can reference it from any project where littlebrand-ui-kit is installed, or install it globally:
+
+```bash
+npm install -g littlebrand-ui-kit
+```
+
+Then use the global path in your config.
 
 ### Available MCP Tools
 
@@ -403,9 +439,17 @@ The MCP server is automatically included when you install `littlebrand-ui-kit`.
 - **Code Generation**: `lb_generate_component_example`, `lb_generate_theme_config`
 - **Documentation**: `lb_get_installation_guide`, `lb_get_theming_guide`
 
+### Testing the MCP Server
+
+After setup, try asking your AI assistant:
+- "Show me all available LittleBrand components"
+- "How do I use the LbButton component?"
+- "What spacing tokens are available?"
+- "Generate a form with email input and submit button"
+
 ### Learn More
 
-See the complete [MCP Server Documentation](./MCP_SERVER.md) for detailed setup instructions, usage examples, and technical details.
+See the [MCP Server README](./mcp-server/README.md) for detailed documentation and troubleshooting.
 
 ## 🛠️ Development
 
