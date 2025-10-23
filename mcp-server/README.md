@@ -26,19 +26,36 @@ This MCP server provides 10 powerful tools for working with LittleBrand UI Kit:
 
 ## Installation
 
-1. Install dependencies:
+The MCP server is **automatically included** when you install `littlebrand-ui-kit` via npm:
+
 ```bash
-npm install
+npm install littlebrand-ui-kit
 ```
 
-2. Build the server:
-```bash
-npm run build
-```
+All dependencies (`@modelcontextprotocol/sdk`, `zod`) are bundled with the main package - no additional installation required!
 
 ## Usage
 
-### With Claude Desktop
+### For Claude Code (Recommended for Projects)
+
+Create `.claude/config.json` in your project root:
+
+```json
+{
+  "mcpServers": {
+    "littlebrand-ui-kit": {
+      "command": "node",
+      "args": [
+        "./node_modules/littlebrand-ui-kit/mcp-server/dist/index.js"
+      ]
+    }
+  }
+}
+```
+
+**Then restart Claude Code** (fully quit and relaunch). The MCP server will load automatically.
+
+### For Claude Desktop
 
 Add to your Claude Desktop configuration file:
 
@@ -51,20 +68,32 @@ Add to your Claude Desktop configuration file:
     "littlebrand-ui-kit": {
       "command": "node",
       "args": [
-        "/absolute/path/to/littlebrand-mcp-server/dist/index.js"
+        "/absolute/path/to/your-project/node_modules/littlebrand-ui-kit/mcp-server/dist/index.js"
       ]
     }
   }
 }
 ```
 
+Replace `/absolute/path/to/your-project/` with your actual project path where `littlebrand-ui-kit` is installed.
+
 ### With Other MCP Clients
 
 The server uses stdio transport and can be integrated with any MCP-compatible client:
 
 ```bash
-node dist/index.js
+node ./node_modules/littlebrand-ui-kit/mcp-server/dist/index.js
 ```
+
+### Verifying Setup
+
+After restarting your AI assistant, test the connection:
+
+```
+"Show me all available LittleBrand components"
+```
+
+You should see the assistant use tools like `lb_list_components` to provide accurate information.
 
 ## Example Queries
 

@@ -3,7 +3,7 @@
 This file contains all available CSS custom properties (tokens) in the LittleBrand UI Kit.
 Use these tokens in your styles instead of hardcoded values.
 
-Generated on: 2025-10-22
+Generated on: 2025-10-23
 
 ## Border Tokens
 
