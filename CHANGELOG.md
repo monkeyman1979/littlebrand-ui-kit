@@ -5,6 +5,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.3] - 2025-11-05
+
+### Added
+- **Segment Button Large Size Variant**
+  - Added `size="large"` option to `LbSegmentButton` component
+  - Large variant renders at 48px height (matches other large-sized form components)
+  - Includes appropriate padding, font size, and icon size adjustments
+  - Maintains consistent sizing with Input, Select, and Button large variants
+
+- **Typography Line Height - Comfortable**
+  - Added new `--lb-line-height-comfortable` (1.35) for small headings (h4-h6)
+  - Provides better spacing between large headings and body text
+  - Available as CSS custom property and SASS variable
+
+### Changed
+- **BREAKING: Typography Line Height System**
+  - Removed `--lb-line-height-relaxed` (1.75) - rarely used in practice
+  - Updated line height hierarchy:
+    - Display text: `tight` (1.1)
+    - Large headings (h1-h3): `compact` (1.25)
+    - Small headings (h4-h6): `comfortable` (1.35) - **NEW**
+    - Body text: `normal` (1.5)
+  - If you were using `--lb-line-height-relaxed`, replace with `--lb-line-height-normal` or a custom value
+
+- **Typography Text Colors**
+  - Default body text now uses `--lb-text-neutral-normal` (step 11) for optimized readability
+  - All headings (h1-h6) now use `--lb-text-neutral-contrast-high` (step 12) for maximum contrast
+  - Creates clearer visual hierarchy between headings and body content
+  - Previously body text used step 12, making it too prominent
+
+- **Override Template Documentation**
+  - Updated line height comments with new hierarchy
+  - Removed `relaxed` documentation
+  - Added usage notes for each line height value
+
 ## [0.8.2] - 2025-10-23
 
 ### Added

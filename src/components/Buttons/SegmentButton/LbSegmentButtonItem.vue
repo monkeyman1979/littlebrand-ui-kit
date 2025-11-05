@@ -220,18 +220,30 @@ defineOptions({
       &:hover:not(.disabled)
         background: var(--lb-surface-neutral-active)
 
-  // Size variant (only medium now)
+  // Size variants
   &.size-medium
     padding: 0 base.$space-lg // 16px minimum
     font-size: typography.$font-size-label-base
-    
+
     .icon-container
       width: base.$size-2xl // 18px
       height: base.$size-2xl // 18px
-      
+
       :deep(svg)
         width: base.$size-2xl // 18px
         height: base.$size-2xl // 18px
+
+  &.size-large
+    padding: 0 base.$space-xl // 20px
+    font-size: typography.$font-size-label-lg
+
+    .icon-container
+      width: base.$size-3xl // 20px
+      height: base.$size-3xl // 20px
+
+      :deep(svg)
+        width: base.$size-3xl // 20px
+        height: base.$size-3xl // 20px
 
 
   // Icon and text layout
@@ -252,13 +264,17 @@ defineOptions({
     padding: 0
     justify-content: center
     align-items: center
-    
+
     // Force hide label even if slot exists
     .label
       display: none
-    
+
     &.size-medium
       min-width: 3.5rem // 56px for better icon spacing
+      width: auto // Let it size based on content
+
+    &.size-large
+      min-width: 4rem // 64px for better icon spacing
       width: auto // Let it size based on content
   
   // Text-only styling (default behavior)

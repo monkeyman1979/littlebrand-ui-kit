@@ -219,9 +219,12 @@ defineOptions({
 
   &.size-small
     height: base.$size-5xl // 32px
-    
+
   &.size-medium
     height: base.$size-6xl // 40px
+
+  &.size-large
+    height: base.$size-7xl // 48px
 
   &.disabled
     opacity: base.$opacity-60
