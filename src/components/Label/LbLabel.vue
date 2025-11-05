@@ -73,5 +73,5 @@ label
     font-weight: var(--lb-font-weight-body)
     color: var(--lb-text-neutral-contrast-low)
     margin-left: base.$space-xs
-    font-size: typography.$font-size-label-small
+    font-size: typography.$font-size-label-sm
 </style>

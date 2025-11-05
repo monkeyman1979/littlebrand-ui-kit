@@ -235,7 +235,7 @@ defineOptions({
 
   &.size-large
     padding: 0 base.$space-xl // 20px
-    font-size: typography.$font-size-label-large
+    font-size: typography.$font-size-label-lg
 
     .icon-container
       width: base.$size-3xl // 20px

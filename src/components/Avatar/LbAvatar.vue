@@ -274,7 +274,7 @@ defineOptions({
 
   // Size-specific styles for text
   &.size-xs .fallback-text
-    font-size: typography.$font-size-label-small
+    font-size: typography.$font-size-label-sm
     
   &.size-sm .fallback-text
     font-size: typography.$font-size-label-base
@@ -283,10 +283,10 @@ defineOptions({
     font-size: typography.$font-size-body-base
     
   &.size-lg .fallback-text
-    font-size: typography.$font-size-body-large
+    font-size: typography.$font-size-body-lg
     
   &.size-xl .fallback-text
-    font-size: typography.$font-size-body-large
+    font-size: typography.$font-size-body-lg
 
   // Size-specific styles for icon
   &.size-xs .default-icon
