@@ -40,6 +40,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Removed `relaxed` documentation
   - Added usage notes for each line height value
 
+- **BREAKING: Font Size Variable Naming**
+  - Standardized all font-size SASS variables to use abbreviated t-shirt sizing format
+  - Changed naming convention:
+    - `small` → `sm` (e.g., `$font-size-body-small` → `$font-size-body-sm`)
+    - `large` → `lg` (e.g., `$font-size-label-large` → `$font-size-label-lg`)
+    - `xsmall` → `xs` (e.g., `$font-size-label-xsmall` → `$font-size-label-xs`)
+    - `xlarge` → `xl` (e.g., `$font-size-body-xlarge` → `$font-size-body-xl`)
+  - CSS custom properties were already using abbreviated format, now SASS variables match
+  - Ensures consistency across the entire design system
+  - **Migration:** If you're using SASS variables directly, update to abbreviated format
+
+### Fixed
+- **Segment Button Large Variant**
+  - Corrected SASS variable reference from `$font-size-label-lg` to proper variable name
+  - Fixed build error in large size variant
+
 ## [0.8.2] - 2025-10-23
 
 ### Added
