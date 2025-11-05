@@ -19,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Provides better spacing between large headings and body text
   - Available as CSS custom property and SASS variable
 
+- **Segment Button TypeScript Declarations**
+  - Added `.vue.d.ts` declaration files for `LbSegmentButton` and `LbSegmentButtonItem`
+  - Enables proper TypeScript support and IDE autocomplete
+  - Added to MCP server component data (increased from 24 to 26 components)
+  - Documents all props including new `size` prop with `'medium' | 'large'` options
+
 ### Changed
 - **BREAKING: Typography Line Height System**
   - Removed `--lb-line-height-relaxed` (1.75) - rarely used in practice
@@ -35,10 +41,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Creates clearer visual hierarchy between headings and body content
   - Previously body text used step 12, making it too prominent
 
-- **Override Template Documentation**
-  - Updated line height comments with new hierarchy
-  - Removed `relaxed` documentation
-  - Added usage notes for each line height value
+- **Documentation Updates**
+  - Updated `TYPOGRAPHY_CUSTOMIZATION_GUIDE.md` with new line heights and font-size variables
+  - Updated `CSS_VARIABLES_REFERENCE.md` with abbreviated variable names
+  - Fixed README examples to use correct rem values instead of incorrect pixel values
+  - Updated override template with new line height hierarchy
+  - Removed `relaxed` documentation, added usage notes for each line height value
+
+- **BREAKING: Font Size Variable Naming**
+  - Standardized all font-size SASS variables to use abbreviated t-shirt sizing format
+  - Changed naming convention:
+    - `small` → `sm` (e.g., `$font-size-body-small` → `$font-size-body-sm`)
+    - `large` → `lg` (e.g., `$font-size-label-large` → `$font-size-label-lg`)
+    - `xsmall` → `xs` (e.g., `$font-size-label-xsmall` → `$font-size-label-xs`)
+    - `xlarge` → `xl` (e.g., `$font-size-body-xlarge` → `$font-size-body-xl`)
+  - CSS custom properties were already using abbreviated format, now SASS variables match
+  - Ensures consistency across the entire design system
+  - **Migration:** If you're using SASS variables directly, update to abbreviated format
+
+### Fixed
+- **Segment Button Large Variant**
+  - Corrected SASS variable reference from `$font-size-label-lg` to proper variable name
+  - Fixed build error in large size variant
 
 ## [0.8.2] - 2025-10-23
 

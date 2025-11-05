@@ -137,7 +137,7 @@ defineOptions({
       transition: all base.$transition
   
   .label
-    font-size: typography.$font-size-label-small
+    font-size: typography.$font-size-label-sm
     font-weight: var(--lb-font-weight-label)
     line-height: typography.$line-height-compact
     text-align: center

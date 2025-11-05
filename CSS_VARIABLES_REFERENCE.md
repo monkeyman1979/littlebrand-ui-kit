@@ -357,15 +357,16 @@ Text colors for use on filled backgrounds. As of v0.3.6, uses stable text variab
 
 ```css
 /* Body text sizes */
---lb-font-size-body-small     /* 0.875rem (14px) */
---lb-font-size-body-base      /* 1rem (16px) */
---lb-font-size-body-large     /* 1.125rem (18px) */
+--lb-font-size-body-sm       /* 0.875rem (14px) */
+--lb-font-size-body-base     /* 1rem (16px) */
+--lb-font-size-body-lg       /* 1.125rem (18px) */
+--lb-font-size-body-xl       /* 1.5rem (24px) */
 
 /* Label/UI text sizes */
---lb-font-size-label-xsmall   /* 0.625rem (10px) */
---lb-font-size-label-small    /* 0.75rem (12px) */
---lb-font-size-label-base     /* 0.875rem (14px) */
---lb-font-size-label-large    /* 1rem (16px) */
+--lb-font-size-label-xs      /* 0.625rem (10px) */
+--lb-font-size-label-sm      /* 0.75rem (12px) */
+--lb-font-size-label-base    /* 0.875rem (14px) */
+--lb-font-size-label-lg      /* 1rem (16px) */
 
 /* Display sizes (responsive) */
 --lb-display-1                /* clamp(3rem, 5vw + 1rem, 5rem) */
@@ -375,10 +376,10 @@ Text colors for use on filled backgrounds. As of v0.3.6, uses stable text variab
 ### Line Heights
 
 ```css
---lb-line-height-tight      /* 1.1 - For display/hero text */
---lb-line-height-compact    /* 1.25 - For headings */
---lb-line-height-normal     /* 1.5 - For body text */
---lb-line-height-relaxed    /* 1.75 - For enhanced readability */
+--lb-line-height-tight        /* 1.1 - Display/hero text */
+--lb-line-height-compact      /* 1.25 - Large headings (h1-h3) */
+--lb-line-height-comfortable  /* 1.35 - Small headings (h4-h6) */
+--lb-line-height-normal       /* 1.5 - Body text */
 ```
 
 ### Letter Spacing

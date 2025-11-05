@@ -3,7 +3,7 @@
 This file contains all available CSS custom properties (tokens) in the LittleBrand UI Kit.
 Use these tokens in your styles instead of hardcoded values.
 
-Generated on: 2025-10-23
+Generated on: 2025-11-05
 
 ## Border Tokens
 
@@ -321,9 +321,9 @@ Generated on: 2025-10-23
 - `--lb-letter-spacing-tight`
 - `--lb-letter-spacing-tighter`
 - `--lb-letter-spacing-wide`
+- `--lb-line-height-comfortable`
 - `--lb-line-height-compact`
 - `--lb-line-height-normal`
-- `--lb-line-height-relaxed`
 - `--lb-line-height-tight`
 - `--lb-opacity-0`
 - `--lb-opacity-10`

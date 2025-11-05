@@ -316,7 +316,7 @@ defineOptions({
   
   &.size-large
     height: base.$unit-48  // 48px
-    font-size: typography.$font-size-label-large
+    font-size: typography.$font-size-label-lg
   
   // Focus visible state (keyboard navigation)
   &:focus-visible

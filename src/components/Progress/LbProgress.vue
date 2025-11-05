@@ -213,7 +213,7 @@ defineOptions({
         font-family: var(--lb-font-body)
         font-weight: var(--lb-font-weight-label)
         fill: var(--lb-text-neutral-contrast-high)
-        font-size: typography.$font-size-label-small
+        font-size: typography.$font-size-label-sm
     
     // Circular size variants (dimensions)
     &.circular-size-xs
@@ -221,14 +221,14 @@ defineOptions({
       height: 1.5rem
       
       .progress-text
-        font-size: typography.$font-size-label-small
+        font-size: typography.$font-size-label-sm
         
     &.circular-size-sm
       width: 2rem // 32px
       height: 2rem
       
       .progress-text
-        font-size: typography.$font-size-label-small
+        font-size: typography.$font-size-label-sm
         
     &.circular-size-md
       width: 2.5rem // 40px
