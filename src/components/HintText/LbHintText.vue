@@ -46,7 +46,7 @@ defineSlots<{
   align-items: center
   gap: base.$space-xs
   font-family: var(--lb-font-label)
-  font-size: typography.$font-size-label-small // 12px
+  font-size: typography.$font-size-label-sm // 12px
   line-height: typography.$line-height-normal
   color: var(--lb-text-neutral-contrast-low)
   

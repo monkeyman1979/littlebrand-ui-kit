@@ -764,7 +764,7 @@ defineOptions({
   justify-content: center
   min-width: base.$unit-40  // 40px to match day cells
   height: base.$unit-32  // 32px height for weekday labels
-  font-size: typography.$font-size-label-small
+  font-size: typography.$font-size-label-sm
   font-weight: var(--lb-font-weight-label)
   color: var(--lb-text-neutral-contrast-low)
   text-align: center
@@ -811,7 +811,7 @@ defineOptions({
     min-height: base.$unit-48  // 48px for large - using min-height to ensure full height
     height: base.$unit-48  // 48px for large
     border-radius: base.$radius-lg
-    font-size: typography.$font-size-body-large
+    font-size: typography.$font-size-body-lg
   
   &:focus-visible
     outline: base.$focus-ring-width solid var(--lb-focus-ring-color)

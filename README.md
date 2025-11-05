@@ -193,9 +193,9 @@ Override specific variables in your CSS:
   
   /* Change typography - separate fonts for different contexts */
   --lb-font-heading: 'Playfair Display', serif;
-  --lb-font-body: 'Inter', sans-serif;  
+  --lb-font-body: 'Inter', sans-serif;
   --lb-font-label: 'Inter', sans-serif;  /* UI elements */
-  --lb-font-size-base: 15px;
+  --lb-font-size-body-base: 1rem;  /* 16px */
   
   /* Change border radius */
   --lb-radius-md: 12px;
@@ -343,9 +343,9 @@ applyTheme({
   --lb-font-label: 'Inter', sans-serif;
   
   /* Font sizes and weights */
-  --lb-font-size-sm: 13px;
-  --lb-font-size-base: 15px;
-  --lb-font-size-lg: 18px;
+  --lb-font-size-body-sm: 0.875rem;   /* 14px */
+  --lb-font-size-body-base: 1rem;     /* 16px */
+  --lb-font-size-body-lg: 1.125rem;   /* 18px */
   --lb-font-weight-regular: 400;
   --lb-font-weight-medium: 500;
   --lb-font-weight-bold: 700;
