@@ -2,6 +2,8 @@
 
 A modern Vue 3 UI component library with a powerful color generation system. Build beautiful, accessible interfaces with minimal effort.
 
+See the [modernization roadmap](./docs/ROADMAP.md) for planned semantic-token, documentation, MCP, registry, and optional headless-integration work.
+
 ## ✨ Features
 
 - 🎨 **Radix UI Color System** - Professional color scales with precise OKLCH values
