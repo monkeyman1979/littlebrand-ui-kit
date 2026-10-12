@@ -1,6 +1,6 @@
 # Modernization execution plan
 
-Status: proposed ordering for the [roadmap](ROADMAP.md), not an implementation or a release commitment. Each numbered item is a small PR to `develop` unless investigation shows it must be split. Complete the acceptance gate before moving to its dependent item. Keep this plan for work that has *not* shipped; update `CHANGELOG.md` in each PR with user-visible changes only. Do not run `npm run build` without an explicit request from the project owner.
+Status: proposed ordering for the [roadmap](ROADMAP.md), not an implementation or a release commitment. See the [handoff status](MODERNIZATION_STATUS.md) for progress through Step 04. Each numbered item is a small PR to `develop` unless investigation shows it must be split. Complete the acceptance gate before moving to its dependent item. Keep this plan for work that has *not* shipped; update `CHANGELOG.md` in each PR with user-visible changes only. Do not run `npm run build` without an explicit request from the project owner.
 
 ## Why this order
 
@@ -110,4 +110,4 @@ Choose a concrete agent workflow that works without Vue. Add an optional visual 
 
 ## Immediate next PR
 
-**01 — Public surface audit.** It should produce the inventory and mismatch matrix only (no renames or broad fixes). The first review meeting can then settle token/theme contracts using evidence rather than choosing a website or registry format prematurely.
+**05 — Repair npm-facing types and packaging contract.** Steps 01–03 have reviewable audit/approved planning contracts; Step 04 has a passing focused safety net with [documented known gaps](STEP_04_CHECKS.md). Next verify a clean Vue + TypeScript consumer against documented root imports and CSS; do not infer published behavior from the source-entry smoke test. A production build remains owner-gated. Review the ordered Step 01–04 commits/PRs against `develop` before merging dependent work; see the [handoff](MODERNIZATION_STATUS.md) for resume details.
