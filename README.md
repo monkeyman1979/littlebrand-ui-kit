@@ -2,6 +2,8 @@
 
 A modern Vue 3 UI component library with a powerful color generation system. Build beautiful, accessible interfaces with minimal effort.
 
+See the [modernization roadmap](./docs/ROADMAP.md) for planned semantic-token, documentation, MCP, registry, and optional headless-integration work.
+
 ## ✨ Features
 
 - 🎨 **Radix UI Color System** - Professional color scales with precise OKLCH values
@@ -381,24 +383,20 @@ LittleBrand UI Kit includes an integrated **Model Context Protocol (MCP) server*
 
 The MCP server is automatically included when you install `littlebrand-ui-kit`. All dependencies are bundled, so no additional installation is needed!
 
-#### For Claude Code (Project-Specific)
+#### For MCP-compatible agents
 
-Create `.claude/config.json` in your project root:
+Configure your agent's MCP client to run the bundled stdio server from your installed project. The location and format of the client configuration vary by agent; a common server entry looks like:
 
 ```json
 {
-  "mcpServers": {
-    "littlebrand-ui-kit": {
-      "command": "node",
-      "args": [
-        "./node_modules/littlebrand-ui-kit/mcp-server/dist/index.js"
-      ]
-    }
+  "littlebrand-ui-kit": {
+    "command": "node",
+    "args": ["./node_modules/littlebrand-ui-kit/mcp-server/dist/index.js"]
   }
 }
 ```
 
-Then restart Claude Code. The MCP server will load automatically and provide access to all LittleBrand components and tokens.
+Use your project's `AGENTS.md` for tool-agnostic guidance about when to consult component and token references.
 
 #### For Claude Desktop
 

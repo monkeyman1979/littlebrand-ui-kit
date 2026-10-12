@@ -52,25 +52,9 @@ Or use the bin command directly:
 }
 ```
 
-## Usage with Claude Code
+## Guidance for MCP-compatible agents
 
-Create a skill for LittleBrand:
-
-```markdown
-# .claude/skills/littlebrand.md
-
-You are expert at building UI with LittleBrand UI Kit.
-
-## CRITICAL RULES:
-1. ALWAYS use the MCP server to verify component props and token names
-2. NEVER guess token variable names - use `lb_search_tokens` first
-3. NEVER guess component props - use `lb_get_component_info` first
-
-## Workflow:
-1. Before using any component: `lb_get_component_info`
-2. Before using any design token: `lb_search_tokens`
-3. Generate code only after confirming exact names from MCP
-```
+Configure your client's MCP settings to launch the bundled stdio server, then put tool-agnostic instructions in your project's `AGENTS.md`. For example: ask the agent to verify component props with `lb_get_component_info` and token names with `lb_search_tokens` before writing code. Check the installed package too: generated examples and metadata are being audited as part of the [modernization roadmap](./docs/ROADMAP.md).
 
 ## Available Tools
 
@@ -163,9 +147,9 @@ Run `npm run build` to regenerate the MCP data from source.
 ### LLM still hallucinating
 
 Make sure to:
-1. Create a Claude Code skill that enforces MCP usage
-2. Add instructions to your project's `CLAUDE.md`
-3. Ask Claude to verify names with the MCP server before writing code
+1. Configure the MCP server in your AI client's supported format.
+2. Put tool-agnostic component and token guidance in your project's `AGENTS.md` (or the equivalent supported by your client).
+3. Have the agent verify component props and token names against the MCP server and installed package before writing code.
 
 ## Technical Details
 
