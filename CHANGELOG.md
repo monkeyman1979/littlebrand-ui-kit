@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Documented the LittleBrand modernization roadmap in `docs/ROADMAP.md`, covering semantic tokens, component reliability, documentation, agent discovery, an optional Vue registry, and headless integration boundaries. No runtime features have shipped as part of this entry.
+- Added tool-agnostic contributor instructions in `AGENTS.md` and optional task checklists in `agents/`.
+
+### Removed
+- Removed Claude-specific GitHub Actions workflows and retired the tracked `.claude/agents/` definitions and root `CLAUDE.md` in favor of tool-agnostic guidance.
 
 ## [0.8.3] - 2025-11-05
 

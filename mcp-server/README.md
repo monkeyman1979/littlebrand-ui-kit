@@ -36,24 +36,20 @@ All dependencies (`@modelcontextprotocol/sdk`, `zod`) are bundled with the main 
 
 ## Usage
 
-### For Claude Code (Recommended for Projects)
+### For MCP-compatible agents
 
-Create `.claude/config.json` in your project root:
+Configure your client's MCP settings to launch the server installed with your project. Configuration location and format depend on the client; a common server entry looks like:
 
 ```json
 {
-  "mcpServers": {
-    "littlebrand-ui-kit": {
-      "command": "node",
-      "args": [
-        "./node_modules/littlebrand-ui-kit/mcp-server/dist/index.js"
-      ]
-    }
+  "littlebrand-ui-kit": {
+    "command": "node",
+    "args": ["./node_modules/littlebrand-ui-kit/mcp-server/dist/index.js"]
   }
 }
 ```
 
-**Then restart Claude Code** (fully quit and relaunch). The MCP server will load automatically.
+Use your project's `AGENTS.md` for tool-agnostic instructions about consulting component and token references.
 
 ### For Claude Desktop
 
