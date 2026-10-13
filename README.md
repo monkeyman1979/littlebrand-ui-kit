@@ -11,7 +11,7 @@ See the [modernization roadmap](./docs/ROADMAP.md) for planned semantic-token, d
 - 📦 **20+ Components** - Buttons, forms, dialogs, navigation, and more
 - 🌙 **Dark Mode** - Opt-in dark mode with optimized colors
 - 🎯 **Zero Config** - Works out of the box with beautiful defaults
-- 🌳 **Named Imports** - Import components individually (bundle-size/tree-shaking results still need consumer verification)
+- 🌳 **Named Imports** - Import components individually (bundle size varies; the global CSS remains shared)
 - 💅 **SASS + Pug** - Clean, maintainable component code
 - 📝 **312 CSS Variables** - Complete control over typography, spacing, and colors
 - 🔤 **Flexible Typography** - Three independent font families for headings, body, and UI elements
@@ -24,7 +24,7 @@ See the [modernization roadmap](./docs/ROADMAP.md) for planned semantic-token, d
 npm install littlebrand-ui-kit
 ```
 
-**Packaging status:** The currently published 0.8.3 package resolves named ESM root imports and the `style.css` path in a Node consumer, but its root TypeScript declarations are not discoverable and its declared CommonJS `require` target is missing. Fixes are prepared under Unreleased and require a separately authorized release build and publication before consumers can rely on them. Do not assume deep source imports or tree-shaking until validated in a consumer.
+**Packaging status:** The currently published 0.8.3 package resolves named ESM root imports and the `style.css` path in a Node consumer, but its root TypeScript declarations are not discoverable and its declared CommonJS `require` target is missing. Fixes have passed a local build and clean consumer check but remain **Unreleased** until separately reviewed and published. Do not assume deep source imports or tree-shaking until validated in a consumer.
 
 ## 🚀 Quick Start
 

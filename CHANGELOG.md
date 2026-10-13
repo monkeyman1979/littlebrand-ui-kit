@@ -12,11 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added tool-agnostic contributor instructions in `AGENTS.md` and optional task checklists in `agents/`.
 
 ### Fixed
-- Prepared root TypeScript declarations for named npm imports and typed `style.css` paths; the seven public components without verified declarations have deliberately opaque prop types until their APIs are audited. Corrected known Button, Input, Dialog, and Popover declaration mismatches. These changes are **Unreleased**; published 0.8.3 remains unchanged.
-- Corrected the declared CommonJS entry from a missing `.umd.js` file to the existing `.umd.cjs` output path. The ESM root and CSS import paths remain the same; no consumer import-path migration is intended. Confirm against the next authorized release artifact before publishing.
+- Prepared root TypeScript declarations for named npm imports and typed `style.css` paths; the seven public components without verified declarations have deliberately opaque prop types until their APIs are audited. Corrected known Button, Input, Dialog, and Popover declaration mismatches, plus seven legacy component declarations with invalid Vue emit/slot generic types. Regenerated affected MCP component metadata from the corrected declaration sources. A locally built package passed strict Vue + TypeScript consumer checks in both Bundler and NodeNext resolution modes with library checking enabled. These changes are **Unreleased**; published 0.8.3 remains unchanged.
+- Corrected the declared CommonJS entry from a missing `.umd.js` file to the existing `.umd.cjs` output path. The ESM root and CSS import paths remain the same; no consumer import-path migration is intended. Confirmed against an owner-authorized local tarball and clean consumer; no publication or migration has occurred.
 
 ### Changed
-- Replaced the unverified README tree-shaking guarantee with a named-import recommendation; bundle-size behavior still needs a measured consumer test.
+- Replaced the README's universal tree-shaking guarantee with a named-import recommendation. In one Vite consumer, a named Button import emitted less JavaScript than plugin installation, but both included the full kit CSS; do not infer per-component CSS or a universal size guarantee.
 
 ### Removed
 - Removed Claude-specific GitHub Actions workflows and retired the tracked `.claude/agents/` definitions and root `CLAUDE.md` in favor of tool-agnostic guidance.

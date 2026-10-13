@@ -12,7 +12,7 @@ Preserve the semantic design language: **text, surface, fill, border, and shadow
 
 - Published package: `littlebrand-ui-kit` 0.8.3; Vue 3, Vite, SASS/Pug, runtime theming, npm distribution, and a bundled stdio MCP server.
 - The MCP component data is generated from 26 `.vue.d.ts` files; the source contains 33 `.vue` files, including internal and compound components. Inventory *public exports*, not raw file counts, before stating a catalog size. Generated descriptions and examples are currently generic.
-- Steps 04–05 replaced placeholder `lint`/`typecheck` scripts and added a source self-reference TypeScript consumer fixture. A verified installed-package artifact and accurate generated documentation still require separate release checks.
+- Steps 04–05 replaced placeholder `lint`/`typecheck` scripts and added a source self-reference TypeScript consumer fixture. Step 05 now includes an owner-authorized local tarball and clean installed Vue + TypeScript consumer check; accurate generated documentation and a future published release still require separate checks.
 - Do not replace the npm package with a registry. Do not add AI-specific runtime dependencies to visual components. Do not assume headless agent applications need a UI.
 - Work on feature branches; do not publish or run `npm run build` as part of planning. Build only when explicitly requested, following project instructions.
 

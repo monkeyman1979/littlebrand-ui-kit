@@ -12,7 +12,7 @@ Do not put a website, registry, or newly advertised MCP tools on top of unreliab
 - Initially `LbInput.vue.d.ts` advertised `size="small"` although the implementation accepts only `medium | large`; Step 05 corrected the declaration but did not regenerate MCP data. The extractor still generates a `variant="filled"` example for `LbDialog`, whose variant is `default | fullscreen`. See `scripts/extract-components.js` and `mcp-server/src/data/components.ts`.
 - `src/styles/_theme.sass` maps primary surface `normal/hover/active` to palette steps 3/4/5; `generateSemanticTokens()` in `src/utils/color-generator.js` maps them to 2/3/4, and does not generate the same base/alpha/inverse surface set. This needs a contract decision before changing either implementation.
 - The static CSS supports `[data-theme="dark"]` and `.dark`; `applyTheme()` detects `.dark` on html/body and its observer watches `class` only. Test theme toggles and overrides explicitly before choosing a light/dark implementation.
-- Initially `package.json` lacked root types and lint/typecheck were placeholders. Steps 04–05 implemented source checks and proposed root types; the published 0.8.3 install still fails strict root TypeScript and CJS require ([consumer evidence](STEP_05_NPM_CONSUMER.md)). Tree-shaking and the future release artifact remain unverified.
+- Initially `package.json` lacked root types and lint/typecheck were placeholders. Steps 04–05 implemented source checks and proposed root types; the published 0.8.3 install still fails strict root TypeScript and CJS require ([consumer evidence](STEP_05_NPM_CONSUMER.md)). A limited local tree-shaking comparison and a fresh tarball consumer check have since passed; a future published artifact remains unverified.
 
 ## Ordered work packages
 
@@ -110,4 +110,4 @@ Choose a concrete agent workflow that works without Vue. Add an optional visual 
 
 ## Immediate next PR
 
-**05 — npm-facing types and packaging prepared, artifact gate pending.** [Step 05 consumer report](STEP_05_NPM_CONSUMER.md) distinguishes failures in installed published 0.8.3 from passing source self-reference checks and a temporary metadata simulation. No new artifact was produced. Review Steps 01–05 in order against `develop`; the next release-artifact check remains owner-gated. See the [handoff](MODERNIZATION_STATUS.md) before attempting dependent work.
+**05 — npm-facing types and packaging locally verified; review next.** [Step 05 consumer report](STEP_05_NPM_CONSUMER.md) distinguishes published 0.8.3 failures from a new owner-authorized, **unpublished** local tarball: strict Bundler/NodeNext TypeScript imports, ESM/CJS, and Vite CSS bundling passed in a fresh consumer. Review Steps 01–05 in order against `develop`, then plan Step 06. A future release from another commit needs its own artifact check; see the [handoff](MODERNIZATION_STATUS.md).

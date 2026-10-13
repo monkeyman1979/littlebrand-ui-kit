@@ -24,7 +24,7 @@ The tests intentionally pin the current mismatch **set**, rather than turning th
 
 ## Next verification gates
 
-1. Step 05: [published 0.8.3 consumer evidence and local fixes](STEP_05_NPM_CONSUMER.md) are prepared; the **next-release installed-package** check (root/CSS/type imports, CJS interop, measured bundle/tree-shaking, MCP bin) remains owner-build-gated. A source-facing fixture is not a substitute.
+1. Step 05: the owner-authorized [local artifact and clean-consumer check](STEP_05_NPM_CONSUMER.md) passed for root/CSS/type imports, CJS interop and a limited bundle comparison; this is separate from the Step 04 source fixture. It is **not** a published-registry update or full browser/MCP certification.
 2. Step 06: update static/runtime tokens together, then retire the surface-step/alpha/inverse known-gap entries, with theme regressions turning into positive assertions.
 3. Step 07–08: real browser tests for system preference on first paint and after OS change, selector precedence, latest custom palette, nested Dialog portal context, alpha/contrast, keyboard focus and accessibility beyond the narrow happy-dom interactions.
 

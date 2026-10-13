@@ -34,6 +34,14 @@ const components = [
 ] as const
 void [generateAlphaScale, generateDarkScale, generateSemanticTokens]
 
+// Vue's DefineComponent event and slot generics must compile without skipLibCheck.
+declare const segmentEmit: InstanceType<typeof LbSegmentButton>['$emit']
+segmentEmit('update:modelValue', 'first')
+// @ts-expect-error The segment model value is not a boolean
+segmentEmit('update:modelValue', true)
+const menuSlots: InstanceType<typeof LbMenu>['$slots'] = { trigger: () => [] }
+void menuSlots
+
 // Known incorrect declaration-only APIs must not be reintroduced.
 // @ts-expect-error Input implementation does not accept small
 const invalidInput: InstanceType<typeof LbInput>['$props'] = { size: 'small' }
