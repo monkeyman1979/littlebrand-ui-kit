@@ -20,6 +20,20 @@
       "related": ["token:--lb-border-neutral-normal", "token:--lb-border-error-normal", "token:--lb-text-neutral-normal"], "dependencies": ["Vue 3"]
     },
     {
+      "id": "component:LbTextarea", "name": "LbTextarea", "source": "src/components/Textarea/LbTextarea.vue", "example": "reference/examples/textarea.vue",
+      "purpose": "Collect longer free-form text with v-model.", "intents": ["textarea", "multiline", "notes", "long form", "feedback"], "use": "Associate a visible label or aria-label; pass native name and aria-describedby to the textarea for forms and helper text.", "avoid": "Do not assume FormField supplies validation or a required native attribute; explicitly set invalid/required on the control. No small size exists.",
+      "accessibility": "Uses a native textarea. Invalid sets aria-invalid; readonly and disabled preserve native semantics. The outline and ring stay visible on keyboard focus in both themes.",
+      "states": ["medium or large", "disabled", "readonly", "required", "invalid", "autoResize with optional maxRows", "keyboard focus", "reduced motion"],
+      "related": ["component:LbFormField", "component:LbInput", "token:--lb-border-neutral-normal", "token:--lb-border-error-normal"], "dependencies": ["Vue 3"]
+    },
+    {
+      "id": "component:LbFormField", "name": "LbFormField", "source": "src/components/FormField/LbFormField.vue", "example": "reference/examples/form-field.vue",
+      "purpose": "Compose a label, control and one helper or validation message.", "intents": ["form field", "validation", "label and hint", "error message", "field group"], "use": "Nest an Input or Textarea, supply label and hint/error, and bind v-model on the control. Pass required and invalid to the control itself.", "avoid": "Do not expect FormField to validate or set aria-invalid/required on its child. If using labelFor, keep it matched to the actual control ID.",
+      "accessibility": "Provides a stable generated id and aria-describedby for injected Input/Textarea; the visible label targets that id and the message supplies its description. A label alone does not mark the control required.",
+      "states": ["hint", "error, warning or success message (in that priority)", "required indicator", "stable control/description ids"],
+      "related": ["component:LbTextarea", "component:LbInput", "token:--lb-border-error-normal"], "dependencies": ["Vue 3", "LbLabel and LbHintText internally (standalone APIs not verified in this slice)"]
+    },
+    {
       "id": "component:LbDialog", "name": "LbDialog", "source": "src/components/Dialog/LbDialog.vue", "example": "reference/examples/dialog.vue",
       "purpose": "Present a modal decision or focused content.", "intents": ["dialog", "modal", "confirmation", "preferences", "overlay"], "use": "Bind v-model and give the dialog a title or an ARIA name; use the footer slot for actions.", "avoid": "Do not use variant=filled; only default and fullscreen exist. The header slot renders only in fullscreen and needs its own visible heading.",
       "accessibility": "Teleports to body with originating theme; focuses dialog on open, contains Tab and restores trigger focus on close. Escape/backdrop respect close props.",

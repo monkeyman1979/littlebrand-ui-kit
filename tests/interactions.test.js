@@ -3,6 +3,8 @@ import { mount } from '@vue/test-utils'
 import { h, nextTick } from 'vue'
 import LbButton from '../src/components/Buttons/Button/LbButton.vue'
 import LbInput from '../src/components/Inputs/Input/LbInput.vue'
+import LbTextarea from '../src/components/Textarea/LbTextarea.vue'
+import LbFormField from '../src/components/FormField/LbFormField.vue'
 import LbDialog from '../src/components/Dialog/LbDialog.vue'
 import LbPopover from '../src/components/Popover/LbPopover.vue'
 import LbPopoverTrigger from '../src/components/Popover/LbPopoverTrigger.vue'
@@ -149,6 +151,44 @@ describe('first component slice — narrow DOM interactions, not an accessibilit
     await fixture.get('button.lb-button').trigger('click')
     await nextTick()
     expect(document.body.querySelector('[role="dialog"]')?.getAttribute('aria-label')).toBe('Preferences')
+  })
+
+  test('Textarea forwards native attributes, updates strings and exposes invalid/disabled states', async () => {
+    const wrapper = attached(LbTextarea, {
+      props: { invalid: true, required: true, size: 'large' },
+      attrs: { name: 'biography', autocomplete: 'on', 'aria-label': 'Biography', class: 'field-control' }
+    })
+    const textarea = wrapper.get('textarea')
+    expect(textarea.attributes('name')).toBe('biography')
+    expect(textarea.attributes('autocomplete')).toBe('on')
+    expect(textarea.attributes('aria-label')).toBe('Biography')
+    expect(textarea.attributes('aria-invalid')).toBe('true')
+    expect(textarea.attributes('required')).toBeDefined()
+    expect(wrapper.get('.lb-textarea').classes()).toContain('field-control')
+    await textarea.setValue('A longer message')
+    expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual(['A longer message'])
+    await wrapper.setProps({ disabled: true, invalid: false })
+    expect(textarea.attributes('disabled')).toBeDefined()
+    expect(textarea.attributes('aria-invalid')).toBeUndefined()
+  })
+
+  test('FormField binds generated and labelFor IDs and updates hint/error descriptions', async () => {
+    const wrapper = attached(LbFormField, {
+      props: { label: 'Biography', hint: 'Tell us about yourself', labelFor: 'bio-field' },
+      slots: { default: () => h(LbTextarea, { name: 'biography' }) }
+    })
+    const textarea = wrapper.get('textarea')
+    expect(textarea.attributes('id')).toBe('bio-field')
+    expect(wrapper.get('label').attributes('for')).toBe('bio-field')
+    const hintId = wrapper.get('.lb-hint-text').attributes('id')
+    expect(textarea.attributes('aria-describedby')).toBe(hintId)
+    await wrapper.setProps({ error: 'Biography is required' })
+    expect(wrapper.get('.lb-hint-text').text()).toBe('Biography is required')
+    expect(textarea.attributes('id')).toBe('bio-field')
+    expect(textarea.attributes('aria-describedby')).toBe(hintId)
+    await wrapper.setProps({ error: undefined, hint: undefined })
+    expect(wrapper.find('.lb-hint-text').exists()).toBe(false)
+    expect(textarea.attributes('aria-describedby')).toBeUndefined()
   })
 
   test('Popover trigger opens on Enter and ignores keyboard action when disabled', async () => {

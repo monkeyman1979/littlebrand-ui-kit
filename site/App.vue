@@ -25,7 +25,7 @@
       .container
         .section-heading
           span.eyebrow 01 / choose by intent
-          h2#catalog-title Four complete starting points.
+          h2#catalog-title Six complete starting points.
           p Browse by what you need to do. SegmentButtonItem belongs inside SegmentButton; it is not a standalone example.
         .component-index(aria-label="Verified components")
           a.component-link(v-for="item in standalone" :key="item.id" :href="`#${item.id}`" :aria-current="active.id === item.id ? 'page' : undefined")
@@ -63,6 +63,22 @@
               label
                 input(type="checkbox" v-model="inputDisabled")
                 | Disabled
+            fieldset.preview-options(v-else-if="active.name === 'LbTextarea'")
+              legend Try verified states
+              label
+                input(type="checkbox" v-model="textareaInvalid")
+                | Invalid
+              label
+                input(type="checkbox" v-model="textareaDisabled")
+                | Disabled
+              label
+                input(type="checkbox" v-model="textareaAutoResize")
+                | Auto resize
+            fieldset.preview-options(v-else-if="active.name === 'LbFormField'")
+              legend Try verified states
+              label
+                input(type="checkbox" v-model="fieldRequired")
+                | Required
             fieldset.preview-options(v-else-if="active.name === 'LbDialog'")
               legend Try verified states
               label
@@ -81,6 +97,14 @@
                 label(for="site-email") Email
                 LbInput(id="site-email" v-model="email" type="email" name="email" autocomplete="email" required clearable :invalid="inputInvalid" :disabled="inputDisabled")
                 p.preview-status(role="status") Value: {{ email || 'empty' }}
+              template(v-else-if="active.name === 'LbTextarea'")
+                label(for="site-notes") Notes
+                LbTextarea(id="site-notes" v-model="notes" name="notes" aria-describedby="site-notes-help" :invalid="textareaInvalid" :disabled="textareaDisabled" :auto-resize="textareaAutoResize" :max-rows="5")
+                p#site-notes-help Optional notes.
+              template(v-else-if="active.name === 'LbFormField'")
+                LbFormField(label="Biography" hint="Tell us a little about yourself." :error="fieldError" :required="fieldRequired")
+                  LbTextarea(v-model="fieldValue" name="biography" :invalid="Boolean(fieldError)" :required="fieldRequired")
+                LbButton(@click="fieldError = fieldValue.trim() ? '' : 'Biography is required'") Validate
               template(v-else-if="active.name === 'LbDialog'")
                 LbButton(@click="dialogOpen = true") Open preferences
                 LbDialog(v-model="dialogOpen" title="Preferences" :variant="dialogFullscreen ? 'fullscreen' : 'default'")
@@ -181,7 +205,7 @@
 
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue'
-import { LbButton, LbInput, LbDialog, LbSegmentButton, LbSegmentButtonItem } from '../src/components'
+import { LbButton, LbInput, LbTextarea, LbFormField, LbDialog, LbSegmentButton, LbSegmentButtonItem } from '../src/components'
 import { applyTheme } from '../src/utils/color-generator.js'
 import reference from '../reference/v1.json'
 
@@ -194,6 +218,13 @@ const buttonLoading = ref(false)
 const email = ref('')
 const inputInvalid = ref(false)
 const inputDisabled = ref(false)
+const notes = ref('')
+const textareaInvalid = ref(false)
+const textareaDisabled = ref(false)
+const textareaAutoResize = ref(false)
+const fieldValue = ref('')
+const fieldError = ref('')
+const fieldRequired = ref(true)
 const dialogOpen = ref(false)
 const dialogFullscreen = ref(false)
 const choice = ref<string | number>('daily')

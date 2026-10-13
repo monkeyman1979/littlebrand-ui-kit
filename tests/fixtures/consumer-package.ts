@@ -22,6 +22,8 @@ createSnackbarHelpers().showSuccess('Saved')
 
 const inputProps: InstanceType<typeof LbInput>['$props'] = { size: 'large' }
 const dialogProps: InstanceType<typeof LbDialog>['$props'] = { variant: 'fullscreen' }
+const textareaProps: InstanceType<typeof LbTextarea>['$props'] = { size: 'large', resize: 'both' }
+const fieldProps: InstanceType<typeof LbFormField>['$props'] = { label: 'Biography', error: 'Required' }
 const popoverProps: InstanceType<typeof LbPopover>['$props'] = { trapFocus: true }
 const components = [
   LbAvatar, LbBadge, LbBottomSheet, LbButton, LbCalendar, LbChatInput,
@@ -43,6 +45,7 @@ const menuSlots: InstanceType<typeof LbMenu>['$slots'] = { trigger: () => [] }
 const buttonSlots: InstanceType<typeof LbButton>['$slots'] = { 'icon-leading': () => [] }
 const inputSlots: InstanceType<typeof LbInput>['$slots'] = { 'icon-clear': () => [] }
 const dialogSlots: InstanceType<typeof LbDialog>['$slots'] = { footer: () => [] }
+const fieldSlots: InstanceType<typeof LbFormField>['$slots'] = { default: ({ id }) => { void id; return [] } }
 declare const buttonEmit: InstanceType<typeof LbButton>['$emit']
 buttonEmit('click', new Event('click'))
 // @ts-expect-error Button click emits an Event
@@ -55,11 +58,19 @@ declare const dialogEmit: InstanceType<typeof LbDialog>['$emit']
 dialogEmit('update:modelValue', false)
 // @ts-expect-error Dialog model updates are booleans
 dialogEmit('update:modelValue', 'no')
-void [menuSlots, buttonSlots, inputSlots, dialogSlots]
+declare const textareaEmit: InstanceType<typeof LbTextarea>['$emit']
+textareaEmit('update:modelValue', 'notes')
+// @ts-expect-error Textarea v-model emits strings
+textareaEmit('update:modelValue', 42)
+void [menuSlots, buttonSlots, inputSlots, dialogSlots, fieldSlots]
 
 // Known incorrect declaration-only APIs must not be reintroduced.
 // @ts-expect-error Input implementation does not accept small
 const invalidInput: InstanceType<typeof LbInput>['$props'] = { size: 'small' }
+// @ts-expect-error Textarea has only medium and large
+const invalidTextarea: InstanceType<typeof LbTextarea>['$props'] = { size: 'small' }
+// @ts-expect-error FormField error is a message, not a boolean
+const invalidField: InstanceType<typeof LbFormField>['$props'] = { error: true }
 // @ts-expect-error Dialog variant is default | fullscreen
 const invalidDialog: InstanceType<typeof LbDialog>['$props'] = { variant: 'filled' }
 // @ts-expect-error Button implementation does not have tag prop
@@ -71,4 +82,4 @@ const invalidSegment: InstanceType<typeof LbSegmentButton>['$props'] = { size: '
 // @ts-expect-error SegmentButtonItem must have a value
 const invalidSegmentItem: InstanceType<typeof LbSegmentButtonItem>['$props'] = {}
 
-void [scale, inputProps, dialogProps, popoverProps, components, invalidInput, invalidDialog, invalidButton, invalidContent, invalidSegment, invalidSegmentItem]
+void [scale, inputProps, dialogProps, textareaProps, fieldProps, popoverProps, components, invalidInput, invalidTextarea, invalidField, invalidDialog, invalidButton, invalidContent, invalidSegment, invalidSegmentItem]

@@ -4,7 +4,7 @@ The bundled server uses **local stdio**, not a hosted endpoint. This source vers
 
 | Tool | Response |
 | --- | --- |
-| `lb_search` | Small intent-matched list of stable IDs, purposes and relative reference paths (up to five). Only four verified standalone examples plus selected tokens appear. |
+| `lb_search` | Small intent-matched list of stable IDs, purposes and relative reference paths (up to five). Only reference-verified standalone examples plus selected tokens appear. |
 | `lb_get` | Exact component/token by ID or name; `detail=full` includes derived API and the tested Vue SFC. `LbSegmentButtonItem` is a compound child, never recommended by itself. |
 | `lb_setup` | npm root/CSS setup, local stdio path and version caveats. |
 
