@@ -4,6 +4,8 @@ ID: `component:LbSegmentButton`. [Reference index](../README.md). Choose one or 
 
 **Use:** Nest LbSegmentButtonItem inside the root; bind v-model and label the group.
 
+**Find by intent:** segment; segmented control; choose frequency; selection; toggle group.
+
 **Avoid:** Never mount LbSegmentButtonItem alone; it requires root context. Do not treat optional toggle mode as mandatory radio mode.
 
 **Accessibility:** Optional selection uses toggle buttons; nonempty mandatory single selection uses radio semantics. Arrow/Home/End skip disabled items; label icon-only items.

@@ -4,6 +4,8 @@ ID: `component:LbInput`. [Reference index](../README.md). Collect one line of te
 
 **Use:** Use a visible label or aria-label; pass native name and autocomplete when submitting forms.
 
+**Find by intent:** input; email; text field; form; entry.
+
 **Avoid:** Do not request small size or assume v-model emits numbers: updates are strings.
 
 **Accessibility:** Invalid sets aria-invalid; loading disables the native input. Clear and password controls are unavailable while disabled or readonly.

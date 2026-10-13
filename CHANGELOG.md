@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Added source-only local stdio MCP retrieval over the verified reference: `lb_search`, `lb_get` and `lb_setup`, with bounded intent results and tested Vue examples on demand. The machine reference and Markdown pages are marked for future npm packaging; no new MCP artifact has been built or published.
 - Added a versioned authored reference for the verified Button, Input, Dialog and compound SegmentButton slice, with stable component/token IDs, generated machine and Markdown views, npm-ready tested Vue examples and drift checks. Existing generic MCP metadata remains unverified until a separately authorized extraction/release check.
 - Verified the first Button/Input/Dialog/SegmentButton slice with a typechecked Vue usage fixture, strict slot/event/prop declaration checks, focused interactions, and light/dark reduced-motion Chromium checks. The supported API and remaining MCP example gaps are documented in `docs/STEP_08_COMPONENT_SLICE.md`.
 - Documented the LittleBrand modernization roadmap in `docs/ROADMAP.md` and the ordered PR sequence with acceptance gates in `docs/EXECUTION_PLAN.md`. These are plans for semantic tokens, component reliability, documentation, agent discovery, an optional Vue registry, and headless integration; no runtime features have shipped as part of this entry.
@@ -28,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Replaced the README's universal tree-shaking guarantee with a named-import recommendation. In one Vite consumer, a named Button import emitted less JavaScript than plugin installation, but both included the full kit CSS; do not infer per-component CSS or a universal size guarantee.
 
 ### Removed
+- **Future MCP migration (unreleased):** Retired the ten legacy source MCP tools (list/search/get for generic components and tokens, code/theme generators, and installation/theming guides). After an authorized build and publication, clients must use `lb_search` → `lb_get` for verified items and `lb_setup` for npm setup instead of `lb_list_components`, `lb_generate_component_example`, etc. The current published 0.8.3 and tracked MCP `dist/` still expose the old tools; do not treat their generic examples as verified. No hosted replacement is offered.
 - Removed Claude-specific GitHub Actions workflows and retired the tracked `.claude/agents/` definitions and root `CLAUDE.md` in favor of tool-agnostic guidance.
 
 ## [0.8.3] - 2025-11-05

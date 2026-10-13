@@ -16,7 +16,7 @@ See the [modernization roadmap](./docs/ROADMAP.md) for planned semantic-token, d
 - 📝 **312 CSS Variables** - Complete control over typography, spacing, and colors
 - 🔤 **Flexible Typography** - Three independent font families for headings, body, and UI elements
 - 🎭 **Alpha Scales** - Complete transparency scales for overlays and subtle backgrounds
-- 🤖 **MCP Server Integration** - Built-in AI assistant tools for accurate component and token discovery
+- 🤖 **MCP Server Integration** - Bundled local stdio server; verified-slice discovery is in unreleased source (published 0.8.3 still has generic metadata)
 
 ## 📦 Installation
 
@@ -360,21 +360,13 @@ applyTheme({
 
 ## 🤖 AI Assistant Integration
 
-LittleBrand UI Kit includes an integrated **Model Context Protocol (MCP) server** that enables AI assistants like Claude to accurately discover components, design tokens, and generate code without hallucinating prop names or variable names.
+The **unreleased source** MCP server uses local stdio and the [verified component/token reference](./docs/reference/v1/README.md). Three read-only tools (`lb_search`, `lb_get`, `lb_setup`) return concise intent matches, exact checked details with tested Vue examples on demand, and npm setup guidance. Only Button, Input, Dialog, SegmentButton (with its child), and selected tokens have verified references. Generic code generation and all-catalog claims have been removed from the source server.
 
-### Why Use the MCP Server?
+**Published npm 0.8.3 still contains the older ten-tool server and generic examples.** Its artifact has not been refreshed or verified against the new source reference; do not treat its examples as verified (in particular, Dialog `variant="filled"` and a standalone SegmentButtonItem are invalid). A future owner-authorized release build/extraction and installed-package check are required before promising the new tools through npm.
 
-**Problem**: LLMs often guess wrong component props and design token variable names.
+### Planned setup after a verified release
 
-**Solution**: The MCP server provides a source of truth that AI assistants can query for:
-- Exact component prop names, types, and options
-- Design token variable names and values
-- Usage examples and documentation
-- Code generation with accurate syntax
-
-### Quick Setup
-
-The MCP server is automatically included when you install `littlebrand-ui-kit`. All dependencies are bundled, so no additional installation is needed!
+npm remains the primary distribution path. The package declares MCP runtime dependencies, which npm installs separately; they are not bundled into the UI library.
 
 #### For MCP-compatible agents
 
@@ -413,30 +405,13 @@ Add to your Claude Desktop config file:
 
 Replace `/absolute/path/to/your-project/` with your actual project path.
 
-#### For Global Access (Optional)
+### Source tools (not yet in npm)
 
-If you want the MCP server available across all projects, you can reference it from any project where littlebrand-ui-kit is installed, or install it globally:
+- `lb_search`: intent-based discovery over the verified slice, returning stable IDs.
+- `lb_get`: exact component/token details; `detail="full"` includes the checked Vue example.
+- `lb_setup`: npm root/CSS import paths and release caveats.
 
-```bash
-npm install -g littlebrand-ui-kit
-```
-
-Then use the global path in your config.
-
-### Available MCP Tools
-
-- **Component Discovery**: `lb_list_components`, `lb_search_components`, `lb_get_component_info`
-- **Design Tokens**: `lb_list_tokens`, `lb_search_tokens`, `lb_get_token_info`
-- **Code Generation**: `lb_generate_component_example`, `lb_generate_theme_config`
-- **Documentation**: `lb_get_installation_guide`, `lb_get_theming_guide`
-
-### Testing the MCP Server
-
-After setup, try asking your AI assistant:
-- "Show me all available LittleBrand components"
-- "How do I use the LbButton component?"
-- "What spacing tokens are available?"
-- "Generate a form with email input and submit button"
+Try: “Find a confirmation modal”, then request `component:LbDialog` with full detail. Other components/tokens must not be treated as verified by these source tools.
 
 ### Learn More
 

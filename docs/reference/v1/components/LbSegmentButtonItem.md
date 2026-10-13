@@ -4,6 +4,8 @@ ID: `component:LbSegmentButtonItem`. [Reference index](../README.md). **Only use
 
 **Use:** Provide a unique value and visible text or ariaLabel within a labelled root.
 
+**Find by intent:** segment item; segmented option.
+
 **Avoid:** Never use independently; it throws without its parent context.
 
 **Accessibility:** Renders a button, with aria-pressed in optional/multi mode or radio semantics in mandatory single mode.
