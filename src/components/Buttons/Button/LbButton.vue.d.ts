@@ -1,4 +1,5 @@
-import type { DefineComponent, VNode } from 'vue'
+import type { DefineComponent, EmitsToProps, PublicProps, SlotsType, VNode } from 'vue'
+import type { ComponentEmits } from '../../component-emits.js'
 
 export interface LbButtonProps {
   variant?: 'filled' | 'tonal' | 'outline' | 'ghost' | 'link'
@@ -22,11 +23,19 @@ export interface LbButtonEmits {
 }
 
 export interface LbButtonSlots {
-  default(): VNode[]
+  default?(): VNode[]
   'icon-leading'?(): VNode[]
   'icon-trailing'?(): VNode[]
 }
 
-declare const LbButton: DefineComponent<LbButtonProps, {}, {}, {}, {}, {}, {}, {}>
+type ButtonEventTuples = { [K in keyof LbButtonEmits]: LbButtonEmits[K] extends (...args: infer Args) => void ? Args : never }
+type ButtonVueEmits = ComponentEmits<ButtonEventTuples>
+// Keep the resolved props generic when specifying event/slot types: {} would erase strict prop validation.
+declare const LbButton: DefineComponent<
+  LbButtonProps, {}, {}, {}, {}, {}, {},
+  ButtonVueEmits, never, PublicProps,
+  Readonly<LbButtonProps> & EmitsToProps<ButtonVueEmits>,
+  {}, SlotsType<LbButtonSlots>
+>
 
 export default LbButton

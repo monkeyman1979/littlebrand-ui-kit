@@ -235,6 +235,8 @@ See [CUSTOMIZATION.md](./CUSTOMIZATION.md) for detailed customization options in
 
 ## 🧩 Components
 
+The [first verified component slice](docs/STEP_08_COMPONENT_SLICE.md) documents source-level Button, Input, Dialog, and SegmentButton APIs with a checked Vue example. These Step 08 fixes are **unreleased** and are not present in the currently published npm package.
+
 ### Form Components
 - `LbInput` - Text input with validation states
 - `LbTextarea` - Multi-line text input

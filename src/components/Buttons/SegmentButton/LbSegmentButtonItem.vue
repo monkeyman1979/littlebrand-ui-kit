@@ -1,5 +1,6 @@
 <template lang="pug">
 button.lb-segment-button-item(
+  v-bind="$attrs"
   ref="itemRef"
   :class="itemClasses"
   :disabled="isDisabled"
@@ -7,8 +8,9 @@ button.lb-segment-button-item(
   :aria-label="ariaLabel"
   @click="handleClick"
   type="button"
-  :role="(segmentButton.allowEmpty.value || segmentButton.multiSelect.value) ? 'button' : 'radio'"
+  :role="(segmentButton.allowEmpty.value || segmentButton.multiSelect.value) ? undefined : 'radio'"
   :aria-checked="(segmentButton.allowEmpty.value || segmentButton.multiSelect.value) ? undefined : isActive"
+  :tabindex="(segmentButton.allowEmpty.value || segmentButton.multiSelect.value) ? undefined : (isActive ? 0 : -1)"
 )
   span.icon-container(v-if="$slots.icon")
     slot(name="icon")
@@ -284,7 +286,10 @@ defineOptions({
   // Icon and text styling
   &.icon-and-text
     // Uses default padding and gap
-    
 
-
+@media (prefers-reduced-motion: reduce)
+  .lb-segment-button-item,
+  .lb-segment-button-item .icon-container,
+  .lb-segment-button-item .label
+    transition: none
 </style>

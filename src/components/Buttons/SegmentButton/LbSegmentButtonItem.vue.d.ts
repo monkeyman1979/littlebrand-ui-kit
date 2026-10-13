@@ -1,4 +1,4 @@
-import type { DefineComponent, SlotsType } from 'vue'
+import type { DefineComponent, PublicProps, SlotsType } from 'vue'
 
 export interface LbSegmentButtonItemProps {
   /**
@@ -39,9 +39,9 @@ declare const LbSegmentButtonItem: DefineComponent<
   {},
   {},
   {},
-  string,
-  {},
-  {},
+  never,
+  PublicProps,
+  Readonly<LbSegmentButtonItemProps>,
   {},
   SlotsType<LbSegmentButtonItemSlots>
 >

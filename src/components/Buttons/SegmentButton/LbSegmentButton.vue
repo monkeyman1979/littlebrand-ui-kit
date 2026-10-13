@@ -1,10 +1,12 @@
 <template lang="pug">
 .lb-segment-button(
   ref="segmentButtonRef"
+  v-bind="$attrs"
   :class="segmentButtonClasses" 
   :role="multiSelect ? 'group' : (allowEmpty ? 'group' : 'radiogroup')" 
-  :aria-labelledby="ariaLabelledby"
-  tabindex="-1"
+  :aria-labelledby="ariaLabelledby || $attrs['aria-labelledby']"
+  :aria-disabled="disabled || undefined"
+  :tabindex="!disabled && !allowEmpty && !multiSelect && activeValue === undefined ? 0 : -1"
 )
   slot
 </template>
@@ -79,27 +81,34 @@ const unregisterSegmentItem = (element: HTMLElement) => {
   }
 }
 
-// Get current focused index
-const getCurrentFocusedIndex = (): number => {
-  const activeElement = document.activeElement as HTMLElement
-  return segmentItems.value.findIndex(item => item === activeElement)
-}
+// Disabled child buttons remain registered, but cannot be arrow-key destinations.
+const enabledItems = () => segmentItems.value.filter(item => !item.matches(':disabled'))
+const getCurrentFocusedIndex = (items: HTMLElement[]) => items.indexOf(document.activeElement as HTMLElement)
 
-// Focus segment by index
-const focusSegmentByIndex = (index: number) => {
-  if (index >= 0 && index < segmentItems.value.length) {
-    segmentItems.value[index].focus()
-  }
+const focusSegmentByIndex = (items: HTMLElement[], index: number) => {
+  const item = items[index]
+  if (!item) return
+  item.focus()
+  // A non-empty single-choice group exposes radio semantics: arrows select.
+  if (!props.allowEmpty && !props.multiSelect) item.click()
 }
 
 // Keyboard navigation
 const handleKeydown = (event: KeyboardEvent) => {
   if (props.disabled) return
 
-  const currentIndex = getCurrentFocusedIndex()
-  if (currentIndex === -1) return
-  
-  const itemsCount = segmentItems.value.length
+  const items = enabledItems()
+  const currentIndex = getCurrentFocusedIndex(items)
+  if (currentIndex === -1) {
+    // An initially empty required radio group must remain keyboard reachable.
+    if (document.activeElement === segmentButtonRef.value && items.length && !props.allowEmpty && !props.multiSelect && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) {
+      event.preventDefault()
+      focusSegmentByIndex(items, 0)
+    }
+    return
+  }
+
+  const itemsCount = items.length
   if (itemsCount === 0) return
 
   switch (event.key) {
@@ -107,24 +116,24 @@ const handleKeydown = (event: KeyboardEvent) => {
     case 'ArrowUp':
       event.preventDefault()
       const prevIndex = currentIndex > 0 ? currentIndex - 1 : itemsCount - 1
-      focusSegmentByIndex(prevIndex)
+      focusSegmentByIndex(items, prevIndex)
       break
 
     case 'ArrowRight':
     case 'ArrowDown':
       event.preventDefault()
       const nextIndex = currentIndex < itemsCount - 1 ? currentIndex + 1 : 0
-      focusSegmentByIndex(nextIndex)
+      focusSegmentByIndex(items, nextIndex)
       break
 
     case 'Home':
       event.preventDefault()
-      focusSegmentByIndex(0)
+      focusSegmentByIndex(items, 0)
       break
 
     case 'End':
       event.preventDefault()
-      focusSegmentByIndex(itemsCount - 1)
+      focusSegmentByIndex(items, itemsCount - 1)
       break
   }
 }

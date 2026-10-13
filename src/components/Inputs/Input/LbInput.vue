@@ -1,8 +1,9 @@
 <template lang="pug">
-.lb-input(:class="rootClasses" :data-size="effectiveSize")
+.lb-input(:class="[rootClasses, $attrs.class]" :style="$attrs.style" :data-size="effectiveSize")
   .icon.icon-leading(v-if="$slots['icon-leading']")
     slot(name="icon-leading")
   input(
+    v-bind="inputAttrs()"
     ref="inputRef"
     :id="computedId"
     :type="currentType"
@@ -22,7 +23,7 @@
   //- Trailing icons container
   .trailing-icons(v-if="hasTrailingIcons")
     //- Loading spinner
-    .icon.icon-loading(v-if="loading")
+    .icon.icon-loading(v-if="loading" aria-hidden="true")
       slot(name="icon-loading")
         svg.spinner(
           viewBox="0 0 16 16"
@@ -109,7 +110,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, inject, type ComputedRef } from 'vue'
+import { computed, ref, inject, useAttrs, type ComputedRef } from 'vue'
 
 // Props
 interface Props {
@@ -153,6 +154,9 @@ const emit = defineEmits<{
 // Refs
 const inputRef = ref<HTMLInputElement>()
 const showPassword = ref(false)
+const attrs = useAttrs()
+// Native input attributes belong on the input, while layout class/style stay on the wrapper.
+const inputAttrs = () => Object.fromEntries(Object.entries(attrs).filter(([name]) => name !== 'class' && name !== 'style'))
 
 // Inject form field context if available
 const injectedId = inject<ComputedRef<string> | undefined>('formFieldId', undefined)
@@ -234,6 +238,7 @@ const handleInput = (event: Event) => {
   emit('input', event)
 }
 
+defineOptions({ inheritAttrs: false })
 </script>
 
 <style lang="sass" scoped>
@@ -266,7 +271,7 @@ const handleInput = (event: Event) => {
       border-color: var(--lb-border-neutral-active)
 
     &:focus-visible
-      outline: base.$focus-ring-width solid transparent
+      outline: base.$focus-ring-width solid var(--lb-text-neutral-contrast-high)
       outline-offset: base.$focus-ring-offset
       border-color: var(--lb-border-neutral-active)
       box-shadow: base.$shadow-sm
@@ -282,7 +287,7 @@ const handleInput = (event: Event) => {
     
     // Error border on focus
     &:focus-visible
-      outline: base.$focus-ring-width solid transparent
+      outline: base.$focus-ring-width solid var(--lb-text-neutral-contrast-high)
       outline-offset: base.$focus-ring-offset
       border-color: var(--lb-border-error-active)
       box-shadow: base.$shadow-sm
@@ -341,31 +346,30 @@ const handleInput = (event: Event) => {
   &.size-large .icon
     width: cv.$input-height-large
     height: cv.$input-height-large
-    
-    &.icon-leading
-      left: 0
-      pointer-events: none
-    
-    // Interactive icons (password toggle, clear)
-    &.icon-password,
-    &.icon-clear
-      pointer-events: auto
-      cursor: pointer
-      background: none
-      border: none
-      padding: 0
-      border-radius: base.$radius-xs  // Set border-radius on the element itself
-      transition: color base.$transition, opacity base.$transition
-      
-      &:hover
-        color: var(--lb-text-neutral-contrast-high)
-      
-      &:focus-visible
-        outline: none
-        box-shadow: 0 0 0 base.$focus-ring-width var(--lb-focus-ring-color)
-      
-      &:active
-        opacity: base.$opacity-80
+
+  .icon-leading
+    left: 0
+    pointer-events: none
+
+  // Interactive icons at both supported sizes
+  .icon-password,
+  .icon-clear
+    cursor: pointer
+    background: none
+    border: none
+    padding: 0
+    border-radius: base.$radius-xs
+    transition: color base.$transition, opacity base.$transition
+
+    &:hover
+      color: var(--lb-text-neutral-contrast-high)
+
+    &:focus-visible
+      outline: base.$focus-ring-width solid var(--lb-text-neutral-contrast-high)
+      outline-offset: base.$focus-ring-offset
+
+    &:active
+      opacity: base.$opacity-80
     
   
   // Icon focus state
@@ -432,4 +436,13 @@ const handleInput = (event: Event) => {
     stroke-dashoffset: 10.47
   100%
     stroke-dashoffset: 31.42
+
+@media (prefers-reduced-motion: reduce)
+  .lb-input input,
+  .lb-input .icon-password,
+  .lb-input .icon-clear
+    transition: none
+  .lb-input .spinner,
+  .lb-input .spinner circle
+    animation: none
 </style>
