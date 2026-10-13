@@ -1,6 +1,6 @@
 # Modernization execution plan
 
-Status: proposed ordering for the [roadmap](ROADMAP.md), not an implementation or a release commitment. See the [handoff status](MODERNIZATION_STATUS.md) for progress through Step 05. Each numbered item is a small PR to `develop` unless investigation shows it must be split. Complete the acceptance gate before moving to its dependent item. Keep this plan for work that has *not* shipped; update `CHANGELOG.md` in each PR with user-visible changes only. Do not run `npm run build` without an explicit request from the project owner.
+Status: proposed ordering for the [roadmap](ROADMAP.md), not an implementation or a release commitment. See the [handoff status](MODERNIZATION_STATUS.md) for progress through Step 07. Each numbered item is a small PR to `develop` unless investigation shows it must be split. Complete the acceptance gate before moving to its dependent item. Keep this plan for work that has *not* shipped; update `CHANGELOG.md` in each PR with user-visible changes only. Do not run `npm run build` without an explicit request from the project owner.
 
 ## Why this order
 
@@ -9,9 +9,9 @@ Do not put a website, registry, or newly advertised MCP tools on top of unreliab
 ### Initial planning observations (some now addressed; see handoff and Step 05 consumer report)
 
 - `src/index.js` and `src/components/index.ts` define public exports; `scripts/extract-components.js` instead scans 26 `.vue.d.ts` files, while there are 33 `.vue` files. Some differences are internal/compound pieces; we need an explicit public inventory rather than assuming either count is the catalog.
-- Initially `LbInput.vue.d.ts` advertised `size="small"` although the implementation accepts only `medium | large`; Step 05 corrected the declaration but did not regenerate MCP data. The extractor still generates a `variant="filled"` example for `LbDialog`, whose variant is `default | fullscreen`. See `scripts/extract-components.js` and `mcp-server/src/data/components.ts`.
-- Initially `src/styles/_theme.sass` mapped primary surface `normal/hover/active` to 3/4/5, while runtime used 2/3/4 and omitted matching base/alpha/inverse roles. The approved Step 02 contract and [Step 06 implementation](STEP_06_TOKEN_ALIGNMENT.md) resolve this source-level mismatch; real-browser theme verification remains Step 07.
-- The static CSS supports `[data-theme="dark"]` and `.dark`; `applyTheme()` detects `.dark` on html/body and its observer watches `class` only. Test theme toggles and overrides explicitly before choosing a light/dark implementation.
+- Initially `LbInput.vue.d.ts` advertised `size="small"` although the implementation accepts only `medium | large`; Step 05 corrected the declaration and an authorized build regenerated affected MCP data. The extractor still generates a `variant="filled"` example for `LbDialog`, whose variant is `default | fullscreen`. See `scripts/extract-components.js` and `mcp-server/src/data/components.ts`.
+- Initially `src/styles/_theme.sass` mapped primary surface `normal/hover/active` to 3/4/5, while runtime used 2/3/4 and omitted matching base/alpha/inverse roles. The approved Step 02 contract and [Step 06 implementation](STEP_06_TOKEN_ALIGNMENT.md) resolve this source-level mismatch; Step 07 added Chromium verification for the theme contract.
+- Initially static CSS supported `[data-theme="dark"]` and `.dark` but not explicit light or system following, while `applyTheme()` observed only `.dark` classes. [Step 07](STEP_07_THEME_RELIABILITY.md) now implements approved precedence and checks it in Chromium; other browser engines and strict CSP are still unverified.
 - Initially `package.json` lacked root types and lint/typecheck were placeholders. Steps 04–05 implemented source checks and proposed root types; the published 0.8.3 install still fails strict root TypeScript and CJS require ([consumer evidence](STEP_05_NPM_CONSUMER.md)). A limited local tree-shaking comparison and a fresh tarball consumer check have since passed; a future published artifact remains unverified.
 
 ## Ordered work packages
@@ -110,4 +110,4 @@ Choose a concrete agent workflow that works without Vue. Add an optional visual 
 
 ## Immediate next PR
 
-**06 — static/runtime tokens implemented locally; review next.** [Step 06 alignment](STEP_06_TOKEN_ALIGNMENT.md) follows the Step 02 contract, covers all eight families × both modes in in-memory SASS/runtime tests, and documents the visible custom-theme surface step change. Review Steps 01–06 in order against `develop`; no Step 06 build/extraction or publication occurred. The next work package is Step 07 browser-verified theme behavior; see the [handoff](MODERNIZATION_STATUS.md).
+**07 — theme reliability implemented locally; review next.** [Step 07 browser checks](STEP_07_THEME_RELIABILITY.md) cover CSS-only OS defaults, explicit scopes, latest custom palettes, Dialog portal syncing, sampled alpha/contrast and keyboard focus in Chromium. Review Steps 01–07 in order against `develop`; no Step 07 build/extraction or publication occurred. Next is Step 08's component API/accessibility slice; see the [handoff](MODERNIZATION_STATUS.md).

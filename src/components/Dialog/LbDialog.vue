@@ -1,4 +1,5 @@
 <template lang="pug">
+span.lb-dialog-origin(ref="originRef" hidden aria-hidden="true")
 Teleport(to="body")
   Transition(
     name="dialog"
@@ -57,7 +58,7 @@ Teleport(to="body")
 </template>
 
 <script setup lang="ts">
-import { computed, ref, nextTick, onBeforeUnmount, onMounted } from 'vue'
+import { computed, ref, nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
 import { useScrollLock } from '@vueuse/core'
 import LbButton from '@/components/Buttons/Button/LbButton.vue'
 
@@ -93,7 +94,68 @@ const emit = defineEmits<{
 const generateId = (prefix: string) => `${prefix}-${Math.random().toString(36).substring(2, 9)}`
 
 // Refs
+const originRef = ref<HTMLElement>()
 const overlayRef = ref<HTMLElement>()
+let themeObserver: MutationObserver | undefined
+let themeMedia: MediaQueryList | undefined
+const portalTokens = new Set<string>()
+
+const effectiveOriginMode = () => {
+  for (let element = originRef.value?.parentElement; element; element = element.parentElement) {
+    const attribute = element.getAttribute('data-theme')
+    if (attribute === 'light' || attribute === 'dark') return attribute
+    if (element.classList.contains('dark')) return 'dark'
+  }
+  return window.matchMedia?.('(prefers-color-scheme: dark)')?.matches ? 'dark' : 'light'
+}
+
+const syncPortalTheme = () => {
+  const source = originRef.value?.parentElement
+  const overlay = overlayRef.value
+  if (!source || !overlay) return
+  overlay.dataset.theme = effectiveOriginMode()
+  const computed = getComputedStyle(source)
+  for (const token of portalTokens) overlay.style.removeProperty(token)
+  portalTokens.clear()
+  for (let index = 0; index < computed.length; index++) {
+    const token = computed.item(index)
+    if (!token.startsWith('--lb-')) continue
+    const value = computed.getPropertyValue(token).trim()
+    if (!value) continue
+    overlay.style.setProperty(token, value)
+    portalTokens.add(token)
+  }
+  overlay.style.colorScheme = computed.colorScheme
+}
+
+const stopThemeSync = () => {
+  themeObserver?.disconnect()
+  themeObserver = undefined
+  themeMedia?.removeEventListener?.('change', syncPortalTheme)
+  themeMedia = undefined
+  document.removeEventListener('lb-theme-change', syncPortalTheme)
+  portalTokens.clear()
+}
+
+const startThemeSync = () => {
+  stopThemeSync()
+  const source = originRef.value?.parentElement
+  if (!source || !overlayRef.value) return
+  syncPortalTheme()
+  themeObserver = new MutationObserver(syncPortalTheme)
+  for (let ancestor: HTMLElement | null = source; ancestor; ancestor = ancestor.parentElement) {
+    themeObserver.observe(ancestor, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] })
+  }
+  themeMedia = window.matchMedia?.('(prefers-color-scheme: dark)')
+  themeMedia?.addEventListener?.('change', syncPortalTheme)
+  document.addEventListener('lb-theme-change', syncPortalTheme)
+}
+
+watch(() => props.modelValue, async (open) => {
+  if (!open) { stopThemeSync(); return }
+  await nextTick()
+  if (props.modelValue) startThemeSync()
+}, { flush: 'post' })
 const titleId = generateId('dialog-title')
 const contentId = generateId('dialog-content')
 
@@ -201,10 +263,12 @@ const handleEscapeKey = (event: KeyboardEvent) => {
 // Set up escape key listener when mounted
 onMounted(() => {
   document.addEventListener('keydown', handleEscapeKey)
+  if (props.modelValue) nextTick(startThemeSync)
 })
 
 // Clean up on unmount
 onBeforeUnmount(() => {
+  stopThemeSync()
   // Remove escape key listener
   document.removeEventListener('keydown', handleEscapeKey)
   

@@ -2798,7 +2798,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import {
   LbButton, LbInput, LbChatInput, LbLabel, LbHintText, LbTextarea, LbCheckbox, LbRadio, LbSwitch, LbSelect, LbFormField, LbDialog,
   LbBadge, LbNavigationBar, LbNavigationBarItem, LbBottomSheet, LbChip, LbAvatar, LbProgress, LbDivider,
@@ -2807,7 +2807,7 @@ import {
 } from '../src'
 import { applyTheme } from '../src/utils/color-generator.js'
 
-const isDark = ref(false)
+const isDark = ref(typeof window !== 'undefined' && (window.matchMedia?.('(prefers-color-scheme: dark)')?.matches ?? false))
 
 // Default theme colors (for demonstration of dynamic theming)
 // Now uses LittleBrand enhanced step 11 values by default
@@ -2824,11 +2824,6 @@ const themeColors = {
 
 // Apply theme initially
 applyTheme(themeColors)
-
-// Watch dark mode changes and reapply theme
-watch(isDark, () => {
-  applyTheme(themeColors)
-})
 
 // Custom theme interactive demo
 
@@ -3341,11 +3336,7 @@ const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1)
 
 const toggleTheme = () => {
   isDark.value = !isDark.value
-  if (isDark.value) {
-    document.documentElement.classList.add('dark')
-  } else {
-    document.documentElement.classList.remove('dark')
-  }
+  document.documentElement.dataset.theme = isDark.value ? 'dark' : 'light'
 }
 
 // OKLCH demo helper methods
@@ -3859,14 +3850,18 @@ const handleQuickAdd = () => {
   }
 }
 
+let themeMedia
+let progressTimer
+const updateSystemTheme = () => {
+  if (!document.documentElement.dataset.theme) isDark.value = themeMedia?.matches ?? false
+}
+
 onMounted(() => {
-  // Check for user's theme preference
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-  if (prefersDark) {
-    isDark.value = true
-    document.documentElement.classList.add('dark')
-  }
-  
+  // With no explicit choice, CSS and applyTheme follow the system automatically.
+  themeMedia = window.matchMedia?.('(prefers-color-scheme: dark)')
+  themeMedia?.addEventListener?.('change', updateSystemTheme)
+  updateSystemTheme()
+
   // Animate progress values for demonstration
   const animateProgress = () => {
     linearProgress1.value = Math.floor(Math.random() * 101)
@@ -3882,7 +3877,12 @@ onMounted(() => {
   animateProgress()
   
   // Continue animating every 3 seconds
-  setInterval(animateProgress, 3000)
+  progressTimer = setInterval(animateProgress, 3000)
+})
+
+onUnmounted(() => {
+  themeMedia?.removeEventListener?.('change', updateSystemTheme)
+  clearInterval(progressTimer)
 })
 </script>
 
@@ -4108,7 +4108,7 @@ section
       font-weight: var(--lb-font-weight-body)
 
     .contrast-step
-      font-size: typography.$font-size-label-small
+      font-size: typography.$font-size-label-sm
       opacity: base.$opacity-60
 
 .color-section
