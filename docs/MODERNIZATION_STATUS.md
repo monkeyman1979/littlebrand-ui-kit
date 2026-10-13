@@ -1,6 +1,6 @@
 # LittleBrand modernization — handoff status
 
-**As of Step 09 review.** Steps 01–08 were merged into `develop` via PRs #121–#128, in order (Step 08: 3186a6c). Step 09 is on `feat/step-09-authored-reference` for review; nothing has been published or merged to `main`. The npm package remains at its current published version. This is a checkpoint, **not** a release announcement. Numbered work packages and gates: [execution plan](EXECUTION_PLAN.md); planned features: [roadmap](ROADMAP.md). Do not treat untested contracts as shipped behavior.
+**Step 09 PR checkpoint (2026-10-13).** Steps 01–08 were merged into `develop` via PRs #121–#128, in order (Step 08: 3186a6c). Step 09 is committed on `feat/step-09-authored-reference` (aa39062), with [PR #129](https://github.com/monkeyman1979/littlebrand-ui-kit/pull/129) targeting `develop`; nothing has been published or merged to `main`. The npm package remains at its current published version. This is a checkpoint, **not** a release announcement. Numbered work packages and gates: [execution plan](EXECUTION_PLAN.md); planned features: [roadmap](ROADMAP.md). Do not treat untested contracts as shipped behavior.
 
 ## Where we stopped
 
@@ -18,9 +18,9 @@
 
 **Earlier validation:** Three owner-authorized Step 05 `npm run build` runs succeeded (extraction, Vite, MCP); **no build/extraction was run for Steps 06–09**. `npm pack --ignore-scripts` created only a local artifact, installed into a fresh temp Vue + TS + Vite consumer. Its full type fixture passed in Bundler and NodeNext modes with `skipLibCheck: false`; ESM and CJS root imports passed; Vite emitted CSS. Named Button JS was 81,557 bytes versus 190,138 bytes with the global plugin; both bundled the full 294,316-byte CSS. `npm run lint`, `npm run typecheck`, `npm test` (5 files, 27 tests), `npm run test:browser` (Chromium theme and component slices), and `git diff --check` passed. Steps 01–08 were merged via PR; no publication, `main` merge, or end-to-end MCP CLI test occurred. The MCP install reported 6 audit findings (3 moderate, 2 high, 1 critical); none were changed.
 
-## Next actions: review Step 08, then author reference content
+## Resume from this checkpoint
 
-1. Review Step 09 against `develop` with required checks/reviews; do not merge or publish automatically. A future release needs an owner-authorized **new** build/extraction and tarball/browser check against the exact release commit; the Step 05 artifact predates Steps 06–09.
+1. Check [PR #129](https://github.com/monkeyman1979/littlebrand-ui-kit/pull/129) for the Step 09 outcome before starting Step 10. Step 09 passed `npm run lint`, `npm run typecheck`, `npm test` (6 files, 29 tests), `npm run test:browser`, `npm run reference:check` and `git diff --check` on its feature branch. No Step 09 build/extraction ran. A future release needs an owner-authorized **new** build/extraction and tarball/browser check against the exact release commit; the Step 05 artifact predates Steps 06–09.
 2. [Step 05 remaining checks](STEP_05_NPM_CONSUMER.md#remaining-before-release) include MCP CLI and dependency audit triage. [Step 07 limits](STEP_07_THEME_RELIABILITY.md#verification-and-limits) include restrictive CSP and arbitrary palettes; [Step 08 limits](STEP_08_COMPONENT_SLICE.md#verification-and-remaining-boundaries) include routing hosts, multi-dialog, cross-engine and screen-reader coverage.
 3. Step **10** can evaluate local MCP discovery using the Step 09 checked reference after review. Do not promote the current generated MCP examples as verified: extraction has not run and the generic examples for other components are untested.
 
