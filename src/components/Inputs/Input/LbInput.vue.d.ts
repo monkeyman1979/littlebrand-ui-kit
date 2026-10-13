@@ -12,7 +12,7 @@ export interface LbInputProps {
   ariaDescribedby?: string
   clearable?: boolean
   loading?: boolean
-  size?: 'small' | 'medium' | 'large'
+  size?: 'medium' | 'large'
   autofocus?: boolean
 }
 

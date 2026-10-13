@@ -29,7 +29,7 @@ export default [
     rules: { 'no-unused-vars': 'off' }
   },
   {
-    files: ['src/**/*.ts'],
+    files: ['src/**/*.ts', 'tests/**/*.ts'],
     languageOptions: { parser: tsParser },
     rules: { 'no-unused-vars': 'off' }
   }

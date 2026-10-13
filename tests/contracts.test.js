@@ -87,7 +87,10 @@ describe('npm-facing source contract (not an installed-package test)', () => {
     const pkg = JSON.parse(source('package.json'))
     const fixture = source('tests/fixtures/ConsumerFixture.vue')
     expect(pkg.exports['.']?.import).toBe('./dist/littlebrand-ui.js')
-    expect(pkg.exports['./style.css']).toBe('./dist/littlebrand-ui.css')
+    expect(pkg.exports['.']?.types).toBe('./types/index.d.ts')
+    expect(pkg.exports['.']?.require).toBe('./dist/littlebrand-ui.umd.cjs')
+    expect(pkg.exports['./style.css']?.default).toBe('./dist/littlebrand-ui.css')
+    expect(pkg.exports['./style.css']?.types).toBe('./types/style.d.ts')
     expect(fixture).toContain("import 'littlebrand-ui-kit/style.css'")
     const named = fixture.match(/import \{([^}]+)\} from 'littlebrand-ui-kit'/)?.[1]
     expect(named).toBeTruthy()

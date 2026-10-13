@@ -11,6 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Documented the LittleBrand modernization roadmap in `docs/ROADMAP.md` and the ordered PR sequence with acceptance gates in `docs/EXECUTION_PLAN.md`. These are plans for semantic tokens, component reliability, documentation, agent discovery, an optional Vue registry, and headless integration; no runtime features have shipped as part of this entry.
 - Added tool-agnostic contributor instructions in `AGENTS.md` and optional task checklists in `agents/`.
 
+### Fixed
+- Prepared root TypeScript declarations for named npm imports and typed `style.css` paths; the seven public components without verified declarations have deliberately opaque prop types until their APIs are audited. Corrected known Button, Input, Dialog, and Popover declaration mismatches. These changes are **Unreleased**; published 0.8.3 remains unchanged.
+- Corrected the declared CommonJS entry from a missing `.umd.js` file to the existing `.umd.cjs` output path. The ESM root and CSS import paths remain the same; no consumer import-path migration is intended. Confirm against the next authorized release artifact before publishing.
+
+### Changed
+- Replaced the unverified README tree-shaking guarantee with a named-import recommendation; bundle-size behavior still needs a measured consumer test.
+
 ### Removed
 - Removed Claude-specific GitHub Actions workflows and retired the tracked `.claude/agents/` definitions and root `CLAUDE.md` in favor of tool-agnostic guidance.
 

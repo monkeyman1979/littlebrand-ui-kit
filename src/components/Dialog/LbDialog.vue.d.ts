@@ -3,7 +3,7 @@ import type { DefineComponent, VNode } from 'vue'
 export type DialogVariant = 'default' | 'fullscreen'
 
 export interface LbDialogProps {
-  modelValue: boolean
+  modelValue?: boolean
   title?: string
   variant?: DialogVariant
   showClose?: boolean

@@ -8,6 +8,7 @@
     "src/components",
     "src/styles",
     "src/utils",
+    "types",
     "TOKENS.md",
     "mcp-server/dist",
     "mcp-server/package.json",
@@ -16,15 +17,23 @@
   "bin": {
     "littlebrand-mcp": "./mcp-server/dist/index.js"
   },
-  "main": "./dist/littlebrand-ui.umd.js",
+  "main": "./dist/littlebrand-ui.umd.cjs",
   "module": "./dist/littlebrand-ui.js",
+  "types": "./types/index.d.ts",
   "exports": {
     ".": {
+      "types": "./types/index.d.ts",
       "import": "./dist/littlebrand-ui.js",
-      "require": "./dist/littlebrand-ui.umd.js"
+      "require": "./dist/littlebrand-ui.umd.cjs"
     },
-    "./style.css": "./dist/littlebrand-ui.css",
-    "./dist/littlebrand-ui.css": "./dist/littlebrand-ui.css"
+    "./style.css": {
+      "types": "./types/style.d.ts",
+      "default": "./dist/littlebrand-ui.css"
+    },
+    "./dist/littlebrand-ui.css": {
+      "types": "./types/style.d.ts",
+      "default": "./dist/littlebrand-ui.css"
+    }
   },
   "scripts": {
     "dev": "vite",
@@ -32,7 +41,7 @@
     "build": "vite build && npm run build:mcp",
     "preview": "vite preview",
     "lint": "eslint src scripts tests eslint.config.js vitest.config.js vite.config.js --ext .js,.ts,.vue",
-    "typecheck": "vue-tsc --noEmit --project tsconfig.json",
+    "typecheck": "vue-tsc --noEmit --project tsconfig.json && tsc --noEmit --project tests/fixtures/tsconfig.consumer.json",
     "test": "vitest run",
     "extract": "npm run extract:tokens && npm run extract:components && npm run sync:versions",
     "extract:tokens": "node scripts/extract-tokens.js",

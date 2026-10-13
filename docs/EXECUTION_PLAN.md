@@ -1,18 +1,18 @@
 # Modernization execution plan
 
-Status: proposed ordering for the [roadmap](ROADMAP.md), not an implementation or a release commitment. See the [handoff status](MODERNIZATION_STATUS.md) for progress through Step 04. Each numbered item is a small PR to `develop` unless investigation shows it must be split. Complete the acceptance gate before moving to its dependent item. Keep this plan for work that has *not* shipped; update `CHANGELOG.md` in each PR with user-visible changes only. Do not run `npm run build` without an explicit request from the project owner.
+Status: proposed ordering for the [roadmap](ROADMAP.md), not an implementation or a release commitment. See the [handoff status](MODERNIZATION_STATUS.md) for progress through Step 05. Each numbered item is a small PR to `develop` unless investigation shows it must be split. Complete the acceptance gate before moving to its dependent item. Keep this plan for work that has *not* shipped; update `CHANGELOG.md` in each PR with user-visible changes only. Do not run `npm run build` without an explicit request from the project owner.
 
 ## Why this order
 
 Do not put a website, registry, or newly advertised MCP tools on top of unreliable APIs. First establish the public contract, protect it with checks, align static and runtime themes, then document it and offer additional ways to discover/install it. The npm Vue package remains the base; headless AI applications remain independent of the visual kit.
 
-### Evidence from the current checkout (planning observations, not test results)
+### Initial planning observations (some now addressed; see handoff and Step 05 consumer report)
 
 - `src/index.js` and `src/components/index.ts` define public exports; `scripts/extract-components.js` instead scans 26 `.vue.d.ts` files, while there are 33 `.vue` files. Some differences are internal/compound pieces; we need an explicit public inventory rather than assuming either count is the catalog.
-- `src/components/Inputs/Input/LbInput.vue.d.ts` advertises `size="small"`, while `LbInput.vue` accepts only `medium | large`. The extractor generates a `variant="filled"` example for `LbDialog`, whose variant is `default | fullscreen`. See `scripts/extract-components.js` and `mcp-server/src/data/components.ts`.
+- Initially `LbInput.vue.d.ts` advertised `size="small"` although the implementation accepts only `medium | large`; Step 05 corrected the declaration but did not regenerate MCP data. The extractor still generates a `variant="filled"` example for `LbDialog`, whose variant is `default | fullscreen`. See `scripts/extract-components.js` and `mcp-server/src/data/components.ts`.
 - `src/styles/_theme.sass` maps primary surface `normal/hover/active` to palette steps 3/4/5; `generateSemanticTokens()` in `src/utils/color-generator.js` maps them to 2/3/4, and does not generate the same base/alpha/inverse surface set. This needs a contract decision before changing either implementation.
 - The static CSS supports `[data-theme="dark"]` and `.dark`; `applyTheme()` detects `.dark` on html/body and its observer watches `class` only. Test theme toggles and overrides explicitly before choosing a light/dark implementation.
-- `package.json` has no root `types` export and its `lint`/`typecheck` scripts are placeholders. Treat TypeScript consumption and tree-shaking as **unverified**, not broken or guaranteed, until checked in a consumer fixture.
+- Initially `package.json` lacked root types and lint/typecheck were placeholders. Steps 04–05 implemented source checks and proposed root types; the published 0.8.3 install still fails strict root TypeScript and CJS require ([consumer evidence](STEP_05_NPM_CONSUMER.md)). Tree-shaking and the future release artifact remain unverified.
 
 ## Ordered work packages
 
@@ -110,4 +110,4 @@ Choose a concrete agent workflow that works without Vue. Add an optional visual 
 
 ## Immediate next PR
 
-**05 — Repair npm-facing types and packaging contract.** Steps 01–03 have reviewable audit/approved planning contracts; Step 04 has a passing focused safety net with [documented known gaps](STEP_04_CHECKS.md). Next verify a clean Vue + TypeScript consumer against documented root imports and CSS; do not infer published behavior from the source-entry smoke test. A production build remains owner-gated. Review the ordered Step 01–04 commits/PRs against `develop` before merging dependent work; see the [handoff](MODERNIZATION_STATUS.md) for resume details.
+**05 — npm-facing types and packaging prepared, artifact gate pending.** [Step 05 consumer report](STEP_05_NPM_CONSUMER.md) distinguishes failures in installed published 0.8.3 from passing source self-reference checks and a temporary metadata simulation. No new artifact was produced. Review Steps 01–05 in order against `develop`; the next release-artifact check remains owner-gated. See the [handoff](MODERNIZATION_STATUS.md) before attempting dependent work.
