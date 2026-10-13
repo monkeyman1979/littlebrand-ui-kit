@@ -10,6 +10,8 @@
     "src/utils",
     "types",
     "TOKENS.md",
+    "reference/v1.json",
+    "docs/reference/v1",
     "mcp-server/dist",
     "mcp-server/package.json",
     "mcp-server/README.md"
@@ -46,6 +48,7 @@
     "reference:generate": "node scripts/generate-reference.js",
     "reference:check": "node scripts/generate-reference.js --check",
     "test:browser": "node tests/browser-theme.mjs && node tests/browser-component-slice.mjs",
+    "test:mcp": "node tests/mcp-stdio.mjs",
     "extract": "npm run extract:tokens && npm run extract:components && npm run sync:versions",
     "extract:tokens": "node scripts/extract-tokens.js",
     "extract:components": "node scripts/extract-components.js",

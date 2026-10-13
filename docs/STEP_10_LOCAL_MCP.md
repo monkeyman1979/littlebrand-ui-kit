@@ -1,0 +1,15 @@
+# Step 10 — bounded local MCP discovery
+
+**Status:** source-only feature branch for review, based on Step 09 as merged into `develop` (#129). No extraction, `npm run build`, MCP artifact compilation, publication, or merge to `main`.
+
+## Contract and measurement
+
+The bundled **source** server registers three read-only local stdio tools instead of ten: `lb_search` (intent search; at most five short ID/purpose/path matches), `lb_get` (one exact ID/name; summary or full API and the *tested* Vue example), and `lb_setup` (npm root import, CSS path, local stdio path and version limitations). Unknown IDs return an error. The compound child is retrievable only in the parent context, never a standalone search hit. IDs, APIs, examples and nine selected tokens come from the Step 09 `reference/v1.json`; version/schema are checked against the package at source startup. Author intent terms in `reference/v1.authored.json` are also generated into human and machine references. Package files now include the machine reference and Markdown pages for a future release.
+
+The ten legacy tools, generic code generator, theme generator, inaccurate installation snippets and all-catalog search were retired from **source**. The old 10-tool evaluation XML (which relied on generic unverified entries) was removed. `mcp-server/src/data/` remains tracked for the release extractor, but the new server does not use its generic examples. README instructions explicitly distinguish current *published* 0.8.3 and tracked `mcp-server/dist/` from this unbuilt source.
+
+A local SDK client test checks **three** registered tools, six realistic intent searches (four component workflows and two tokens), exact retrieval for all five component names/four examples, a token, unknown-item behavior, matching source API fields, and response ceilings (<1,800 bytes default search; <6,500 bytes full component). A separate local stdio source smoke used an MCP client to request “confirm in a modal”, retrieve Dialog's tested example, and measured **289 bytes search / 1,999 bytes full Dialog**. The tests are deterministic retrieval checks, not an LLM-agent usability study or evaluation of other components. No hosted endpoint is proposed.
+
+## Validation and remaining gate
+
+Run `npm run lint`, `npm run typecheck`, `npm test`, `npm run test:mcp`, `npm run reference:check`, `./mcp-server/node_modules/.bin/tsc --noEmit -p mcp-server/tsconfig.json`, and `git diff --check`. `test:mcp` needs the already-installed `mcp-server` dev dependencies (`tsx`) and runs **source** over real stdio, not compiled `dist/`. An actual agent-in-loop trial and a fresh installed npm CLI/tarball check against the exact eventual release remain **open**. Published 0.8.3 still contains ten generic tools with invalid Dialog/standalone SegmentButtonItem examples. The MCP dependency audit findings (3 moderate, 2 high, 1 critical in the Step 05 install) remain untriaged; no dependency upgrade or release build was authorized. Keep npm primary and run build/extraction/publication only on separate owner instruction.

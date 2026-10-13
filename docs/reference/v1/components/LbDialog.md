@@ -4,6 +4,8 @@ ID: `component:LbDialog`. [Reference index](../README.md). Present a modal decis
 
 **Use:** Bind v-model and give the dialog a title or an ARIA name; use the footer slot for actions.
 
+**Find by intent:** dialog; modal; confirmation; preferences; overlay.
+
 **Avoid:** Do not use variant=filled; only default and fullscreen exist. The header slot renders only in fullscreen and needs its own visible heading.
 
 **Accessibility:** Teleports to body with originating theme; focuses dialog on open, contains Tab and restores trigger focus on close. Escape/backdrop respect close props.

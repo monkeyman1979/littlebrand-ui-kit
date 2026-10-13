@@ -4,6 +4,8 @@ ID: `component:LbButton`. [Reference index](../README.md). Trigger an action or 
 
 **Use:** Use a native button for actions; href for a URL, or to only in a host with Vue Router.
 
+**Find by intent:** action; submit; save; button; link; navigate.
+
 **Avoid:** Do not use iconOnly without an accessible name; do not use a link for a disabled action.
 
 **Accessibility:** Native button by default; iconOnly needs aria-label. Loading exposes aria-busy and blocks activation. Disabled/loading links become disabled buttons.
