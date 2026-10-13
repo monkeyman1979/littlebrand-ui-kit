@@ -46,7 +46,7 @@ Preserve the semantic design language: **text, surface, fill, border, and shadow
 
 ## Phase 3 — Documentation and agent discovery (P1; depends on Phases 1–2)
 
-- [ ] Build a separate public documentation site with live Vue previews, copyable Vue examples, API and token references, accessibility notes, theming, and installation guides. Start with Button, Input, Dialog, and a compound component before expanding.
+- [ ] Build a separate public documentation site with live Vue previews, copyable Vue examples, API and token references, accessibility notes, theming, and installation guides. Start with Button, Input, Dialog, and a compound component before expanding. A local preview exists (Step 11); the owner intends to place docs within the future multi-project seedtoshelves.com site, which is not built or deployed yet.
 - [ ] Publish per-component Markdown plus a compact index for agents. Include intent, when/not to use, valid props/slots/events, dependencies, related items, and links back to the site.
 - [ ] Refocus MCP on a short path: search by intent → retrieve one verified component/token reference → get install or theming instructions. Keep results concise by default; offer detail on demand. Remove or correct generic code generation that can return invalid examples.
 - [ ] Validate tool answers against the same versioned content as the website and package. Keep bundled local stdio usable; evaluate a hosted read-only endpoint only if there is a clear need and an ownership/hosting plan.

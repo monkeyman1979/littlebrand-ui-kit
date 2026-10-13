@@ -1,6 +1,6 @@
 # Modernization execution plan
 
-Status: proposed ordering for the [roadmap](ROADMAP.md), not an implementation or a release commitment. See the [handoff status](MODERNIZATION_STATUS.md) for merged Steps 01–10 and Step 11 local work. Each numbered item is a small PR to `develop` unless investigation shows it must be split. Complete the acceptance gate before moving to its dependent item. Keep this plan for work that has *not* shipped; update `CHANGELOG.md` in each PR with user-visible changes only. Do not run `npm run build` without an explicit request from the project owner.
+Status: proposed ordering for the [roadmap](ROADMAP.md), not an implementation or a release commitment. See the [handoff status](MODERNIZATION_STATUS.md) for merged Steps 01–11 and outstanding release-readiness work. Each numbered item is a small PR to `develop` unless investigation shows it must be split. Complete the acceptance gate before moving to its dependent item. Keep this plan for work that has *not* shipped; update `CHANGELOG.md` in each PR with user-visible changes only. Do not run `npm run build` without an explicit request from the project owner.
 
 ## Why this order
 
@@ -110,4 +110,4 @@ Choose a concrete agent workflow that works without Vue. Add an optional visual 
 
 ## Immediate next PR
 
-**Steps 01–10 merged into `develop` via PRs #121–#131; Step 11 local docs work is on a feature branch.** [Step 11 site](STEP_11_DOC_SITE.md) previews the verified slice and generated Markdown without choosing hosting or building a release artifact. Published npm and compiled MCP remain unchanged; agent-in-loop, hosting and exact release-artifact verification remain open. See the [handoff](MODERNIZATION_STATUS.md).
+**Steps 01–11 merged into `develop` via PRs #121–#132.** [Step 11 site](STEP_11_DOC_SITE.md) previews the verified slice and generated Markdown locally. [Release-readiness triage](MCP_RELEASE_READINESS.md) records four source stdio intent paths and outstanding lockfile findings; independent agent-in-loop and exact-release artifact checks remain open. The owner intends future docs within the not-yet-built seedtoshelves.com project; no hosting, build or publication has been authorized. See the [handoff](MODERNIZATION_STATUS.md).
