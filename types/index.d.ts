@@ -52,5 +52,5 @@ type ColorFamily = 'primary' | 'secondary' | 'tertiary' | 'neutral' | 'success' 
 export declare function generateScale(hexColor: string, curve?: string): Scale
 export declare function generateDarkScale(lightScale: Scale | null, originalHex: string): Scale
 export declare function generateAlphaScale(hexColor: string, mode?: 'light' | 'dark'): Scale
-export declare function generateSemanticTokens(name: string, scale: Scale, darkScale?: Scale | null): Record<string, string>
+export declare function generateSemanticTokens(name: string, scale: Scale, darkScale?: Scale | null, mode?: 'light' | 'dark'): Record<string, string>
 export declare function applyTheme(colors: Partial<Record<ColorFamily, string>> & { background?: ColorFamily | string }, curve?: string): void

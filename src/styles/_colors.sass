@@ -465,6 +465,42 @@ $gray-dark-a12: oklch(1 0 0 / 0.860)
 // This mixin generates CSS custom properties for all color scales
 @mixin generate-color-variables()
   :root
+    // Opposite-mode canvas primitives are available before applyTheme() runs.
+    // Keep these stable across .dark switches; the active --lb-{family}-{step}
+    // scale below still changes with the selected mode.
+    --lb-primary-light-1: #{$orange-1}
+    --lb-primary-light-2: #{$orange-2}
+    --lb-primary-dark-1: #{$orange-dark-1}
+    --lb-primary-dark-2: #{$orange-dark-2}
+    --lb-secondary-light-1: #{$teal-1}
+    --lb-secondary-light-2: #{$teal-2}
+    --lb-secondary-dark-1: #{$teal-dark-1}
+    --lb-secondary-dark-2: #{$teal-dark-2}
+    --lb-tertiary-light-1: #{$sky-1}
+    --lb-tertiary-light-2: #{$sky-2}
+    --lb-tertiary-dark-1: #{$sky-dark-1}
+    --lb-tertiary-dark-2: #{$sky-dark-2}
+    --lb-neutral-light-1: #{$gray-1}
+    --lb-neutral-light-2: #{$gray-2}
+    --lb-neutral-dark-1: #{$gray-dark-1}
+    --lb-neutral-dark-2: #{$gray-dark-2}
+    --lb-success-light-1: #{$green-1}
+    --lb-success-light-2: #{$green-2}
+    --lb-success-dark-1: #{$green-dark-1}
+    --lb-success-dark-2: #{$green-dark-2}
+    --lb-warning-light-1: #{$yellow-1}
+    --lb-warning-light-2: #{$yellow-2}
+    --lb-warning-dark-1: #{$yellow-dark-1}
+    --lb-warning-dark-2: #{$yellow-dark-2}
+    --lb-error-light-1: #{$red-1}
+    --lb-error-light-2: #{$red-2}
+    --lb-error-dark-1: #{$red-dark-1}
+    --lb-error-dark-2: #{$red-dark-2}
+    --lb-info-light-1: #{$blue-1}
+    --lb-info-light-2: #{$blue-2}
+    --lb-info-dark-1: #{$blue-dark-1}
+    --lb-info-dark-2: #{$blue-dark-2}
+
     // Primary Scale
     --lb-primary-1: #{$orange-1}
     --lb-primary-2: #{$orange-2}

@@ -38,7 +38,7 @@ export function generateAlphaScale(hexColor, mode = 'light') {
 /**
  * Generate semantic tokens from a scale
  */
-export function generateSemanticTokens(name, scale, darkScale = null) {
+export function generateSemanticTokens(name, scale, darkScale = null, mode = 'light') {
   const tokens = {}
   
   // Validate scale exists and has required properties
@@ -95,11 +95,19 @@ export function generateSemanticTokens(name, scale, darkScale = null) {
   tokens[`--lb-text-on-${name}-hover`] = textColor
   tokens[`--lb-text-on-${name}-active`] = textColor
   
-  // Surface tokens
-  tokens[`--lb-surface-${name}-normal`] = getScaleValue(2)
-  tokens[`--lb-surface-${name}-hover`] = getScaleValue(3)
-  tokens[`--lb-surface-${name}-active`] = getScaleValue(4)
-  tokens[`--lb-surface-${name}-subtle`] = getScaleValue(1)
+  // Keep the same 1/2/3/4/5 roles as the static theme in both modes.
+  tokens[`--lb-surface-${name}-base`] = getScaleValue(1)
+  tokens[`--lb-surface-${name}-subtle`] = getScaleValue(2)
+  tokens[`--lb-surface-${name}-normal`] = getScaleValue(3)
+  tokens[`--lb-surface-${name}-hover`] = getScaleValue(4)
+  tokens[`--lb-surface-${name}-active`] = getScaleValue(5)
+  for (const [state, step] of [['normal', 3], ['hover', 4], ['active', 5]]) {
+    tokens[`--lb-surface-${name}-${state}-alpha`] = `var(--lb-${name}-alpha-${step})`
+  }
+  const inverseMode = mode === 'dark' ? 'light' : 'dark'
+  tokens[`--lb-surface-${name}-base-inverse`] = `var(--lb-${name}-${inverseMode}-1)`
+  tokens[`--lb-surface-${name}-subtle-inverse`] = `var(--lb-${name}-${inverseMode}-2)`
+  // Legacy runtime-only names are retained without promoting them to static API.
   tokens[`--lb-surface-${name}-raised`] = getScaleValue(1)
   tokens[`--lb-surface-${name}-disabled`] = getScaleValue(3)
   
@@ -144,8 +152,9 @@ export function applyTheme(colors, curve = 'natural') {
     neutral: '#6b7280'    // Gray
   }
   
-  // Merge with defaults
-  const finalColors = { ...defaultColors, ...colors }
+  // Background chooses the global canvas; it is not a ninth color family.
+  const { background = 'neutral', ...paletteColors } = colors
+  const finalColors = { ...defaultColors, ...paletteColors }
   
   // Generate and apply each color
   Object.entries(finalColors).forEach(([name, hexColor]) => {
@@ -188,8 +197,8 @@ export function applyTheme(colors, curve = 'natural') {
       }
       
       // Generate semantic tokens
-      const lightTokens = generateSemanticTokens(name, lightScale)
-      const darkTokens = generateSemanticTokens(name, darkScale)
+      const lightTokens = generateSemanticTokens(name, lightScale, darkScale, 'light')
+      const darkTokens = generateSemanticTokens(name, darkScale, lightScale, 'dark')
       
       // Apply appropriate tokens based on current mode
       const tokens = isDarkMode ? darkTokens : lightTokens
@@ -262,7 +271,7 @@ export function applyTheme(colors, curve = 'natural') {
   })
   
   // Handle background tokens
-  const backgroundSource = colors.background || 'neutral'
+  const backgroundSource = background
   let backgroundScale = null
   
   try {

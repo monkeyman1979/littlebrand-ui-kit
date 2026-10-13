@@ -36,21 +36,16 @@ describe('runtime theme contracts — current successes and explicit legacy gaps
     expect(css('--lb-primary-2')).toBe(light)
   })
 
-  test('approved surface mapping and data-theme handling expose only pinned baseline gaps', () => {
+  test('surface steps/alpha are aligned, while data-theme detection remains a Step 07 gap', () => {
     const lightScale = generateScale(primary)
     const generated = generateSemanticTokens('primary', lightScale)
-    const gaps = []
-    if (generated['--lb-surface-primary-normal'] !== lightScale[3]) gaps.push('surface-normal-step')
-    if (generated['--lb-surface-primary-hover'] !== lightScale[4]) gaps.push('surface-hover-step')
-    if (generated['--lb-surface-primary-active'] !== lightScale[5]) gaps.push('surface-active-step')
-    if (!('--lb-surface-primary-normal-alpha' in generated)) gaps.push('surface-alpha-missing')
+    expect(generated['--lb-surface-primary-normal']).toBe(lightScale[3])
+    expect(generated['--lb-surface-primary-hover']).toBe(lightScale[4])
+    expect(generated['--lb-surface-primary-active']).toBe(lightScale[5])
+    expect(generated['--lb-surface-primary-normal-alpha']).toBe('var(--lb-primary-alpha-3)')
     root().dataset.theme = 'dark'
     applyTheme({ primary })
-    if (css('--lb-primary-2') !== generateDarkScale(null, primary)[2]) gaps.push('attribute-dark-not-detected')
-    expect(gaps.sort()).toEqual([
-      'attribute-dark-not-detected', 'surface-active-step', 'surface-alpha-missing',
-      'surface-hover-step', 'surface-normal-step'
-    ])
+    expect(css('--lb-primary-2')).toBe(lightScale[2]) // attribute selector is not detected yet
   })
 
   test('a later applyTheme palette should survive a mode toggle (known legacy observer gap)', async () => {
