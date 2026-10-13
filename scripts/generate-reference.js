@@ -122,10 +122,20 @@ const componentList = authored.components.map(c => `- [${c.name}](${link(c.id)})
 const tokenList = authored.tokens.map(t => `- [\`${t.name}\`](${link(t.id)}) — ${t.purpose}`).join('\n')
 output.set('docs/reference/v1/README.md', `${heading}\n## Components\n\n${componentList}\n\n## Verified semantic token selection\n\n${tokenList}\n\nOnly these authored tokens are listed here; see [Step 02](../../STEP_02_TOKEN_CONTRACT.md) for the complete semantic grammar. Generic extracted MCP examples are not verified: Dialog has no filled variant, and a SegmentButtonItem cannot stand alone.\n`)
 output.set('docs/reference/v1/TOKENS.md', `${heading}\n## Selected semantic tokens\n\n${authored.tokens.map(t => `<a id="${t.id.replace(':', '-')}"></a>\n### \`${t.name}\`\n\nID: \`${t.id}\`. ${t.purpose}\n\nRelated: ${related(t, 'index')}.`).join('\n\n')}\n`)
+output.set('docs/reference/v1/ai-index.md', `${heading}\n## Find a verified item\n\n${authored.components.filter(c => !c.compoundOnly).map(c => `- ${c.id} — ${c.purpose} [Reference](${link(c.id)})`).join('\n')}\n\nCompound child: [component:LbSegmentButtonItem](${link('component:LbSegmentButtonItem')}) only inside LbSegmentButton.\n\n## Selected tokens\n\n${authored.tokens.map(t => `- ${t.id} — [${t.name}](${link(t.id)})`).join('\n')}\n\nUse the package root and \`littlebrand-ui-kit/style.css\`. Current published npm 0.8.3 has not been verified against this source reference.\n`)
 for (const item of authored.components) {
   const entry = api[item.id]
   const rows = entry.props.map(p => `| \`${p.name}\` | \`${p.type.replaceAll('|', '\\|')}\` | ${p.required ? 'yes' : 'no'} | ${p.default === undefined ? '—' : `\`${p.default}\``} |`).join('\n')
   output.set(`docs/reference/v1/components/${item.name}.md`, `# ${item.name}\n\nID: \`${item.id}\`. [Reference index](../README.md). ${item.compoundOnly ? '**Only use inside LbSegmentButton.** ' : ''}${item.purpose}\n\n**Use:** ${item.use}\n\n**Find by intent:** ${item.intents.join('; ')}.\n\n**Avoid:** ${item.avoid}\n\n**Accessibility:** ${item.accessibility}\n\n**States:** ${item.states.join('; ')}.\n\n**Dependencies:** ${item.dependencies.join('; ')}.\n\n**Related:** ${related(item, 'component')}.\n\n## API (source/declaration checked)\n\n| Prop | Type | Required | Default |\n| --- | --- | --- | --- |\n${rows}\n\nSlots: ${entry.slots.map(s => `\`${s}\``).join(', ') || 'none'}. Events: ${entry.emits.map(e => `\`${e}\``).join(', ') || 'none'}.\n\n## Tested Vue example\n\n\`\`\`vue\n${entry.usage.trim()}\n\`\`\`\n`)
+}
+// Vite publicDir serves the same generated Markdown beside the local Vue site.
+// Keep the repository's full contract links pointing back to the source tree.
+for (const [file, content] of [...output]) {
+  if (!file.startsWith('docs/reference/v1/')) continue
+  const publicContent = file.endsWith('/README.md')
+    ? content.replace('../../STEP_02_TOKEN_CONTRACT.md', 'https://github.com/monkeyman1979/littlebrand-ui-kit/blob/develop/docs/STEP_02_TOKEN_CONTRACT.md')
+    : content
+  output.set(file.replace('docs/reference/v1/', 'site/public/reference/v1/'), publicContent)
 }
 const check = process.argv.includes('--check')
 for (const [file, content] of output) {

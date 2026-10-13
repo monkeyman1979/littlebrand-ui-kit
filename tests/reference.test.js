@@ -25,12 +25,16 @@ function render(file) {
 test('authored, machine and Markdown references agree without writing generated files', () => {
   execFileSync(process.execPath, ['scripts/generate-reference.js', '--check'])
   const index = readFileSync('docs/reference/v1/README.md', 'utf8')
+  const aiIndex = readFileSync('site/public/reference/v1/ai-index.md', 'utf8')
+  expect(aiIndex).toContain(`v${reference.schemaVersion}`)
   for (const component of reference.components) {
     const page = readFileSync(`docs/reference/v1/components/${component.name}.md`, 'utf8')
     expect(index).toContain(`components/${component.name}.md`)
     expect(page).toContain(component.id)
     expect(page).toContain(component.usage.trim())
     expect(page).toContain(component.purpose)
+    expect(aiIndex).toContain(component.id)
+    expect(readFileSync(`site/public/reference/v1/components/${component.name}.md`, 'utf8')).toBe(page)
   }
   const tokens = readFileSync('docs/reference/v1/TOKENS.md', 'utf8')
   const css = compile(resolve('src/styles/_theme.sass'), { loadPaths: [resolve('src/styles')], logger: { warn() {}, debug() {} } }).css
@@ -38,6 +42,7 @@ test('authored, machine and Markdown references agree without writing generated 
     expect(tokens).toContain(token.id)
     expect(index).toContain(token.name)
     expect(css).toContain(`${token.name}:`)
+    expect(aiIndex).toContain(token.id)
   }
   expect(reference.components.find(c => c.name === 'LbDialog').usage).not.toContain('variant="filled"')
   expect(reference.components.find(c => c.name === 'LbSegmentButtonItem').usage).toContain('<LbSegmentButton ')
