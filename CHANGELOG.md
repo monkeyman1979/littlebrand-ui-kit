@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Documented the LittleBrand modernization roadmap in `docs/ROADMAP.md`, covering semantic tokens, component reliability, documentation, agent discovery, an optional Vue registry, and headless integration boundaries. No runtime features have shipped as part of this entry.
+- Documented the LittleBrand modernization roadmap in `docs/ROADMAP.md` and the ordered PR sequence with acceptance gates in `docs/EXECUTION_PLAN.md`. These are plans for semantic tokens, component reliability, documentation, agent discovery, an optional Vue registry, and headless integration; no runtime features have shipped as part of this entry.
 - Added tool-agnostic contributor instructions in `AGENTS.md` and optional task checklists in `agents/`.
 
 ### Removed
