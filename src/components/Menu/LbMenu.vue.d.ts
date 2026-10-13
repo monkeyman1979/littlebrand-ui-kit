@@ -1,4 +1,5 @@
-import { DefineComponent } from 'vue'
+import type { DefineComponent, SlotsType } from 'vue'
+import type { ComponentEmits } from '../component-emits.js'
 
 export type MenuPlacement = 
   | 'top' | 'top-start' | 'top-end'
@@ -53,6 +54,6 @@ export interface LbMenuEmits {
   'search': [query: string]
 }
 
-declare const LbMenu: DefineComponent<LbMenuProps, {}, {}, {}, {}, {}, {}, LbMenuEmits, string, {}, {}, string, LbMenuSlots>
+declare const LbMenu: DefineComponent<LbMenuProps, {}, {}, {}, {}, {}, {}, ComponentEmits<LbMenuEmits>, string, {}, {}, string, SlotsType<LbMenuSlots>>
 
 export default LbMenu

@@ -1,4 +1,4 @@
-import { DefineComponent } from 'vue'
+import type { DefineComponent, SlotsType } from 'vue'
 
 export interface LbSegmentButtonItemProps {
   /**
@@ -43,7 +43,7 @@ declare const LbSegmentButtonItem: DefineComponent<
   {},
   {},
   {},
-  LbSegmentButtonItemSlots
+  SlotsType<LbSegmentButtonItemSlots>
 >
 
 export default LbSegmentButtonItem

@@ -14,7 +14,6 @@ export interface LbButtonProps {
   to?: string | object
   target?: string
   rel?: string
-  tag?: string
   muted?: boolean
 }
 

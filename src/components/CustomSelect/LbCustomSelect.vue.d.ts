@@ -1,4 +1,5 @@
-import { DefineComponent } from 'vue'
+import type { DefineComponent, SlotsType } from 'vue'
+import type { ComponentEmits } from '../component-emits.js'
 
 export interface CustomSelectOption {
   value: any
@@ -20,13 +21,13 @@ export interface LbCustomSelectProps {
 }
 
 export interface LbCustomSelectEmits {
-  (e: 'update:modelValue', value: any): void
-  (e: 'change', value: any, option: CustomSelectOption | null): void
-  (e: 'clear'): void
-  (e: 'open'): void
-  (e: 'close'): void
-  (e: 'focus', event: FocusEvent): void
-  (e: 'blur', event: FocusEvent): void
+  'update:modelValue': [value: any]
+  'change': [value: any, option: CustomSelectOption | null]
+  'clear': []
+  'open': []
+  'close': []
+  'focus': [event: FocusEvent]
+  'blur': [event: FocusEvent]
 }
 
 export interface LbCustomSelectSlots {
@@ -50,12 +51,12 @@ declare const LbCustomSelect: DefineComponent<
   {},
   {},
   {},
-  LbCustomSelectEmits,
+  ComponentEmits<LbCustomSelectEmits>,
   string,
   {},
   {},
   string,
-  LbCustomSelectSlots
+  SlotsType<LbCustomSelectSlots>
 >
 
 export default LbCustomSelect

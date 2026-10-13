@@ -1,5 +1,5 @@
 import { inject } from 'vue'
-import type { SnackbarProviderContext, UseSnackbarReturn, SnackbarConfig } from './types'
+import type { SnackbarProviderContext, UseSnackbarReturn, SnackbarConfig } from './types.js'
 
 /**
  * Composable for interacting with the snackbar system

@@ -1,6 +1,6 @@
 # LittleBrand roadmap
 
-Status: planning. This is the working plan for the next iteration of LittleBrand UI Kit, not a list of shipped features. See the [current handoff status](MODERNIZATION_STATUS.md) for Steps 01–04 and the next action. Follow the numbered PR sequence and acceptance gates in the [execution plan](EXECUTION_PLAN.md). Check an item only after its acceptance criteria are met. Keep release notes in [`CHANGELOG.md`](../CHANGELOG.md).
+Status: planning. This is the working plan for the next iteration of LittleBrand UI Kit, not a list of shipped features. See the [current handoff status](MODERNIZATION_STATUS.md) for Steps 01–05 and the next action. Follow the numbered PR sequence and acceptance gates in the [execution plan](EXECUTION_PLAN.md). Check an item only after its acceptance criteria are met. Keep release notes in [`CHANGELOG.md`](../CHANGELOG.md).
 
 ## North star
 
@@ -12,7 +12,7 @@ Preserve the semantic design language: **text, surface, fill, border, and shadow
 
 - Published package: `littlebrand-ui-kit` 0.8.3; Vue 3, Vite, SASS/Pug, runtime theming, npm distribution, and a bundled stdio MCP server.
 - The MCP component data is generated from 26 `.vue.d.ts` files; the source contains 33 `.vue` files, including internal and compound components. Inventory *public exports*, not raw file counts, before stating a catalog size. Generated descriptions and examples are currently generic.
-- `lint` and `typecheck` are placeholders in `package.json`. Establish real checks before depending on generated documentation or registry output.
+- Steps 04–05 replaced placeholder `lint`/`typecheck` scripts and added a source self-reference TypeScript consumer fixture. Step 05 now includes an owner-authorized local tarball and clean installed Vue + TypeScript consumer check; accurate generated documentation and a future published release still require separate checks.
 - Do not replace the npm package with a registry. Do not add AI-specific runtime dependencies to visual components. Do not assume headless agent applications need a UI.
 - Work on feature branches; do not publish or run `npm run build` as part of planning. Build only when explicitly requested, following project instructions.
 

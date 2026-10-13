@@ -1,4 +1,5 @@
-import { DefineComponent } from 'vue'
+import type { DefineComponent, SlotsType } from 'vue'
+import type { ComponentEmits } from '../../component-emits.js'
 
 export interface ChatInputMenuItem {
   label: string
@@ -90,12 +91,12 @@ declare const LbChatInput: DefineComponent<
   {},
   {},
   {},
-  LbChatInputEmits,
+  ComponentEmits<LbChatInputEmits>,
   string,
   {},
   {},
   {},
-  LbChatInputSlots
+  SlotsType<LbChatInputSlots>
 >
 
 export default LbChatInput
