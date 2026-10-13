@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** Local stdio discovery for the checked Step 09 slice. No generated examples. */
+/** Local stdio discovery for the checked reference slices. No synthesized examples. */
 import { readFileSync, realpathSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -71,7 +71,7 @@ export function createServer(reference: Reference = loadReference()) {
 
   server.registerTool('lb_search', {
     title: 'Search verified LittleBrand components and tokens',
-    description: 'Small intent search over the four verified examples and selected semantic tokens. Returns stable IDs and reference paths. Search, then use lb_get for the exact item.',
+    description: `Small intent search over ${reference.components.filter(c => !c.compoundOnly).length} verified examples and selected semantic tokens. Returns stable IDs and reference paths. Search, then use lb_get for the exact item.`,
     inputSchema: { query: z.string().trim().min(2), limit: z.number().int().min(1).max(5).default(4) },
     annotations
   }, async ({ query, limit }) => response({ schemaVersion: reference.schemaVersion, packageVersion, status: reference.status, results: search(reference, query, limit) }));

@@ -1,4 +1,4 @@
-import type { DefineComponent, VNode } from 'vue'
+import type { DefineComponent, PublicProps, SlotsType, VNode } from 'vue'
 
 export interface LbFormFieldProps {
   label?: string
@@ -16,6 +16,11 @@ export interface LbFormFieldSlots {
   'label-icon'?(): VNode[]
 }
 
-declare const LbFormField: DefineComponent<LbFormFieldProps, {}, {}, {}, {}, {}, {}, {}>
+declare const LbFormField: DefineComponent<
+  LbFormFieldProps, {}, {}, {}, {}, {}, {},
+  {}, never, PublicProps,
+  Readonly<LbFormFieldProps>,
+  {}, SlotsType<LbFormFieldSlots>
+>
 
 export default LbFormField

@@ -8,6 +8,8 @@ Install from npm; import components from littlebrand-ui-kit and CSS from littleb
 
 - [LbButton](./components/LbButton.md) — Trigger an action or navigate to a destination.
 - [LbInput](./components/LbInput.md) — Collect one line of text with v-model.
+- [LbTextarea](./components/LbTextarea.md) — Collect longer free-form text with v-model.
+- [LbFormField](./components/LbFormField.md) — Compose a label, control and one helper or validation message.
 - [LbDialog](./components/LbDialog.md) — Present a modal decision or focused content.
 - [LbSegmentButton](./components/LbSegmentButton.md) — Choose one or more options from a short set of segments.
 - [LbSegmentButtonItem](./components/LbSegmentButtonItem.md) (compound child only) — One option within LbSegmentButton.

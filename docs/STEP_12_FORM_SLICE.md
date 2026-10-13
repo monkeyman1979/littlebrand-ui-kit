@@ -1,0 +1,15 @@
+# Step 12A — Textarea and FormField verified form slice
+
+**Status:** source-only feature branch `feat/step-12-form-slice` for review; based on Steps 01–11 and dependency remediation as merged into `develop` (#134, 9d0c6bf). No build/extraction, npm publish, website deployment, or `main` merge. `seedtoshelves.com` remains a future hosting intention, not a deployed docs URL.
+
+## Scope and contract
+
+- `LbTextarea` is a native multiline control. `v-model` emits strings; supported sizes are `medium | large`, resize modes `none | vertical | horizontal | both`; optional autoResize/maxRows, invalid, disabled, readonly and required states. Native attributes such as `name`, `autocomplete`, `aria-label`, class/style now go to the intended native control/wrapper, as Input already does. Focus now has a visible neutral outline and semantic brand ring in light/dark, and reduced motion limits its transition. Enabling/disabling autoResize or changing maxRows while mounted recalculates or restores height.
+- `LbFormField` composes an internal `LbLabel` and `LbHintText` around a default-slot control; provides a stable generated `id` and hint `aria-describedby` for injecting Input/Textarea. An explicit `labelFor` now serves as the child's ID fallback when `id` is absent, so the label targets the native control. Error, warning, success, hint priority is unchanged. FormField **does not** validate, or forward native `required`/`invalid` to children; the host must set these on the control. Label/HintText **standalone** APIs remain outside this slice and are not claimed verified.
+- `.vue.d.ts` types now expose checked Textarea event/prop signatures and FormField scoped slots/props instead of permissive `{}` emits/props. The existing root/barrel/plugin exports and `--lb-*` names are unchanged. No migration of import paths is required.
+
+The two new SFCs in `reference/examples/` mount, typecheck and render. The v1 authored reference, generated machine JSON, per-component and AI-index Markdown, local source MCP lookup, and local docs site now include both entries from the same source. Other generic extracted MCP entries remain unverified; no extraction refreshed `mcp-server/src/data/` or old tracked `dist/`. Published npm 0.8.3 is unchanged.
+
+## Checks and boundaries
+
+`npm run lint`, `npm run typecheck` (including strict npm consumer declarations), `npm run typecheck:site`, `npm test` (42 tests), `npm run test:mcp` (six intent→exact-example source stdio retrievals), `npm run reference:check`, `npm run test:site` (Chromium six previews, light/dark Textarea focus, dynamic autoResize, FormField label/description/error, reduced motion, Markdown routes), `npm run test:browser`, MCP no-emit typecheck and `git diff --check` passed on this branch. These are source and Chromium checks, not broad accessibility/SSR/router/browser certification or installed release-artifact verification. An independent LLM-agent trial is still pending local model availability. A future npm release needs separately authorized build/extraction and tarball checks from the exact commit; hosting belongs to a later seedtoshelves.com integration decision.

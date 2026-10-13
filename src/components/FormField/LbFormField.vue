@@ -45,7 +45,8 @@ const props = withDefaults(defineProps<LbFormFieldProps>(), {
 const generateId = () => `form-field-${Math.random().toString(36).substr(2, 9)}`
 
 // Computed properties
-const computedId = computed(() => props.id || generateId())
+const generatedId = generateId()
+const computedId = computed(() => props.id || props.labelFor || generatedId)
 const computedLabelFor = computed(() => props.labelFor || computedId.value)
 const computedHintId = computed(() => `${computedId.value}-hint`)
 

@@ -89,7 +89,7 @@ for (const item of authored.components) {
   const { props: sourceProps, defaults, propTypes, emits: sourceEmits } = implementationProps(descriptor.scriptSetup.content, item.name)
   assert(JSON.stringify(sourceProps.slice().sort()) === JSON.stringify(props.map(p => p.name).sort()), `${item.name}: declaration/source prop drift`)
   for (const prop of props) {
-    if (['variant', 'color', 'size', 'type', 'width', 'iconPosition'].includes(prop.name)) {
+    if (['variant', 'color', 'size', 'type', 'width', 'iconPosition', 'resize'].includes(prop.name)) {
       const normalize = value => value.replaceAll(/\s+/g, '').replaceAll('"', "'")
       assert(normalize(prop.type) === normalize(propTypes[prop.name]), `${item.name}.${prop.name}: declaration/source type drift`)
     }

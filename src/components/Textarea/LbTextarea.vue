@@ -1,6 +1,7 @@
 <template lang="pug">
-.lb-textarea(:class="rootClasses" :data-size="effectiveSize")
+.lb-textarea(:class="[rootClasses, $attrs.class]" :style="$attrs.style" :data-size="effectiveSize")
   textarea(
+    v-bind="textareaAttrs()"
     ref="textareaRef"
     :id="computedId"
     :value="modelValue"
@@ -24,7 +25,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, inject, watch, nextTick, onMounted, onUnmounted, type ComputedRef } from 'vue'
+import { computed, ref, inject, watch, nextTick, onMounted, onUnmounted, useAttrs, type ComputedRef } from 'vue'
+
+defineOptions({ name: 'LbTextarea', inheritAttrs: false })
+const attrs = useAttrs()
+const textareaAttrs = () => Object.fromEntries(Object.entries(attrs).filter(([key]) => key !== 'class' && key !== 'style'))
 
 // Props
 interface Props {
@@ -159,25 +164,21 @@ const adjustHeight = () => {
   textarea.style.height = `${Math.min(scrollHeight, maxHeight)}px`
 }
 
-// Watch for content changes
-watch(() => props.modelValue, () => {
-  if (props.autoResize) {
-    nextTick(() => {
-      adjustHeight()
-    })
+const syncHeight = () => {
+  if (!textareaRef.value) return
+  if (!props.autoResize) {
+    textareaRef.value.style.height = ''
+    return
   }
-})
+  lineHeight.value = parseFloat(window.getComputedStyle(textareaRef.value).lineHeight)
+  adjustHeight()
+}
+
+watch(() => [props.modelValue, props.autoResize, props.maxRows], () => nextTick(syncHeight))
 
 // Initialize on mount
 onMounted(() => {
-  if (props.autoResize && textareaRef.value) {
-    // Calculate line height for maxRows calculation
-    const computedStyle = window.getComputedStyle(textareaRef.value)
-    lineHeight.value = parseFloat(computedStyle.lineHeight)
-    
-    // Initial height adjustment
-    adjustHeight()
-  }
+  syncHeight()
   
   // Set up global listeners for keyboard/mouse detection
   document.addEventListener('keydown', handleKeyDown, true)
@@ -227,10 +228,10 @@ defineExpose({
       border-color: var(--lb-border-neutral-active)
     
     &:focus-visible
-      outline: base.$focus-ring-width solid transparent
+      outline: base.$focus-ring-width solid var(--lb-text-neutral-contrast-high)
       outline-offset: base.$focus-ring-offset
       border-color: var(--lb-border-neutral-active)
-      box-shadow: base.$shadow-sm
+      box-shadow: 0 0 0 calc(#{base.$focus-ring-width} + #{base.$focus-ring-offset}) var(--lb-focus-ring-color)
   
   // Invalid state
   &.invalid textarea
@@ -242,10 +243,10 @@ defineExpose({
     
     // Error border on focus
     &:focus-visible
-      outline: base.$focus-ring-width solid transparent
+      outline: base.$focus-ring-width solid var(--lb-text-neutral-contrast-high)
       outline-offset: base.$focus-ring-offset
       border-color: var(--lb-border-error-active)
-      box-shadow: base.$shadow-sm
+      box-shadow: 0 0 0 calc(#{base.$focus-ring-width} + #{base.$focus-ring-offset}) var(--lb-focus-ring-color)
   
   // Disabled state
   textarea:disabled
@@ -283,6 +284,8 @@ defineExpose({
     
   &.resize-both textarea
     resize: both
-  
-  
+
+@media (prefers-reduced-motion: reduce)
+  .lb-textarea textarea
+    transition-duration: 0.01ms
 </style>

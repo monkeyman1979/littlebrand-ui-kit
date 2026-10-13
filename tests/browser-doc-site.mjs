@@ -18,7 +18,7 @@ try {
     page.on('pageerror', error => errors.push(error.message))
     await page.goto(base)
     await page.getByRole('heading', { name: 'Good interfaces start with a known contract.' }).waitFor()
-    assert.equal(await page.locator('.component-link').count(), 4)
+    assert.equal(await page.locator('.component-link').count(), 6)
     assert.equal(await page.locator('.token-list li').count(), 9)
     assert.equal(await page.locator('th[scope="row"]').count(), reference.components[0].props.length, 'Button props derived from machine reference')
     await page.getByRole('button', { name: 'Save changes' }).click()
@@ -35,6 +35,38 @@ try {
     assert.match(await page.locator('.preview-status').innerText(), /hello@example.com/)
     await page.getByRole('checkbox', { name: 'Invalid' }).check()
     assert.equal(await page.locator('#site-email').getAttribute('aria-invalid'), 'true')
+    await page.getByRole('link', { name: /LbTextarea/ }).first().click()
+    await page.locator('#site-notes').fill('A longer message')
+    assert.equal(await page.locator('#site-notes').getAttribute('name'), 'notes')
+    await page.getByRole('checkbox', { name: 'Invalid' }).check()
+    assert.equal(await page.locator('#site-notes').getAttribute('aria-invalid'), 'true')
+    await page.getByRole('checkbox', { name: 'Auto resize' }).check()
+    const resizedHeight = await page.locator('#site-notes').evaluate(el => parseFloat(el.style.height))
+    assert.ok(resizedHeight > 0, 'enabling autoResize adjusts textarea height')
+    await page.locator('#site-notes').fill(Array.from({ length: 20 }, (_, i) => `Line ${i}`).join('\n'))
+    const capped = await page.locator('#site-notes').evaluate(el => {
+      const style = getComputedStyle(el)
+      const cap = 5 * parseFloat(style.lineHeight) + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom) + parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth)
+      return parseFloat(el.style.height) <= cap + 1
+    })
+    assert.equal(capped, true, 'autoResize respects maxRows')
+    await page.getByRole('checkbox', { name: 'Auto resize' }).uncheck()
+    assert.equal(await page.locator('#site-notes').evaluate(el => el.style.height), '', 'turning autoResize off restores normal sizing')
+    await page.locator('#site-notes').focus()
+    const lightOutline = await page.locator('#site-notes').evaluate(el => getComputedStyle(el).outlineColor)
+    await page.getByRole('button', { name: 'dark', exact: true }).click()
+    await page.locator('#site-notes').focus()
+    const darkOutline = await page.locator('#site-notes').evaluate(el => getComputedStyle(el).outlineColor)
+    assert.notEqual(lightOutline, darkOutline, 'textarea keyboard outline follows light/dark theme')
+    await page.getByRole('button', { name: 'light', exact: true }).click()
+    await page.getByRole('link', { name: /LbFormField/ }).first().click()
+    const field = page.locator('.preview-surface .lb-form-field')
+    const fieldId = await field.locator('textarea').getAttribute('id')
+    assert.equal(await field.locator('label').getAttribute('for'), fieldId)
+    assert.equal(await field.locator('textarea').getAttribute('aria-describedby'), await field.locator('.lb-hint-text').getAttribute('id'))
+    await page.getByRole('button', { name: 'Validate' }).click()
+    assert.equal(await field.locator('textarea').getAttribute('aria-invalid'), 'true')
+    assert.match(await field.locator('.lb-hint-text').innerText(), /Biography is required/)
     await page.getByRole('link', { name: /LbDialog/ }).first().click()
     assert.equal(await page.locator('pre').first().innerText().then(text => text.includes('variant="filled"')), false)
     await page.getByRole('button', { name: 'Open preferences' }).click()
@@ -65,7 +97,7 @@ try {
       await page.setViewportSize(viewport)
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `no horizontal overflow at ${viewport.width}`)
     }
-    for (const file of ['README.md', 'ai-index.md', 'components/LbButton.md', 'components/LbInput.md', 'components/LbDialog.md', 'components/LbSegmentButton.md', 'components/LbSegmentButtonItem.md', 'TOKENS.md']) {
+    for (const file of ['README.md', 'ai-index.md', 'components/LbButton.md', 'components/LbInput.md', 'components/LbTextarea.md', 'components/LbFormField.md', 'components/LbDialog.md', 'components/LbSegmentButton.md', 'components/LbSegmentButtonItem.md', 'TOKENS.md']) {
       const response = await page.request.get(new URL(`/reference/v1/${file}`, base).href)
       assert.equal(response.status(), 200, `Markdown ${file} served with site`)
       assert.equal(await response.text(), readFileSync(resolve('site/public/reference/v1', file), 'utf8'))
@@ -74,7 +106,19 @@ try {
   } finally {
     await context.close()
   }
-  console.log('Documentation site browser checks passed (4 previews, API, themes, copy, responsive layout, 8 Markdown routes).')
+  const reduced = await browser.newContext({ colorScheme: 'dark', reducedMotion: 'reduce' })
+  try {
+    const page = await reduced.newPage()
+    await page.goto(new URL('/#component:LbTextarea', base).href)
+    await page.locator('#site-notes').waitFor()
+    const duration = await page.locator('#site-notes').evaluate(el => getComputedStyle(el).transitionDuration)
+    assert.ok(parseFloat(duration) <= 0.00001, `textarea reduces motion: ${duration}`)
+    await page.locator('#site-notes').focus()
+    assert.equal(await page.locator('#site-notes').evaluate(el => getComputedStyle(el).outlineStyle), 'solid')
+  } finally {
+    await reduced.close()
+  }
+  console.log('Documentation site browser checks passed (6 previews, light/dark focus, reduced motion, copy, responsive layout, 10 Markdown routes).')
 } finally {
   await server.close()
   await browser.close()

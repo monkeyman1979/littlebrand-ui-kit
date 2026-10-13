@@ -35,6 +35,8 @@ test('small verified stdio tool surface; no synthetic example or generic catalog
 test.each([
   ['save changes with a button', 'component:LbButton'],
   ['collect an email in a form', 'component:LbInput'],
+  ['write multiline notes', 'component:LbTextarea'],
+  ['show a validation field group', 'component:LbFormField'],
   ['confirmation modal', 'component:LbDialog'],
   ['choose frequency using a segmented control', 'component:LbSegmentButton'],
   ['focus ring color', 'token:--lb-focus-ring-color'],

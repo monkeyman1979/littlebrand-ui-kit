@@ -360,7 +360,7 @@ applyTheme({
 
 ## 🤖 AI Assistant Integration
 
-The **unreleased source** MCP server uses local stdio and the [verified component/token reference](./docs/reference/v1/README.md). Three read-only tools (`lb_search`, `lb_get`, `lb_setup`) return concise intent matches, exact checked details with tested Vue examples on demand, and npm setup guidance. Only Button, Input, Dialog, SegmentButton (with its child), and selected tokens have verified references. Generic code generation and all-catalog claims have been removed from the source server.
+The **unreleased source** MCP server uses local stdio and the [verified component/token reference](./docs/reference/v1/README.md). Three read-only tools (`lb_search`, `lb_get`, `lb_setup`) return concise intent matches, exact checked details with tested Vue examples on demand, and npm setup guidance. Only Button, Input, Textarea, FormField, Dialog, SegmentButton (with its child), and selected tokens have verified references. Generic code generation and all-catalog claims have been removed from the source server.
 
 **Published npm 0.8.3 still contains the older ten-tool server and generic examples.** Its artifact has not been refreshed or verified against the new source reference; do not treat its examples as verified (in particular, Dialog `variant="filled"` and a standalone SegmentButtonItem are invalid). A future owner-authorized release build/extraction and installed-package check are required before promising the new tools through npm.
 

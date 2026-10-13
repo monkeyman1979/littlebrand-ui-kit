@@ -1,4 +1,4 @@
-// Source-only protocol trial: four intent prompts over actual stdio, no dist build.
+// Source-only protocol trial: six intent prompts over actual stdio, no dist build.
 import assert from 'node:assert/strict'
 import { resolve } from 'node:path'
 import { existsSync, readFileSync } from 'node:fs'
@@ -12,6 +12,8 @@ const transport = new StdioClientTransport({ command, args: [resolve('mcp-server
 const client = new Client({ name: 'littlebrand-source-trial', version: '1.0.0' })
 const prompts = [
   ['I need an action to save my changes', 'component:LbButton'],
+  ['How can I write multiline notes?', 'component:LbTextarea'],
+  ['I need a validation field with a label and error hint', 'component:LbFormField'],
   ['How can I collect a user email address?', 'component:LbInput'],
   ['Show a confirmation in a modal', 'component:LbDialog'],
   ['Choose frequency using a segmented control', 'component:LbSegmentButton']
@@ -35,7 +37,7 @@ try {
     assert.match(item.testedVueExample, /littlebrand-ui-kit\/style\.css/)
     largestDetail = Math.max(largestDetail, Buffer.byteLength(result.content[0].text))
   }
-  console.log(`Source stdio trial passed (3 tools, 4 intents/examples; max search ${largestSearch} bytes, max full ${largestDetail} bytes)`)
+  console.log(`Source stdio trial passed (3 tools, 6 intents/examples; max search ${largestSearch} bytes, max full ${largestDetail} bytes)`)
 } finally {
   await client.close()
 }
