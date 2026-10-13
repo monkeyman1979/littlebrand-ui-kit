@@ -15,7 +15,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Prepared root TypeScript declarations for named npm imports and typed `style.css` paths; the seven public components without verified declarations have deliberately opaque prop types until their APIs are audited. Corrected known Button, Input, Dialog, and Popover declaration mismatches, plus seven legacy component declarations with invalid Vue emit/slot generic types. Regenerated affected MCP component metadata from the corrected declaration sources. A locally built package passed strict Vue + TypeScript consumer checks in both Bundler and NodeNext resolution modes with library checking enabled. These changes are **Unreleased**; published 0.8.3 remains unchanged.
 - Corrected the declared CommonJS entry from a missing `.umd.js` file to the existing `.umd.cjs` output path. The ESM root and CSS import paths remain the same; no consumer import-path migration is intended. Confirmed against an owner-authorized local tarball and clean consumer; no publication or migration has occurred.
 
+### Added
+- Made the existing `--lb-{family}-{light,dark}-{1,2}` inverse dependencies available in static CSS before JavaScript runs for all eight color families. Custom themes continue to override these raw steps with generated values; no new semantic names or aliases were introduced.
+
 ### Changed
+- Aligned `applyTheme()` family surface roles with the existing static 1/2/3/4/5 palette mapping in light and dark modes (`base/subtle/normal/hover/active`). **Visual change for custom palettes:** runtime `subtle/normal/hover/active` previously used steps 1/2/3/4 and now use 2/3/4/5; review custom-theme screenshots and any hand-tuned overrides. No semantic token names were removed or renamed. Runtime alpha and inverse surface roles now match the existing static names, and `background` no longer creates an unintended ninth color family.
 - Replaced the README's universal tree-shaking guarantee with a named-import recommendation. In one Vite consumer, a named Button import emitted less JavaScript than plugin installation, but both included the full kit CSS; do not infer per-component CSS or a universal size guarantee.
 
 ### Removed
