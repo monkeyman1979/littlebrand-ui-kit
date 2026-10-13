@@ -271,7 +271,7 @@ See [CUSTOMIZATION.md](./CUSTOMIZATION.md) for detailed customization options in
 
 ## 🌙 Dark Mode
 
-Full dark mode support is built-in! Simply activate it with the `dark` class or `data-theme` attribute:
+Without an explicit choice, the kit follows your system light/dark preference, including subsequent changes. To keep an app light regardless of the OS, set `<html data-theme="light">`. To force dark, use `data-theme="dark"` or the existing `.dark` class:
 
 ```html
 <!-- Using class -->
@@ -285,7 +285,7 @@ Full dark mode support is built-in! Simply activate it with the `dark` class or 
 </html>
 ```
 
-Dark mode automatically switches all 312 tokens to properly optimized dark values.
+The nearest explicit theme scope wins, including inside previews. On the same element, `data-theme="light"` takes precedence over `.dark`. `applyTheme()` retains the latest custom colors across mode changes; a teleported Dialog inherits its opening scope's theme while open. Your application owns persistence of any user-selected mode.
 
 ## 🎯 Color System Features
 
@@ -300,18 +300,7 @@ From ONE color, get:
 
 ### Saturation Curves
 
-Choose the mood of your colors:
-
-```javascript
-// Natural (default) - balanced
-applyTheme({ primary: '#6366f1' }, 'natural')
-
-// Vivid - more saturated, bold
-applyTheme({ primary: '#6366f1' }, 'vivid')
-
-// Muted - less saturated, subtle
-applyTheme({ primary: '#6366f1' }, 'muted')
-```
+The optional curve argument is retained for compatibility, but the current generator uses its natural scale for all values. Do not rely on `'vivid'` or `'muted'` changing the output until implemented.
 
 ## 📖 Examples
 
@@ -334,7 +323,7 @@ applyTheme({
   primary: '#8b5cf6',
   secondary: '#ec4899',
   success: '#10b981'
-}, 'vivid') // Use vivid curve for more saturation
+}) // A new call replaces the previous custom palette
 ```
 
 ### Override Specific Variables

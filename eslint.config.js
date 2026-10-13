@@ -6,7 +6,7 @@ import globals from 'globals'
 export default [
   { ignores: ['dist/**', 'mcp-server/**', 'node_modules/**', 'examples/**'] },
   {
-    files: ['src/**/*.js', 'scripts/**/*.js', 'tests/**/*.js', '*.config.js'],
+    files: ['src/**/*.js', 'scripts/**/*.js', 'tests/**/*.js', 'tests/**/*.mjs', '*.config.js'],
     ...js.configs.recommended,
     languageOptions: { globals: { ...globals.browser, ...globals.node } }
   },

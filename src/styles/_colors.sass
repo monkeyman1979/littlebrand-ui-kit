@@ -1,3 +1,229 @@
+@mixin dark-color-variables()
+  // Primary Scale Dark
+  --lb-primary-1: #{$orange-dark-1}
+  --lb-primary-2: #{$orange-dark-2}
+  --lb-primary-3: #{$orange-dark-3}
+  --lb-primary-4: #{$orange-dark-4}
+  --lb-primary-5: #{$orange-dark-5}
+  --lb-primary-6: #{$orange-dark-6}
+  --lb-primary-7: #{$orange-dark-7}
+  --lb-primary-8: #{$orange-dark-8}
+  --lb-primary-9: #{$orange-dark-9}
+  --lb-primary-10: #{$orange-dark-10}
+  --lb-primary-11: #{$orange-dark-11}
+  --lb-primary-12: #{$orange-dark-12}
+
+  // Secondary Scale Dark
+  --lb-secondary-1: #{$teal-dark-1}
+  --lb-secondary-2: #{$teal-dark-2}
+  --lb-secondary-3: #{$teal-dark-3}
+  --lb-secondary-4: #{$teal-dark-4}
+  --lb-secondary-5: #{$teal-dark-5}
+  --lb-secondary-6: #{$teal-dark-6}
+  --lb-secondary-7: #{$teal-dark-7}
+  --lb-secondary-8: #{$teal-dark-8}
+  --lb-secondary-9: #{$teal-dark-9}
+  --lb-secondary-10: #{$teal-dark-10}
+  --lb-secondary-11: #{$teal-dark-11}
+  --lb-secondary-12: #{$teal-dark-12}
+
+  // Tertiary Scale Dark (Sky)
+  --lb-tertiary-1: #{$sky-dark-1}
+  --lb-tertiary-2: #{$sky-dark-2}
+  --lb-tertiary-3: #{$sky-dark-3}
+  --lb-tertiary-4: #{$sky-dark-4}
+  --lb-tertiary-5: #{$sky-dark-5}
+  --lb-tertiary-6: #{$sky-dark-6}
+  --lb-tertiary-7: #{$sky-dark-7}
+  --lb-tertiary-8: #{$sky-dark-8}
+  --lb-tertiary-9: #{$sky-dark-9}
+  --lb-tertiary-10: #{$sky-dark-10}
+  --lb-tertiary-11: #{$sky-dark-11}
+  --lb-tertiary-12: #{$sky-dark-12}
+
+  // Neutral Scale Dark
+  --lb-neutral-1: #{$gray-dark-1}
+  --lb-neutral-2: #{$gray-dark-2}
+  --lb-neutral-3: #{$gray-dark-3}
+  --lb-neutral-4: #{$gray-dark-4}
+  --lb-neutral-5: #{$gray-dark-5}
+  --lb-neutral-6: #{$gray-dark-6}
+  --lb-neutral-7: #{$gray-dark-7}
+  --lb-neutral-8: #{$gray-dark-8}
+  --lb-neutral-9: #{$gray-dark-9}
+  --lb-neutral-10: #{$gray-dark-10}
+  --lb-neutral-11: #{$gray-dark-11}
+  --lb-neutral-12: #{$gray-dark-12}
+
+  // Success Scale Dark
+  --lb-success-1: #{$green-dark-1}
+  --lb-success-2: #{$green-dark-2}
+  --lb-success-3: #{$green-dark-3}
+  --lb-success-4: #{$green-dark-4}
+  --lb-success-5: #{$green-dark-5}
+  --lb-success-6: #{$green-dark-6}
+  --lb-success-7: #{$green-dark-7}
+  --lb-success-8: #{$green-dark-8}
+  --lb-success-9: #{$green-dark-9}
+  --lb-success-10: #{$green-dark-10}
+  --lb-success-11: #{$green-dark-11}
+  --lb-success-12: #{$green-dark-12}
+
+  // Warning Scale Dark
+  --lb-warning-1: #{$yellow-dark-1}
+  --lb-warning-2: #{$yellow-dark-2}
+  --lb-warning-3: #{$yellow-dark-3}
+  --lb-warning-4: #{$yellow-dark-4}
+  --lb-warning-5: #{$yellow-dark-5}
+  --lb-warning-6: #{$yellow-dark-6}
+  --lb-warning-7: #{$yellow-dark-7}
+  --lb-warning-8: #{$yellow-dark-8}
+  --lb-warning-9: #{$yellow-dark-9}
+  --lb-warning-10: #{$yellow-dark-10}
+  --lb-warning-11: #{$yellow-dark-11}
+  --lb-warning-12: #{$yellow-dark-12}
+
+  // Error Scale Dark
+  --lb-error-1: #{$red-dark-1}
+  --lb-error-2: #{$red-dark-2}
+  --lb-error-3: #{$red-dark-3}
+  --lb-error-4: #{$red-dark-4}
+  --lb-error-5: #{$red-dark-5}
+  --lb-error-6: #{$red-dark-6}
+  --lb-error-7: #{$red-dark-7}
+  --lb-error-8: #{$red-dark-8}
+  --lb-error-9: #{$red-dark-9}
+  --lb-error-10: #{$red-dark-10}
+  --lb-error-11: #{$red-dark-11}
+  --lb-error-12: #{$red-dark-12}
+
+  // Info Scale Dark (same as tertiary/blue)
+  --lb-info-1: #{$blue-dark-1}
+  --lb-info-2: #{$blue-dark-2}
+  --lb-info-3: #{$blue-dark-3}
+  --lb-info-4: #{$blue-dark-4}
+  --lb-info-5: #{$blue-dark-5}
+  --lb-info-6: #{$blue-dark-6}
+  --lb-info-7: #{$blue-dark-7}
+  --lb-info-8: #{$blue-dark-8}
+  --lb-info-9: #{$blue-dark-9}
+  --lb-info-10: #{$blue-dark-10}
+  --lb-info-11: #{$blue-dark-11}
+  --lb-info-12: #{$blue-dark-12}
+
+  // === Alpha Scales Dark Mode ===
+  // Primary/Orange Alpha Scale Dark
+  --lb-primary-alpha-1: #{$orange-dark-a1}
+  --lb-primary-alpha-2: #{$orange-dark-a2}
+  --lb-primary-alpha-3: #{$orange-dark-a3}
+  --lb-primary-alpha-4: #{$orange-dark-a4}
+  --lb-primary-alpha-5: #{$orange-dark-a5}
+  --lb-primary-alpha-6: #{$orange-dark-a6}
+  --lb-primary-alpha-7: #{$orange-dark-a7}
+  --lb-primary-alpha-8: #{$orange-dark-a8}
+  --lb-primary-alpha-9: #{$orange-dark-a9}
+  --lb-primary-alpha-10: #{$orange-dark-a10}
+  --lb-primary-alpha-11: #{$orange-dark-a11}
+  --lb-primary-alpha-12: #{$orange-dark-a12}
+
+  // Secondary/Teal Alpha Scale Dark
+  --lb-secondary-alpha-1: #{$teal-dark-a1}
+  --lb-secondary-alpha-2: #{$teal-dark-a2}
+  --lb-secondary-alpha-3: #{$teal-dark-a3}
+  --lb-secondary-alpha-4: #{$teal-dark-a4}
+  --lb-secondary-alpha-5: #{$teal-dark-a5}
+  --lb-secondary-alpha-6: #{$teal-dark-a6}
+  --lb-secondary-alpha-7: #{$teal-dark-a7}
+  --lb-secondary-alpha-8: #{$teal-dark-a8}
+  --lb-secondary-alpha-9: #{$teal-dark-a9}
+  --lb-secondary-alpha-10: #{$teal-dark-a10}
+  --lb-secondary-alpha-11: #{$teal-dark-a11}
+  --lb-secondary-alpha-12: #{$teal-dark-a12}
+
+  // Tertiary/Sky Alpha Scale Dark
+  --lb-tertiary-alpha-1: #{$sky-dark-a1}
+  --lb-tertiary-alpha-2: #{$sky-dark-a2}
+  --lb-tertiary-alpha-3: #{$sky-dark-a3}
+  --lb-tertiary-alpha-4: #{$sky-dark-a4}
+  --lb-tertiary-alpha-5: #{$sky-dark-a5}
+  --lb-tertiary-alpha-6: #{$sky-dark-a6}
+  --lb-tertiary-alpha-7: #{$sky-dark-a7}
+  --lb-tertiary-alpha-8: #{$sky-dark-a8}
+  --lb-tertiary-alpha-9: #{$sky-dark-a9}
+  --lb-tertiary-alpha-10: #{$sky-dark-a10}
+  --lb-tertiary-alpha-11: #{$sky-dark-a11}
+  --lb-tertiary-alpha-12: #{$sky-dark-a12}
+
+  // Success/Green Alpha Scale Dark
+  --lb-success-alpha-1: #{$green-dark-a1}
+  --lb-success-alpha-2: #{$green-dark-a2}
+  --lb-success-alpha-3: #{$green-dark-a3}
+  --lb-success-alpha-4: #{$green-dark-a4}
+  --lb-success-alpha-5: #{$green-dark-a5}
+  --lb-success-alpha-6: #{$green-dark-a6}
+  --lb-success-alpha-7: #{$green-dark-a7}
+  --lb-success-alpha-8: #{$green-dark-a8}
+  --lb-success-alpha-9: #{$green-dark-a9}
+  --lb-success-alpha-10: #{$green-dark-a10}
+  --lb-success-alpha-11: #{$green-dark-a11}
+  --lb-success-alpha-12: #{$green-dark-a12}
+
+  // Warning/Yellow Alpha Scale Dark
+  --lb-warning-alpha-1: #{$yellow-dark-a1}
+  --lb-warning-alpha-2: #{$yellow-dark-a2}
+  --lb-warning-alpha-3: #{$yellow-dark-a3}
+  --lb-warning-alpha-4: #{$yellow-dark-a4}
+  --lb-warning-alpha-5: #{$yellow-dark-a5}
+  --lb-warning-alpha-6: #{$yellow-dark-a6}
+  --lb-warning-alpha-7: #{$yellow-dark-a7}
+  --lb-warning-alpha-8: #{$yellow-dark-a8}
+  --lb-warning-alpha-9: #{$yellow-dark-a9}
+  --lb-warning-alpha-10: #{$yellow-dark-a10}
+  --lb-warning-alpha-11: #{$yellow-dark-a11}
+  --lb-warning-alpha-12: #{$yellow-dark-a12}
+
+  // Error/Red Alpha Scale Dark
+  --lb-error-alpha-1: #{$red-dark-a1}
+  --lb-error-alpha-2: #{$red-dark-a2}
+  --lb-error-alpha-3: #{$red-dark-a3}
+  --lb-error-alpha-4: #{$red-dark-a4}
+  --lb-error-alpha-5: #{$red-dark-a5}
+  --lb-error-alpha-6: #{$red-dark-a6}
+  --lb-error-alpha-7: #{$red-dark-a7}
+  --lb-error-alpha-8: #{$red-dark-a8}
+  --lb-error-alpha-9: #{$red-dark-a9}
+  --lb-error-alpha-10: #{$red-dark-a10}
+  --lb-error-alpha-11: #{$red-dark-a11}
+  --lb-error-alpha-12: #{$red-dark-a12}
+
+  // Info/Blue Alpha Scale Dark
+  --lb-info-alpha-1: #{$blue-dark-a1}
+  --lb-info-alpha-2: #{$blue-dark-a2}
+  --lb-info-alpha-3: #{$blue-dark-a3}
+  --lb-info-alpha-4: #{$blue-dark-a4}
+  --lb-info-alpha-5: #{$blue-dark-a5}
+  --lb-info-alpha-6: #{$blue-dark-a6}
+  --lb-info-alpha-7: #{$blue-dark-a7}
+  --lb-info-alpha-8: #{$blue-dark-a8}
+  --lb-info-alpha-9: #{$blue-dark-a9}
+  --lb-info-alpha-10: #{$blue-dark-a10}
+  --lb-info-alpha-11: #{$blue-dark-a11}
+  --lb-info-alpha-12: #{$blue-dark-a12}
+
+  // Neutral/Gray Alpha Scale Dark
+  --lb-neutral-alpha-1: #{$gray-dark-a1}
+  --lb-neutral-alpha-2: #{$gray-dark-a2}
+  --lb-neutral-alpha-3: #{$gray-dark-a3}
+  --lb-neutral-alpha-4: #{$gray-dark-a4}
+  --lb-neutral-alpha-5: #{$gray-dark-a5}
+  --lb-neutral-alpha-6: #{$gray-dark-a6}
+  --lb-neutral-alpha-7: #{$gray-dark-a7}
+  --lb-neutral-alpha-8: #{$gray-dark-a8}
+  --lb-neutral-alpha-9: #{$gray-dark-a9}
+  --lb-neutral-alpha-10: #{$gray-dark-a10}
+  --lb-neutral-alpha-11: #{$gray-dark-a11}
+  --lb-neutral-alpha-12: #{$gray-dark-a12}
+
 // LittleBrand UI Kit - OKLCH Color System
 // Single source of truth for all colors using OKLCH color space
 // Enhanced dynamic ranges for better visual distinction between steps
@@ -464,7 +690,7 @@ $gray-dark-a12: oklch(1 0 0 / 0.860)
 // === CSS Custom Property Generation ===
 // This mixin generates CSS custom properties for all color scales
 @mixin generate-color-variables()
-  :root
+  :root, [data-theme="light"]
     // Opposite-mode canvas primitives are available before applyTheme() runs.
     // Keep these stable across .dark switches; the active --lb-{family}-{step}
     // scale below still changes with the selected mode.
@@ -612,7 +838,7 @@ $gray-dark-a12: oklch(1 0 0 / 0.860)
     --lb-info-10: #{$blue-10}
     --lb-info-11: #{$blue-11}
     --lb-info-12: #{$blue-12}
-    
+
     // === Alpha Scales ===
     // Primary/Orange Alpha Scale
     --lb-primary-alpha-1: #{$orange-a1}
@@ -727,228 +953,9 @@ $gray-dark-a12: oklch(1 0 0 / 0.860)
     --lb-neutral-alpha-12: #{$gray-a12}
 
   // Dark mode scales
-  [data-theme="dark"], .dark
-    // Primary Scale Dark
-    --lb-primary-1: #{$orange-dark-1}
-    --lb-primary-2: #{$orange-dark-2}
-    --lb-primary-3: #{$orange-dark-3}
-    --lb-primary-4: #{$orange-dark-4}
-    --lb-primary-5: #{$orange-dark-5}
-    --lb-primary-6: #{$orange-dark-6}
-    --lb-primary-7: #{$orange-dark-7}
-    --lb-primary-8: #{$orange-dark-8}
-    --lb-primary-9: #{$orange-dark-9}
-    --lb-primary-10: #{$orange-dark-10}
-    --lb-primary-11: #{$orange-dark-11}
-    --lb-primary-12: #{$orange-dark-12}
+  [data-theme="dark"], .dark:not([data-theme="light"])
+    @include dark-color-variables()
 
-    // Secondary Scale Dark
-    --lb-secondary-1: #{$teal-dark-1}
-    --lb-secondary-2: #{$teal-dark-2}
-    --lb-secondary-3: #{$teal-dark-3}
-    --lb-secondary-4: #{$teal-dark-4}
-    --lb-secondary-5: #{$teal-dark-5}
-    --lb-secondary-6: #{$teal-dark-6}
-    --lb-secondary-7: #{$teal-dark-7}
-    --lb-secondary-8: #{$teal-dark-8}
-    --lb-secondary-9: #{$teal-dark-9}
-    --lb-secondary-10: #{$teal-dark-10}
-    --lb-secondary-11: #{$teal-dark-11}
-    --lb-secondary-12: #{$teal-dark-12}
-
-    // Tertiary Scale Dark (Sky)
-    --lb-tertiary-1: #{$sky-dark-1}
-    --lb-tertiary-2: #{$sky-dark-2}
-    --lb-tertiary-3: #{$sky-dark-3}
-    --lb-tertiary-4: #{$sky-dark-4}
-    --lb-tertiary-5: #{$sky-dark-5}
-    --lb-tertiary-6: #{$sky-dark-6}
-    --lb-tertiary-7: #{$sky-dark-7}
-    --lb-tertiary-8: #{$sky-dark-8}
-    --lb-tertiary-9: #{$sky-dark-9}
-    --lb-tertiary-10: #{$sky-dark-10}
-    --lb-tertiary-11: #{$sky-dark-11}
-    --lb-tertiary-12: #{$sky-dark-12}
-
-    // Neutral Scale Dark
-    --lb-neutral-1: #{$gray-dark-1}
-    --lb-neutral-2: #{$gray-dark-2}
-    --lb-neutral-3: #{$gray-dark-3}
-    --lb-neutral-4: #{$gray-dark-4}
-    --lb-neutral-5: #{$gray-dark-5}
-    --lb-neutral-6: #{$gray-dark-6}
-    --lb-neutral-7: #{$gray-dark-7}
-    --lb-neutral-8: #{$gray-dark-8}
-    --lb-neutral-9: #{$gray-dark-9}
-    --lb-neutral-10: #{$gray-dark-10}
-    --lb-neutral-11: #{$gray-dark-11}
-    --lb-neutral-12: #{$gray-dark-12}
-
-    // Success Scale Dark
-    --lb-success-1: #{$green-dark-1}
-    --lb-success-2: #{$green-dark-2}
-    --lb-success-3: #{$green-dark-3}
-    --lb-success-4: #{$green-dark-4}
-    --lb-success-5: #{$green-dark-5}
-    --lb-success-6: #{$green-dark-6}
-    --lb-success-7: #{$green-dark-7}
-    --lb-success-8: #{$green-dark-8}
-    --lb-success-9: #{$green-dark-9}
-    --lb-success-10: #{$green-dark-10}
-    --lb-success-11: #{$green-dark-11}
-    --lb-success-12: #{$green-dark-12}
-
-    // Warning Scale Dark
-    --lb-warning-1: #{$yellow-dark-1}
-    --lb-warning-2: #{$yellow-dark-2}
-    --lb-warning-3: #{$yellow-dark-3}
-    --lb-warning-4: #{$yellow-dark-4}
-    --lb-warning-5: #{$yellow-dark-5}
-    --lb-warning-6: #{$yellow-dark-6}
-    --lb-warning-7: #{$yellow-dark-7}
-    --lb-warning-8: #{$yellow-dark-8}
-    --lb-warning-9: #{$yellow-dark-9}
-    --lb-warning-10: #{$yellow-dark-10}
-    --lb-warning-11: #{$yellow-dark-11}
-    --lb-warning-12: #{$yellow-dark-12}
-
-    // Error Scale Dark
-    --lb-error-1: #{$red-dark-1}
-    --lb-error-2: #{$red-dark-2}
-    --lb-error-3: #{$red-dark-3}
-    --lb-error-4: #{$red-dark-4}
-    --lb-error-5: #{$red-dark-5}
-    --lb-error-6: #{$red-dark-6}
-    --lb-error-7: #{$red-dark-7}
-    --lb-error-8: #{$red-dark-8}
-    --lb-error-9: #{$red-dark-9}
-    --lb-error-10: #{$red-dark-10}
-    --lb-error-11: #{$red-dark-11}
-    --lb-error-12: #{$red-dark-12}
-
-    // Info Scale Dark (same as tertiary/blue)
-    --lb-info-1: #{$blue-dark-1}
-    --lb-info-2: #{$blue-dark-2}
-    --lb-info-3: #{$blue-dark-3}
-    --lb-info-4: #{$blue-dark-4}
-    --lb-info-5: #{$blue-dark-5}
-    --lb-info-6: #{$blue-dark-6}
-    --lb-info-7: #{$blue-dark-7}
-    --lb-info-8: #{$blue-dark-8}
-    --lb-info-9: #{$blue-dark-9}
-    --lb-info-10: #{$blue-dark-10}
-    --lb-info-11: #{$blue-dark-11}
-    --lb-info-12: #{$blue-dark-12}
-    
-    // === Alpha Scales Dark Mode ===
-    // Primary/Orange Alpha Scale Dark
-    --lb-primary-alpha-1: #{$orange-dark-a1}
-    --lb-primary-alpha-2: #{$orange-dark-a2}
-    --lb-primary-alpha-3: #{$orange-dark-a3}
-    --lb-primary-alpha-4: #{$orange-dark-a4}
-    --lb-primary-alpha-5: #{$orange-dark-a5}
-    --lb-primary-alpha-6: #{$orange-dark-a6}
-    --lb-primary-alpha-7: #{$orange-dark-a7}
-    --lb-primary-alpha-8: #{$orange-dark-a8}
-    --lb-primary-alpha-9: #{$orange-dark-a9}
-    --lb-primary-alpha-10: #{$orange-dark-a10}
-    --lb-primary-alpha-11: #{$orange-dark-a11}
-    --lb-primary-alpha-12: #{$orange-dark-a12}
-
-    // Secondary/Teal Alpha Scale Dark
-    --lb-secondary-alpha-1: #{$teal-dark-a1}
-    --lb-secondary-alpha-2: #{$teal-dark-a2}
-    --lb-secondary-alpha-3: #{$teal-dark-a3}
-    --lb-secondary-alpha-4: #{$teal-dark-a4}
-    --lb-secondary-alpha-5: #{$teal-dark-a5}
-    --lb-secondary-alpha-6: #{$teal-dark-a6}
-    --lb-secondary-alpha-7: #{$teal-dark-a7}
-    --lb-secondary-alpha-8: #{$teal-dark-a8}
-    --lb-secondary-alpha-9: #{$teal-dark-a9}
-    --lb-secondary-alpha-10: #{$teal-dark-a10}
-    --lb-secondary-alpha-11: #{$teal-dark-a11}
-    --lb-secondary-alpha-12: #{$teal-dark-a12}
-
-    // Tertiary/Sky Alpha Scale Dark
-    --lb-tertiary-alpha-1: #{$sky-dark-a1}
-    --lb-tertiary-alpha-2: #{$sky-dark-a2}
-    --lb-tertiary-alpha-3: #{$sky-dark-a3}
-    --lb-tertiary-alpha-4: #{$sky-dark-a4}
-    --lb-tertiary-alpha-5: #{$sky-dark-a5}
-    --lb-tertiary-alpha-6: #{$sky-dark-a6}
-    --lb-tertiary-alpha-7: #{$sky-dark-a7}
-    --lb-tertiary-alpha-8: #{$sky-dark-a8}
-    --lb-tertiary-alpha-9: #{$sky-dark-a9}
-    --lb-tertiary-alpha-10: #{$sky-dark-a10}
-    --lb-tertiary-alpha-11: #{$sky-dark-a11}
-    --lb-tertiary-alpha-12: #{$sky-dark-a12}
-
-    // Success/Green Alpha Scale Dark
-    --lb-success-alpha-1: #{$green-dark-a1}
-    --lb-success-alpha-2: #{$green-dark-a2}
-    --lb-success-alpha-3: #{$green-dark-a3}
-    --lb-success-alpha-4: #{$green-dark-a4}
-    --lb-success-alpha-5: #{$green-dark-a5}
-    --lb-success-alpha-6: #{$green-dark-a6}
-    --lb-success-alpha-7: #{$green-dark-a7}
-    --lb-success-alpha-8: #{$green-dark-a8}
-    --lb-success-alpha-9: #{$green-dark-a9}
-    --lb-success-alpha-10: #{$green-dark-a10}
-    --lb-success-alpha-11: #{$green-dark-a11}
-    --lb-success-alpha-12: #{$green-dark-a12}
-
-    // Warning/Yellow Alpha Scale Dark
-    --lb-warning-alpha-1: #{$yellow-dark-a1}
-    --lb-warning-alpha-2: #{$yellow-dark-a2}
-    --lb-warning-alpha-3: #{$yellow-dark-a3}
-    --lb-warning-alpha-4: #{$yellow-dark-a4}
-    --lb-warning-alpha-5: #{$yellow-dark-a5}
-    --lb-warning-alpha-6: #{$yellow-dark-a6}
-    --lb-warning-alpha-7: #{$yellow-dark-a7}
-    --lb-warning-alpha-8: #{$yellow-dark-a8}
-    --lb-warning-alpha-9: #{$yellow-dark-a9}
-    --lb-warning-alpha-10: #{$yellow-dark-a10}
-    --lb-warning-alpha-11: #{$yellow-dark-a11}
-    --lb-warning-alpha-12: #{$yellow-dark-a12}
-
-    // Error/Red Alpha Scale Dark
-    --lb-error-alpha-1: #{$red-dark-a1}
-    --lb-error-alpha-2: #{$red-dark-a2}
-    --lb-error-alpha-3: #{$red-dark-a3}
-    --lb-error-alpha-4: #{$red-dark-a4}
-    --lb-error-alpha-5: #{$red-dark-a5}
-    --lb-error-alpha-6: #{$red-dark-a6}
-    --lb-error-alpha-7: #{$red-dark-a7}
-    --lb-error-alpha-8: #{$red-dark-a8}
-    --lb-error-alpha-9: #{$red-dark-a9}
-    --lb-error-alpha-10: #{$red-dark-a10}
-    --lb-error-alpha-11: #{$red-dark-a11}
-    --lb-error-alpha-12: #{$red-dark-a12}
-
-    // Info/Blue Alpha Scale Dark
-    --lb-info-alpha-1: #{$blue-dark-a1}
-    --lb-info-alpha-2: #{$blue-dark-a2}
-    --lb-info-alpha-3: #{$blue-dark-a3}
-    --lb-info-alpha-4: #{$blue-dark-a4}
-    --lb-info-alpha-5: #{$blue-dark-a5}
-    --lb-info-alpha-6: #{$blue-dark-a6}
-    --lb-info-alpha-7: #{$blue-dark-a7}
-    --lb-info-alpha-8: #{$blue-dark-a8}
-    --lb-info-alpha-9: #{$blue-dark-a9}
-    --lb-info-alpha-10: #{$blue-dark-a10}
-    --lb-info-alpha-11: #{$blue-dark-a11}
-    --lb-info-alpha-12: #{$blue-dark-a12}
-
-    // Neutral/Gray Alpha Scale Dark
-    --lb-neutral-alpha-1: #{$gray-dark-a1}
-    --lb-neutral-alpha-2: #{$gray-dark-a2}
-    --lb-neutral-alpha-3: #{$gray-dark-a3}
-    --lb-neutral-alpha-4: #{$gray-dark-a4}
-    --lb-neutral-alpha-5: #{$gray-dark-a5}
-    --lb-neutral-alpha-6: #{$gray-dark-a6}
-    --lb-neutral-alpha-7: #{$gray-dark-a7}
-    --lb-neutral-alpha-8: #{$gray-dark-a8}
-    --lb-neutral-alpha-9: #{$gray-dark-a9}
-    --lb-neutral-alpha-10: #{$gray-dark-a10}
-    --lb-neutral-alpha-11: #{$gray-dark-a11}
-    --lb-neutral-alpha-12: #{$gray-dark-a12}
+  @media (prefers-color-scheme: dark)
+    :root:not([data-theme="light"]):not([data-theme="dark"]):not(.dark)
+      @include dark-color-variables()

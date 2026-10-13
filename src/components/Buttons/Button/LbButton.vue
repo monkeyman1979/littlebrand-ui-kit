@@ -158,8 +158,11 @@ defineOptions({
     color: inherit
   
   &:focus-visible
-    outline: base.$focus-ring-width solid var(--lb-focus-ring-color)
+    // Preserve the brand focus hue as an outer ring, with an inner ring
+    // that remains distinguishable from both light and dark canvases.
+    outline: base.$focus-ring-width solid var(--lb-text-neutral-contrast-high)
     outline-offset: base.$focus-ring-offset
+    box-shadow: 0 0 0 calc(#{base.$focus-ring-width} + #{base.$focus-ring-offset}) var(--lb-focus-ring-color)
     transition: none
   
   // Size modifiers

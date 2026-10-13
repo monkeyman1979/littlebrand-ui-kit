@@ -11,6 +11,32 @@ import * as oklchUtils from './oklch-utils.js'
 // Re-export all OKLCH utilities
 export * from './oklch-utils.js'
 
+let latestTheme = null
+const preferredDark = () => window.matchMedia?.('(prefers-color-scheme: dark)')?.matches ?? false
+
+// An explicit root choice takes precedence over the OS. Body and nested
+// selectors are styled at their own scopes by CSS and the custom palette rule.
+const rootIsDark = () => {
+  const root = document.documentElement
+  const explicit = root.getAttribute('data-theme')
+  if (explicit === 'light') return false
+  if (explicit === 'dark') return true
+  return root.classList.contains('dark') || preferredDark()
+}
+
+const applyScopedPalette = (scopes) => {
+  let style = document.querySelector('style[data-lb-custom-theme]')
+  if (!style) {
+    style = document.createElement('style')
+    style.setAttribute('data-lb-custom-theme', '')
+    document.head.appendChild(style)
+  }
+  const declarations = (values) => Object.entries(values)
+    .map(([name, value]) => `${name}: ${value};`).join('\n')
+  style.textContent = `[data-theme="light"] { ${declarations(scopes.light)} }\n` +
+    `[data-theme="dark"], .dark:not([data-theme="light"]) { ${declarations(scopes.dark)} }`
+}
+
 /**
  * Generate a 12-step color scale from a single color
  * Uses OKLCH for perceptually uniform scales
@@ -72,28 +98,22 @@ export function generateSemanticTokens(name, scale, darkScale = null, mode = 'li
   tokens[`--lb-text-${name}-contrast-high`] = getScaleValue(12)
   tokens[`--lb-text-${name}-disabled`] = getScaleValue(7)
   
-  // Text-on tokens (determine if light or dark text needed)
-  // Parse OKLCH lightness from scale[9]
-  const scaleValue9 = getScaleValue(9)
-  const match = scaleValue9.match(/oklch\(([\d.]+)/)
-  const lightness = match ? parseFloat(match[1]) : 0.5
-  
-  // Improved OKLCH contrast calculation using stable text variables
-  // Most colors need light text, but high lightness colors need dark text
-  let textColor = 'var(--lb-text-light-normal)' // Default to stable light text
-  
-  if (lightness > 0.75) {
-    // High lightness usually needs dark text
-    textColor = 'var(--lb-text-dark-normal)'
-  } else if (lightness > 0.65 && name === 'warning') {
-    // Yellow/warning colors need dark text even at lower lightness
-    textColor = 'var(--lb-text-dark-normal)'
+  // Pick the higher-contrast stable anchor separately for each fill state.
+  // Against true black/white, the WCAG AA dividing luminance is ~0.179.
+  const onFill = (step) => {
+    const match = getScaleValue(step).match(/^oklch\(([\d.]+)\s+([\d.]+)\s+([\d.]+)/)
+    if (!match) return name === 'warning' ? 'var(--lb-text-dark-normal)' : 'var(--lb-text-light-normal)'
+    const { r, g, b } = oklchUtils.oklchToRgb(...match.slice(1, 4).map(Number))
+    const linear = [r, g, b].map(channel => {
+      const value = channel / 255
+      return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4
+    })
+    const luminance = linear[0] * 0.2126 + linear[1] * 0.7152 + linear[2] * 0.0722
+    return luminance >= 0.179 ? 'var(--lb-text-dark-normal)' : 'var(--lb-text-light-normal)'
   }
-  // All other cases use stable light text
-  
-  tokens[`--lb-text-on-${name}`] = textColor
-  tokens[`--lb-text-on-${name}-hover`] = textColor
-  tokens[`--lb-text-on-${name}-active`] = textColor
+  tokens[`--lb-text-on-${name}`] = onFill(9)
+  tokens[`--lb-text-on-${name}-hover`] = onFill(10)
+  tokens[`--lb-text-on-${name}-active`] = onFill(8)
   
   // Keep the same 1/2/3/4/5 roles as the static theme in both modes.
   tokens[`--lb-surface-${name}-base`] = getScaleValue(1)
@@ -135,10 +155,9 @@ export function generateSemanticTokens(name, scale, darkScale = null, mode = 'li
  */
 export function applyTheme(colors, curve = 'natural') {
   const root = document.documentElement
-  
-  // Check for dark mode
-  const isDarkMode = document.documentElement.classList.contains('dark') ||
-                     document.body.classList.contains('dark')
+  const isDarkMode = rootIsDark()
+  latestTheme = { colors: { ...colors }, curve }
+  const scopes = { light: {}, dark: {} }
   
   // Default colors if not provided
   const defaultColors = {
@@ -159,8 +178,8 @@ export function applyTheme(colors, curve = 'natural') {
   // Generate and apply each color
   Object.entries(finalColors).forEach(([name, hexColor]) => {
     try {
-      // Validate hex color
-      if (!hexColor || typeof hexColor !== 'string' || !hexColor.match(/^#[0-9A-Fa-f]{6}$/)) {
+      // Only safe color-family names may appear in the scoped CSS rule.
+      if (!/^[a-z][a-z0-9-]*$/.test(name) || !hexColor || typeof hexColor !== 'string' || !hexColor.match(/^#[0-9A-Fa-f]{6}$/)) {
         console.warn(`applyTheme: Invalid hex color for ${name}: ${hexColor}`)
         return
       }
@@ -196,9 +215,26 @@ export function applyTheme(colors, curve = 'natural') {
         alphaDark = {} // Empty object fallback
       }
       
-      // Generate semantic tokens
+      // Generate both palettes for explicit nested scopes and the active root.
       const lightTokens = generateSemanticTokens(name, lightScale, darkScale, 'light')
       const darkTokens = generateSemanticTokens(name, darkScale, lightScale, 'dark')
+      for (const [mode, semantic, activeScale, activeAlpha] of [
+        ['light', lightTokens, lightScale, alphaLight],
+        ['dark', darkTokens, darkScale, alphaDark]
+      ]) {
+        Object.assign(scopes[mode], semantic)
+        for (const [step, value] of Object.entries(activeScale)) {
+          scopes[mode][`--lb-${name}-${step}`] = value
+          scopes[mode][`--lb-${name}-${mode}-${step}`] = value
+        }
+        for (const [step, value] of Object.entries(activeAlpha)) {
+          scopes[mode][`--lb-${name}-alpha-${step}`] = value
+        }
+        const opposite = mode === 'dark' ? 'light' : 'dark'
+        for (const [step, value] of Object.entries(opposite === 'dark' ? darkScale : lightScale)) {
+          scopes[mode][`--lb-${name}-${opposite}-${step}`] = value
+        }
+      }
       
       // Apply appropriate tokens based on current mode
       const tokens = isDarkMode ? darkTokens : lightTokens
@@ -270,64 +306,53 @@ export function applyTheme(colors, curve = 'natural') {
     }
   })
   
-  // Handle background tokens
-  const backgroundSource = background
-  let backgroundScale = null
-  
+  // The background family is independent from other tinted surface roles.
   try {
-    // Determine which scale to use for backgrounds
-    if (typeof backgroundSource === 'string' && backgroundSource.startsWith('#')) {
-      // Generate a scale from a custom hex color
-      backgroundScale = isDarkMode 
-        ? generateDarkScale(null, backgroundSource)
-        : generateScale(backgroundSource, curve)
-    } else {
-      // Use an existing color scale
-      const sourceColor = finalColors[backgroundSource] || finalColors.neutral
-      backgroundScale = isDarkMode 
-        ? generateDarkScale(null, sourceColor)
-        : generateScale(sourceColor, curve)
+    const backgroundHex = typeof background === 'string' && background.startsWith('#')
+      ? background : finalColors[background] || finalColors.neutral
+    const backgrounds = {
+      light: generateScale(backgroundHex, curve),
+      dark: generateDarkScale(null, backgroundHex)
     }
-    
-    // Apply surface tokens with validation
-    if (backgroundScale && typeof backgroundScale === 'object') {
-      if (backgroundScale[1]) {
-        root.style.setProperty('--lb-surface-base', backgroundScale[1])
+    for (const [mode, backgroundScale] of Object.entries(backgrounds)) {
+      for (const [token, step] of [['base', 1], ['subtle', 2], ['disabled', 3]]) {
+        scopes[mode][`--lb-surface-${token}`] = backgroundScale[step]
       }
-      if (backgroundScale[2]) {
-        root.style.setProperty('--lb-surface-subtle', backgroundScale[2])
-      }
-      if (backgroundScale[3]) {
-        root.style.setProperty('--lb-surface-disabled', backgroundScale[3])
-      }
+    }
+    for (const [token, step] of [['base', 1], ['subtle', 2], ['disabled', 3]]) {
+      root.style.setProperty(`--lb-surface-${token}`, backgrounds[isDarkMode ? 'dark' : 'light'][step])
     }
   } catch (err) {
     console.warn('applyTheme: Failed to generate background scale:', err)
-    // Apply fallback surface colors
     root.style.setProperty('--lb-surface-base', 'oklch(0.98 0.01 0)')
     root.style.setProperty('--lb-surface-subtle', 'oklch(0.96 0.01 0)')
     root.style.setProperty('--lb-surface-disabled', 'oklch(0.94 0.01 0)')
   }
-  
-  root.style.setProperty('--lb-surface-overlay', isDarkMode ? 
-    `oklch(0 0 0 / 0.7)` : `oklch(0 0 0 / 0.5)`)
-  
-  // Watch for dark mode changes
+
+  scopes.light['--lb-surface-overlay'] = 'oklch(0 0 0 / 0.5)'
+  scopes.dark['--lb-surface-overlay'] = 'oklch(0 0 0 / 0.7)'
+  root.style.setProperty('--lb-surface-overlay', scopes[isDarkMode ? 'dark' : 'light']['--lb-surface-overlay'])
+  applyScopedPalette(scopes)
+  document.dispatchEvent(new Event('lb-theme-change'))
+
+  // Only the document root requires inline recomputation. Body and nested
+  // choices are handled immediately by mode-scoped CSS rules above.
   if (!window.__lbThemeObserver) {
     window.__lbThemeObserver = new MutationObserver(() => {
-      // Reapply theme when dark mode changes
-      applyTheme(colors, curve)
+      if (latestTheme) applyTheme(latestTheme.colors, latestTheme.curve)
     })
-    
-    window.__lbThemeObserver.observe(document.documentElement, {
+    window.__lbThemeObserver.observe(root, {
       attributes: true,
-      attributeFilter: ['class']
+      attributeFilter: ['class', 'data-theme']
     })
-    
-    window.__lbThemeObserver.observe(document.body, {
-      attributes: true,
-      attributeFilter: ['class']
-    })
+  }
+  if (!window.__lbThemeMediaListener && window.matchMedia) {
+    const media = window.matchMedia('(prefers-color-scheme: dark)')
+    if (media?.addEventListener) {
+      const handle = () => { if (latestTheme) applyTheme(latestTheme.colors, latestTheme.curve) }
+      media.addEventListener('change', handle)
+      window.__lbThemeMediaListener = { media, handle }
+    }
   }
 }
 

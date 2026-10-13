@@ -23,8 +23,8 @@ const css = compile(resolve('src/styles/_theme.sass'), {
 }).css
 const staticModes = { light: new Map(), dark: new Map() }
 for (const [, selector, body] of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
-  const mode = selector.trim() === ':root' ? 'light'
-    : selector.trim() === '[data-theme=dark], .dark' ? 'dark' : null
+  const mode = [':root', ':root, [data-theme=light]'].includes(selector.trim()) ? 'light'
+    : selector.trim() === '[data-theme=dark], .dark:not([data-theme=light])' ? 'dark' : null
   if (!mode) continue
   for (const [, token, value] of body.matchAll(/(--lb-[a-z0-9-]+):\s*([^;]+);/g)) {
     staticModes[mode].set(token, value.trim())
@@ -83,10 +83,13 @@ describe('Step 06 static and custom-palette token alignment', () => {
           expect(staticModes.light.get(raw), `${raw} defined without JS`).toBeTruthy()
           expect(staticModes.light.get(raw)).toBe(staticModes[opposite].get(`--lb-${family}-${step}`))
         }
-        // Existing on-fill anchors are candidates; Step 07 measures contrast.
+        // Palettes have different underlying colors; each fill state's
+        // on-fill anchor is selected for contrast, not by family name alone.
         for (const state of ['', '-hover', '-active']) {
           const name = `--lb-text-on-${family}${state}`
-          expect(generated[name]).toBe(staticTokens.get(name))
+          const anchors = ['var(--lb-text-light-normal)', 'var(--lb-text-dark-normal)']
+          expect(anchors).toContain(generated[name])
+          expect(anchors).toContain(staticTokens.get(name))
         }
       }
     }
