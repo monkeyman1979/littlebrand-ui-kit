@@ -1,6 +1,6 @@
 # Modernization execution plan
 
-Status: proposed ordering for the [roadmap](ROADMAP.md), not an implementation or a release commitment. See the [handoff status](MODERNIZATION_STATUS.md) for merged Steps 01–07 and Step 08 work. Each numbered item is a small PR to `develop` unless investigation shows it must be split. Complete the acceptance gate before moving to its dependent item. Keep this plan for work that has *not* shipped; update `CHANGELOG.md` in each PR with user-visible changes only. Do not run `npm run build` without an explicit request from the project owner.
+Status: proposed ordering for the [roadmap](ROADMAP.md), not an implementation or a release commitment. See the [handoff status](MODERNIZATION_STATUS.md) for merged Steps 01–08 and Step 09 work. Each numbered item is a small PR to `develop` unless investigation shows it must be split. Complete the acceptance gate before moving to its dependent item. Keep this plan for work that has *not* shipped; update `CHANGELOG.md` in each PR with user-visible changes only. Do not run `npm run build` without an explicit request from the project owner.
 
 ## Why this order
 
@@ -110,4 +110,4 @@ Choose a concrete agent workflow that works without Vue. Add an optional visual 
 
 ## Immediate next PR
 
-**Steps 01–07 merged into `develop` via PRs #121–#127; Step 08 in progress on a feature branch.** [Step 07 browser checks](STEP_07_THEME_RELIABILITY.md) cover CSS-only OS defaults, explicit scopes, latest custom palettes, Dialog portal syncing, sampled alpha/contrast and keyboard focus in Chromium. The [Step 08 component slice](STEP_08_COMPONENT_SLICE.md) verifies Button, Input, Dialog and SegmentButton in source, declarations, tests and a Vue example. Neither Step 07 nor Step 08 was built, extracted or published; see the [handoff](MODERNIZATION_STATUS.md).
+**Steps 01–08 merged into `develop` via PRs #121–#128; Step 09 is on a feature branch for review.** [Step 09 reference](STEP_09_AUTHORED_REFERENCE.md) authors the verified Button, Input, Dialog and SegmentButton slice with generated machine and Markdown views and checks. No Step 09 build, extraction or publication; see the [handoff](MODERNIZATION_STATUS.md).

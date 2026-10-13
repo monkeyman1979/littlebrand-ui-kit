@@ -4,8 +4,14 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { glob } from 'glob';
+import { execFileSync } from 'node:child_process';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+execFileSync(process.execPath, [path.join(__dirname, 'generate-reference.js'), '--check'], { stdio: 'inherit' });
+// Only this authored slice has rendered and typechecked examples. Other generic
+// extractor examples remain unverified and must not be advertised as such.
+const reference = JSON.parse(fs.readFileSync(path.join(__dirname, '../reference/v1.json'), 'utf8'));
+const verifiedUsage = new Map(reference.components.map(c => [c.name, c.usage]));
 
 // Component categories based on directory structure and known types
 const COMPONENT_CATEGORIES = {
@@ -209,7 +215,7 @@ async function extractComponents() {
       }
 
       component.features = features;
-      component.usage = generateUsageExample(component);
+      component.usage = verifiedUsage.get(component.name) ?? generateUsageExample(component);
       component.description = `${component.name} component`;
 
       components.push(component);

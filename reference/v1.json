@@ -1,0 +1,524 @@
+{
+  "schemaVersion": 1,
+  "packageVersion": "0.8.3",
+  "status": "Unreleased source reference; not a published 0.8.3 artifact",
+  "distribution": "Install from npm; import components from littlebrand-ui-kit and CSS from littlebrand-ui-kit/style.css. This source reference describes unreleased develop work, not the published 0.8.3 artifact. Deep imports are unsupported.",
+  "components": [
+    {
+      "id": "component:LbButton",
+      "name": "LbButton",
+      "source": "src/components/Buttons/Button/LbButton.vue",
+      "example": "reference/examples/button.vue",
+      "purpose": "Trigger an action or navigate to a destination.",
+      "use": "Use a native button for actions; href for a URL, or to only in a host with Vue Router.",
+      "avoid": "Do not use iconOnly without an accessible name; do not use a link for a disabled action.",
+      "accessibility": "Native button by default; iconOnly needs aria-label. Loading exposes aria-busy and blocks activation. Disabled/loading links become disabled buttons.",
+      "states": [
+        "filled, tonal, outline, ghost or link",
+        "small, medium or large",
+        "disabled",
+        "loading",
+        "keyboard focus"
+      ],
+      "related": [
+        "component:LbDialog",
+        "token:--lb-fill-primary-normal",
+        "token:--lb-text-on-primary",
+        "token:--lb-focus-ring-color"
+      ],
+      "dependencies": [
+        "Vue 3",
+        "Vue Router only for the to prop"
+      ],
+      "declaration": "src/components/Buttons/Button/LbButton.vue.d.ts",
+      "props": [
+        {
+          "name": "variant",
+          "type": "'filled' | 'tonal' | 'outline' | 'ghost' | 'link'",
+          "required": false,
+          "default": "filled"
+        },
+        {
+          "name": "color",
+          "type": "'primary' | 'secondary' | 'tertiary' | 'neutral' | 'success' | 'warning' | 'error' | 'info'",
+          "required": false,
+          "default": "primary"
+        },
+        {
+          "name": "size",
+          "type": "'small' | 'medium' | 'large'",
+          "required": false,
+          "default": "medium"
+        },
+        {
+          "name": "type",
+          "type": "'button' | 'submit' | 'reset'",
+          "required": false,
+          "default": "button"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "fullWidth",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "iconPosition",
+          "type": "'leading' | 'trailing'",
+          "required": false,
+          "default": "leading"
+        },
+        {
+          "name": "iconOnly",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "href",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "to",
+          "type": "string | object",
+          "required": false
+        },
+        {
+          "name": "target",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "rel",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "muted",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        }
+      ],
+      "slots": [
+        "default",
+        "icon-leading",
+        "icon-trailing"
+      ],
+      "emits": [
+        "click"
+      ],
+      "usage": "<script setup lang=\"ts\">\nimport 'littlebrand-ui-kit/style.css'\nimport { ref } from 'vue'\nimport { LbButton } from 'littlebrand-ui-kit'\nconst saved = ref(false)\n</script>\n\n<template>\n  <LbButton @click=\"saved = true\">Save changes</LbButton>\n  <p v-if=\"saved\" role=\"status\">Saved</p>\n</template>\n"
+    },
+    {
+      "id": "component:LbInput",
+      "name": "LbInput",
+      "source": "src/components/Inputs/Input/LbInput.vue",
+      "example": "reference/examples/input.vue",
+      "purpose": "Collect one line of text with v-model.",
+      "use": "Use a visible label or aria-label; pass native name and autocomplete when submitting forms.",
+      "avoid": "Do not request small size or assume v-model emits numbers: updates are strings.",
+      "accessibility": "Invalid sets aria-invalid; loading disables the native input. Clear and password controls are unavailable while disabled or readonly.",
+      "states": [
+        "medium or large",
+        "disabled",
+        "readonly",
+        "required",
+        "invalid",
+        "loading",
+        "clearable",
+        "keyboard focus"
+      ],
+      "related": [
+        "token:--lb-border-neutral-normal",
+        "token:--lb-border-error-normal",
+        "token:--lb-text-neutral-normal"
+      ],
+      "dependencies": [
+        "Vue 3"
+      ],
+      "declaration": "src/components/Inputs/Input/LbInput.vue.d.ts",
+      "props": [
+        {
+          "name": "modelValue",
+          "type": "string | number",
+          "required": false,
+          "default": ""
+        },
+        {
+          "name": "type",
+          "type": "'text' | 'email' | 'password' | 'tel' | 'url' | 'search'",
+          "required": false,
+          "default": "text"
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "readonly",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "ariaDescribedby",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "clearable",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "size",
+          "type": "'medium' | 'large'",
+          "required": false
+        },
+        {
+          "name": "autofocus",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        }
+      ],
+      "slots": [
+        "icon-leading",
+        "icon-trailing",
+        "icon-password-show",
+        "icon-password-hide",
+        "icon-clear",
+        "icon-loading"
+      ],
+      "emits": [
+        "update:modelValue",
+        "input",
+        "change",
+        "focus",
+        "blur",
+        "clear"
+      ],
+      "usage": "<script setup lang=\"ts\">\nimport 'littlebrand-ui-kit/style.css'\nimport { ref } from 'vue'\nimport { LbInput } from 'littlebrand-ui-kit'\nconst email = ref('')\n</script>\n\n<template>\n  <label for=\"contact-email\">Email</label>\n  <LbInput id=\"contact-email\" v-model=\"email\" type=\"email\" name=\"email\" autocomplete=\"email\" required />\n</template>\n"
+    },
+    {
+      "id": "component:LbDialog",
+      "name": "LbDialog",
+      "source": "src/components/Dialog/LbDialog.vue",
+      "example": "reference/examples/dialog.vue",
+      "purpose": "Present a modal decision or focused content.",
+      "use": "Bind v-model and give the dialog a title or an ARIA name; use the footer slot for actions.",
+      "avoid": "Do not use variant=filled; only default and fullscreen exist. The header slot renders only in fullscreen and needs its own visible heading.",
+      "accessibility": "Teleports to body with originating theme; focuses dialog on open, contains Tab and restores trigger focus on close. Escape/backdrop respect close props.",
+      "states": [
+        "closed or open",
+        "default or fullscreen",
+        "close button",
+        "Escape and backdrop policy"
+      ],
+      "related": [
+        "component:LbButton",
+        "token:--lb-surface-subtle",
+        "token:--lb-surface-overlay"
+      ],
+      "dependencies": [
+        "Vue 3",
+        "@vueuse/core (package dependency)"
+      ],
+      "declaration": "src/components/Dialog/LbDialog.vue.d.ts",
+      "props": [
+        {
+          "name": "modelValue",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "variant",
+          "type": "'default' | 'fullscreen'",
+          "required": false,
+          "default": "default"
+        },
+        {
+          "name": "showClose",
+          "type": "boolean",
+          "required": false,
+          "default": "true"
+        },
+        {
+          "name": "closeOnBackdrop",
+          "type": "boolean",
+          "required": false,
+          "default": "true"
+        },
+        {
+          "name": "closeOnEscape",
+          "type": "boolean",
+          "required": false,
+          "default": "true"
+        }
+      ],
+      "slots": [
+        "default",
+        "header",
+        "footer"
+      ],
+      "emits": [
+        "update:modelValue",
+        "close",
+        "open"
+      ],
+      "usage": "<script setup lang=\"ts\">\nimport 'littlebrand-ui-kit/style.css'\nimport { ref } from 'vue'\nimport { LbButton, LbDialog } from 'littlebrand-ui-kit'\nconst open = ref(false)\n</script>\n\n<template>\n  <LbButton @click=\"open = true\">Open preferences</LbButton>\n  <LbDialog v-model=\"open\" title=\"Preferences\">\n    <p>Choose your preferences.</p>\n    <template #footer>\n      <LbButton @click=\"open = false\">Done</LbButton>\n    </template>\n  </LbDialog>\n</template>\n"
+    },
+    {
+      "id": "component:LbSegmentButton",
+      "name": "LbSegmentButton",
+      "source": "src/components/Buttons/SegmentButton/LbSegmentButton.vue",
+      "example": "reference/examples/segment-button.vue",
+      "purpose": "Choose one or more options from a short set of segments.",
+      "use": "Nest LbSegmentButtonItem inside the root; bind v-model and label the group.",
+      "avoid": "Never mount LbSegmentButtonItem alone; it requires root context. Do not treat optional toggle mode as mandatory radio mode.",
+      "accessibility": "Optional selection uses toggle buttons; nonempty mandatory single selection uses radio semantics. Arrow/Home/End skip disabled items; label icon-only items.",
+      "states": [
+        "optional or mandatory",
+        "single or multi-select",
+        "medium or large",
+        "disabled",
+        "keyboard focus"
+      ],
+      "related": [
+        "component:LbSegmentButtonItem",
+        "token:--lb-surface-primary-active"
+      ],
+      "dependencies": [
+        "Vue 3"
+      ],
+      "declaration": "src/components/Buttons/SegmentButton/LbSegmentButton.vue.d.ts",
+      "props": [
+        {
+          "name": "modelValue",
+          "type": "string | number | (string | number)[]",
+          "required": false
+        },
+        {
+          "name": "size",
+          "type": "'medium' | 'large'",
+          "required": false,
+          "default": "medium"
+        },
+        {
+          "name": "width",
+          "type": "'full' | 'auto'",
+          "required": false,
+          "default": "full"
+        },
+        {
+          "name": "color",
+          "type": "'primary' | 'secondary' | 'tertiary' | 'neutral'",
+          "required": false,
+          "default": "primary"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "ariaLabelledby",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "allowEmpty",
+          "type": "boolean",
+          "required": false,
+          "default": "true"
+        },
+        {
+          "name": "multiSelect",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        }
+      ],
+      "slots": [
+        "default"
+      ],
+      "emits": [
+        "update:modelValue"
+      ],
+      "usage": "<script setup lang=\"ts\">\nimport 'littlebrand-ui-kit/style.css'\nimport { ref } from 'vue'\nimport { LbSegmentButton, LbSegmentButtonItem } from 'littlebrand-ui-kit'\nconst choice = ref<string | number>('daily')\n</script>\n\n<template>\n  <LbSegmentButton v-model=\"choice\" :allow-empty=\"false\" aria-label=\"Frequency\">\n    <LbSegmentButtonItem value=\"daily\">Daily</LbSegmentButtonItem>\n    <LbSegmentButtonItem value=\"weekly\">Weekly</LbSegmentButtonItem>\n  </LbSegmentButton>\n</template>\n"
+    },
+    {
+      "id": "component:LbSegmentButtonItem",
+      "name": "LbSegmentButtonItem",
+      "source": "src/components/Buttons/SegmentButton/LbSegmentButtonItem.vue",
+      "example": "reference/examples/segment-button.vue",
+      "compoundOnly": true,
+      "purpose": "One option within LbSegmentButton.",
+      "use": "Provide a unique value and visible text or ariaLabel within a labelled root.",
+      "avoid": "Never use independently; it throws without its parent context.",
+      "accessibility": "Renders a button, with aria-pressed in optional/multi mode or radio semantics in mandatory single mode.",
+      "states": [
+        "selected",
+        "disabled",
+        "keyboard focus"
+      ],
+      "related": [
+        "component:LbSegmentButton"
+      ],
+      "dependencies": [
+        "LbSegmentButton parent"
+      ],
+      "declaration": "src/components/Buttons/SegmentButton/LbSegmentButtonItem.vue.d.ts",
+      "props": [
+        {
+          "name": "value",
+          "type": "string | number",
+          "required": true
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "false"
+        },
+        {
+          "name": "ariaLabel",
+          "type": "string",
+          "required": false
+        }
+      ],
+      "slots": [
+        "default",
+        "icon"
+      ],
+      "emits": [],
+      "usage": "<script setup lang=\"ts\">\nimport 'littlebrand-ui-kit/style.css'\nimport { ref } from 'vue'\nimport { LbSegmentButton, LbSegmentButtonItem } from 'littlebrand-ui-kit'\nconst choice = ref<string | number>('daily')\n</script>\n\n<template>\n  <LbSegmentButton v-model=\"choice\" :allow-empty=\"false\" aria-label=\"Frequency\">\n    <LbSegmentButtonItem value=\"daily\">Daily</LbSegmentButtonItem>\n    <LbSegmentButtonItem value=\"weekly\">Weekly</LbSegmentButtonItem>\n  </LbSegmentButton>\n</template>\n"
+    }
+  ],
+  "tokens": [
+    {
+      "id": "token:--lb-fill-primary-normal",
+      "name": "--lb-fill-primary-normal",
+      "purpose": "Primary solid control fill; light/dark palette step 9.",
+      "related": [
+        "component:LbButton"
+      ]
+    },
+    {
+      "id": "token:--lb-text-on-primary",
+      "name": "--lb-text-on-primary",
+      "purpose": "Readable foreground on primary normal fill; contrast anchor chosen per mode/state, not ordinary primary text.",
+      "related": [
+        "component:LbButton"
+      ]
+    },
+    {
+      "id": "token:--lb-focus-ring-color",
+      "name": "--lb-focus-ring-color",
+      "purpose": "Button focus ring color, resolved from the primary focus border role; width and offset use shared SASS sizing.",
+      "related": [
+        "component:LbButton"
+      ]
+    },
+    {
+      "id": "token:--lb-border-neutral-normal",
+      "name": "--lb-border-neutral-normal",
+      "purpose": "Neutral control border, palette step 7.",
+      "related": [
+        "component:LbInput"
+      ]
+    },
+    {
+      "id": "token:--lb-border-error-normal",
+      "name": "--lb-border-error-normal",
+      "purpose": "Error control border, palette step 7.",
+      "related": [
+        "component:LbInput"
+      ]
+    },
+    {
+      "id": "token:--lb-text-neutral-normal",
+      "name": "--lb-text-neutral-normal",
+      "purpose": "Normal neutral reading text, palette step 11.",
+      "related": [
+        "component:LbInput"
+      ]
+    },
+    {
+      "id": "token:--lb-surface-subtle",
+      "name": "--lb-surface-subtle",
+      "purpose": "Global background-source subtle layer used by the Dialog panel, separate from family-specific surfaces.",
+      "related": [
+        "component:LbDialog"
+      ]
+    },
+    {
+      "id": "token:--lb-surface-overlay",
+      "name": "--lb-surface-overlay",
+      "purpose": "Dialog backdrop overlay, not a tinted surface step.",
+      "related": [
+        "component:LbDialog"
+      ]
+    },
+    {
+      "id": "token:--lb-surface-primary-active",
+      "name": "--lb-surface-primary-active",
+      "purpose": "Primary tinted selected/pressed surface, palette step 5; not keyboard focus.",
+      "related": [
+        "component:LbSegmentButton"
+      ]
+    }
+  ]
+}

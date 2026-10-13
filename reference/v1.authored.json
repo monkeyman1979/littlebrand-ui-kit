@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "packageVersion": "0.8.3",
+  "status": "Unreleased source reference; not a published 0.8.3 artifact",
+  "distribution": "Install from npm; import components from littlebrand-ui-kit and CSS from littlebrand-ui-kit/style.css. This source reference describes unreleased develop work, not the published 0.8.3 artifact. Deep imports are unsupported.",
+  "components": [
+    {
+      "id": "component:LbButton", "name": "LbButton", "source": "src/components/Buttons/Button/LbButton.vue", "example": "reference/examples/button.vue",
+      "purpose": "Trigger an action or navigate to a destination.", "use": "Use a native button for actions; href for a URL, or to only in a host with Vue Router.", "avoid": "Do not use iconOnly without an accessible name; do not use a link for a disabled action.",
+      "accessibility": "Native button by default; iconOnly needs aria-label. Loading exposes aria-busy and blocks activation. Disabled/loading links become disabled buttons.",
+      "states": ["filled, tonal, outline, ghost or link", "small, medium or large", "disabled", "loading", "keyboard focus"],
+      "related": ["component:LbDialog", "token:--lb-fill-primary-normal", "token:--lb-text-on-primary", "token:--lb-focus-ring-color"],
+      "dependencies": ["Vue 3", "Vue Router only for the to prop"]
+    },
+    {
+      "id": "component:LbInput", "name": "LbInput", "source": "src/components/Inputs/Input/LbInput.vue", "example": "reference/examples/input.vue",
+      "purpose": "Collect one line of text with v-model.", "use": "Use a visible label or aria-label; pass native name and autocomplete when submitting forms.", "avoid": "Do not request small size or assume v-model emits numbers: updates are strings.",
+      "accessibility": "Invalid sets aria-invalid; loading disables the native input. Clear and password controls are unavailable while disabled or readonly.",
+      "states": ["medium or large", "disabled", "readonly", "required", "invalid", "loading", "clearable", "keyboard focus"],
+      "related": ["token:--lb-border-neutral-normal", "token:--lb-border-error-normal", "token:--lb-text-neutral-normal"], "dependencies": ["Vue 3"]
+    },
+    {
+      "id": "component:LbDialog", "name": "LbDialog", "source": "src/components/Dialog/LbDialog.vue", "example": "reference/examples/dialog.vue",
+      "purpose": "Present a modal decision or focused content.", "use": "Bind v-model and give the dialog a title or an ARIA name; use the footer slot for actions.", "avoid": "Do not use variant=filled; only default and fullscreen exist. The header slot renders only in fullscreen and needs its own visible heading.",
+      "accessibility": "Teleports to body with originating theme; focuses dialog on open, contains Tab and restores trigger focus on close. Escape/backdrop respect close props.",
+      "states": ["closed or open", "default or fullscreen", "close button", "Escape and backdrop policy"],
+      "related": ["component:LbButton", "token:--lb-surface-subtle", "token:--lb-surface-overlay"], "dependencies": ["Vue 3", "@vueuse/core (package dependency)"]
+    },
+    {
+      "id": "component:LbSegmentButton", "name": "LbSegmentButton", "source": "src/components/Buttons/SegmentButton/LbSegmentButton.vue", "example": "reference/examples/segment-button.vue",
+      "purpose": "Choose one or more options from a short set of segments.", "use": "Nest LbSegmentButtonItem inside the root; bind v-model and label the group.", "avoid": "Never mount LbSegmentButtonItem alone; it requires root context. Do not treat optional toggle mode as mandatory radio mode.",
+      "accessibility": "Optional selection uses toggle buttons; nonempty mandatory single selection uses radio semantics. Arrow/Home/End skip disabled items; label icon-only items.",
+      "states": ["optional or mandatory", "single or multi-select", "medium or large", "disabled", "keyboard focus"],
+      "related": ["component:LbSegmentButtonItem", "token:--lb-surface-primary-active"], "dependencies": ["Vue 3"]
+    },
+    {
+      "id": "component:LbSegmentButtonItem", "name": "LbSegmentButtonItem", "source": "src/components/Buttons/SegmentButton/LbSegmentButtonItem.vue", "example": "reference/examples/segment-button.vue", "compoundOnly": true,
+      "purpose": "One option within LbSegmentButton.", "use": "Provide a unique value and visible text or ariaLabel within a labelled root.", "avoid": "Never use independently; it throws without its parent context.", "accessibility": "Renders a button, with aria-pressed in optional/multi mode or radio semantics in mandatory single mode.",
+      "states": ["selected", "disabled", "keyboard focus"], "related": ["component:LbSegmentButton"], "dependencies": ["LbSegmentButton parent"]
+    }
+  ],
+  "tokens": [
+    {"id":"token:--lb-fill-primary-normal","name":"--lb-fill-primary-normal","purpose":"Primary solid control fill; light/dark palette step 9.","related":["component:LbButton"]},
+    {"id":"token:--lb-text-on-primary","name":"--lb-text-on-primary","purpose":"Readable foreground on primary normal fill; contrast anchor chosen per mode/state, not ordinary primary text.","related":["component:LbButton"]},
+    {"id":"token:--lb-focus-ring-color","name":"--lb-focus-ring-color","purpose":"Button focus ring color, resolved from the primary focus border role; width and offset use shared SASS sizing.","related":["component:LbButton"]},
+    {"id":"token:--lb-border-neutral-normal","name":"--lb-border-neutral-normal","purpose":"Neutral control border, palette step 7.","related":["component:LbInput"]},
+    {"id":"token:--lb-border-error-normal","name":"--lb-border-error-normal","purpose":"Error control border, palette step 7.","related":["component:LbInput"]},
+    {"id":"token:--lb-text-neutral-normal","name":"--lb-text-neutral-normal","purpose":"Normal neutral reading text, palette step 11.","related":["component:LbInput"]},
+    {"id":"token:--lb-surface-subtle","name":"--lb-surface-subtle","purpose":"Global background-source subtle layer used by the Dialog panel, separate from family-specific surfaces.","related":["component:LbDialog"]},
+    {"id":"token:--lb-surface-overlay","name":"--lb-surface-overlay","purpose":"Dialog backdrop overlay, not a tinted surface step.","related":["component:LbDialog"]},
+    {"id":"token:--lb-surface-primary-active","name":"--lb-surface-primary-active","purpose":"Primary tinted selected/pressed surface, palette step 5; not keyboard focus.","related":["component:LbSegmentButton"]}
+  ]
+}
