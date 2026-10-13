@@ -1,6 +1,6 @@
 # Step 09 — authored verified-slice reference
 
-**Status:** Step 09 feature branch for review; not built, extracted, merged or published. Step 08 merged into `develop` via #128 (3186a6c). Published npm 0.8.3 and `main` are unchanged.
+**Status:** merged to `develop` via PR #129 (be16c94); not built, extracted or published. Step 08 merged via #128 (3186a6c). Published npm 0.8.3 and `main` are unchanged.
 
 `reference/v1.authored.json` is the versioned, authored source for intent, use/avoid guidance, accessibility, states, dependencies, related stable IDs and four tested Vue examples (`reference/examples/*.vue`). The compound child shares the parent example: it cannot render alone. `scripts/generate-reference.js` derives prop names/types/requiredness from `.vue.d.ts`, defaults and source parity from implementations, slots/events from declarations, and checks selected tokens against compiled static SASS. It produces `reference/v1.json` (machine-readable), `docs/reference/v1/README.md`, `TOKENS.md` and five linked component pages. Token anchors are explicit stable IDs; the reference is intentionally limited to nine semantic tokens used by the slice, not an exhaustive catalog. Token mapping and theme contract remain in [Step 02](STEP_02_TOKEN_CONTRACT.md) and [Step 06](STEP_06_TOKEN_ALIGNMENT.md).
 
