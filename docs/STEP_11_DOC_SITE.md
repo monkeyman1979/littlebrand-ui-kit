@@ -1,6 +1,6 @@
 # Step 11 — verified-slice Vue documentation preview
 
-**Status:** local site on `feat/step-11-docs-site` for review, based on Step 10 merged via PR #131 (4cd0684). No production build, hosted deployment, npm release, MCP extraction, or merge to `main`.
+**Status:** local site merged to `develop` via PR #132 (3852364), based on Step 10 (#131). No production build, hosted deployment, npm release, MCP extraction, or merge to `main`. The intended future home is the owner's multi-project site **seedtoshelves.com**, which has not been built; its framework, docs route, and deployment process are not selected.
 
 `site/` is a separate Vue + Vite application, not the library's `examples/` showcase. It reads `reference/v1.json` and imports the checked Vue components from source. Four intent links lead to live Button, Input, Dialog and compound SegmentButton previews; the child is documented only in context. Each view displays purpose, when/not to use, accessibility, states, props/defaults, slots/events, and the same SFC example returned by local MCP `lb_get`. The token browser exposes the nine Step 09 semantic tokens with system/light/dark and three brand-palette previews; the installation section uses npm root imports and `littlebrand-ui-kit/style.css`. Copy buttons handle clipboard failure without hiding the selectable example. There is a skip link, native navigation, accessible control labels, visible focus, and reduced-motion handling; this is not an accessibility certification.
 
