@@ -1,6 +1,6 @@
 # Step 07 — theme reliability and browser verification
 
-**Status:** implemented locally on `feat/step-07-theme-reliability`, dependent on Steps 01–06. No build, extraction, merge or publication was run for this step. The version already published on npm remains unchanged. See the [approved theme contract](STEP_03_THEME_DISTRIBUTION_CONTRACT.md) and [token mapping](STEP_06_TOKEN_ALIGNMENT.md).
+**Status:** merged into `develop` via [PR #127](https://github.com/monkeyman1979/littlebrand-ui-kit/pull/127), dependent on Steps 01–06. No build, extraction or publication was run for this step. The version already published on npm remains unchanged. See the [approved theme contract](STEP_03_THEME_DISTRIBUTION_CONTRACT.md) and [token mapping](STEP_06_TOKEN_ALIGNMENT.md).
 
 ## Implemented contract
 

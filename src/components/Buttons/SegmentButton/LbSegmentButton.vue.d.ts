@@ -1,4 +1,4 @@
-import type { DefineComponent, SlotsType } from 'vue'
+import type { DefineComponent, EmitsToProps, PublicProps, SlotsType } from 'vue'
 import type { ComponentEmits } from '../../component-emits.js'
 
 export interface LbSegmentButtonProps {
@@ -73,9 +73,9 @@ declare const LbSegmentButton: DefineComponent<
   {},
   {},
   ComponentEmits<LbSegmentButtonEmits>,
-  string,
-  {},
-  {},
+  never,
+  PublicProps,
+  Readonly<LbSegmentButtonProps> & EmitsToProps<ComponentEmits<LbSegmentButtonEmits>>,
   {},
   SlotsType<LbSegmentButtonSlots>
 >

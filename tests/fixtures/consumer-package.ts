@@ -40,7 +40,22 @@ segmentEmit('update:modelValue', 'first')
 // @ts-expect-error The segment model value is not a boolean
 segmentEmit('update:modelValue', true)
 const menuSlots: InstanceType<typeof LbMenu>['$slots'] = { trigger: () => [] }
-void menuSlots
+const buttonSlots: InstanceType<typeof LbButton>['$slots'] = { 'icon-leading': () => [] }
+const inputSlots: InstanceType<typeof LbInput>['$slots'] = { 'icon-clear': () => [] }
+const dialogSlots: InstanceType<typeof LbDialog>['$slots'] = { footer: () => [] }
+declare const buttonEmit: InstanceType<typeof LbButton>['$emit']
+buttonEmit('click', new Event('click'))
+// @ts-expect-error Button click emits an Event
+buttonEmit('click', 'not an event')
+declare const inputEmit: InstanceType<typeof LbInput>['$emit']
+inputEmit('update:modelValue', 'text')
+// @ts-expect-error Input model updates are strings
+inputEmit('update:modelValue', true)
+declare const dialogEmit: InstanceType<typeof LbDialog>['$emit']
+dialogEmit('update:modelValue', false)
+// @ts-expect-error Dialog model updates are booleans
+dialogEmit('update:modelValue', 'no')
+void [menuSlots, buttonSlots, inputSlots, dialogSlots]
 
 // Known incorrect declaration-only APIs must not be reintroduced.
 // @ts-expect-error Input implementation does not accept small
@@ -51,5 +66,9 @@ const invalidDialog: InstanceType<typeof LbDialog>['$props'] = { variant: 'fille
 const invalidButton: InstanceType<typeof LbButton>['$props'] = { tag: 'span' }
 // @ts-expect-error PopoverContent has no side prop; use parent placement
 const invalidContent: InstanceType<typeof LbPopoverContent>['$props'] = { side: 'top' }
+// @ts-expect-error SegmentButton supports medium or large, not small
+const invalidSegment: InstanceType<typeof LbSegmentButton>['$props'] = { size: 'small' }
+// @ts-expect-error SegmentButtonItem must have a value
+const invalidSegmentItem: InstanceType<typeof LbSegmentButtonItem>['$props'] = {}
 
-void [scale, inputProps, dialogProps, popoverProps, components, invalidInput, invalidDialog, invalidButton, invalidContent]
+void [scale, inputProps, dialogProps, popoverProps, components, invalidInput, invalidDialog, invalidButton, invalidContent, invalidSegment, invalidSegmentItem]

@@ -14,11 +14,15 @@ Teleport(to="body")
       ref="overlayRef"
     )
       .lb-dialog(
+        ref="dialogRef"
+        v-bind="$attrs"
         :class="dialogClasses"
+        tabindex="-1"
         role="dialog"
         :aria-modal="true"
-        :aria-labelledby="titleId"
-        :aria-describedby="contentId"
+        :aria-labelledby="$attrs['aria-labelledby'] || (hasVisibleTitle ? titleId : undefined)"
+        :aria-label="$attrs['aria-label'] || (title && !hasVisibleTitle ? title : undefined)"
+        :aria-describedby="$attrs['aria-describedby'] || contentId"
         @click.stop
       )
         //- Header only for fullscreen variant
@@ -66,7 +70,7 @@ import LbButton from '@/components/Buttons/Button/LbButton.vue'
 export type DialogVariant = 'default' | 'fullscreen'
 
 export interface LbDialogProps {
-  modelValue: boolean
+  modelValue?: boolean
   title?: string
   variant?: DialogVariant
   showClose?: boolean
@@ -96,6 +100,7 @@ const generateId = (prefix: string) => `${prefix}-${Math.random().toString(36).s
 // Refs
 const originRef = ref<HTMLElement>()
 const overlayRef = ref<HTMLElement>()
+const dialogRef = ref<HTMLElement>()
 let themeObserver: MutationObserver | undefined
 let themeMedia: MediaQueryList | undefined
 const portalTokens = new Set<string>()
@@ -168,21 +173,26 @@ const lastFocusedElement = ref<HTMLElement | null>(null)
 const getFocusableElements = () => {
   if (!overlayRef.value) return []
   
-  const selector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-  return Array.from(overlayRef.value.querySelectorAll(selector)) as HTMLElement[]
+  const selector = 'button:not(:disabled), [href], input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])'
+  return (Array.from(dialogRef.value?.querySelectorAll(selector) || []) as HTMLElement[])
+    .filter(element => !element.closest('[hidden], [inert]') && getComputedStyle(element).visibility !== 'hidden')
 }
 
 const trapFocus = (event: KeyboardEvent) => {
   if (event.key !== 'Tab') return
   
   const elements = getFocusableElements()
-  if (elements.length === 0) return
-  
+  if (elements.length === 0) {
+    event.preventDefault()
+    dialogRef.value?.focus()
+    return
+  }
+
   const firstElement = elements[0]
   const lastElement = elements[elements.length - 1]
   const { activeElement } = document
   
-  if (event.shiftKey && activeElement === firstElement) {
+  if (event.shiftKey && (activeElement === firstElement || !elements.includes(activeElement as HTMLElement))) {
     event.preventDefault()
     lastElement.focus()
   } else if (!event.shiftKey && activeElement === lastElement) {
@@ -202,12 +212,13 @@ const dialogClasses = computed(() => ({
 }))
 
 const hasHeader = computed(() => props.title || !!slots.header)
+const hasVisibleTitle = computed(() => props.variant === 'fullscreen' && !!props.title && !slots.header)
 
 // Get slots
 const slots = defineSlots<{
-  default(): any
-  header(): any
-  footer(): any
+  default?(): any
+  header?(): any
+  footer?(): any
 }>()
 
 // Methods
@@ -232,8 +243,8 @@ const onEnter = async () => {
   // Lock scroll using VueUse
   isScrollLocked.value = true
   
-  // Focus overlay for keyboard events
-  overlayRef.value?.focus()
+  // The dialog container carries the accessible name and is the first focus stop.
+  dialogRef.value?.focus()
   
   // Set up focus trap
   overlayRef.value?.addEventListener('keydown', trapFocus)
@@ -275,6 +286,7 @@ onBeforeUnmount(() => {
   // Clean up scroll lock if dialog is open
   if (props.modelValue) {
     isScrollLocked.value = false
+    lastFocusedElement.value?.focus()
   }
   
   // Remove focus trap listener if still attached
@@ -414,6 +426,16 @@ defineExpose({
 .dialog-leave-to .lb-dialog
   opacity: base.$opacity-0
   transform: scale(0.95) translateY(base.$space-sm)
+
+@media (prefers-reduced-motion: reduce)
+  .dialog-enter-active,
+  .dialog-leave-active,
+  .dialog-enter-active .lb-dialog,
+  .dialog-leave-active .lb-dialog
+    transition: none
+  .dialog-enter-from .lb-dialog,
+  .dialog-leave-to .lb-dialog
+    transform: none
 
 // Responsive adjustments
 @media (max-width: 640px)

@@ -1,6 +1,6 @@
 # LittleBrand roadmap
 
-Status: planning. This is the working plan for the next iteration of LittleBrand UI Kit, not a list of shipped features. See the [current handoff status](MODERNIZATION_STATUS.md) for Steps 01–07 and the next action. Follow the numbered PR sequence and acceptance gates in the [execution plan](EXECUTION_PLAN.md). Check an item only after its acceptance criteria are met. Keep release notes in [`CHANGELOG.md`](../CHANGELOG.md).
+Status: planning. This is the working plan for the next iteration of LittleBrand UI Kit, not a list of shipped features. See the [current handoff status](MODERNIZATION_STATUS.md) for merged Steps 01–07, Step 08 work and the next action. Follow the numbered PR sequence and acceptance gates in the [execution plan](EXECUTION_PLAN.md). Check an item only after its acceptance criteria are met. Keep release notes in [`CHANGELOG.md`](../CHANGELOG.md).
 
 ## North star
 

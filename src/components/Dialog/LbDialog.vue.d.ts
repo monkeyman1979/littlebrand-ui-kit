@@ -1,4 +1,5 @@
-import type { DefineComponent, VNode } from 'vue'
+import type { DefineComponent, EmitsToProps, PublicProps, SlotsType, VNode } from 'vue'
+import type { ComponentEmits } from '../component-emits.js'
 
 export type DialogVariant = 'default' | 'fullscreen'
 
@@ -12,7 +13,7 @@ export interface LbDialogProps {
 }
 
 export interface LbDialogSlots {
-  default(): VNode[]
+  default?(): VNode[]
   header?(): VNode[]
   footer?(): VNode[]
 }
@@ -23,6 +24,12 @@ export interface LbDialogEmits {
   'open': []
 }
 
-declare const LbDialog: DefineComponent<LbDialogProps, {}, {}, {}, {}, {}, {}, {}>
+type DialogVueEmits = ComponentEmits<LbDialogEmits>
+declare const LbDialog: DefineComponent<
+  LbDialogProps, {}, {}, {}, {}, {}, {},
+  DialogVueEmits, never, PublicProps,
+  Readonly<LbDialogProps> & EmitsToProps<DialogVueEmits>,
+  {}, SlotsType<LbDialogSlots>
+>
 
 export default LbDialog

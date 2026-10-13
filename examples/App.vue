@@ -376,7 +376,7 @@
           .button-row
             LbButton(href="https://vuejs.org" target="_blank" rel="noopener") External Link
             LbButton(href="#typography-section" variant="outline" color="secondary") Anchor Link
-            LbButton(tag="span" variant="ghost" color="info") Custom Tag (span)
+            LbButton(href="#typography-section" variant="ghost" color="info") Ghost Anchor Link
             LbButton(href="https://github.com" target="_blank" variant="filled" color="primary")
               template(#icon-leading)
                 svg(viewBox="0 0 24 24" fill="currentColor")

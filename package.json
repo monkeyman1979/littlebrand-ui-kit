@@ -43,7 +43,7 @@
     "lint": "eslint src scripts tests eslint.config.js vitest.config.js vite.config.js --ext .js,.mjs,.ts,.vue",
     "typecheck": "vue-tsc --noEmit --project tsconfig.json && tsc --noEmit --project tests/fixtures/tsconfig.consumer.json && tsc --noEmit --project tests/fixtures/tsconfig.node-consumer.json",
     "test": "vitest run",
-    "test:browser": "node tests/browser-theme.mjs",
+    "test:browser": "node tests/browser-theme.mjs && node tests/browser-component-slice.mjs",
     "extract": "npm run extract:tokens && npm run extract:components && npm run sync:versions",
     "extract:tokens": "node scripts/extract-tokens.js",
     "extract:components": "node scripts/extract-components.js",

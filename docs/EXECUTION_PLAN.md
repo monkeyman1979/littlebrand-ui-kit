@@ -1,6 +1,6 @@
 # Modernization execution plan
 
-Status: proposed ordering for the [roadmap](ROADMAP.md), not an implementation or a release commitment. See the [handoff status](MODERNIZATION_STATUS.md) for progress through Step 07. Each numbered item is a small PR to `develop` unless investigation shows it must be split. Complete the acceptance gate before moving to its dependent item. Keep this plan for work that has *not* shipped; update `CHANGELOG.md` in each PR with user-visible changes only. Do not run `npm run build` without an explicit request from the project owner.
+Status: proposed ordering for the [roadmap](ROADMAP.md), not an implementation or a release commitment. See the [handoff status](MODERNIZATION_STATUS.md) for merged Steps 01–07 and Step 08 work. Each numbered item is a small PR to `develop` unless investigation shows it must be split. Complete the acceptance gate before moving to its dependent item. Keep this plan for work that has *not* shipped; update `CHANGELOG.md` in each PR with user-visible changes only. Do not run `npm run build` without an explicit request from the project owner.
 
 ## Why this order
 
@@ -110,4 +110,4 @@ Choose a concrete agent workflow that works without Vue. Add an optional visual 
 
 ## Immediate next PR
 
-**07 — theme reliability implemented locally; review next.** [Step 07 browser checks](STEP_07_THEME_RELIABILITY.md) cover CSS-only OS defaults, explicit scopes, latest custom palettes, Dialog portal syncing, sampled alpha/contrast and keyboard focus in Chromium. Review Steps 01–07 in order against `develop`; no Step 07 build/extraction or publication occurred. Next is Step 08's component API/accessibility slice; see the [handoff](MODERNIZATION_STATUS.md).
+**Steps 01–07 merged into `develop` via PRs #121–#127; Step 08 in progress on a feature branch.** [Step 07 browser checks](STEP_07_THEME_RELIABILITY.md) cover CSS-only OS defaults, explicit scopes, latest custom palettes, Dialog portal syncing, sampled alpha/contrast and keyboard focus in Chromium. The [Step 08 component slice](STEP_08_COMPONENT_SLICE.md) verifies Button, Input, Dialog and SegmentButton in source, declarations, tests and a Vue example. Neither Step 07 nor Step 08 was built, extracted or published; see the [handoff](MODERNIZATION_STATUS.md).
