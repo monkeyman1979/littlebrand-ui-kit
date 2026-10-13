@@ -1,6 +1,6 @@
 # Step 08 — verified component slice (Button, Input, Dialog, SegmentButton)
 
-**Status:** source implementation and declaration review on `feat/step-08-component-slice`, based on Step 07 as merged into `develop` (#127). This is not a package release; no build, extraction, merge or publication was run for Step 08.
+**Status:** merged to `develop` via PR #128 (3186a6c), based on Step 07 (#127). This is not a package release; no build, extraction or publication was run for Step 08.
 
 ## Supported contract
 
@@ -41,4 +41,4 @@ const open = ref(false)
 
 `npm run lint`, `npm run typecheck` (including strict Bundler/NodeNext consumer declarations and the Vue fixture), `npm test` (27 focused tests), `npm run test:browser` (Chromium, light/dark and reduced-motion samples), and `git diff --check` passed on this branch. The component browser fixture mounts the typed Vue example, checks Dialog focus containment/restore with and without controls, Input icon placement and focus style, and reduced-motion duration. This is **not** a WCAG certification: more combinations (overlapping Dialogs, unusual consumer CSS, forms, router-link hosts, screen readers, other browser engines and mobile/touch) remain to be tested.
 
-The generated MCP data in `mcp-server/src/data/components.ts` still uses generic examples and is **not** promoted as verified reference for these components: the extractor currently suggests `variant="filled"` on Dialog and emits an isolated `LbSegmentButtonItem`. Step 09 should author/reference these checked examples and fix the extractor before refreshing generated metadata. No Step 08 build or extraction has run; any future release requires separately authorized artifact verification from its exact commit. The Step 05 MCP dependency audit findings remain open.
+The generated MCP data in `mcp-server/src/data/components.ts` still uses generic examples and is **not** promoted as verified reference for these components: the extractor currently suggests `variant="filled"` on Dialog and emits an isolated `LbSegmentButtonItem`. Step 09 authors and tests a separate reference for this slice and updates the extractor to use it in a future extraction; the existing generated MCP data has not been refreshed. No Step 08 build or extraction has run; any future release requires separately authorized artifact verification from its exact commit. The Step 05 MCP dependency audit findings remain open.

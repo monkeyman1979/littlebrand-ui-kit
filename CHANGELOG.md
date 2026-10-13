@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Added a versioned authored reference for the verified Button, Input, Dialog and compound SegmentButton slice, with stable component/token IDs, generated machine and Markdown views, npm-ready tested Vue examples and drift checks. Existing generic MCP metadata remains unverified until a separately authorized extraction/release check.
 - Verified the first Button/Input/Dialog/SegmentButton slice with a typechecked Vue usage fixture, strict slot/event/prop declaration checks, focused interactions, and light/dark reduced-motion Chromium checks. The supported API and remaining MCP example gaps are documented in `docs/STEP_08_COMPONENT_SLICE.md`.
 - Documented the LittleBrand modernization roadmap in `docs/ROADMAP.md` and the ordered PR sequence with acceptance gates in `docs/EXECUTION_PLAN.md`. These are plans for semantic tokens, component reliability, documentation, agent discovery, an optional Vue registry, and headless integration; no runtime features have shipped as part of this entry.
 - Added tool-agnostic contributor instructions in `AGENTS.md` and optional task checklists in `agents/`.
