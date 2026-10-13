@@ -1,0 +1,23 @@
+# LittleBrand modernization — handoff status
+
+**As of 2026-10-12.** Work is on feature branches for review against `develop`; nothing has been merged or published. The project remains at the current package version. This is a checkpoint, **not** a release announcement. Numbered work packages and gates: [execution plan](EXECUTION_PLAN.md); planned features: [roadmap](ROADMAP.md). Do not treat untested contracts as shipped behavior.
+
+## Where we stopped
+
+| Step | State | Evidence / boundary |
+|---|---|---|
+| **01 — public-surface audit** | Audit prepared | [Report](audits/01-public-surface.md) inventories 33 root-exported components/pieces, 26 declarations/MCP entries, representative API drift, tokens and packaging claims. It is source triage, not installed-package or browser verification; [audit spec](STEP_01_AUDIT_SPEC.md). |
+| **02 — semantic token contract** | **Owner-approved planning baseline** | [Contract and migration matrix](STEP_02_TOKEN_CONTRACT.md): keep eight color families and current `--lb-*` names; align runtime surface sequence with static 1/2/3/4/5; avoid first-slice removals/renames. No token or generator implementation yet. |
+| **03 — theme and distribution contract** | **Owner-approved planning baseline** | [Contract and walkthroughs](STEP_03_THEME_DISTRIBUTION_CONTRACT.md): automatically follow the system preference without an explicit choice, preserve explicit light/dark controls, retain latest `applyTheme()` custom palette, and give a teleported Dialog the originating theme scope. npm root imports and `/style.css` remain intended paths; installed-package types and deep imports are unverified. |
+| **04 — real checks** | **Implemented locally; ready for review** | [Check coverage and pinned gaps](STEP_04_CHECKS.md). ESLint and `vue-tsc` replace placeholder scripts; 18 focused Vitest tests cover inventory/metadata examples/tokens, limited source consumer/CSS checks, runtime theme probes, and a few DOM interactions. One type-only Badge annotation was needed. Tests record known legacy discrepancies, **not** fixes. |
+
+**Last validation:** `npm run lint`, `npm run typecheck`, and `npm test` passed (4 files, 18 tests). `git diff --check` was run on documentation and implementation changes. No `npm run build`, extraction, MCP build, publication, merge, or browser/clean installed-package verification occurred. The test fixture compiles source styles in memory; it is **not** an npm tarball build. `CHANGELOG.md` already had a planning-note edit before Step 04; no new feature or theme behavior was shipped by Step 04.
+
+## Resume next time: Step 05
+
+1. Start with [execution plan §05](EXECUTION_PLAN.md#L45-L49), the [audit's packaging findings](audits/01-public-surface.md#L89-L96), and [Step 04's limits](STEP_04_CHECKS.md#L1-L31). Check branch/worktree and keep required reviews/checks; keep numbered PRs bounded.
+2. Investigate a **clean Vue + TypeScript consumer** of documented npm root named imports, `littlebrand-ui-kit/style.css`, composables/utilities and theme API. Verify root declarations/exports and `.vue.d.ts` accuracy rather than inferring type completion from `vue-tsc` on source. Verify source-only versus installed-package findings separately. Include existing CSS alias and UMD/require/MCP bin only where supported. The existing secondary barrel omits `LbDropdown`; seven public names lack declarations/MCP records.
+3. Test the actual package only when the owner authorizes any required **build**. Do not run `npm run build` (which performs extraction and MCP installation), `npm run extract*`, publishing or a release as a convenience check. It is fine to refine read-only fixtures/checks without doing that; explicitly report what remains unverified.
+4. After Step 05, Steps **06–07** implement/test token and theme contracts. First retire the pinned surface-step/alpha/inverse and selector/observer gaps; then check automatic OS following, explicit override precedence, latest brand palette, nested Dialog portal treatment, focus and color contrast in a real browser. Step **08** verifies Button, Input, Dialog and a compound component before promoting generated examples.
+
+**Open decisions:** do not promise runtime-only `border-subtle`/`surface-raised` as new public APIs without consumer evidence; Popover/other teleported overlays beyond Dialog are deferred; TypeScript/deep-import guarantees await Step 05. Any unavoidable breaking behavior/deprecation window needs separate owner approval. Keep user-visible implementation changes and migrations in `CHANGELOG.md` in their implementing PR, not as claims in this checkpoint.
