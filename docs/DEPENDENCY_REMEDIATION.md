@@ -1,6 +1,6 @@
 # Dependency remediation — root and bundled MCP lockfiles
 
-**Status:** source/lockfile work on `fix/mcp-dependency-remediation` for review, based on PR #133 as merged to `develop`. No production build, MCP extraction/compilation, tarball test, `main` merge or npm publication. Initial advisory inventory and paths: [MCP readiness triage](MCP_RELEASE_READINESS.md).
+**Status:** merged into `develop` via PR #134 (9d0c6bf), based on PR #133 as merged to `develop`. No production build, MCP extraction/compilation, tarball test, `main` merge or npm publication. Initial advisory inventory and paths: [MCP readiness triage](MCP_RELEASE_READINESS.md).
 
 ## Change and scope
 
