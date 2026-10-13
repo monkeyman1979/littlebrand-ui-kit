@@ -6,7 +6,7 @@ import globals from 'globals'
 export default [
   { ignores: ['dist/**', 'mcp-server/**', 'node_modules/**', 'examples/**'] },
   {
-    files: ['src/**/*.js', 'scripts/**/*.js', 'tests/**/*.js', 'tests/**/*.mjs', '*.config.js'],
+    files: ['src/**/*.js', 'scripts/**/*.js', 'tests/**/*.js', 'tests/**/*.mjs', 'site/**/*.js', '*.config.js'],
     ...js.configs.recommended,
     languageOptions: { globals: { ...globals.browser, ...globals.node } }
   },
@@ -24,12 +24,12 @@ export default [
   },
   ...vue.configs['flat/essential'],
   {
-    files: ['src/**/*.vue'],
+    files: ['src/**/*.vue', 'site/**/*.vue'],
     languageOptions: { parserOptions: { parser: tsParser } },
     rules: { 'no-unused-vars': 'off' }
   },
   {
-    files: ['src/**/*.ts', 'tests/**/*.ts'],
+    files: ['src/**/*.ts', 'tests/**/*.ts', 'site/**/*.ts'],
     languageOptions: { parser: tsParser },
     rules: { 'no-unused-vars': 'off' }
   }

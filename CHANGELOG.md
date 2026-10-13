@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Added a local Vue documentation preview for the verified Button, Input, Dialog and compound SegmentButton slice, with live previews, source-derived API and guidance, copyable tested examples, nine semantic token swatches, theme/brand controls, and npm setup. A compact AI index and per-item Markdown are generated from the same reference and served beside the preview. This is **unreleased source work**, not a deployed site or updated npm package.
 - Added source-only local stdio MCP retrieval over the verified reference: `lb_search`, `lb_get` and `lb_setup`, with bounded intent results and tested Vue examples on demand. The machine reference and Markdown pages are marked for future npm packaging; no new MCP artifact has been built or published.
 - Added a versioned authored reference for the verified Button, Input, Dialog and compound SegmentButton slice, with stable component/token IDs, generated machine and Markdown views, npm-ready tested Vue examples and drift checks. Existing generic MCP metadata remains unverified until a separately authorized extraction/release check.
 - Verified the first Button/Input/Dialog/SegmentButton slice with a typechecked Vue usage fixture, strict slot/event/prop declaration checks, focused interactions, and light/dark reduced-motion Chromium checks. The supported API and remaining MCP example gaps are documented in `docs/STEP_08_COMPONENT_SLICE.md`.

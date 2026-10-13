@@ -1,6 +1,6 @@
 # Step 10 — bounded local MCP discovery
 
-**Status:** source-only feature branch for review, based on Step 09 as merged into `develop` (#129). No extraction, `npm run build`, MCP artifact compilation, publication, or merge to `main`.
+**Status:** merged to `develop` via PR #131 (4cd0684), based on Step 09 (#129). No extraction, `npm run build`, MCP artifact compilation, publication, or merge to `main`.
 
 ## Contract and measurement
 
