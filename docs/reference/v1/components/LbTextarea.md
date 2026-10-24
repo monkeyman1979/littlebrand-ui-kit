@@ -2,7 +2,7 @@
 
 ID: `component:LbTextarea`. [Reference index](../README.md). Collect longer free-form text with v-model.
 
-**Use:** Associate a visible label or aria-label; pass native name and aria-describedby to the textarea for forms and helper text.
+**Use:** Associate a visible label or aria-label. For a standalone textarea, pass native name and aria-describedby for helper text; when nested in FormField, it supplies the control id and message description.
 
 **Find by intent:** textarea; multiline; notes; long form; feedback.
 

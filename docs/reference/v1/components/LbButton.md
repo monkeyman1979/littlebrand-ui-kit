@@ -2,11 +2,11 @@
 
 ID: `component:LbButton`. [Reference index](../README.md). Trigger an action or navigate to a destination.
 
-**Use:** Use a native button for actions; href for a URL, or to only in a host with Vue Router.
+**Use:** Use a native button for actions; inside a form use type=submit with one form @submit.prevent handler. Use href for a URL, or to only in a host with Vue Router.
 
 **Find by intent:** action; submit; save; button; link; navigate.
 
-**Avoid:** Do not use iconOnly without an accessible name; do not use a link for a disabled action.
+**Avoid:** Do not attach the same action to both a submit button click and its form submit; do not use iconOnly without an accessible name or a link for a disabled action.
 
 **Accessibility:** Native button by default; iconOnly needs aria-label. Loading exposes aria-busy and blocks activation. Disabled/loading links become disabled buttons.
 

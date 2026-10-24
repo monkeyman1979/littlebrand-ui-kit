@@ -18,8 +18,8 @@
         "link",
         "navigate"
       ],
-      "use": "Use a native button for actions; href for a URL, or to only in a host with Vue Router.",
-      "avoid": "Do not use iconOnly without an accessible name; do not use a link for a disabled action.",
+      "use": "Use a native button for actions; inside a form use type=submit with one form @submit.prevent handler. Use href for a URL, or to only in a host with Vue Router.",
+      "avoid": "Do not attach the same action to both a submit button click and its form submit; do not use iconOnly without an accessible name or a link for a disabled action.",
       "accessibility": "Native button by default; iconOnly needs aria-label. Loading exposes aria-busy and blocks activation. Disabled/loading links become disabled buttons.",
       "states": [
         "filled, tonal, outline, ghost or link",
@@ -273,7 +273,7 @@
         "long form",
         "feedback"
       ],
-      "use": "Associate a visible label or aria-label; pass native name and aria-describedby to the textarea for forms and helper text.",
+      "use": "Associate a visible label or aria-label. For a standalone textarea, pass native name and aria-describedby for helper text; when nested in FormField, it supplies the control id and message description.",
       "avoid": "Do not assume FormField supplies validation or a required native attribute; explicitly set invalid/required on the control. No small size exists.",
       "accessibility": "Uses a native textarea. Invalid sets aria-invalid; readonly and disabled preserve native semantics. The outline and ring stay visible on keyboard focus in both themes.",
       "states": [
@@ -421,8 +421,8 @@
         "error message",
         "field group"
       ],
-      "use": "Nest an Input or Textarea, supply label and hint/error, and bind v-model on the control. Pass required and invalid to the control itself.",
-      "avoid": "Do not expect FormField to validate or set aria-invalid/required on its child. If using labelFor, keep it matched to the actual control ID.",
+      "use": "Nest an Input or Textarea, supply label and hint/error, and bind v-model on the control. Pass required and invalid to the control itself. For submission, handle the native form @submit.prevent once and use LbButton type=submit.",
+      "avoid": "Do not expect FormField to validate or set aria-invalid/required on its child. Do not also call the submit handler on button click. If using labelFor, keep it matched to the actual control ID.",
       "accessibility": "Provides a stable generated id and aria-describedby for injected Input/Textarea; the visible label targets that id and the message supplies its description. A label alone does not mark the control required.",
       "states": [
         "hint",
@@ -488,7 +488,7 @@
         "label-icon"
       ],
       "emits": [],
-      "usage": "<script setup lang=\"ts\">\nimport 'littlebrand-ui-kit/style.css'\nimport { ref } from 'vue'\nimport { LbFormField, LbTextarea, LbButton } from 'littlebrand-ui-kit'\nconst biography = ref('')\nconst error = ref('')\nfunction validate() {\n  error.value = biography.value.trim() ? '' : 'Biography is required'\n}\n</script>\n\n<template>\n  <LbFormField label=\"Biography\" hint=\"Tell us a little about yourself.\" :error=\"error\" required>\n    <LbTextarea v-model=\"biography\" name=\"biography\" :invalid=\"Boolean(error)\" required />\n  </LbFormField>\n  <LbButton @click=\"validate\">Validate</LbButton>\n</template>\n"
+      "usage": "<script setup lang=\"ts\">\nimport 'littlebrand-ui-kit/style.css'\nimport { ref } from 'vue'\nimport { LbFormField, LbTextarea, LbButton } from 'littlebrand-ui-kit'\nconst biography = ref('')\nconst error = ref('')\nconst emit = defineEmits<{ save: [biography: string] }>()\nfunction onSubmit() {\n  const text = biography.value.trim()\n  error.value = text ? '' : 'Biography is required'\n  if (!error.value) emit('save', text)\n}\n</script>\n\n<template>\n  <form novalidate @submit.prevent=\"onSubmit\">\n    <LbFormField label=\"Biography\" hint=\"Tell us a little about yourself.\" :error=\"error\" required>\n      <LbTextarea v-model=\"biography\" name=\"biography\" :invalid=\"Boolean(error)\" required />\n    </LbFormField>\n    <LbButton type=\"submit\">Save biography</LbButton>\n  </form>\n</template>\n"
     },
     {
       "id": "component:LbDialog",

@@ -6,7 +6,7 @@
   "components": [
     {
       "id": "component:LbButton", "name": "LbButton", "source": "src/components/Buttons/Button/LbButton.vue", "example": "reference/examples/button.vue",
-      "purpose": "Trigger an action or navigate to a destination.", "intents": ["action", "submit", "save", "button", "link", "navigate"], "use": "Use a native button for actions; href for a URL, or to only in a host with Vue Router.", "avoid": "Do not use iconOnly without an accessible name; do not use a link for a disabled action.",
+      "purpose": "Trigger an action or navigate to a destination.", "intents": ["action", "submit", "save", "button", "link", "navigate"], "use": "Use a native button for actions; inside a form use type=submit with one form @submit.prevent handler. Use href for a URL, or to only in a host with Vue Router.", "avoid": "Do not attach the same action to both a submit button click and its form submit; do not use iconOnly without an accessible name or a link for a disabled action.",
       "accessibility": "Native button by default; iconOnly needs aria-label. Loading exposes aria-busy and blocks activation. Disabled/loading links become disabled buttons.",
       "states": ["filled, tonal, outline, ghost or link", "small, medium or large", "disabled", "loading", "keyboard focus"],
       "related": ["component:LbDialog", "token:--lb-fill-primary-normal", "token:--lb-text-on-primary", "token:--lb-focus-ring-color"],
@@ -21,14 +21,14 @@
     },
     {
       "id": "component:LbTextarea", "name": "LbTextarea", "source": "src/components/Textarea/LbTextarea.vue", "example": "reference/examples/textarea.vue",
-      "purpose": "Collect longer free-form text with v-model.", "intents": ["textarea", "multiline", "notes", "long form", "feedback"], "use": "Associate a visible label or aria-label; pass native name and aria-describedby to the textarea for forms and helper text.", "avoid": "Do not assume FormField supplies validation or a required native attribute; explicitly set invalid/required on the control. No small size exists.",
+      "purpose": "Collect longer free-form text with v-model.", "intents": ["textarea", "multiline", "notes", "long form", "feedback"], "use": "Associate a visible label or aria-label. For a standalone textarea, pass native name and aria-describedby for helper text; when nested in FormField, it supplies the control id and message description.", "avoid": "Do not assume FormField supplies validation or a required native attribute; explicitly set invalid/required on the control. No small size exists.",
       "accessibility": "Uses a native textarea. Invalid sets aria-invalid; readonly and disabled preserve native semantics. The outline and ring stay visible on keyboard focus in both themes.",
       "states": ["medium or large", "disabled", "readonly", "required", "invalid", "autoResize with optional maxRows", "keyboard focus", "reduced motion"],
       "related": ["component:LbFormField", "component:LbInput", "token:--lb-border-neutral-normal", "token:--lb-border-error-normal"], "dependencies": ["Vue 3"]
     },
     {
       "id": "component:LbFormField", "name": "LbFormField", "source": "src/components/FormField/LbFormField.vue", "example": "reference/examples/form-field.vue",
-      "purpose": "Compose a label, control and one helper or validation message.", "intents": ["form field", "validation", "label and hint", "error message", "field group"], "use": "Nest an Input or Textarea, supply label and hint/error, and bind v-model on the control. Pass required and invalid to the control itself.", "avoid": "Do not expect FormField to validate or set aria-invalid/required on its child. If using labelFor, keep it matched to the actual control ID.",
+      "purpose": "Compose a label, control and one helper or validation message.", "intents": ["form field", "validation", "label and hint", "error message", "field group"], "use": "Nest an Input or Textarea, supply label and hint/error, and bind v-model on the control. Pass required and invalid to the control itself. For submission, handle the native form @submit.prevent once and use LbButton type=submit.", "avoid": "Do not expect FormField to validate or set aria-invalid/required on its child. Do not also call the submit handler on button click. If using labelFor, keep it matched to the actual control ID.",
       "accessibility": "Provides a stable generated id and aria-describedby for injected Input/Textarea; the visible label targets that id and the message supplies its description. A label alone does not mark the control required.",
       "states": ["hint", "error, warning or success message (in that priority)", "required indicator", "stable control/description ids"],
       "related": ["component:LbTextarea", "component:LbInput", "token:--lb-border-error-normal"], "dependencies": ["Vue 3", "LbLabel and LbHintText internally (standalone APIs not verified in this slice)"]
