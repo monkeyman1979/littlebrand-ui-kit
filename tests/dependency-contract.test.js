@@ -23,5 +23,7 @@ test('root and bundled local MCP lockfiles retain patched SDK and Zod versions',
     expect(lock.packages['node_modules/proxy-addr'].version).not.toBe('2.0.7')
   }
   const root = json('./package-lock.json')
+  expect(json('./package.json').peerDependencies.vue).toBe('^3.3.0')
+  expect(root.packages['node_modules/@vueuse/core']).toBeUndefined()
   expect(atLeast(root.packages['node_modules/happy-dom'].version, [21, 0, 4])).toBe(true)
 })

@@ -1,5 +1,5 @@
-import type { DefineComponent, EmitsToProps, PublicProps, SlotsType, VNode } from 'vue'
-import type { ComponentEmits } from '../component-emits.js'
+import type { DefineComponent, SlotsType, VNode } from 'vue'
+import type { ComponentEmits, ComponentPublicProps as PublicProps, ComponentEventProps as EmitsToProps } from '../component-emits.js'
 
 export type DialogVariant = 'default' | 'fullscreen'
 

@@ -63,7 +63,7 @@ Teleport(to="body")
 
 <script setup lang="ts">
 import { computed, ref, nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
-import { useScrollLock } from '@vueuse/core'
+import { useBodyScrollLock } from '@/utils/body-scroll-lock'
 import LbButton from '@/components/Buttons/Button/LbButton.vue'
 
 // Types
@@ -164,8 +164,7 @@ watch(() => props.modelValue, async (open) => {
 const titleId = generateId('dialog-title')
 const contentId = generateId('dialog-content')
 
-// Scroll lock using VueUse
-const isScrollLocked = useScrollLock(typeof document !== 'undefined' ? document.body : null)
+const { lock: lockBodyScroll, unlock: unlockBodyScroll } = useBodyScrollLock()
 
 // Focus management
 const lastFocusedElement = ref<HTMLElement | null>(null)
@@ -236,12 +235,12 @@ const handleBackdropClick = (event: MouseEvent) => {
 
 const onEnter = async () => {
   await nextTick()
+  if (!props.modelValue || !overlayRef.value) return
   
   // Store last focused element
   lastFocusedElement.value = document.activeElement as HTMLElement
   
-  // Lock scroll using VueUse
-  isScrollLocked.value = true
+  lockBodyScroll()
   
   // The dialog container carries the accessible name and is the first focus stop.
   dialogRef.value?.focus()
@@ -253,8 +252,8 @@ const onEnter = async () => {
 }
 
 const onAfterLeave = () => {
-  // Unlock scroll using VueUse
-  isScrollLocked.value = false
+  // A reopen during the leave transition still owns its lock.
+  if (!props.modelValue) unlockBodyScroll()
   
   // Remove focus trap
   overlayRef.value?.removeEventListener('keydown', trapFocus)
@@ -273,6 +272,7 @@ const handleEscapeKey = (event: KeyboardEvent) => {
 
 // Set up escape key listener when mounted
 onMounted(() => {
+  if (props.modelValue) lockBodyScroll()
   document.addEventListener('keydown', handleEscapeKey)
   if (props.modelValue) nextTick(startThemeSync)
 })
@@ -285,7 +285,7 @@ onBeforeUnmount(() => {
   
   // Clean up scroll lock if dialog is open
   if (props.modelValue) {
-    isScrollLocked.value = false
+    unlockBodyScroll()
     lastFocusedElement.value?.focus()
   }
   

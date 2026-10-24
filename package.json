@@ -50,7 +50,8 @@
     "test": "vitest run",
     "reference:generate": "node scripts/generate-reference.js",
     "reference:check": "node scripts/generate-reference.js --check",
-    "test:browser": "node tests/browser-theme.mjs && node tests/browser-component-slice.mjs",
+    "test:browser": "node tests/browser-theme.mjs && node tests/browser-component-slice.mjs && node tests/browser-overlay-scroll.mjs",
+    "test:vue-compat": "node tests/check-vue-source-compat.mjs && node tests/browser-overlay-scroll.mjs",
     "test:mcp": "node tests/mcp-stdio.mjs",
     "extract": "npm run extract:tokens && npm run extract:components && npm run sync:versions",
     "extract:tokens": "node scripts/extract-tokens.js",
@@ -107,7 +108,6 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.32.2",
-    "@vueuse/core": "^13.8.0",
     "culori": "^4.0.2",
     "zod": "^4.6.7"
   }
