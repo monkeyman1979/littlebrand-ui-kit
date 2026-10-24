@@ -1,8 +1,16 @@
 # LittleBrand modernization — handoff status
 
+## Current source checkpoint — 2026-10-24
+
+The agent handoff and six-intent source trials (#136–#140), Vue 3.3.13 wrapper probe (#141), security refresh (#142), Zod 4 source compatibility (#143), and Vue 3.3 minimum source/declaration fixes (#144) are merged into `develop`. The accompanying [tooling refresh](CURRENT_DEPENDENCY_BASELINE.md) moves development to current compatible versions, including Vite 8 and TypeScript 6; TypeScript 7 and Node 26 type definitions are intentionally not forced. The Vue peer remains `^3.3.0`, now checked with an isolated **3.3.0** source/type fixture; removed VueUse no longer imposes a hidden Vue 3.5 peer. All of this remains **unreleased source work**, not npm 0.8.3 or tracked MCP `dist/` verification.
+
+Current validation and intentional dependency exceptions are recorded in [the dependency baseline](CURRENT_DEPENDENCY_BASELINE.md). The next release gate is a separately owner-authorized build/extraction and exact-artifact installed-consumer/MCP check, **not** another blanket dependency update. No publication, deployment, or `main` merge has occurred. Broader component/API audits, Safari/Firefox and screen-reader coverage remain outside the narrow source checks.
+
+## Historical work packages
+
 **Release-readiness checkpoint (2026-10-13).** Steps 01–11 were merged into `develop` via PRs #121–#132 (Step 11 merge commit 3852364). MCP trial/audit triage merged via PR #133 (f1df767); dependency remediation merged via PR #134 (9d0c6bf); Step 12A merged via PR #135 (cc98a0e). Nothing has been published or merged to `main`. The npm package remains at its current published version. This is a checkpoint, **not** a release announcement. Numbered work packages and gates: [execution plan](EXECUTION_PLAN.md); planned features: [roadmap](ROADMAP.md). Do not treat untested contracts as shipped behavior.
 
-## Where we stopped
+### Earlier checkpoint detail
 
 | Step | State | Evidence / boundary |
 |---|---|---|
@@ -23,7 +31,7 @@
 
 ## Resume from this checkpoint
 
-1. Follow the [independent MCP agent trial handoff](MCP_AGENT_TRIAL_HANDOFF.md). The local reference/site/source MCP now cover six intent→example paths on `develop`, but the published package and tracked MCP `dist/` remain old. A subsequent independent source-agent trial is recorded in PR #137: all six prompts led to tool calls, but only two primary answers used the kit and the notes answer emitted twice. A separate kit-focused single-prompt retrial is recorded in PR #138; neither is an exact-release artifact check or a six-intent agent-use pass. Check those PRs' merge status before treating their evidence as merged. Step 10's exact-release artifact gate is still open. Step 09 passed `npm run lint`, `npm run typecheck`, `npm test` (6 files, 29 tests), `npm run test:browser`, `npm run reference:check` and `git diff --check` on its feature branch. No Step 09 build/extraction ran. A future release needs an owner-authorized **new** build/extraction and tarball/browser check against the exact release commit; the Step 05 artifact predates Steps 06–12A.
+1. The [original agent trial evidence](MCP_AGENT_TRIAL_EVIDENCE.md) remains historical, including its double-save failure. The later [kit-directed six-intent trial](MCP_AGENT_KIT_DIRECTED_TRIAL.md) passed its measured source-fixture interactions; [Vue 3.3 source compatibility](VUE33_SOURCE_COMPATIBILITY.md) adds minimum-version source/declaration and overlay checks, not installed-artifact certification. Step 10's exact-release artifact gate is still open. A future release needs an owner-authorized **new** build/extraction and tarball/browser/MCP check against the exact release commit; the Step 05 artifact predates all this work.
 2. The owner viewed the full local `npm run dev` showcase and reported that it worked; this is not an independent MCP agent or released-package check. [Step 05 remaining checks](STEP_05_NPM_CONSUMER.md#remaining-before-release) include installed-package MCP CLI verification and re-auditing the exact release lockfiles. [Step 07 limits](STEP_07_THEME_RELIABILITY.md#verification-and-limits) include restrictive CSP and arbitrary palettes; [Step 08 limits](STEP_08_COMPONENT_SLICE.md#verification-and-remaining-boundaries) include routing hosts, multi-dialog, cross-engine and screen-reader coverage.
 3. The local docs app and source server retrieve only Step 09 plus Step 12A checked examples. The owner plans to place documentation in the future multi-project **seedtoshelves.com** website; it has not been built and no route or deployment is selected. Do not promote tracked `mcp-server/dist/`, the published npm CLI, or the local docs preview as a verified release: extraction/build has not run. Keep npm primary; hosted MCP and source registry remain separate decisions.
 

@@ -1,5 +1,6 @@
 {
   "extends": "../tsconfig.json",
+  "compilerOptions": { "types": ["vite/client"], "rootDir": ".." },
   "include": ["../src/**/*.ts", "../src/**/*.vue", "./**/*.ts", "./**/*.vue"],
   "exclude": ["../node_modules", "../mcp-server", "../dist"]
 }

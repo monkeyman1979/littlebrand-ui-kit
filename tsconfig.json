@@ -12,8 +12,7 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "baseUrl": ".",
-    "paths": { "@/*": ["src/*"] },
+    "paths": { "@/*": ["./src/*"] },
     "types": []
   },
   "include": ["src/**/*.ts", "src/**/*.vue", "src/index.js", "tests/fixtures/VerifiedSlice.vue", "reference/examples/*.vue"],

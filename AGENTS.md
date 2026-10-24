@@ -26,7 +26,10 @@ This file is tool-agnostic guidance for anyone working on this repository. See [
 - `npm run extract` — regenerate token/component metadata and sync versions; writes files.
 - `npm run build:mcp` — compile MCP server (the script installs its dependencies).
 - `npm run build` — production build; **only when explicitly requested**.
-- `npm run lint` and `npm run typecheck` are placeholders until implemented; do not report them as validation.
+- `npm run lint` — ESLint over source, scripts, tests and site.
+- `npm run typecheck` — source Vue/TypeScript plus strict Bundler/NodeNext declaration fixtures; `npm run typecheck:site` checks the local docs app.
+- `npm test`, `npm run test:mcp`, `npm run test:browser`, `npm run test:site` and `npm run reference:check` — non-release source checks. Optional `npm run test:vue-compat` needs isolated host dependencies; see `docs/VUE33_SOURCE_COMPATIBILITY.md`.
+- Development tooling uses Node `^20.19.0 || >=22.12.0` (Vite baseline); this is separate from the MCP package engine declaration. TypeScript stays on 6.0.x while the lint stack requires `<6.1`; do not force TypeScript 7.
 
 ## Optional task guides
 
