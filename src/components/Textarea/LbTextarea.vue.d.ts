@@ -1,5 +1,5 @@
-import type { DefineComponent, EmitsToProps, PublicProps, SlotsType } from 'vue'
-import type { ComponentEmits } from '../component-emits.js'
+import type { DefineComponent, SlotsType } from 'vue'
+import type { ComponentEmits, ComponentPublicProps as PublicProps, ComponentEventProps as EmitsToProps } from '../component-emits.js'
 
 export interface LbTextareaProps {
   modelValue?: string

@@ -1,4 +1,5 @@
-import type { DefineComponent, PublicProps, SlotsType, VNode } from 'vue'
+import type { DefineComponent, SlotsType, VNode } from 'vue'
+import type { ComponentPublicProps as PublicProps } from '../component-emits.js'
 
 export interface LbFormFieldProps {
   label?: string
