@@ -1,5 +1,7 @@
 # Current compatible dependency baseline — 2026-10-24
 
+**Vite+ source follow-up:** the owner subsequently requested adoption after the earlier bounded trial. Vite+ **1.4.0** now owns the root `vite.config.js`; `vite` is aliased/overridden to **`@voidzero-dev/vite-plus-core@1.4.0`** (Vite 8.3.5), with one bundled **Vitest 5.0.5** runtime. The full existing JavaScript/Vue-essential ESLint rules and strict Vue/TypeScript **6.0.3** checks remain mandatory supplemental tasks, not native TypeScript-Go substitutes. `npm run check` runs the full source gate; `npm run check:all` adds browser checks. See [development commands and formatter scope](../README.md#️-development). Public library source bytes and historical evidence are unchanged. A fresh candidate production build/tarball check is still separately gated; the historical snapshots below do not certify this new toolchain.
+
 **Runtime follow-up:** after the Node 22 migration, the October security review requires **`^22.23.4 || ^24.22.1 || ^26.12.1`** in both manifests and pins development to patched LTS 22.23.4. The earlier generic Node 22+/Node 22.12+/unchanged-engine statements below are historical, not a security recommendation. See [distributable verification](DISTRIBUTABLE_VERIFICATION.md) for the installed Node 22/current-runtime matrix and the explicit migration. Dependency versions and the Vue peer range were not changed by that follow-up.
 
 ## Decision and scope
@@ -8,7 +10,7 @@ Owner-authorized maintenance: merge the pending source-evidence/Zod PRs, restore
 
 PRs #141/#143 merged the earlier Vue 3.3.13 probe and Zod 4 follow-up. PR #144 removed VueUse's hidden Vue 3.5 requirement and fixed declaration-only Vue aliases; [minimum-version evidence](VUE33_SOURCE_COMPATIBILITY.md) now covers isolated Vue **3.3.0** strict source and declaration checks, plus targeted overlay interactions. Historical agent answers and their failures remain unchanged.
 
-## Tooling refresh
+## Tooling refresh (pre-Vite+ checkpoint)
 
 | Dependency | Before | Current |
 | --- | --- | --- |

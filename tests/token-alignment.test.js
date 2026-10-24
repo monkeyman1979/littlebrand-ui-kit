@@ -1,12 +1,23 @@
-import { afterEach, beforeEach, describe, expect, test } from 'vitest'
+import { afterEach, beforeEach, describe, expect, test } from 'vite-plus/test'
 import { compile } from 'sass'
 import { resolve } from 'node:path'
-import { applyTheme, generateAlphaScale, generateDarkScale, generateScale, generateSemanticTokens } from '../src/utils/color-generator.js'
+import {
+  applyTheme,
+  generateAlphaScale,
+  generateDarkScale,
+  generateScale,
+  generateSemanticTokens
+} from '../src/utils/color-generator.js'
 
 const families = {
-  primary: '#ff8800', secondary: '#00bfa5', tertiary: '#3b82f6',
-  neutral: '#6b7280', success: '#22c55e', warning: '#f59e0b',
-  error: '#ef4444', info: '#3b82f6'
+  primary: '#ff8800',
+  secondary: '#00bfa5',
+  tertiary: '#3b82f6',
+  neutral: '#6b7280',
+  success: '#22c55e',
+  warning: '#f59e0b',
+  error: '#ef4444',
+  info: '#3b82f6'
 }
 const roles = {
   surface: { base: 1, subtle: 2, normal: 3, hover: 4, active: 5 },
@@ -23,8 +34,11 @@ const css = compile(resolve('src/styles/_theme.sass'), {
 }).css
 const staticModes = { light: new Map(), dark: new Map() }
 for (const [, selector, body] of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
-  const mode = [':root', ':root, [data-theme=light]'].includes(selector.trim()) ? 'light'
-    : selector.trim() === '[data-theme=dark], .dark:not([data-theme=light])' ? 'dark' : null
+  const mode = [':root', ':root, [data-theme=light]'].includes(selector.trim())
+    ? 'light'
+    : selector.trim() === '[data-theme=dark], .dark:not([data-theme=light])'
+      ? 'dark'
+      : null
   if (!mode) continue
   for (const [, token, value] of body.matchAll(/(--lb-[a-z0-9-]+):\s*([^;]+);/g)) {
     staticModes[mode].set(token, value.trim())
@@ -50,13 +64,23 @@ describe('Step 06 static and custom-palette token alignment', () => {
     for (const [family, hex] of Object.entries(families)) {
       const light = generateScale(hex)
       const dark = generateDarkScale(light, hex)
-      for (const [mode, scale] of [['light', light], ['dark', dark]]) {
+      for (const [mode, scale] of [
+        ['light', light],
+        ['dark', dark]
+      ]) {
         const staticTokens = staticModes[mode]
-        const generated = generateSemanticTokens(family, scale, mode === 'light' ? dark : light, mode)
+        const generated = generateSemanticTokens(
+          family,
+          scale,
+          mode === 'light' ? dark : light,
+          mode
+        )
         for (const [role, mapping] of Object.entries(roles)) {
           for (const [state, step] of Object.entries(mapping)) {
             const name = `--lb-${role}-${family}-${state}`
-            expect(staticTokens.get(name), `${mode} static ${name}`).toBe(`var(--lb-${family}-${step})`)
+            expect(staticTokens.get(name), `${mode} static ${name}`).toBe(
+              `var(--lb-${family}-${step})`
+            )
             expect(generated[name], `${mode} runtime ${name}`).toBe(scale[step])
           }
         }
@@ -74,14 +98,19 @@ describe('Step 06 static and custom-palette token alignment', () => {
           expect(generated[name]).toBe(reference)
           expect(staticTokens.has(`--lb-${family}-alpha-${step}`)).toBe(true)
         }
-        for (const [state, step] of [['base', 1], ['subtle', 2]]) {
+        for (const [state, step] of [
+          ['base', 1],
+          ['subtle', 2]
+        ]) {
           const name = `--lb-surface-${family}-${state}-inverse`
           const opposite = mode === 'dark' ? 'light' : 'dark'
           const raw = `--lb-${family}-${opposite}-${step}`
           expect(staticTokens.get(name)).toBe(`var(${raw})`)
           expect(generated[name]).toBe(`var(${raw})`)
           expect(staticModes.light.get(raw), `${raw} defined without JS`).toBeTruthy()
-          expect(staticModes.light.get(raw)).toBe(staticModes[opposite].get(`--lb-${family}-${step}`))
+          expect(staticModes.light.get(raw)).toBe(
+            staticModes[opposite].get(`--lb-${family}-${step}`)
+          )
         }
         // Palettes have different underlying colors; each fill state's
         // on-fill anchor is selected for contrast, not by family name alone.
@@ -95,7 +124,8 @@ describe('Step 06 static and custom-palette token alignment', () => {
     }
     for (const mode of ['light', 'dark']) {
       // Shadows are defined once in :root and inherited unchanged in dark mode.
-      for (const shadow of ['sm', 'md', 'lg']) expect(staticModes.light.has(`--lb-shadow-${shadow}`)).toBe(true)
+      for (const shadow of ['sm', 'md', 'lg'])
+        expect(staticModes.light.has(`--lb-shadow-${shadow}`)).toBe(true)
       expect(staticModes[mode].get('--lb-surface-base')).toBe('var(--lb-neutral-1)')
       expect(staticModes[mode].get('--lb-surface-subtle')).toBe('var(--lb-neutral-2)')
       expect(staticModes[mode].get('--lb-surface-disabled')).toBe('var(--lb-neutral-3)')
@@ -109,7 +139,8 @@ describe('Step 06 static and custom-palette token alignment', () => {
       root().style.cssText = ''
       applyTheme({ primary: '#8b5cf6', background: 'primary' })
       const active = mode === 'dark' ? generateDarkScale(null, '#8b5cf6') : generateScale('#8b5cf6')
-      const inverse = mode === 'dark' ? generateScale('#8b5cf6') : generateDarkScale(null, '#8b5cf6')
+      const inverse =
+        mode === 'dark' ? generateScale('#8b5cf6') : generateDarkScale(null, '#8b5cf6')
       const alpha = generateAlphaScale('#8b5cf6', mode)
       expect(inline('--lb-surface-primary-base')).toBe(active[1])
       expect(inline('--lb-surface-primary-subtle')).toBe(active[2])
@@ -127,7 +158,9 @@ describe('Step 06 static and custom-palette token alignment', () => {
       expect(inline('--lb-surface-primary-subtle-inverse')).toBe(`var(--lb-primary-${opposite}-2)`)
       for (const [state, step] of Object.entries({ normal: 3, hover: 4, active: 5 })) {
         expect(inline(`--lb-primary-alpha-${step}`)).toBe(alpha[step])
-        expect(inline(`--lb-surface-primary-${state}-alpha`)).toBe(`var(--lb-primary-alpha-${step})`)
+        expect(inline(`--lb-surface-primary-${state}-alpha`)).toBe(
+          `var(--lb-primary-alpha-${step})`
+        )
       }
       expect(inline('--lb-background-1')).toBe('')
     }

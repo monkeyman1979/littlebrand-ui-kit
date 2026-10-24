@@ -1,13 +1,46 @@
 import { createApp } from 'vue'
 import {
-  LbAvatar, LbBadge, LbBottomSheet, LbButton, LbCalendar, LbChatInput,
-  LbCheckbox, LbChip, LbCustomSelect, LbDatePicker, LbDialog, LbDivider,
-  LbDropdown, LbFormField, LbHintText, LbInput, LbLabel, LbMenu,
-  LbNavigationBar, LbNavigationBarItem, LbPopover, LbPopoverArrow,
-  LbPopoverContent, LbPopoverTrigger, LbProgress, LbRadio, LbSegmentButton,
-  LbSegmentButtonItem, LbSelect, LbSnackbar, LbSnackbarProvider, LbSwitch,
-  LbTextarea, LittleBrandUI, applyTheme, generateAlphaScale, generateDarkScale,
-  generateScale, generateSemanticTokens, useSnackbar, createSnackbarHelpers
+  LbAvatar,
+  LbBadge,
+  LbBottomSheet,
+  LbButton,
+  LbCalendar,
+  LbChatInput,
+  LbCheckbox,
+  LbChip,
+  LbCustomSelect,
+  LbDatePicker,
+  LbDialog,
+  LbDivider,
+  LbDropdown,
+  LbFormField,
+  LbHintText,
+  LbInput,
+  LbLabel,
+  LbMenu,
+  LbNavigationBar,
+  LbNavigationBarItem,
+  LbPopover,
+  LbPopoverArrow,
+  LbPopoverContent,
+  LbPopoverTrigger,
+  LbProgress,
+  LbRadio,
+  LbSegmentButton,
+  LbSegmentButtonItem,
+  LbSelect,
+  LbSnackbar,
+  LbSnackbarProvider,
+  LbSwitch,
+  LbTextarea,
+  LittleBrandUI,
+  applyTheme,
+  generateAlphaScale,
+  generateDarkScale,
+  generateScale,
+  generateSemanticTokens,
+  useSnackbar,
+  createSnackbarHelpers
 } from 'littlebrand-ui-kit'
 import 'littlebrand-ui-kit/style.css'
 import 'littlebrand-ui-kit/dist/littlebrand-ui.css'
@@ -23,15 +56,44 @@ createSnackbarHelpers().showSuccess('Saved')
 const inputProps: InstanceType<typeof LbInput>['$props'] = { size: 'large' }
 const dialogProps: InstanceType<typeof LbDialog>['$props'] = { variant: 'fullscreen' }
 const textareaProps: InstanceType<typeof LbTextarea>['$props'] = { size: 'large', resize: 'both' }
-const fieldProps: InstanceType<typeof LbFormField>['$props'] = { label: 'Biography', error: 'Required' }
+const fieldProps: InstanceType<typeof LbFormField>['$props'] = {
+  label: 'Biography',
+  error: 'Required'
+}
 const popoverProps: InstanceType<typeof LbPopover>['$props'] = { trapFocus: true }
 const components = [
-  LbAvatar, LbBadge, LbBottomSheet, LbButton, LbCalendar, LbChatInput,
-  LbCheckbox, LbChip, LbCustomSelect, LbDatePicker, LbDialog, LbDivider,
-  LbDropdown, LbFormField, LbHintText, LbInput, LbLabel, LbMenu,
-  LbNavigationBar, LbNavigationBarItem, LbPopover, LbPopoverArrow,
-  LbPopoverContent, LbPopoverTrigger, LbProgress, LbRadio, LbSegmentButton,
-  LbSegmentButtonItem, LbSelect, LbSnackbar, LbSnackbarProvider, LbSwitch,
+  LbAvatar,
+  LbBadge,
+  LbBottomSheet,
+  LbButton,
+  LbCalendar,
+  LbChatInput,
+  LbCheckbox,
+  LbChip,
+  LbCustomSelect,
+  LbDatePicker,
+  LbDialog,
+  LbDivider,
+  LbDropdown,
+  LbFormField,
+  LbHintText,
+  LbInput,
+  LbLabel,
+  LbMenu,
+  LbNavigationBar,
+  LbNavigationBarItem,
+  LbPopover,
+  LbPopoverArrow,
+  LbPopoverContent,
+  LbPopoverTrigger,
+  LbProgress,
+  LbRadio,
+  LbSegmentButton,
+  LbSegmentButtonItem,
+  LbSelect,
+  LbSnackbar,
+  LbSnackbarProvider,
+  LbSwitch,
   LbTextarea
 ] as const
 void [generateAlphaScale, generateDarkScale, generateSemanticTokens]
@@ -45,7 +107,12 @@ const menuSlots: InstanceType<typeof LbMenu>['$slots'] = { trigger: () => [] }
 const buttonSlots: InstanceType<typeof LbButton>['$slots'] = { 'icon-leading': () => [] }
 const inputSlots: InstanceType<typeof LbInput>['$slots'] = { 'icon-clear': () => [] }
 const dialogSlots: InstanceType<typeof LbDialog>['$slots'] = { footer: () => [] }
-const fieldSlots: InstanceType<typeof LbFormField>['$slots'] = { default: ({ id }) => { void id; return [] } }
+const fieldSlots: InstanceType<typeof LbFormField>['$slots'] = {
+  default: ({ id }) => {
+    void id
+    return []
+  }
+}
 declare const buttonEmit: InstanceType<typeof LbButton>['$emit']
 buttonEmit('click', new Event('click'))
 // @ts-expect-error Button click emits an Event
@@ -82,4 +149,20 @@ const invalidSegment: InstanceType<typeof LbSegmentButton>['$props'] = { size: '
 // @ts-expect-error SegmentButtonItem must have a value
 const invalidSegmentItem: InstanceType<typeof LbSegmentButtonItem>['$props'] = {}
 
-void [scale, inputProps, dialogProps, textareaProps, fieldProps, popoverProps, components, invalidInput, invalidTextarea, invalidField, invalidDialog, invalidButton, invalidContent, invalidSegment, invalidSegmentItem]
+void [
+  scale,
+  inputProps,
+  dialogProps,
+  textareaProps,
+  fieldProps,
+  popoverProps,
+  components,
+  invalidInput,
+  invalidTextarea,
+  invalidField,
+  invalidDialog,
+  invalidButton,
+  invalidContent,
+  invalidSegment,
+  invalidSegmentItem
+]

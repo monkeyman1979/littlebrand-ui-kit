@@ -15,6 +15,12 @@
     "paths": { "@/*": ["./src/*"] },
     "types": []
   },
-  "include": ["src/**/*.ts", "src/**/*.vue", "src/index.js", "tests/fixtures/VerifiedSlice.vue", "reference/examples/*.vue"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.vue",
+    "src/index.js",
+    "tests/fixtures/VerifiedSlice.vue",
+    "reference/examples/*.vue"
+  ],
   "exclude": ["node_modules", "mcp-server", "dist", "examples"]
 }

@@ -17,7 +17,9 @@ function primary(name) {
   const header = `## ${name[0].toUpperCase()}${name.slice(1)}\n\n**User request (exact):**`
   const start = evidence.indexOf(header)
   assert.ok(start >= 0, `missing ${name} evidence`)
-  const answer = evidence.slice(start).match(/\*\*Exact final agent answer:\*\*\n\n~~~~text\n([\s\S]*?)\n~~~~\n/)
+  const answer = evidence
+    .slice(start)
+    .match(/\*\*Exact final agent answer:\*\*\n\n~~~~text\n([\s\S]*?)\n~~~~\n/)
   assert.ok(answer, `missing ${name} final answer`)
   const block = answer[1].match(/```vue\n([\s\S]*?)\n```/)
   assert.ok(block, `missing ${name} first SFC`)
@@ -53,14 +55,19 @@ window.__trialReady = true
 
 try {
   for (const name of names) writeFileSync(resolve(fixture, `${name}.vue`), primary(name))
-  writeFileSync(resolve(fixture, 'index.html'), '<!doctype html><html lang="en"><meta charset="utf-8"><div id="app"></div><script type="module" src="./entry.ts"></script></html>')
+  writeFileSync(
+    resolve(fixture, 'index.html'),
+    '<!doctype html><html lang="en"><meta charset="utf-8"><div id="app"></div><script type="module" src="./entry.ts"></script></html>'
+  )
   writeFileSync(resolve(fixture, 'entry.ts'), entry)
   server = await createServer({
     logLevel: 'error',
-    resolve: { alias: [
-      { find: 'littlebrand-ui-kit/style.css', replacement: resolve('src/styles/index.sass') },
-      { find: 'littlebrand-ui-kit', replacement: resolve('src/components/index.ts') }
-    ] },
+    resolve: {
+      alias: [
+        { find: 'littlebrand-ui-kit/style.css', replacement: resolve('src/styles/index.sass') },
+        { find: 'littlebrand-ui-kit', replacement: resolve('src/components/index.ts') }
+      ]
+    },
     server: { host: '127.0.0.1', port: 0 }
   })
   await server.listen()
@@ -69,9 +76,12 @@ try {
     const context = await browser.newContext({ colorScheme: 'light' })
     const page = await context.newPage()
     const errors = []
-    page.on('pageerror', e => errors.push(e.message))
+    page.on('pageerror', (e) => errors.push(e.message))
     try {
-      const url = new URL(`/tests/fixtures/${basename(fixture)}/index.html`, server.resolvedUrls.local[0])
+      const url = new URL(
+        `/tests/fixtures/${basename(fixture)}/index.html`,
+        server.resolvedUrls.local[0]
+      )
       url.searchParams.set('case', name)
       await page.goto(url.href)
       await page.waitForFunction(() => window.__trialReady === true, null, { timeout: 8000 })
@@ -85,7 +95,9 @@ try {
           await page.locator('input[name="name"]').fill('  Alex  ')
           await button.click()
           await page.getByText('Changes saved.').waitFor()
-          assert.deepEqual(await page.evaluate(() => window.__trialEvents), [['save', { name: 'Alex' }]])
+          assert.deepEqual(await page.evaluate(() => window.__trialEvents), [
+            ['save', { name: 'Alex' }]
+          ])
           break
         }
         case 'email': {
@@ -94,7 +106,9 @@ try {
           await page.getByText('Enter your email address.').waitFor()
           await page.locator('input[type="email"]').fill('person@example.com')
           await button.click()
-          assert.deepEqual(await page.evaluate(() => window.__trialEvents), [['submit', 'person@example.com']])
+          assert.deepEqual(await page.evaluate(() => window.__trialEvents), [
+            ['submit', 'person@example.com']
+          ])
           break
         }
         case 'notes': {
@@ -110,13 +124,22 @@ try {
           const field = page.locator('.lb-form-field')
           const control = field.locator('input[name="email"]')
           await field.getByText('Email is required').waitFor()
-          assert.equal(await field.locator('label').getAttribute('for'), await control.getAttribute('id'))
+          assert.equal(
+            await field.locator('label').getAttribute('for'),
+            await control.getAttribute('id')
+          )
           assert.equal(await control.getAttribute('aria-invalid'), 'true')
-          assert.equal(await control.getAttribute('aria-describedby'), await field.locator('.lb-hint-text').getAttribute('id'))
+          assert.equal(
+            await control.getAttribute('aria-describedby'),
+            await field.locator('.lb-hint-text').getAttribute('id')
+          )
           await control.fill('person@example.com')
           await field.getByText('We will contact you.').waitFor()
           assert.equal(await control.getAttribute('aria-invalid'), null)
-          assert.deepEqual(await page.evaluate(() => window.__trialEvents.at(-1)), ['update', 'person@example.com'])
+          assert.deepEqual(await page.evaluate(() => window.__trialEvents.at(-1)), [
+            'update',
+            'person@example.com'
+          ])
           break
         }
         case 'confirmation': {
@@ -125,10 +148,17 @@ try {
           await dialog.waitFor()
           assert.equal(await dialog.getAttribute('aria-label'), 'Delete “Report”?')
           await dialog.getByRole('button', { name: 'Delete' }).click()
-          assert.deepEqual(await page.evaluate(() => window.__trialEvents.filter(([type]) => type === 'confirm')), [['confirm']])
+          assert.deepEqual(
+            await page.evaluate(() => window.__trialEvents.filter(([type]) => type === 'confirm')),
+            [['confirm']]
+          )
           await dialog.getByRole('button', { name: 'Cancel' }).click()
           await dialog.waitFor({ state: 'detached' })
-          assert.ok((await page.evaluate(() => window.__trialEvents)).some(([type, v]) => type === 'open' && v === false))
+          assert.ok(
+            (await page.evaluate(() => window.__trialEvents)).some(
+              ([type, v]) => type === 'open' && v === false
+            )
+          )
           break
         }
         case 'frequency': {
@@ -161,6 +191,8 @@ try {
   if (server) await server.close()
   rmSync(fixture, { recursive: true, force: true })
 }
-const failed = results.filter(result => !result.passed)
-console.log(`${results.length - failed.length}/${names.length} kit-directed primary SFCs passed this source Chromium probe`)
+const failed = results.filter((result) => !result.passed)
+console.log(
+  `${results.length - failed.length}/${names.length} kit-directed primary SFCs passed this source Chromium probe`
+)
 if (failed.length) process.exitCode = 1

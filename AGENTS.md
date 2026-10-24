@@ -22,11 +22,13 @@ This file is tool-agnostic guidance for anyone working on this repository. See [
 
 ## Commands (run only when appropriate)
 
-- `npm run dev` — local Vite demo.
+- `npm run dev` / `npm run dev:site` — Vite+ component showcase / local docs; both use the root `vite.config.js`.
 - `npm run extract` — regenerate token/component metadata and sync versions; writes files.
 - `npm run build:mcp` — compile MCP server (the script installs its dependencies).
 - `npm run build` — production build; **only when explicitly requested**.
-- `npm run lint` — ESLint over source, scripts, tests and site.
+- `npm run check` — full non-release source gate; `npm run check:all` adds Chromium checks. Use these rather than bare `vp check`, which does not run the mandatory supplemental Vue/TypeScript checks.
+- `npm run lint` — native Oxlint plus the existing JavaScript/Vue-essential ESLint rules, all configured in `vite.config.js`; the framework lint runner contains no rule policy.
+- `npm run format` / `npm run format:check` — Oxfmt for tooling/tests/MCP/docs UI; public library sources, generated references and historical evidence are excluded.
 - `npm run typecheck` — source Vue/TypeScript plus strict Bundler/NodeNext declaration fixtures; `npm run typecheck:site` checks the local docs app.
 - `npm test`, `npm run test:mcp`, `npm run test:browser`, `npm run test:site` and `npm run reference:check` — non-release source checks. Optional `npm run test:vue-compat` needs isolated host dependencies; see `docs/VUE33_SOURCE_COMPATIBILITY.md`.
 - Use a security-patched supported Node runtime: `^22.23.4 || ^24.22.1 || ^26.12.1` in both manifests. `.node-version` pins 22.23.4 and `.npmrc` enables engine-strict; the MCP also checks its runtime. A clean npm audit is not a Node runtime security check. Recheck official Node advisories before changing these floors or adding a major. TypeScript stays on 6.0.x while the lint stack requires `<6.1`; do not force TypeScript 7.

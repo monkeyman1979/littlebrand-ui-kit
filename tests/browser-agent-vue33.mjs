@@ -9,7 +9,10 @@ import { createServer } from 'vite'
 import vuePlugin from '@vitejs/plugin-vue'
 
 const modules = process.env.VUE33_NODE_MODULES
-assert.ok(modules, 'Set VUE33_NODE_MODULES to a temp node_modules with Vue/compiler-sfc 3.3.13, pug and sass')
+assert.ok(
+  modules,
+  'Set VUE33_NODE_MODULES to a temp node_modules with Vue/compiler-sfc 3.3.13, pug and sass'
+)
 const requireFromFixture = createRequire(resolve(modules, 'vue/package.json'))
 const compiler = requireFromFixture('@vue/compiler-sfc')
 assert.equal(requireFromFixture('vue/package.json').version, '3.3.13')
@@ -23,12 +26,21 @@ function primary(name) {
   const heading = `## ${name[0].toUpperCase()}${name.slice(1)}\n\n**User request (exact):**`
   const start = evidence.indexOf(heading)
   assert.ok(start >= 0, `missing ${name} trial`)
-  const answer = evidence.slice(start).match(/\*\*Exact final agent answer \(unaltered\):\*\*\n\n~~~~text\n([\s\S]*?)\n~~~~\n/)?.[1]
+  const answer = evidence
+    .slice(start)
+    .match(/\*\*Exact final agent answer \(unaltered\):\*\*\n\n~~~~text\n([\s\S]*?)\n~~~~\n/)?.[1]
   const code = answer?.match(/```vue\n([\s\S]*?)\n```/)?.[1]
-  assert.ok(code && !code.includes('defineModel'), `${name}: first code block missing or uses defineModel`)
+  assert.ok(
+    code && !code.includes('defineModel'),
+    `${name}: first code block missing or uses defineModel`
+  )
   const parsed = compiler.parse(code, { filename: `${name}.vue` })
   assert.deepEqual(parsed.errors, [])
-  assert.ok(compiler.compileScript(parsed.descriptor, { id: `trial-${name}` }).content.includes('update:modelValue'))
+  assert.ok(
+    compiler
+      .compileScript(parsed.descriptor, { id: `trial-${name}` })
+      .content.includes('update:modelValue')
+  )
   return `${code}\n`
 }
 
@@ -52,18 +64,29 @@ window.__ready = true
 `
 
 try {
-  for (const name of ['confirmation', 'frequency']) writeFileSync(resolve(fixture, `${name}.vue`), primary(name))
-  writeFileSync(resolve(fixture, 'index.html'), '<html><div id="app"></div><script type="module" src="./entry.ts"></script></html>')
+  for (const name of ['confirmation', 'frequency'])
+    writeFileSync(resolve(fixture, `${name}.vue`), primary(name))
+  writeFileSync(
+    resolve(fixture, 'index.html'),
+    '<html><div id="app"></div><script type="module" src="./entry.ts"></script></html>'
+  )
   writeFileSync(resolve(fixture, 'entry.ts'), entry)
   server = await createServer({
-    configFile: false, root: process.cwd(), logLevel: 'error',
-    plugins: [vuePlugin({ compiler, template: { preprocessOptions: { pug: { doctype: 'html' } } } })],
-    resolve: { dedupe: ['vue'], alias: [
-      { find: 'littlebrand-ui-kit/style.css', replacement: resolve('src/styles/index.sass') },
-      { find: 'littlebrand-ui-kit', replacement: resolve('src/components/index.ts') },
-      { find: '@', replacement: resolve('src') },
-      { find: /^vue$/, replacement: resolve(modules, 'vue/dist/vue.runtime.esm-bundler.js') }
-    ] },
+    configFile: false,
+    root: process.cwd(),
+    logLevel: 'error',
+    plugins: [
+      vuePlugin({ compiler, template: { preprocessOptions: { pug: { doctype: 'html' } } } })
+    ],
+    resolve: {
+      dedupe: ['vue'],
+      alias: [
+        { find: 'littlebrand-ui-kit/style.css', replacement: resolve('src/styles/index.sass') },
+        { find: 'littlebrand-ui-kit', replacement: resolve('src/components/index.ts') },
+        { find: '@', replacement: resolve('src') },
+        { find: /^vue$/, replacement: resolve(modules, 'vue/dist/vue.runtime.esm-bundler.js') }
+      ]
+    },
     server: { host: '127.0.0.1', port: 0 }
   })
   await server.listen()
@@ -72,9 +95,14 @@ try {
     const page = await browser.newPage()
     try {
       const errors = []
-      page.on('pageerror', e => errors.push(e.message))
-      page.on('console', message => { if (message.type() === 'error') errors.push(message.text()) })
-      const url = new URL(`/tests/fixtures/${basename(fixture)}/index.html`, server.resolvedUrls.local[0])
+      page.on('pageerror', (e) => errors.push(e.message))
+      page.on('console', (message) => {
+        if (message.type() === 'error') errors.push(message.text())
+      })
+      const url = new URL(
+        `/tests/fixtures/${basename(fixture)}/index.html`,
+        server.resolvedUrls.local[0]
+      )
       url.searchParams.set('case', name)
       await page.goto(url.href)
       await page.waitForFunction(() => window.__ready === true, null, { timeout: 10000 })
@@ -88,7 +116,10 @@ try {
         assert.deepEqual(await page.evaluate(() => window.__events), [['confirm']])
         await dialog.getByRole('button', { name: 'Cancel' }).click()
         await dialog.waitFor({ state: 'detached' })
-        assert.deepEqual(await page.evaluate(() => window.__events), [['confirm'], ['update', false]])
+        assert.deepEqual(await page.evaluate(() => window.__events), [
+          ['confirm'],
+          ['update', false]
+        ])
       } else {
         const group = page.getByRole('radiogroup', { name: 'Update frequency' })
         await group.waitFor()
@@ -101,8 +132,12 @@ try {
         assert.deepEqual(await page.evaluate(() => window.__events), [['update', 'weekly']])
       }
       assert.deepEqual(errors, [], `${name}: browser errors`)
-      console.log(`PASS ${name}: exact source SFC, compiler/runtime Vue 3.3.13, Chromium core interaction`)
-    } finally { await page.close() }
+      console.log(
+        `PASS ${name}: exact source SFC, compiler/runtime Vue 3.3.13, Chromium core interaction`
+      )
+    } finally {
+      await page.close()
+    }
   }
 } finally {
   if (browser) await browser.close()

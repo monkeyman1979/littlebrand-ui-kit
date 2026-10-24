@@ -1,10 +1,15 @@
-import { afterEach, beforeEach, describe, expect, test } from 'vitest'
-import { applyTheme, generateScale, generateDarkScale, generateSemanticTokens } from '../src/utils/color-generator.js'
+import { afterEach, beforeEach, describe, expect, test } from 'vite-plus/test'
+import {
+  applyTheme,
+  generateScale,
+  generateDarkScale,
+  generateSemanticTokens
+} from '../src/utils/color-generator.js'
 
 const primary = '#8b5cf6'
 const root = () => document.documentElement
 const css = (name) => root().style.getPropertyValue(name)
-const settle = () => new Promise(resolve => setTimeout(resolve, 0))
+const settle = () => new Promise((resolve) => setTimeout(resolve, 0))
 const originalMatchMedia = window.matchMedia
 let prefersDark = false
 let mediaListeners
@@ -18,13 +23,18 @@ const setSystemDark = async (dark) => {
 beforeEach(() => {
   window.__lbThemeObserver?.disconnect()
   delete window.__lbThemeObserver
-  window.__lbThemeMediaListener?.media.removeEventListener('change', window.__lbThemeMediaListener.handle)
+  window.__lbThemeMediaListener?.media.removeEventListener(
+    'change',
+    window.__lbThemeMediaListener.handle
+  )
   delete window.__lbThemeMediaListener
   document.querySelector('style[data-lb-custom-theme]')?.remove()
   mediaListeners = new Set()
   prefersDark = false
   window.matchMedia = () => ({
-    get matches() { return prefersDark },
+    get matches() {
+      return prefersDark
+    },
     addEventListener: (_name, listener) => mediaListeners.add(listener),
     removeEventListener: (_name, listener) => mediaListeners.delete(listener)
   })
@@ -38,7 +48,10 @@ beforeEach(() => {
 afterEach(() => {
   window.__lbThemeObserver?.disconnect()
   delete window.__lbThemeObserver
-  window.__lbThemeMediaListener?.media.removeEventListener('change', window.__lbThemeMediaListener.handle)
+  window.__lbThemeMediaListener?.media.removeEventListener(
+    'change',
+    window.__lbThemeMediaListener.handle
+  )
   delete window.__lbThemeMediaListener
   document.querySelector('style[data-lb-custom-theme]')?.remove()
   window.matchMedia = originalMatchMedia

@@ -1,4 +1,4 @@
-import { afterEach, expect, test } from 'vitest'
+import { afterEach, expect, test } from 'vite-plus/test'
 import { Client } from '@modelcontextprotocol/sdk/client/index.js'
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js'
 import { createServer } from '../mcp-server/src/index.ts'
@@ -15,20 +15,27 @@ async function connect() {
   return client
 }
 afterEach(async () => {
-  for (const { client, server } of open.splice(0)) { await client.close(); await server.close() }
+  for (const { client, server } of open.splice(0)) {
+    await client.close()
+    await server.close()
+  }
 })
 async function call(client, name, args = {}) {
   const result = await client.callTool({ name, arguments: args })
-  return { result, body: JSON.parse(result.content[0].text), bytes: Buffer.byteLength(result.content[0].text) }
+  return {
+    result,
+    body: JSON.parse(result.content[0].text),
+    bytes: Buffer.byteLength(result.content[0].text)
+  }
 }
 
 test('small verified stdio tool surface; no synthetic example or generic catalog tools', async () => {
   const client = await connect()
-  const tools = (await client.listTools()).tools.map(tool => tool.name)
+  const tools = (await client.listTools()).tools.map((tool) => tool.name)
   expect(tools).toEqual(['lb_search', 'lb_get', 'lb_setup'])
   const setup = await call(client, 'lb_setup')
   expect(setup.body.vue).toContain("from 'littlebrand-ui-kit'")
-  expect(setup.body.vue).toContain("littlebrand-ui-kit/style.css")
+  expect(setup.body.vue).toContain('littlebrand-ui-kit/style.css')
   expect(setup.body.caveat).toContain('unverified')
   expect(setup.body.supported).toContain(NODE_ENGINE_RANGE)
   expect(setup.body.supported).toContain('Vue peer ^3.3.0')
@@ -51,7 +58,7 @@ test.each([
   expect(body.results.length).toBeLessThanOrEqual(4)
   expect(body.results[0].id).toBe(id)
   expect(bytes).toBeLessThan(1800)
-  expect(body.results.every(result => result.id !== 'component:LbSegmentButtonItem')).toBe(true)
+  expect(body.results.every((result) => result.id !== 'component:LbSegmentButtonItem')).toBe(true)
 })
 
 test('exact full retrieval matches authored machine facts and all four tested examples', async () => {
@@ -77,7 +84,7 @@ test('exact full retrieval matches authored machine facts and all four tested ex
   expect(item.testedVueExample).toContain('<LbSegmentButton ')
   const token = (await call(client, 'lb_get', { id: '--lb-surface-overlay' })).body
   expect(token.referencePath).toBe('docs/reference/v1/TOKENS.md')
-  expect(token.purpose).toBe(reference.tokens.find(t => t.name === token.name).purpose)
+  expect(token.purpose).toBe(reference.tokens.find((t) => t.name === token.name).purpose)
   const missing = await call(client, 'lb_get', { id: 'LbUnverifiedComponent' })
   expect(missing.result.isError).toBe(true)
 })

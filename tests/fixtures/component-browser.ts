@@ -10,25 +10,49 @@ const emptyOpen = ref(false)
 const savedBiographies = ref<string[]>([])
 const App = defineComponent({
   setup() {
-    return () => h('main', [
-      h(VerifiedSlice),
-      h('section', { id: 'form-submit-example' }, [
-        h(FormFieldExample, { onSave: (value: string) => { savedBiographies.value = [...savedBiographies.value, value] } }),
-        h('output', { id: 'form-submit-count' }, String(savedBiographies.value.length))
-      ]),
-      h('button', { id: 'empty-trigger', onClick: () => { emptyOpen.value = true } }, 'Open empty dialog'),
-      h(LbInput, { id: 'icon-input', modelValue: '', 'aria-label': 'Search' }, {
-        'icon-leading': () => h('span', { 'aria-hidden': 'true' }, '●')
-      }),
-      h(LbButton, { id: 'loading-button', loading: true }, () => 'Saving'),
-      h(LbButton, { id: 'warning-button', variant: 'tonal', color: 'warning' }, () => 'Warning'),
-      h(LbDialog, {
-        modelValue: emptyOpen.value,
-        title: 'No controls',
-        showClose: false,
-        'onUpdate:modelValue': (value: boolean) => { emptyOpen.value = value }
-      }, { default: () => h('p', 'Nothing to choose') })
-    ])
+    return () =>
+      h('main', [
+        h(VerifiedSlice),
+        h('section', { id: 'form-submit-example' }, [
+          h(FormFieldExample, {
+            onSave: (value: string) => {
+              savedBiographies.value = [...savedBiographies.value, value]
+            }
+          }),
+          h('output', { id: 'form-submit-count' }, String(savedBiographies.value.length))
+        ]),
+        h(
+          'button',
+          {
+            id: 'empty-trigger',
+            onClick: () => {
+              emptyOpen.value = true
+            }
+          },
+          'Open empty dialog'
+        ),
+        h(
+          LbInput,
+          { id: 'icon-input', modelValue: '', 'aria-label': 'Search' },
+          {
+            'icon-leading': () => h('span', { 'aria-hidden': 'true' }, '●')
+          }
+        ),
+        h(LbButton, { id: 'loading-button', loading: true }, () => 'Saving'),
+        h(LbButton, { id: 'warning-button', variant: 'tonal', color: 'warning' }, () => 'Warning'),
+        h(
+          LbDialog,
+          {
+            modelValue: emptyOpen.value,
+            title: 'No controls',
+            showClose: false,
+            'onUpdate:modelValue': (value: boolean) => {
+              emptyOpen.value = value
+            }
+          },
+          { default: () => h('p', 'Nothing to choose') }
+        )
+      ])
   }
 })
 createApp(App).mount('#app')

@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 // Script to help identify SASS variable usage in components
-const fs = require('fs');
-const path = require('path');
+const fs = require('fs')
+const path = require('path')
 
 // Map of SASS variables to CSS custom properties
 const variableMap = {
@@ -25,7 +25,7 @@ const variableMap = {
   'base.$space-16': 'var(--space-16)',
   'base.$space-17': 'var(--space-17)',
   'base.$space-18': 'var(--space-18)',
-  
+
   // Sizes
   'base.$size-xs': 'var(--icon-size-xs)',
   'base.$size-sm': 'var(--icon-size-sm)',
@@ -34,7 +34,7 @@ const variableMap = {
   'base.$size-xl': 'var(--btn-height-small)',
   'base.$size-2xl': 'var(--btn-height-medium)',
   'base.$size-3xl': 'var(--btn-height-large)',
-  
+
   // Border radius
   'base.$radius-xs': 'var(--radius-xs)',
   'base.$radius-sm': 'var(--radius-sm)',
@@ -45,25 +45,25 @@ const variableMap = {
   'base.$radius-3xl': 'var(--radius-3xl)',
   'base.$radius-4xl': 'var(--radius-4xl)',
   'base.$radius-full': 'var(--radius-full)',
-  
+
   // Borders
   'base.$border-thin': 'var(--border-thin)',
   'base.$border-medium': 'var(--border-medium)',
   'base.$border-thick': 'var(--border-thick)',
-  
+
   // Transitions
   'base.$transition': 'var(--transition)',
-  
+
   // Focus
   'base.$focus-ring-width': 'var(--focus-ring-width)',
   'base.$focus-ring-offset': 'var(--focus-ring-offset)',
-  
+
   // Z-index
   'base.$z-dropdown': 'var(--z-dropdown)',
   'base.$z-modal-backdrop': 'var(--z-modal-backdrop)',
   'base.$z-modal': 'var(--z-modal)',
   'base.$z-notification': 'var(--z-notification)',
-  
+
   // Typography
   'typography.$font-heading': 'var(--font-heading)',
   'typography.$font-body': 'var(--font-body)',
@@ -80,42 +80,43 @@ const variableMap = {
   'typography.$label-size-large': 'var(--font-size-label-large)',
   'typography.$letter-spacing-tight': 'var(--letter-spacing-tight)',
   'typography.$letter-spacing-normal': 'var(--letter-spacing-normal)',
-  'typography.$letter-spacing-wide': 'var(--letter-spacing-wide)',
-};
+  'typography.$letter-spacing-wide': 'var(--letter-spacing-wide)'
+}
 
 // Function to process a file
 function processFile(filePath) {
-  const content = fs.readFileSync(filePath, 'utf8');
-  
+  const content = fs.readFileSync(filePath, 'utf8')
+
   // Find all SASS variable usages
-  const sassVarRegex = /(base|typography)\.\$[\w-]+/g;
-  const matches = content.match(sassVarRegex);
-  
+  const sassVarRegex = /(base|typography)\.\$[\w-]+/g
+  const matches = content.match(sassVarRegex)
+
   if (!matches) {
-    console.log(`No SASS variables found in ${filePath}`);
-    return;
+    console.log(`No SASS variables found in ${filePath}`)
+    return
   }
-  
-  console.log(`\n${filePath}:`);
-  console.log('Found SASS variables:');
-  
-  const unique = [...new Set(matches)];
-  unique.forEach(sassVar => {
-    const cssVar = variableMap[sassVar];
+
+  console.log(`\n${filePath}:`)
+  console.log('Found SASS variables:')
+
+  const unique = [...new Set(matches)]
+  unique.forEach((sassVar) => {
+    const cssVar = variableMap[sassVar]
     if (cssVar) {
-      console.log(`  ${sassVar} → ${cssVar}`);
+      console.log(`  ${sassVar} → ${cssVar}`)
     } else {
-      console.log(`  ${sassVar} → ⚠️  NO MAPPING FOUND`);
+      console.log(`  ${sassVar} → ⚠️  NO MAPPING FOUND`)
     }
-  });
-  
-  console.log(`Total: ${matches.length} usages (${unique.length} unique)`);
+  })
+
+  console.log(`Total: ${matches.length} usages (${unique.length} unique)`)
 }
 
 // Process all component files
-const componentsDir = path.join(__dirname, '../src/components');
-const componentFiles = fs.readdirSync(componentsDir, { recursive: true })
-  .filter(file => file.endsWith('.vue'))
-  .map(file => path.join(componentsDir, file));
+const componentsDir = path.join(__dirname, '../src/components')
+const componentFiles = fs
+  .readdirSync(componentsDir, { recursive: true })
+  .filter((file) => file.endsWith('.vue'))
+  .map((file) => path.join(componentsDir, file))
 
-componentFiles.forEach(processFile);
+componentFiles.forEach(processFile)
