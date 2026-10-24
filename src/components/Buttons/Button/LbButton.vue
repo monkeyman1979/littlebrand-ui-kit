@@ -286,8 +286,10 @@ defineOptions({
 
 // Variant styles
 @mixin button-variant($variant, $color, $color-name)
-  // Common active state for all non-link variants
-  @if $variant != 'link'
+  // Keep the same semantic mapping without Sass's deprecated if() function.
+  $text-family: $color
+  @if $color == 'neutral' or $color == 'warning'
+    $text-family: 'neutral'
   
   // Base colors for each variant
   @if $variant == 'filled'
@@ -318,22 +320,22 @@ defineOptions({
       
   @else if $variant == 'tonal'
     background-color: var(--lb-surface-#{$color}-normal)
-    color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
+    color: var(--lb-text-#{$text-family}-contrast-high)
     .icon-leading,
     .icon-trailing
-      color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-normal), var(--lb-text-#{$color}-normal))
+      color: var(--lb-text-#{$text-family}-normal)
     &:not(.disabled):not(.loading)
       @include base.hover-supported
         background-color: var(--lb-surface-#{$color}-hover)
-        color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
+        color: var(--lb-text-#{$text-family}-contrast-high)
         .icon-leading,
         .icon-trailing
-          color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
+          color: var(--lb-text-#{$text-family}-contrast-high)
     &:active:not(.disabled):not(.loading)
       background-color: var(--lb-surface-#{$color}-active)
       .icon-leading,
       .icon-trailing
-        color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
+        color: var(--lb-text-#{$text-family}-contrast-high)
     &.disabled
       background-color: var(--lb-surface-subtle)
       color: var(--lb-text-neutral-disabled)
@@ -343,11 +345,11 @@ defineOptions({
       
   @else if $variant == 'outline'
     background-color: transparent
-    color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
+    color: var(--lb-text-#{$text-family}-contrast-high)
     box-shadow: inset 0 0 0 base.$border-sm var(--lb-border-#{$color}-normal)
     .icon-leading,
     .icon-trailing
-      color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-normal), var(--lb-text-#{$color}-normal))
+      color: var(--lb-text-#{$text-family}-normal)
     &:not(.disabled):not(.loading)
       @include base.hover-supported
         background-color: var(--lb-fill-#{$color}-normal)
@@ -372,23 +374,23 @@ defineOptions({
       
   @else if $variant == 'ghost'
     background-color: transparent
-    color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
+    color: var(--lb-text-#{$text-family}-contrast-high)
     .icon-leading,
     .icon-trailing
-      color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-normal), var(--lb-text-#{$color}-normal))
+      color: var(--lb-text-#{$text-family}-normal)
     &:not(.disabled):not(.loading)
       @include base.hover-supported
         background-color: var(--lb-surface-#{$color}-normal)
-        color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
+        color: var(--lb-text-#{$text-family}-contrast-high)
         .icon-leading,
         .icon-trailing
-          color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
+          color: var(--lb-text-#{$text-family}-contrast-high)
     &:active:not(.disabled):not(.loading)
       background-color: var(--lb-surface-#{$color}-hover)
       transform: translateY(1px)
       .icon-leading,
       .icon-trailing
-        color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
+        color: var(--lb-text-#{$text-family}-contrast-high)
     &.disabled
       color: var(--lb-text-neutral-disabled)
       .icon-leading,

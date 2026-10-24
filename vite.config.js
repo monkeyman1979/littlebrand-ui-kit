@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import { resolve } from 'path'
 import { fileURLToPath, URL } from 'node:url'
 
 export default defineConfig({
@@ -26,12 +25,14 @@ export default defineConfig({
     })
   ],
   build: {
+    // Preserve Vite 7's browser target rather than silently raising it in Vite 8.
+    target: ['chrome107', 'edge107', 'firefox104', 'safari16'],
     lib: {
-      entry: resolve(__dirname, 'src/index.js'),
+      entry: fileURLToPath(new URL('./src/index.js', import.meta.url)),
       name: 'LittleBrandUI',
       fileName: 'littlebrand-ui'
     },
-    rollupOptions: {
+    rolldownOptions: {
       external: ['vue'],
       output: {
         exports: 'named',
