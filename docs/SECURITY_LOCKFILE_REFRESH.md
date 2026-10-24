@@ -1,6 +1,6 @@
 # Bounded security lockfile refresh — 2026-10-24
 
-**Scope:** source-only patch/minor refresh on a feature branch, based on `develop` after #140. [Earlier remediation](DEPENDENCY_REMEDIATION.md) audited zero findings at its checkpoint, but new advisories have since appeared. This work does **not** test the published npm 0.8.3, old tracked MCP `dist/`, or an exact release artifact. PR #141's Vue 3.3 source fixture is independent.
+**Scope:** source-only patch/minor refresh on a feature branch, based on `develop` after #140. [Earlier remediation](DEPENDENCY_REMEDIATION.md) audited zero findings at its checkpoint, but new advisories have since appeared. **The one-high counts below are historical; see the later [Zod 4 source follow-up](ZOD4_MCP_SOURCE_COMPAT.md).** This work does **not** test the published npm 0.8.3, old tracked MCP `dist/`, or an exact release artifact. PR #141's Vue 3.3 source fixture is independent.
 
 ## Changes
 

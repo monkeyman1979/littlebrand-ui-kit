@@ -10,12 +10,13 @@ function atLeast(version, minimum) {
   return true
 }
 
-test('root and bundled local MCP lockfiles do not revert to the vulnerable SDK range', () => {
+test('root and bundled local MCP lockfiles retain patched SDK and Zod versions', () => {
   for (const dir of ['.', 'mcp-server']) {
     const manifest = json(`${dir}/package.json`)
     const lock = json(`${dir}/package-lock.json`)
     expect(manifest.dependencies['@modelcontextprotocol/sdk']).toBe('^1.32.2')
-    expect(manifest.dependencies.zod).toBe('^3.25.1') // Zod 4 migration is separate.
+    expect(manifest.dependencies.zod).toBe('^4.6.7')
+    expect(atLeast(lock.packages['node_modules/zod'].version, [4, 6, 7])).toBe(true)
     expect(atLeast(lock.packages['node_modules/@modelcontextprotocol/sdk'].version, [1, 32, 2])).toBe(true)
     expect(atLeast(lock.packages['node_modules/body-parser'].version, [2, 4, 0])).toBe(true)
     expect(atLeast(lock.packages['node_modules/fast-uri'].version, [3, 1, 9])).toBe(true)
