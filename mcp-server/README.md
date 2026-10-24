@@ -8,7 +8,7 @@ The bundled server uses **local stdio**, not a hosted endpoint. This source vers
 | `lb_get` | Exact component/token by ID or name; `detail=full` includes derived API and the tested Vue SFC. `LbSegmentButtonItem` is a compound child, never recommended by itself. |
 | `lb_setup` | npm root/CSS setup, local stdio path and version caveats. |
 
-The server loads `reference/v1.json` from the same package root at runtime, checks schema/package version, and does not read the unverified generic `src/data/` examples. There is no synthetic code/theme generation, all-catalog claim, hosted endpoint, or registry install path. `mcp-server/dist/` is still the old tracked artifact until a **separately authorized release build**; the *published* npm 0.8.3 is unchanged. Do not mistake the current npm CLI for this source server.
+The server loads `reference/v1.json` from the same package root at runtime, checks schema/package version, and does not read the unverified generic `src/data/` examples. There is no synthetic code/theme generation, all-catalog claim, hosted endpoint, or registry install path. `mcp-server/dist/` is still the old tracked artifact until a **separately authorized release build**; the *published* npm 0.8.3 is unchanged. Do not mistake the current npm CLI for this source server. The source is on the maintained `@modelcontextprotocol/sdk` **v1** line (`^1.32.1`), not the new split-package v2 SDK or a hosted transport. For a real-agent trial and the separate v2/Node compatibility decision, see the [next-session handoff](../docs/MCP_AGENT_TRIAL_HANDOFF.md).
 
 ## Planned npm usage (after artifact verification and publication)
 

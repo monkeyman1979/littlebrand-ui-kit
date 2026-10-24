@@ -1,6 +1,6 @@
 # Step 12A — Textarea and FormField verified form slice
 
-**Status:** source-only feature branch `feat/step-12-form-slice` for review; based on Steps 01–11 and dependency remediation as merged into `develop` (#134, 9d0c6bf). No build/extraction, npm publish, website deployment, or `main` merge. `seedtoshelves.com` remains a future hosting intention, not a deployed docs URL.
+**Status:** merged into `develop` via PR #135 (cc98a0e), based on Steps 01–11 and dependency remediation (#134, 9d0c6bf). No build/extraction, npm publish, website deployment, or `main` merge. `seedtoshelves.com` remains a future hosting intention, not a deployed docs URL.
 
 ## Scope and contract
 
