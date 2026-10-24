@@ -36,16 +36,14 @@ describe('public component contract (legacy gaps pinned)', () => {
 
 describe('MCP usage examples', () => {
   test('known legacy mistakes are explicit, and new invalid variants/required props fail', () => {
-    const all = records()
-    const issues = all.flatMap(record => usageIssues(record, record.name === 'LbDialog'
-      ? ['default', 'fullscreen'] : undefined)).sort()
+    const verified = new Set(JSON.parse(source('reference/v1.json')).components.map(item => item.name))
+    const legacy = records().filter(record => !verified.has(record.name))
+    const issues = legacy.flatMap(record => usageIssues(record)).sort()
     expect(issues).toEqual([
       'LbCalendar:invalid-variant-filled',
       'LbCustomSelect:missing-options',
-      'LbDialog:invalid-variant-filled',
       'LbMenu:missing-options',
       'LbRadio:missing-value',
-      'LbSegmentButtonItem:missing-value',
       'LbSelect:missing-options'
     ])
   })
@@ -56,10 +54,13 @@ describe('MCP usage examples', () => {
     ] })).toEqual(['LbButton:invalid-variant-imaginary', 'LbButton:missing-value'])
   })
 
-  test('the documented Button usage includes content unlike the generated example', () => {
-    const button = records().find(record => record.name === 'LbButton')
-    expect(button.usage).toMatch(/<lb-button/)
-    expect(button.usage).toMatch(/\/>$/) // known legacy: no label or default slot
+  test('generated verified examples exactly match the authored SFCs, including Button content', () => {
+    const generated = new Map(records().map(record => [record.name, record]))
+    for (const item of JSON.parse(source('reference/v1.json')).components) {
+      expect(generated.get(item.name)?.usage, item.name).toBe(item.usage)
+      expect(parseSfc(item.usage, { filename: `${item.name}.vue` }).errors).toEqual([])
+    }
+    expect(generated.get('LbButton').usage).toContain('>Save changes</LbButton>')
     expect(source('examples/App.vue')).toMatch(/LbButton\(variant="filled" color="primary"\) Primary Button/)
   })
 })
