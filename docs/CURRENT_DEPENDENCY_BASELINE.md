@@ -1,5 +1,7 @@
 # Current compatible dependency baseline — 2026-10-24
 
+**Runtime follow-up:** the owner subsequently approved Node **22+** for both package manifests and the bundled MCP CLI; development needs Node 22.12+. The earlier unchanged-Node-engine/untested-Node-18 statements below are historical. See [distributable verification](DISTRIBUTABLE_VERIFICATION.md) for the installed Node 22/current-runtime matrix and the explicit migration. Dependency versions and the Vue peer range were not changed by that follow-up.
+
 ## Decision and scope
 
 Owner-authorized maintenance: merge the pending source-evidence/Zod PRs, restore the promised Vue 3.3 source contract, then update dependencies in validated batches. Keep public `Lb` names, CSS tokens/imports, Vue peer `^3.3.0`, and MCP SDK v1/Node engine unchanged. This is **unreleased source maintenance**, not a release build or npm publication.
