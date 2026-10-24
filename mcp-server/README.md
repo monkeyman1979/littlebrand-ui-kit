@@ -1,6 +1,6 @@
 # LittleBrand local MCP (source work, unreleased)
 
-**Runtime migration:** Node.js **22 or newer** is required by both the root npm package (which ships the CLI) and this MCP manifest. Node 18/20 are no longer supported for this unreleased package; use a patched supported LTS release. Development tooling needs Node **22.12+**. This does not raise the Vue peer minimum (`^3.3.0`) or migrate to SDK v2.
+**Security-patched runtime required:** Both the root package (which ships the CLI) and MCP manifest require **`^22.23.4 || ^24.22.1 || ^26.12.1`** after the [October 2026 Node security releases](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases). The server checks this before creating tools; vulnerable older patches, EOL odd majors and unreviewed future majors are refused even if npm engine checks were bypassed. `.node-version` pins LTS **22.23.4** for development. Upgrade Node and restart MCP clients to load fixes; npm dependency audits do not cover Node's bundled libraries. Vue peer `^3.3.0` and SDK v1 remain unchanged.
 
 The bundled server uses **local stdio**, not a hosted endpoint. This source version reduces the old ten unverified tools to three read-only tools grounded in the authored [v1 reference](../docs/reference/v1/README.md):
 

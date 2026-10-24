@@ -3,6 +3,7 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js'
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js'
 import { createServer } from '../mcp-server/src/index.ts'
 import reference from '../reference/v1.json'
+import { NODE_ENGINE_RANGE } from '../mcp-server/src/node-runtime.ts'
 
 const open = []
 async function connect() {
@@ -29,7 +30,7 @@ test('small verified stdio tool surface; no synthetic example or generic catalog
   expect(setup.body.vue).toContain("from 'littlebrand-ui-kit'")
   expect(setup.body.vue).toContain("littlebrand-ui-kit/style.css")
   expect(setup.body.caveat).toContain('unverified')
-  expect(setup.body.supported).toContain('Node 22+')
+  expect(setup.body.supported).toContain(NODE_ENGINE_RANGE)
   expect(setup.body.supported).toContain('Vue peer ^3.3.0')
   expect(setup.body.supported).toContain('defineModel requires Vue 3.4+')
   expect(setup.body.packageVersion).toBe(reference.packageVersion)
