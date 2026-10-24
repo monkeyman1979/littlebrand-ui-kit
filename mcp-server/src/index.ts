@@ -105,7 +105,7 @@ export function createServer(reference: Reference = loadReference()) {
     install: 'npm install littlebrand-ui-kit',
     vue: "import { LbButton } from 'littlebrand-ui-kit'\nimport 'littlebrand-ui-kit/style.css'",
     mcpStdio: 'node ./node_modules/littlebrand-ui-kit/mcp-server/dist/index.js',
-    supported: 'Vue peer ^3.3.0; npm root component exports and /style.css. For reusable wrappers compatible with Vue 3.3, use modelValue and update:modelValue; defineModel requires Vue 3.4+. No deep import or hosted MCP contract.' }));
+    supported: 'Node 22+ for the bundled MCP CLI. Vue peer ^3.3.0; npm root component exports and /style.css. For reusable wrappers compatible with Vue 3.3, use modelValue and update:modelValue; defineModel requires Vue 3.4+. No deep import or hosted MCP contract.' }));
   return server;
 }
 

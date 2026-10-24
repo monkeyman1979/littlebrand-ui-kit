@@ -26,15 +26,19 @@ function run(command, args, cwd) {
   return result.stdout
 }
 
-async function mcp(consumer, reference) {
+async function mcp(consumer, reference, runtime) {
   const command = join(consumer, 'node_modules/.bin/littlebrand-mcp')
   assert.ok(existsSync(command), 'npm must install the executable bin link')
   const client = new Client({ name: 'installed-tarball-probe', version: '1.0.0' })
   try {
-    await client.connect(new StdioClientTransport({ command, args: [], cwd: consumer, stderr: 'pipe' }))
+    // Execute the npm-installed bin link with the selected real Node binary, not tsx/source.
+    await client.connect(new StdioClientTransport({ command: runtime, args: [command], cwd: consumer, stderr: 'pipe' }))
     assert.deepEqual((await client.listTools()).tools.map(t => t.name), ['lb_search', 'lb_get', 'lb_setup'])
     const setup = await client.callTool({ name: 'lb_setup', arguments: {} })
-    assert.equal(JSON.parse(setup.content[0].text).packageVersion, reference.packageVersion)
+    const setupBody = JSON.parse(setup.content[0].text)
+    assert.equal(setupBody.packageVersion, reference.packageVersion)
+    assert.match(setupBody.supported, /Node 22\+/)
+    assert.match(setupBody.supported, /Vue peer \^3\.3\.0/)
     for (const [index, name] of names.entries()) {
       const search = await client.callTool({ name: 'lb_search', arguments: { query: intents[index] } })
       assert.equal(JSON.parse(search.content[0].text).results[0]?.id, `component:${name}`)
@@ -98,6 +102,14 @@ async function interactions(page, version, scheme) {
 }
 
 try {
+  const runtimes = JSON.parse(process.env.LB_MCP_NODE_BINARIES || JSON.stringify([process.execPath]))
+  assert.ok(Array.isArray(runtimes) && runtimes.length > 0, 'LB_MCP_NODE_BINARIES must be a nonempty JSON array of executable paths')
+  const nodes = runtimes.map(path => realpathSync(resolve(path)))
+  report.mcpNodes = nodes.map(node => {
+    const version = run(node, ['--version'], root).trim()
+    assert.ok(Number(version.slice(1).split('.')[0]) >= 22, `unsupported MCP runtime: ${version}`)
+    return version
+  })
   browser = await chromium.launch({ headless: true })
   for (const version of ['3.3.0', '3.5.44']) {
     const consumer = join(root, version)
@@ -108,13 +120,16 @@ try {
       devDependencies: { '@vue/compiler-sfc': version, '@vitejs/plugin-vue': '6.0.10', vite: '8.3.5', typescript: '6.0.3', 'vue-tsc': '3.3.13' }
     }))
     // Vite preview sets NODE_ENV=production in this process; still install test tools for each host.
-    run('npm', ['install', '--include=dev', '--ignore-scripts', '--no-fund', '--no-audit'], consumer)
+    run('npm', ['install', '--engine-strict', '--include=dev', '--ignore-scripts', '--no-fund', '--no-audit'], consumer)
     const host = createRequire(join(consumer, 'package.json'))
     assert.equal(host('vue/package.json').version, version)
     const installed = join(consumer, 'node_modules/littlebrand-ui-kit')
     assert.ok(!realpathSync(installed).startsWith(realpathSync(repo)), 'must not link to repo source')
     const manifest = JSON.parse(readFileSync(join(installed, 'package.json'), 'utf8'))
     const reference = JSON.parse(readFileSync(join(installed, 'reference/v1.json'), 'utf8'))
+    assert.equal(manifest.engines.node, '>=22')
+    assert.equal(JSON.parse(readFileSync(join(installed, 'mcp-server/package.json'), 'utf8')).engines.node, '>=22')
+    assert.equal(manifest.peerDependencies.vue, '^3.3.0')
     for (const file of [manifest.main, manifest.module, manifest.types, 'types/style.d.ts', 'dist/littlebrand-ui.css', 'mcp-server/dist/index.js', 'docs/reference/v1/ai-index.md']) {
       assert.ok(existsSync(join(installed, file)), `tarball missing ${file}`)
     }
@@ -140,7 +155,7 @@ try {
     writeFileSync(join(consumer, 'entry.ts'), "import {createApp} from 'vue'; import App from './App.vue'; createApp(App).mount('#app')")
     writeFileSync(join(consumer, 'vite.config.js'), "import {defineConfig} from 'vite'; import vue from '@vitejs/plugin-vue'; export default defineConfig({plugins:[vue()]})")
     run(process.execPath, [join(consumer, 'node_modules/vite/bin/vite.js'), 'build'], consumer)
-    await mcp(consumer, reference)
+    for (const node of nodes) await mcp(consumer, reference, node)
     const { preview } = await import(pathToFileURL(join(consumer, 'node_modules/vite/dist/node/index.js')).href)
     const server = await preview({ root: consumer, configFile: false, preview: { host: '127.0.0.1', port: 0 } })
     try {
@@ -158,7 +173,7 @@ try {
       }
     } finally { await new Promise((resolve, reject) => server.httpServer.close(error => error ? reject(error) : resolve())) }
     report.consumers.push({ vue: version, typescript: host('typescript/package.json').version, packageVersion: manifest.version, imports: 'ESM+CJS', declarations: 'Bundler+NodeNext+Vue SFC (skipLibCheck=false)', browser: 'production Chromium light+dark, six examples', mcp: 'installed bin, 3 tools, six lookups, invalid input' })
-    console.log(`PASS installed tarball: Vue ${version}, strict types, production consumer, six examples, installed MCP bin`)
+    console.log(`PASS installed tarball: Vue ${version}, strict types, production consumer, six examples, MCP bin on ${report.mcpNodes.join(', ')}`)
   }
   if (process.env.LB_REPORT) writeFileSync(resolve(process.env.LB_REPORT), JSON.stringify(report, null, 2) + '\n')
   console.log(JSON.stringify(report, null, 2))

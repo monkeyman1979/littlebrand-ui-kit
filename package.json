@@ -86,6 +86,9 @@
   "peerDependencies": {
     "vue": "^3.3.0"
   },
+  "engines": {
+    "node": ">=22"
+  },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@vitejs/plugin-vue": "^6.0.10",

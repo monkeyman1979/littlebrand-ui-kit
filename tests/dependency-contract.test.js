@@ -10,6 +10,13 @@ function atLeast(version, minimum) {
   return true
 }
 
+test('both manifests and lockfiles agree on Node 22 minimum for the bundled CLI', () => {
+  for (const dir of ['.', 'mcp-server']) {
+    expect(json(`${dir}/package.json`).engines.node).toBe('>=22')
+    expect(json(`${dir}/package-lock.json`).packages[''].engines.node).toBe('>=22')
+  }
+})
+
 test('root and bundled local MCP lockfiles retain patched SDK and Zod versions', () => {
   for (const dir of ['.', 'mcp-server']) {
     const manifest = json(`${dir}/package.json`)

@@ -1,5 +1,7 @@
 # LittleBrand local MCP (source work, unreleased)
 
+**Runtime migration:** Node.js **22 or newer** is required by both the root npm package (which ships the CLI) and this MCP manifest. Node 18/20 are no longer supported for this unreleased package; use a patched supported LTS release. Development tooling needs Node **22.12+**. This does not raise the Vue peer minimum (`^3.3.0`) or migrate to SDK v2.
+
 The bundled server uses **local stdio**, not a hosted endpoint. This source version reduces the old ten unverified tools to three read-only tools grounded in the authored [v1 reference](../docs/reference/v1/README.md):
 
 | Tool | Response |
@@ -8,7 +10,7 @@ The bundled server uses **local stdio**, not a hosted endpoint. This source vers
 | `lb_get` | Exact component/token by ID or name; `detail=full` includes derived API and the tested Vue SFC. `LbSegmentButtonItem` is a compound child, never recommended by itself. |
 | `lb_setup` | npm root/CSS setup, local stdio path and version caveats. |
 
-The server loads `reference/v1.json` from the same package root at runtime, checks schema/package version, and does not read the unverified generic `src/data/` examples. There is no synthetic code/theme generation, all-catalog claim, hosted endpoint, or registry install path. `mcp-server/dist/` is still the old tracked artifact until a **separately authorized release build**; the *published* npm 0.8.3 is unchanged. Do not mistake the current npm CLI for this source server. The source is on the maintained `@modelcontextprotocol/sdk` **v1** line (`^1.32.1`), not the new split-package v2 SDK or a hosted transport. For a real-agent trial and the separate v2/Node compatibility decision, see the [next-session handoff](../docs/MCP_AGENT_TRIAL_HANDOFF.md).
+The server loads `reference/v1.json` from the same package root at runtime, checks schema/package version, and does not read the unverified generic `src/data/` examples. There is no synthetic code/theme generation, all-catalog claim, hosted endpoint, or registry install path. `mcp-server/dist/` is still the old tracked artifact until a **separately authorized release build**; the *published* npm 0.8.3 is unchanged. Do not mistake the current npm CLI for this source server. The source is on the maintained `@modelcontextprotocol/sdk` **v1** line (`^1.32.2`), not the new split-package v2 SDK or a hosted transport. For agent trial context, see the [handoff](../docs/MCP_AGENT_TRIAL_HANDOFF.md); local artifact checks and runtime coverage are recorded in [distributable verification](../docs/DISTRIBUTABLE_VERIFICATION.md). SDK v2 remains a separate migration.
 
 ## Planned npm usage (after artifact verification and publication)
 
