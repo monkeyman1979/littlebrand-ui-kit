@@ -94,7 +94,7 @@
     "eslint-plugin-vue": "^10.11.1",
     "glob": "^11.0.0",
     "globals": "^17.13.0",
-    "happy-dom": "^21.0.1",
+    "happy-dom": "^21.0.4",
     "playwright": "1.60.0",
     "pug": "^3.0.3",
     "sass": "^1.89.2",
@@ -106,7 +106,7 @@
     "vue-tsc": "^3.3.13"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.32.1",
+    "@modelcontextprotocol/sdk": "^1.32.2",
     "@vueuse/core": "^13.8.0",
     "culori": "^4.0.2",
     "zod": "^3.25.1"
