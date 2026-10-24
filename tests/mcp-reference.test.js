@@ -29,6 +29,8 @@ test('small verified stdio tool surface; no synthetic example or generic catalog
   expect(setup.body.vue).toContain("from 'littlebrand-ui-kit'")
   expect(setup.body.vue).toContain("littlebrand-ui-kit/style.css")
   expect(setup.body.caveat).toContain('unverified')
+  expect(setup.body.supported).toContain('Vue peer ^3.3.0')
+  expect(setup.body.supported).toContain('defineModel requires Vue 3.4+')
   expect(setup.body.packageVersion).toBe(reference.packageVersion)
 })
 
@@ -63,6 +65,11 @@ test('exact full retrieval matches authored machine facts and all four tested ex
   }
   const dialog = (await call(client, 'lb_get', { id: 'LbDialog', detail: 'full' })).body
   expect(dialog.testedVueExample).not.toContain('variant="filled"')
+  expect(dialog.avoid).toContain('defineModel')
+  expect(dialog.use).toContain('update:modelValue')
+  const segment = (await call(client, 'lb_get', { id: 'LbSegmentButton', detail: 'full' })).body
+  expect(segment.avoid).toContain('defineModel')
+  expect(segment.use).toContain('update:modelValue')
   const item = (await call(client, 'lb_get', { id: 'LbSegmentButtonItem', detail: 'full' })).body
   expect(item.compoundOnly).toBe(true)
   expect(item.testedVueExample).toContain('<LbSegmentButton ')
