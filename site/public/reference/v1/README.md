@@ -2,7 +2,7 @@
 
 Source: `reference/v1.authored.json`; API derived from implementation and declarations. Package version: `0.8.3`. Unreleased source reference; not a published 0.8.3 artifact.
 
-Install from npm; import components from littlebrand-ui-kit and CSS from littlebrand-ui-kit/style.css. This source reference describes unreleased develop work, not the published 0.8.3 artifact. Deep imports are unsupported.
+Vue peer range ^3.3.0. Install from npm; import components from littlebrand-ui-kit and CSS from littlebrand-ui-kit/style.css. This source reference describes unreleased develop work, not the published 0.8.3 artifact. Deep imports are unsupported.
 
 ## Components
 

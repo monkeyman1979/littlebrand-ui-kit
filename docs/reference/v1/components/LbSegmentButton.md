@@ -2,11 +2,11 @@
 
 ID: `component:LbSegmentButton`. [Reference index](../README.md). Choose one or more options from a short set of segments.
 
-**Use:** Nest LbSegmentButtonItem inside the root; bind v-model and label the group.
+**Use:** Nest LbSegmentButtonItem inside the root; bind v-model and label the group. For a reusable wrapper supporting Vue 3.3, declare modelValue and emit update:modelValue (a computed getter/setter can bridge to v-model).
 
 **Find by intent:** segment; segmented control; choose frequency; selection; toggle group.
 
-**Avoid:** Never mount LbSegmentButtonItem alone; it requires root context. Do not treat optional toggle mode as mandatory radio mode.
+**Avoid:** Do not use defineModel in a Vue 3.3-compatible wrapper: that macro requires Vue 3.4+. Never mount LbSegmentButtonItem alone; it requires root context. Do not treat optional toggle mode as mandatory radio mode.
 
 **Accessibility:** Optional selection uses toggle buttons; nonempty mandatory single selection uses radio semantics. Arrow/Home/End skip disabled items; label icon-only items.
 

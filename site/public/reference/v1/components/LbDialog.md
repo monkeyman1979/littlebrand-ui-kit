@@ -2,11 +2,11 @@
 
 ID: `component:LbDialog`. [Reference index](../README.md). Present a modal decision or focused content.
 
-**Use:** Bind v-model and give the dialog a title or an ARIA name; use the footer slot for actions.
+**Use:** Bind v-model and give the dialog a title or an ARIA name; use the footer slot for actions. For a reusable wrapper supporting Vue 3.3, declare modelValue and emit update:modelValue (a computed getter/setter can bridge to v-model).
 
 **Find by intent:** dialog; modal; confirmation; preferences; overlay.
 
-**Avoid:** Do not use variant=filled; only default and fullscreen exist. The header slot renders only in fullscreen and needs its own visible heading.
+**Avoid:** Do not use defineModel in a Vue 3.3-compatible wrapper: that macro requires Vue 3.4+. Do not use variant=filled; only default and fullscreen exist. The header slot renders only in fullscreen and needs its own visible heading.
 
 **Accessibility:** Teleports to body with originating theme; focuses dialog on open, contains Tab and restores trigger focus on close. Escape/backdrop respect close props.
 
