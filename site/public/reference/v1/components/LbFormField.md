@@ -2,11 +2,11 @@
 
 ID: `component:LbFormField`. [Reference index](../README.md). Compose a label, control and one helper or validation message.
 
-**Use:** Nest an Input or Textarea, supply label and hint/error, and bind v-model on the control. Pass required and invalid to the control itself.
+**Use:** Nest an Input or Textarea, supply label and hint/error, and bind v-model on the control. Pass required and invalid to the control itself. For submission, handle the native form @submit.prevent once and use LbButton type=submit.
 
 **Find by intent:** form field; validation; label and hint; error message; field group.
 
-**Avoid:** Do not expect FormField to validate or set aria-invalid/required on its child. If using labelFor, keep it matched to the actual control ID.
+**Avoid:** Do not expect FormField to validate or set aria-invalid/required on its child. Do not also call the submit handler on button click. If using labelFor, keep it matched to the actual control ID.
 
 **Accessibility:** Provides a stable generated id and aria-describedby for injected Input/Textarea; the visible label targets that id and the message supplies its description. A label alone does not mark the control required.
 
@@ -40,15 +40,20 @@ import { ref } from 'vue'
 import { LbFormField, LbTextarea, LbButton } from 'littlebrand-ui-kit'
 const biography = ref('')
 const error = ref('')
-function validate() {
-  error.value = biography.value.trim() ? '' : 'Biography is required'
+const emit = defineEmits<{ save: [biography: string] }>()
+function onSubmit() {
+  const text = biography.value.trim()
+  error.value = text ? '' : 'Biography is required'
+  if (!error.value) emit('save', text)
 }
 </script>
 
 <template>
-  <LbFormField label="Biography" hint="Tell us a little about yourself." :error="error" required>
-    <LbTextarea v-model="biography" name="biography" :invalid="Boolean(error)" required />
-  </LbFormField>
-  <LbButton @click="validate">Validate</LbButton>
+  <form novalidate @submit.prevent="onSubmit">
+    <LbFormField label="Biography" hint="Tell us a little about yourself." :error="error" required>
+      <LbTextarea v-model="biography" name="biography" :invalid="Boolean(error)" required />
+    </LbFormField>
+    <LbButton type="submit">Save biography</LbButton>
+  </form>
 </template>
 ```
