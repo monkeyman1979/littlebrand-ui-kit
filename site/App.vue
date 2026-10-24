@@ -205,13 +205,23 @@
 
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue'
-import { LbButton, LbInput, LbTextarea, LbFormField, LbDialog, LbSegmentButton, LbSegmentButtonItem } from '../src/components'
+import {
+  LbButton,
+  LbInput,
+  LbTextarea,
+  LbFormField,
+  LbDialog,
+  LbSegmentButton,
+  LbSegmentButtonItem
+} from '../src/components'
 import { applyTheme } from '../src/utils/color-generator.js'
 import reference from '../reference/v1.json'
 
-const standalone = reference.components.filter(item => !item.compoundOnly)
+const standalone = reference.components.filter((item) => !item.compoundOnly)
 const currentId = ref('component:LbButton')
-const active = computed(() => standalone.find(item => item.id === currentId.value) ?? standalone[0])
+const active = computed(
+  () => standalone.find((item) => item.id === currentId.value) ?? standalone[0]
+)
 const saved = ref(false)
 const buttonDisabled = ref(false)
 const buttonLoading = ref(false)
@@ -233,20 +243,27 @@ const scheme = ref('system')
 const brand = ref('default')
 const modes = ['system', 'light', 'dark']
 const basePalette = {
-  secondary: '#00bfa5', success: '#22c55e', warning: '#f59e0b',
-  error: '#ef4444', info: '#3b82f6', neutral: '#6b7280'
+  secondary: '#00bfa5',
+  success: '#22c55e',
+  warning: '#f59e0b',
+  error: '#ef4444',
+  info: '#3b82f6',
+  neutral: '#6b7280'
 }
 const palettes = [
   { name: 'default', colors: { ...basePalette, primary: '#ff8800' } },
   { name: 'cobalt', colors: { ...basePalette, primary: '#405fe7' } },
   { name: 'berry', colors: { ...basePalette, primary: '#ac498e' } }
 ]
-const installVue = "import { LbButton } from 'littlebrand-ui-kit'\nimport 'littlebrand-ui-kit/style.css'"
+const installVue =
+  "import { LbButton } from 'littlebrand-ui-kit'\nimport 'littlebrand-ui-kit/style.css'"
 const copyStatus = ref('')
-const copyLabel = computed(() => copyStatus.value === 'Example copied' ? 'Copied' : 'Copy example')
+const copyLabel = computed(() =>
+  copyStatus.value === 'Example copied' ? 'Copied' : 'Copy example'
+)
 async function syncHash() {
   const id = decodeURIComponent(window.location.hash.slice(1))
-  if (!standalone.some(item => item.id === id)) return
+  if (!standalone.some((item) => item.id === id)) return
   currentId.value = id
   await nextTick()
   document.getElementById(id)?.scrollIntoView()
@@ -257,12 +274,16 @@ function setScheme(mode: string) {
   if (mode === 'system') delete document.documentElement.dataset.theme
   else document.documentElement.dataset.theme = mode
 }
-function setBrand(palette: typeof palettes[number]) {
+function setBrand(palette: (typeof palettes)[number]) {
   brand.value = palette.name
   applyTheme(palette.colors)
 }
-function tokenStyle(name: string) { return { backgroundColor: `var(${name})` } }
-function idLink(id: string) { return id.startsWith('component:') ? `#${id}` : '#tokens' }
+function tokenStyle(name: string) {
+  return { backgroundColor: `var(${name})` }
+}
+function idLink(id: string) {
+  return id.startsWith('component:') ? `#${id}` : '#tokens'
+}
 async function copyText(text: string, success: string) {
   try {
     await navigator.clipboard.writeText(text)
@@ -271,8 +292,13 @@ async function copyText(text: string, success: string) {
     copyStatus.value = 'Clipboard unavailable. Select the text to copy it.'
   }
 }
-function copyExample() { return copyText(active.value.usage, 'Example copied') }
-onMounted(() => { syncHash(); window.addEventListener('hashchange', syncHash) })
+function copyExample() {
+  return copyText(active.value.usage, 'Example copied')
+}
+onMounted(() => {
+  syncHash()
+  window.addEventListener('hashchange', syncHash)
+})
 onUnmounted(() => window.removeEventListener('hashchange', syncHash))
 </script>
 

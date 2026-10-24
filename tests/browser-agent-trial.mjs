@@ -56,33 +56,45 @@ window.__trialReady = true
 
 try {
   for (const name of names) writeFileSync(resolve(fixture, `${name}.vue`), primarySfc(name))
-  writeFileSync(resolve(fixture, 'index.html'), '<!doctype html><html lang="en"><meta charset="utf-8"><div id="app"></div><script type="module" src="./entry.ts"></script></html>')
+  writeFileSync(
+    resolve(fixture, 'index.html'),
+    '<!doctype html><html lang="en"><meta charset="utf-8"><div id="app"></div><script type="module" src="./entry.ts"></script></html>'
+  )
   writeFileSync(resolve(fixture, 'entry.ts'), entry)
   server = await createServer({
     logLevel: 'error',
-    resolve: { alias: [
-      { find: 'littlebrand-ui-kit/style.css', replacement: resolve('src/styles/index.sass') },
-      { find: 'littlebrand-ui-kit', replacement: resolve('src/components/index.ts') }
-    ] },
+    resolve: {
+      alias: [
+        { find: 'littlebrand-ui-kit/style.css', replacement: resolve('src/styles/index.sass') },
+        { find: 'littlebrand-ui-kit', replacement: resolve('src/components/index.ts') }
+      ]
+    },
     server: { host: '127.0.0.1', port: 0 }
   })
   await server.listen()
   browser = await chromium.launch({ headless: true })
-  const base = new URL(`${fixture.replace(/^.*?tests\//, '/tests/')}/index.html`, server.resolvedUrls.local[0])
+  const base = new URL(
+    `${fixture.replace(/^.*?tests\//, '/tests/')}/index.html`,
+    server.resolvedUrls.local[0]
+  )
   for (const name of names) {
     const context = await browser.newContext({ colorScheme: 'light' })
     const page = await context.newPage()
     const pageErrors = []
     let saveRequests = 0
-    page.on('pageerror', e => pageErrors.push(e.message))
-    page.on('response', r => { if (r.url().includes('/src/') && r.status() >= 400) pageErrors.push(`${r.status()} ${r.url()}`) })
+    page.on('pageerror', (e) => pageErrors.push(e.message))
+    page.on('response', (r) => {
+      if (r.url().includes('/src/') && r.status() >= 400)
+        pageErrors.push(`${r.status()} ${r.url()}`)
+    })
     try {
       const url = new URL(base)
       url.searchParams.set('case', name)
-      if (name === 'Save') await page.route('**/api/notes', route => {
-        saveRequests += 1
-        return route.fulfill({ status: 200, contentType: 'application/json', body: '{}' })
-      })
+      if (name === 'Save')
+        await page.route('**/api/notes', (route) => {
+          saveRequests += 1
+          return route.fulfill({ status: 200, contentType: 'application/json', body: '{}' })
+        })
       await page.goto(url.href)
       await page.waitForFunction(() => window.__trialReady === true, null, { timeout: 8000 })
       assert.deepEqual(pageErrors, [], `${name}: browser errors`)
@@ -91,7 +103,7 @@ try {
           const textarea = page.locator('textarea[name="notes"]')
           assert.equal(await textarea.inputValue(), 'Before')
           await textarea.fill('After')
-          const request = page.waitForRequest(req => req.url().endsWith('/api/notes'))
+          const request = page.waitForRequest((req) => req.url().endsWith('/api/notes'))
           await page.getByRole('button', { name: 'Save changes' }).click()
           assert.equal((await request).postDataJSON().notes, 'After')
           await page.getByRole('status').getByText('Saved').waitFor()
@@ -101,7 +113,8 @@ try {
         }
         case 'Email': {
           const input = page.locator('input[type="email"]')
-          await input.focus(); await input.blur()
+          await input.focus()
+          await input.blur()
           await page.getByRole('alert').waitFor()
           await input.fill('person@example.com')
           assert.equal(await input.inputValue(), 'person@example.com')
@@ -114,19 +127,24 @@ try {
           await page.getByText('Notes are required').waitFor()
           await textarea.fill('A note')
           await page.getByRole('button', { name: 'Save notes' }).click()
-          const saves = await page.evaluate(() => window.__trialEvents.filter(([type]) => type === 'save'))
+          const saves = await page.evaluate(() =>
+            window.__trialEvents.filter(([type]) => type === 'save')
+          )
           assert.deepEqual(saves, [['save', 'A note']], 'one click must emit exactly one save')
           break
         }
         case 'Validation': {
           const input = page.locator('input[type="email"]')
-          await input.focus(); await input.blur()
+          await input.focus()
+          await input.blur()
           await page.getByRole('alert').waitFor()
           assert.equal(await input.getAttribute('aria-invalid'), 'true')
           await input.fill('valid@example.com')
           await page.getByRole('alert').waitFor({ state: 'detached' })
           await page.getByRole('button', { name: 'Save' }).click()
-          assert.deepEqual(await page.evaluate(() => window.__trialEvents), [['submit', 'valid@example.com']])
+          assert.deepEqual(await page.evaluate(() => window.__trialEvents), [
+            ['submit', 'valid@example.com']
+          ])
           break
         }
         case 'Confirmation': {
@@ -138,7 +156,9 @@ try {
           assert.deepEqual(await page.evaluate(() => window.__trialEvents), [['confirm']])
           await page.keyboard.press('Escape')
           await dialog.waitFor({ state: 'hidden' })
-          assert.ok((await page.evaluate(() => window.__trialEvents)).some(([type]) => type === 'cancel'))
+          assert.ok(
+            (await page.evaluate(() => window.__trialEvents)).some(([type]) => type === 'cancel')
+          )
           break
         }
         case 'Frequency': {
@@ -158,7 +178,9 @@ try {
       console.error(`FAIL ${name}: ${error.message.split('\n')[0]}`)
       if ('actual' in error) console.error('  observed:', JSON.stringify(error.actual))
       if (pageErrors.length) console.error('  page errors:', pageErrors)
-    } finally { await context.close() }
+    } finally {
+      await context.close()
+    }
   }
 } finally {
   if (browser) await browser.close()
@@ -166,6 +188,8 @@ try {
   rmSync(fixture, { recursive: true, force: true })
 }
 if (errors.length) {
-  console.error(`${errors.length} of ${names.length} primary agent answers failed this browser probe. These are agent-answer findings, not a release-package result.`)
+  console.error(
+    `${errors.length} of ${names.length} primary agent answers failed this browser probe. These are agent-answer findings, not a release-package result.`
+  )
   process.exitCode = 1
 }

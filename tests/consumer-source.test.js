@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test } from 'vite-plus/test'
 import { compile } from 'sass'
 import { resolve } from 'node:path'
 import * as kit from '../src/index.js'

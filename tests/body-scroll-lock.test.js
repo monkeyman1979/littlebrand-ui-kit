@@ -1,4 +1,4 @@
-import { afterEach, expect, test, vi } from 'vitest'
+import { afterEach, expect, test, vi } from 'vite-plus/test'
 import { effectScope, nextTick } from 'vue'
 import { mount } from '@vue/test-utils'
 import { useBodyScrollLock } from '../src/utils/body-scroll-lock'
@@ -65,7 +65,9 @@ test('touch guard blocks background and scroll edges but allows inner scrolling 
   document.body.append(content)
   const touch = (type, target, y, count = 1) => {
     const event = new Event(type, { bubbles: true, cancelable: true })
-    Object.defineProperty(event, 'touches', { value: Array.from({ length: count }, () => ({ clientX: 0, clientY: y })) })
+    Object.defineProperty(event, 'touches', {
+      value: Array.from({ length: count }, () => ({ clientX: 0, clientY: y }))
+    })
     target.dispatchEvent(event)
     return event.defaultPrevented
   }
@@ -87,13 +89,22 @@ test('lock is safe without a browser document', () => {
   const modal = owner()
   vi.stubGlobal('document', undefined)
   try {
-    expect(() => { modal.lock(); modal.unlock(); modal.stop() }).not.toThrow()
-  } finally { vi.unstubAllGlobals() }
+    expect(() => {
+      modal.lock()
+      modal.unlock()
+      modal.stop()
+    }).not.toThrow()
+  } finally {
+    vi.unstubAllGlobals()
+  }
 })
 
 test('Dialog and BottomSheet initially open share the lock and release on unmount', async () => {
   for (const component of [LbDialog, LbBottomSheet]) {
-    const wrapper = mount(component, { props: { modelValue: true }, slots: { default: 'Overlay content' } })
+    const wrapper = mount(component, {
+      props: { modelValue: true },
+      slots: { default: 'Overlay content' }
+    })
     wrappers.push(wrapper)
   }
   await nextTick()

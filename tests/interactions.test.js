@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, test } from 'vitest'
+import { afterEach, describe, expect, test } from 'vite-plus/test'
 import { mount } from '@vue/test-utils'
 import { h, nextTick } from 'vue'
 import LbButton from '../src/components/Buttons/Button/LbButton.vue'
@@ -55,7 +55,10 @@ describe('first component slice — narrow DOM interactions, not an accessibilit
   })
 
   test('Dialog opens in a body portal and Escape emits close/model update', async () => {
-    const dialog = attached(LbDialog, { props: { modelValue: true }, slots: { default: 'Details' } })
+    const dialog = attached(LbDialog, {
+      props: { modelValue: true },
+      slots: { default: 'Details' }
+    })
     await nextTick()
     expect(document.body.querySelector('[role="dialog"]')?.textContent).toContain('Details')
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))
@@ -64,12 +67,21 @@ describe('first component slice — narrow DOM interactions, not an accessibilit
   })
 
   test('disabled and loading links render native disabled buttons, without destinations', async () => {
-    const button = attached(LbButton, { props: { href: '/billing', disabled: true }, slots: { default: 'Billing' } })
+    const button = attached(LbButton, {
+      props: { href: '/billing', disabled: true },
+      slots: { default: 'Billing' }
+    })
     expect(button.find('a').exists()).toBe(false)
     expect(button.get('button').attributes('disabled')).toBeDefined()
     await button.setProps({ disabled: false })
     expect(button.get('a').attributes('href')).toBe('/billing')
-    await button.setProps({ loading: true, iconOnly: true, iconPosition: 'trailing', href: undefined, to: '/billing' })
+    await button.setProps({
+      loading: true,
+      iconOnly: true,
+      iconPosition: 'trailing',
+      href: undefined,
+      to: '/billing'
+    })
     expect(button.get('button').attributes('aria-busy')).toBe('true')
     expect(button.find('.spinner').exists()).toBe(true)
     await button.get('button').trigger('click')
@@ -77,7 +89,10 @@ describe('first component slice — narrow DOM interactions, not an accessibilit
   })
 
   test('Input forwards native attributes, preserves wrapper classes and exposes its states', async () => {
-    const input = attached(LbInput, { attrs: { name: 'email', autocomplete: 'email', 'aria-label': 'Email', class: 'form-control' }, props: { required: true, invalid: true, type: 'password' } })
+    const input = attached(LbInput, {
+      attrs: { name: 'email', autocomplete: 'email', 'aria-label': 'Email', class: 'form-control' },
+      props: { required: true, invalid: true, type: 'password' }
+    })
     const native = input.get('input')
     expect(native.attributes('name')).toBe('email')
     expect(native.attributes('autocomplete')).toBe('email')
@@ -94,16 +109,28 @@ describe('first component slice — narrow DOM interactions, not an accessibilit
   })
 
   test('Dialog exposes an accessible name and respects a custom label', async () => {
-    attached(LbDialog, { props: { modelValue: true, title: 'Preferences', showClose: false }, slots: { default: 'Details' } })
+    attached(LbDialog, {
+      props: { modelValue: true, title: 'Preferences', showClose: false },
+      slots: { default: 'Details' }
+    })
     await nextTick()
     const panel = document.body.querySelector('[role="dialog"]')
     expect(panel?.getAttribute('aria-label')).toBe('Preferences')
     expect(panel?.hasAttribute('aria-labelledby')).toBe(false)
-    const custom = attached(LbDialog, { props: { modelValue: true, title: 'Ignored fallback' }, attrs: { 'aria-label': 'Custom name' }, slots: { default: 'Other details' } })
+    const custom = attached(LbDialog, {
+      props: { modelValue: true, title: 'Ignored fallback' },
+      attrs: { 'aria-label': 'Custom name' },
+      slots: { default: 'Other details' }
+    })
     await nextTick()
-    expect(document.body.querySelectorAll('[role="dialog"]')[1]?.getAttribute('aria-label')).toBe('Custom name')
+    expect(document.body.querySelectorAll('[role="dialog"]')[1]?.getAttribute('aria-label')).toBe(
+      'Custom name'
+    )
     expect(custom.exists()).toBe(true)
-    attached(LbDialog, { props: { modelValue: true, title: 'Expanded', variant: 'fullscreen' }, slots: { default: 'More details' } })
+    attached(LbDialog, {
+      props: { modelValue: true, title: 'Expanded', variant: 'fullscreen' },
+      slots: { default: 'More details' }
+    })
     await nextTick()
     const full = document.body.querySelectorAll('[role="dialog"]')[2]
     expect(full?.getAttribute('aria-labelledby')).toBe(full?.querySelector('.dialog-title')?.id)
@@ -113,11 +140,13 @@ describe('first component slice — narrow DOM interactions, not an accessibilit
     const segment = attached(LbSegmentButton, {
       props: { modelValue: 'a', allowEmpty: false },
       attrs: { 'aria-label': 'Period' },
-      slots: { default: () => [
-        h(LbSegmentButtonItem, { value: 'a' }, { default: () => 'Daily' }),
-        h(LbSegmentButtonItem, { value: 'b', disabled: true }, { default: () => 'Weekly' }),
-        h(LbSegmentButtonItem, { value: 'c' }, { default: () => 'Monthly' })
-      ] }
+      slots: {
+        default: () => [
+          h(LbSegmentButtonItem, { value: 'a' }, { default: () => 'Daily' }),
+          h(LbSegmentButtonItem, { value: 'b', disabled: true }, { default: () => 'Weekly' }),
+          h(LbSegmentButtonItem, { value: 'c' }, { default: () => 'Monthly' })
+        ]
+      }
     })
     const buttons = segment.findAll('button')
     expect(segment.get('[role="radiogroup"]').attributes('aria-label')).toBe('Period')
@@ -134,7 +163,12 @@ describe('first component slice — narrow DOM interactions, not an accessibilit
   })
 
   test('required SegmentButton without an initial value stays reachable from its group', async () => {
-    const segment = attached(LbSegmentButton, { props: { allowEmpty: false }, slots: { default: () => h(LbSegmentButtonItem, { value: 'first' }, { default: () => 'First' }) } })
+    const segment = attached(LbSegmentButton, {
+      props: { allowEmpty: false },
+      slots: {
+        default: () => h(LbSegmentButtonItem, { value: 'first' }, { default: () => 'First' })
+      }
+    })
     const root = segment.get('[role="radiogroup"]')
     expect(root.attributes('tabindex')).toBe('0')
     root.element.focus()
@@ -150,13 +184,20 @@ describe('first component slice — narrow DOM interactions, not an accessibilit
     expect(fixture.get('[role="radiogroup"]').attributes('aria-label')).toBe('Frequency')
     await fixture.get('button.lb-button').trigger('click')
     await nextTick()
-    expect(document.body.querySelector('[role="dialog"]')?.getAttribute('aria-label')).toBe('Preferences')
+    expect(document.body.querySelector('[role="dialog"]')?.getAttribute('aria-label')).toBe(
+      'Preferences'
+    )
   })
 
   test('Textarea forwards native attributes, updates strings and exposes invalid/disabled states', async () => {
     const wrapper = attached(LbTextarea, {
       props: { invalid: true, required: true, size: 'large' },
-      attrs: { name: 'biography', autocomplete: 'on', 'aria-label': 'Biography', class: 'field-control' }
+      attrs: {
+        name: 'biography',
+        autocomplete: 'on',
+        'aria-label': 'Biography',
+        class: 'field-control'
+      }
     })
     const textarea = wrapper.get('textarea')
     expect(textarea.attributes('name')).toBe('biography')

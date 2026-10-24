@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { LbButton, LbInput, LbDialog, LbSegmentButton, LbSegmentButtonItem } from '../../src/components'
+import {
+  LbButton,
+  LbInput,
+  LbDialog,
+  LbSegmentButton,
+  LbSegmentButtonItem
+} from '../../src/components'
 
 const name = ref('')
 const choice = ref<string | number>('daily')

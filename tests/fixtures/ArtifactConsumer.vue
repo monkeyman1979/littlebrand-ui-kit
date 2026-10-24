@@ -15,7 +15,9 @@ function toggleTheme() {
   dark.value = !dark.value
   document.documentElement.dataset.theme = dark.value ? 'dark' : 'light'
 }
-onMounted(() => { Object.assign(window, { __consumerVueVersion: version }) })
+onMounted(() => {
+  Object.assign(window, { __consumerVueVersion: version })
+})
 </script>
 
 <template>
@@ -25,7 +27,9 @@ onMounted(() => { Object.assign(window, { __consumerVueVersion: version }) })
     <section id="save"><SaveExample /></section>
     <section id="email"><EmailExample /></section>
     <section id="notes-example"><NotesExample /></section>
-    <section id="form"><FormExample @save="saves++" /><output>{{ saves }}</output></section>
+    <section id="form">
+      <FormExample @save="saves++" /><output>{{ saves }}</output>
+    </section>
     <section id="dialog"><DialogExample /></section>
     <section id="frequency"><FrequencyExample /></section>
   </main>

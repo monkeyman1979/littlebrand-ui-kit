@@ -1,8 +1,12 @@
-import { expect, test } from 'vitest'
+import { expect, test } from 'vite-plus/test'
 import { readFileSync } from 'node:fs'
-import { assertSupportedNodeVersion, isSupportedNodeVersion, NODE_ENGINE_RANGE } from '../mcp-server/src/node-runtime.ts'
+import {
+  assertSupportedNodeVersion,
+  isSupportedNodeVersion,
+  NODE_ENGINE_RANGE
+} from '../mcp-server/src/node-runtime.ts'
 
-const json = path => JSON.parse(readFileSync(path, 'utf8'))
+const json = (path) => JSON.parse(readFileSync(path, 'utf8'))
 function atLeast(version, minimum) {
   const parts = version.split('.').map(Number)
   for (let i = 0; i < minimum.length; i++) {
@@ -20,10 +24,31 @@ test('both manifests and lockfiles require the security-patched supported Node l
 })
 
 test('Node security boundaries reject vulnerable patches, EOL majors and unreviewed releases', () => {
-  for (const version of ['22.23.4', 'v22.23.5', '22.24.0', '24.22.1', '24.23.0', '26.12.1', '26.13.0']) {
+  for (const version of [
+    '22.23.4',
+    'v22.23.5',
+    '22.24.0',
+    '24.22.1',
+    '24.23.0',
+    '26.12.1',
+    '26.13.0'
+  ]) {
     expect(isSupportedNodeVersion(version), version).toBe(true)
   }
-  for (const version of ['18.20.8', '20.20.2', '22.0.0', '22.23.3', '23.11.1', '24.22.0', '25.9.0', '26.9.0', '26.12.0', '28.0.0', '22.23.4-rc.1', 'invalid']) {
+  for (const version of [
+    '18.20.8',
+    '20.20.2',
+    '22.0.0',
+    '22.23.3',
+    '23.11.1',
+    '24.22.0',
+    '25.9.0',
+    '26.9.0',
+    '26.12.0',
+    '28.0.0',
+    '22.23.4-rc.1',
+    'invalid'
+  ]) {
     expect(isSupportedNodeVersion(version), version).toBe(false)
     expect(() => assertSupportedNodeVersion(version)).toThrow('security-patched Node')
   }
@@ -48,7 +73,9 @@ test('root and bundled local MCP lockfiles retain patched SDK and Zod versions',
     expect(manifest.dependencies['@modelcontextprotocol/sdk']).toBe('^1.32.2')
     expect(manifest.dependencies.zod).toBe('^4.6.7')
     expect(atLeast(lock.packages['node_modules/zod'].version, [4, 6, 7])).toBe(true)
-    expect(atLeast(lock.packages['node_modules/@modelcontextprotocol/sdk'].version, [1, 32, 2])).toBe(true)
+    expect(
+      atLeast(lock.packages['node_modules/@modelcontextprotocol/sdk'].version, [1, 32, 2])
+    ).toBe(true)
     expect(atLeast(lock.packages['node_modules/body-parser'].version, [2, 4, 0])).toBe(true)
     expect(atLeast(lock.packages['node_modules/fast-uri'].version, [3, 1, 9])).toBe(true)
     expect(lock.packages['node_modules/proxy-addr'].version).not.toBe('2.0.7')

@@ -9,18 +9,27 @@ const open = ref(true)
 const rootOpen = ref(false)
 const App = defineComponent({
   setup() {
-    return () => h('div', { id: 'fixture-app' }, [
-      h('section', { id: 'preview', 'data-theme': mode.value }, [
-        h('div', { id: 'preview-probe' }, 'Preview'),
-        h(LbButton, { id: 'focus-button', color: 'primary' }, () => 'Focus'),
-        h(LbDialog, { modelValue: open.value, title: 'Theme test' }, {
-          default: () => h('span', { id: 'dialog-probe' }, 'Dialog')
-        })
-      ]),
-      h(LbDialog, { modelValue: rootOpen.value, title: 'Document theme' }, {
-        default: () => h('span', { id: 'root-dialog-probe' }, 'Root dialog')
-      })
-    ])
+    return () =>
+      h('div', { id: 'fixture-app' }, [
+        h('section', { id: 'preview', 'data-theme': mode.value }, [
+          h('div', { id: 'preview-probe' }, 'Preview'),
+          h(LbButton, { id: 'focus-button', color: 'primary' }, () => 'Focus'),
+          h(
+            LbDialog,
+            { modelValue: open.value, title: 'Theme test' },
+            {
+              default: () => h('span', { id: 'dialog-probe' }, 'Dialog')
+            }
+          )
+        ]),
+        h(
+          LbDialog,
+          { modelValue: rootOpen.value, title: 'Document theme' },
+          {
+            default: () => h('span', { id: 'root-dialog-probe' }, 'Root dialog')
+          }
+        )
+      ])
   }
 })
 createApp(App).mount('#app')

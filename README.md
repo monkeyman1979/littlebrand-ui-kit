@@ -421,19 +421,24 @@ See the [MCP Server README](./mcp-server/README.md) for detailed documentation a
 
 ## 🛠️ Development
 
+Use a security-patched Node version from `.node-version` / `package.json`.
+
 ```bash
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-
-# Build library
-npm run build
-
-# Preview production build
-npm run preview
+npm ci --ignore-scripts
+npm ci --ignore-scripts --prefix mcp-server
+npm run dev        # component showcase
+npm run dev:site   # local documentation
+npm run check      # formatting, lint, strict types, unit tests, source MCP, reference freshness
+npm run check:all  # the same checks plus Chromium theme/component/overlay/docs probes
 ```
+
+**Vite+ 1.4.0 uses one central `vite.config.js`** for Vite, Vitest, Oxfmt, Oxlint, the existing ESLint rules, and validation tasks. There are no separate ESLint, Vitest or site Vite configs. TypeScript project/consumer-fixture configs remain separate deliberately.
+
+Use `npm run check`, not bare `vp check`, for the full source gate: native `vp check` covers formatting and script linting, while the central task also runs the existing Vue-essential ESLint rules and strict `vue-tsc` / TypeScript 6 checks. Native TypeScript-Go checking is disabled rather than masking Vue imports with an `any` shim. The framework lint runner only consumes rules from the central config; it does not define another policy.
+
+`npm run lint`, `npm run typecheck`, and `npm test` remain available individually. `npm run format` / `npm run format:check` cover tooling, tests, MCP source and the docs app; public library sources, generated references and captured historical answers are intentionally excluded to avoid an unrelated formatting migration. Validation task caching is disabled so checks execute on the current runtime.
+
+Source checks do not build or extract metadata. Production builds still require explicit owner authorization and a fresh installed-tarball gate; published npm 0.8.3 and historical artifact results do not certify this toolchain.
 
 ## 📄 License
 
