@@ -22,6 +22,31 @@ try {
   await client.connect(transport)
   const tools = (await client.listTools()).tools
   assert.deepEqual(tools.map(tool => tool.name), ['lb_search', 'lb_get', 'lb_setup'])
+  const searchSchema = tools.find(tool => tool.name === 'lb_search').inputSchema
+  const getSchema = tools.find(tool => tool.name === 'lb_get').inputSchema
+  assert.equal(searchSchema.properties.query.minLength, 2)
+  assert.equal(searchSchema.properties.limit.default, 4)
+  assert.deepEqual(getSchema.properties.detail.enum, ['summary', 'full'])
+  assert.equal(getSchema.properties.detail.default, 'summary')
+
+  const defaultSearch = await client.callTool({ name: 'lb_search', arguments: { query: 'save' } })
+  const explicitSearch = await client.callTool({ name: 'lb_search', arguments: { query: 'save', limit: 4 } })
+  assert.deepEqual(defaultSearch, explicitSearch, 'omitted limit still defaults to 4')
+  const defaultGet = await client.callTool({ name: 'lb_get', arguments: { id: 'component:LbButton' } })
+  const summary = JSON.parse(defaultGet.content[0].text)
+  assert.equal(summary.id, 'component:LbButton')
+  assert.ok(!('testedVueExample' in summary), 'omitted detail still defaults to summary')
+  for (const [name, args] of [
+    ['lb_search', { query: 'a' }],
+    ['lb_search', { query: 'save', limit: 0 }],
+    ['lb_search', { query: 'save', limit: 9007199254740992 }],
+    ['lb_get', { id: 'component:LbButton', detail: 'bogus' }]
+  ]) {
+    const invalid = await client.callTool({ name, arguments: args })
+    assert.equal(invalid.isError, true, `${name} must reject ${JSON.stringify(args)}`)
+    assert.match(invalid.content[0].text, /Input validation error/)
+  }
+
   let largestSearch = 0
   let largestDetail = 0
   for (const [query, expectedId] of prompts) {
