@@ -2,16 +2,31 @@
 
 **Scope:** An authenticated Claude Code CLI agent (Haiku) used an isolated, read-only source-stdio MCP configuration, with no built-in file/command tools and a fresh nonpersistent conversation per intent. The source entry was `mcp-server/node_modules/.bin/tsx mcp-server/src/index.ts`; no tracked `dist/`, published CLI, build, extraction, deployment, or publication was used. Tool selection and final answers were the agent's own. This is an experiment, not a release check.
 
-**Result:** All six conversations used the source tools; only save and notes used LittleBrand in the *primary* final SFC. Email, validation, confirmation, and frequency used native controls instead despite retrieving the corresponding LittleBrand references. Each primary final SFC (the first `vue` block in each answer below, unchanged) passed a source-aliased `vue-tsc --noEmit` with `strict: true` and the repository baseline `skipLibCheck: true`. These were temporary test fixtures removed afterward; **no code was rendered or behavior checked**. A second strict-library check with `skipLibCheck: false` failed on existing `@vueuse/core` Bluetooth ambient types, not these SFCs. Other snippets in answers were not typechecked. Passing TypeScript is not the Step 10 agent-use gate.
+**Result:** All six conversations used the source tools; only save and notes used LittleBrand in the *primary* final SFC. Email, validation, confirmation, and frequency used native controls instead despite retrieving the corresponding LittleBrand references. Each primary final SFC (the first `vue` block in each answer below, unchanged) passed a source-aliased `vue-tsc --noEmit` with `strict: true` and the repository baseline `skipLibCheck: true`. These were temporary test fixtures removed afterward. A second strict-library check with `skipLibCheck: false` failed on existing `@vueuse/core` Bluetooth ambient types, not these SFCs. Other snippets in answers were not typechecked. A subsequent source-only browser probe is recorded below; passing TypeScript or rendering does not by itself meet the Step 10 agent-use gate.
 
 Successful `lb_get` results carried `packageVersion: "0.8.3"` and `status: "Unreleased source reference; not a published 0.8.3 artifact"`; an unknown-item lookup returned an error instead. Raw event-stream logs were local temporary files; below are their actual tool names/arguments, retrieved IDs, and **unaltered final agent answers** (including all code blocks). Prompts did not supply component names, props, or preselected tool calls.
 
 ## Observations
 
 - The agent respected the source-versus-release caveat, but in four cases used it as a reason to substitute native components. Tool discovery alone does not show the kit can be used correctly.
-- The notes SFC attaches both `@submit.prevent="onSubmit"` to the form and `@click="onSubmit"` to a submit button, potentially emitting twice for one click. A rendered interaction test is needed; do not count it as a successful behavior.
+- The notes SFC attaches both `@submit.prevent="onSubmit"` to the form and `@click="onSubmit"` to a submit button. A rendered click emitted `save` **twice**; do not count this as successful behavior.
 - The confirmation run called `lb_get` for unverified `token:--lb-fill-error-normal` and received an unknown-item response, then retrieved `token:--lb-surface-subtle`. It ultimately used a native dialog, not `LbDialog`.
-- Re-run under a deliberately explicit **use this unreleased source kit** constraint (without naming components or props) to distinguish tool/API quality from the rational decision to avoid an unreleased package. Then render and test the exact final SFCs in a source fixture. Keep published-package verification separate.
+- Re-run under a deliberately explicit **use this unreleased source kit** constraint (without naming components or props) to distinguish tool/API quality from the rational decision to avoid an unreleased package. Keep published-package verification separate.
+
+## Browser follow-up (source fixture, not npm artifact)
+
+`node tests/browser-agent-trial.mjs` loads the first `vue` block from each **unaltered** answer below into temporary Vue files, aliases package-root imports and CSS to current source (never the tracked `dist/`), runs Vite's development server and headless Chromium, then removes the fixtures. Only these primary SFCs were probed; optional usage/alternative snippets were not. It checks initial rendering, one core interaction per task, and browser errors in a light-scheme context. It does **not** certify styling, accessibility, dark mode, all component states, production bundling, or installed npm behavior.
+
+| Primary SFC | Result | Browser observation |
+|---|---|---|
+| Save | Passed | Edited note sent once to an intercepted placeholder API; success state and disabled save button observed. |
+| Email | Passed | Required native input showed an error on blur and cleared it for a valid address. |
+| Notes | **Failed** | A single click on “Save notes” emitted `save("A note")` **twice**; the handler runs on both button click and form submit. Empty-field error rendered. |
+| Validation | Passed | Native input showed/cleared its error and emitted the valid address on submit. |
+| Confirmation | Passed | Native dialog opened, confirmed, and closed on Escape with a cancel event. |
+| Frequency | Passed | Native weekly radio selection updated its controlled value. |
+
+The runner intentionally exits nonzero while the exact notes answer remains wrong (five of six core interaction probes passed). This failure belongs to **agent-produced code**, not a verified kit defect. Do not edit the captured answer to make the trial green. A rerun with explicit kit-use instructions and a new exact-answer validation is a separate follow-up.
 
 ## Save
 
