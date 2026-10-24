@@ -29,7 +29,7 @@ This file is tool-agnostic guidance for anyone working on this repository. See [
 - `npm run lint` — ESLint over source, scripts, tests and site.
 - `npm run typecheck` — source Vue/TypeScript plus strict Bundler/NodeNext declaration fixtures; `npm run typecheck:site` checks the local docs app.
 - `npm test`, `npm run test:mcp`, `npm run test:browser`, `npm run test:site` and `npm run reference:check` — non-release source checks. Optional `npm run test:vue-compat` needs isolated host dependencies; see `docs/VUE33_SOURCE_COMPATIBILITY.md`.
-- Both package manifests require Node `>=22` because the root package ships the MCP CLI. Development tooling needs Node `>=22.12.0` (Vite baseline); prefer a patched supported LTS release. TypeScript stays on 6.0.x while the lint stack requires `<6.1`; do not force TypeScript 7.
+- Use a security-patched supported Node runtime: `^22.23.4 || ^24.22.1 || ^26.12.1` in both manifests. `.node-version` pins 22.23.4 and `.npmrc` enables engine-strict; the MCP also checks its runtime. A clean npm audit is not a Node runtime security check. Recheck official Node advisories before changing these floors or adding a major. TypeScript stays on 6.0.x while the lint stack requires `<6.1`; do not force TypeScript 7.
 
 ## Optional task guides
 

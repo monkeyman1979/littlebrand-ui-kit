@@ -20,7 +20,7 @@ See the [modernization roadmap](./docs/ROADMAP.md) for planned semantic-token, d
 
 ## 📦 Installation
 
-**Unreleased runtime migration:** The root npm package and bundled MCP CLI now require **Node.js 22 or newer** (`node >=22` in both manifests). Upgrade Node before installing this package, even if you only use its Vue components. Use a patched supported LTS release. Repository development needs **Node 22.12+** for Vite. The Vue peer range remains `^3.3.0`; published npm 0.8.3 is unchanged.
+**Unreleased security baseline:** Both manifests require **`^22.23.4 || ^24.22.1 || ^26.12.1`**, the supported Node release lines patched for the [October 2026 security advisory](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases). Older patches, EOL odd-numbered majors and unreviewed future majors are unsupported. Upgrade/select Node before installing this package, even if you only use its Vue components. `.node-version` pins patched LTS **22.23.4** for development; `.npmrc` enforces package engines, and the MCP server refuses unsupported runtimes. A pin does not upgrade your installed Node or restart running clients. The Vue peer remains `^3.3.0`; published npm 0.8.3 is unchanged.
 
 ```bash
 npm install littlebrand-ui-kit

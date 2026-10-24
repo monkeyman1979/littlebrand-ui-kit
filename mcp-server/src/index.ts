@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { z } from 'zod';
+import { assertSupportedNodeVersion, NODE_ENGINE_RANGE } from './node-runtime.js';
 
 interface Prop { name: string; type: string; required: boolean; default?: string }
 interface Component {
@@ -64,6 +65,7 @@ const response = (value: unknown, isError = false) => ({
 const note = 'This reference is unreleased source work, not the published npm 0.8.3 artifact. Published 0.8.3 has known strict TypeScript and CJS failures; the exact future release artifact and MCP CLI remain unverified.';
 
 export function createServer(reference: Reference = loadReference()) {
+  assertSupportedNodeVersion();
   if (reference.schemaVersion !== 1) throw new Error('Unsupported MCP reference schema');
   const packageVersion = reference.packageVersion;
   const server = new McpServer({ name: 'littlebrand-mcp-server', version: packageVersion });
@@ -105,7 +107,7 @@ export function createServer(reference: Reference = loadReference()) {
     install: 'npm install littlebrand-ui-kit',
     vue: "import { LbButton } from 'littlebrand-ui-kit'\nimport 'littlebrand-ui-kit/style.css'",
     mcpStdio: 'node ./node_modules/littlebrand-ui-kit/mcp-server/dist/index.js',
-    supported: 'Node 22+ for the bundled MCP CLI. Vue peer ^3.3.0; npm root component exports and /style.css. For reusable wrappers compatible with Vue 3.3, use modelValue and update:modelValue; defineModel requires Vue 3.4+. No deep import or hosted MCP contract.' }));
+    supported: `Security-patched Node (${NODE_ENGINE_RANGE}) for the bundled MCP CLI. Vue peer ^3.3.0; npm root component exports and /style.css. For reusable wrappers compatible with Vue 3.3, use modelValue and update:modelValue; defineModel requires Vue 3.4+. No deep import or hosted MCP contract.` }));
   return server;
 }
 

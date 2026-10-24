@@ -14,6 +14,7 @@ import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js'
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 assert.ok(process.env.LB_TARBALL, 'Set LB_TARBALL to an already built local npm tarball; this check never builds the kit')
 const tarball = realpathSync(resolve(process.env.LB_TARBALL))
+const engineRange = JSON.parse(readFileSync(join(repo, 'package.json'), 'utf8')).engines.node
 const root = mkdtempSync(join(tmpdir(), 'lb-installed-consumer-'))
 const report = { tarball, sha256: createHash('sha256').update(readFileSync(tarball)).digest('hex'), node: process.version, consumers: [] }
 const names = ['LbButton', 'LbInput', 'LbTextarea', 'LbFormField', 'LbDialog', 'LbSegmentButton']
@@ -37,7 +38,7 @@ async function mcp(consumer, reference, runtime) {
     const setup = await client.callTool({ name: 'lb_setup', arguments: {} })
     const setupBody = JSON.parse(setup.content[0].text)
     assert.equal(setupBody.packageVersion, reference.packageVersion)
-    assert.match(setupBody.supported, /Node 22\+/)
+    assert.ok(setupBody.supported.includes(engineRange))
     assert.match(setupBody.supported, /Vue peer \^3\.3\.0/)
     for (const [index, name] of names.entries()) {
       const search = await client.callTool({ name: 'lb_search', arguments: { query: intents[index] } })
@@ -107,7 +108,7 @@ try {
   const nodes = runtimes.map(path => realpathSync(resolve(path)))
   report.mcpNodes = nodes.map(node => {
     const version = run(node, ['--version'], root).trim()
-    assert.ok(Number(version.slice(1).split('.')[0]) >= 22, `unsupported MCP runtime: ${version}`)
+    assert.match(version, /^v\d+\.\d+\.\d+$/, 'expected a released Node executable')
     return version
   })
   browser = await chromium.launch({ headless: true })
@@ -127,12 +128,21 @@ try {
     assert.ok(!realpathSync(installed).startsWith(realpathSync(repo)), 'must not link to repo source')
     const manifest = JSON.parse(readFileSync(join(installed, 'package.json'), 'utf8'))
     const reference = JSON.parse(readFileSync(join(installed, 'reference/v1.json'), 'utf8'))
-    assert.equal(manifest.engines.node, '>=22')
-    assert.equal(JSON.parse(readFileSync(join(installed, 'mcp-server/package.json'), 'utf8')).engines.node, '>=22')
+    assert.equal(manifest.engines.node, engineRange)
+    assert.equal(JSON.parse(readFileSync(join(installed, 'mcp-server/package.json'), 'utf8')).engines.node, engineRange)
     assert.equal(manifest.peerDependencies.vue, '^3.3.0')
-    for (const file of [manifest.main, manifest.module, manifest.types, 'types/style.d.ts', 'dist/littlebrand-ui.css', 'mcp-server/dist/index.js', 'docs/reference/v1/ai-index.md']) {
+    for (const file of [manifest.main, manifest.module, manifest.types, 'types/style.d.ts', 'dist/littlebrand-ui.css', 'mcp-server/dist/index.js', 'mcp-server/dist/node-runtime.js', 'docs/reference/v1/ai-index.md']) {
       assert.ok(existsSync(join(installed, file)), `tarball missing ${file}`)
     }
+    // Exercise the compiled startup guard without running an actually vulnerable binary.
+    const refused = spawnSync(process.execPath, ['--input-type=module', '-e', `
+      import { pathToFileURL } from 'node:url'
+      Object.defineProperty(process.versions, 'node', { value: '26.9.0' })
+      await import(pathToFileURL(process.argv[1]).href)
+    `, join(installed, 'mcp-server/dist/index.js')], { cwd: consumer, encoding: 'utf8', timeout: 10000 })
+    assert.equal(refused.status, 1, 'compiled CLI must reject a simulated vulnerable Node version')
+    assert.match(refused.stderr, /security-patched Node/)
+    assert.equal(refused.stdout, '', 'refused CLI must not start the protocol')
     run(process.execPath, ['--input-type=module', '-e', `
       import assert from 'node:assert/strict'
       import * as kit from 'littlebrand-ui-kit'
@@ -172,7 +182,7 @@ try {
         } finally { await context.close() }
       }
     } finally { await new Promise((resolve, reject) => server.httpServer.close(error => error ? reject(error) : resolve())) }
-    report.consumers.push({ vue: version, typescript: host('typescript/package.json').version, packageVersion: manifest.version, imports: 'ESM+CJS', declarations: 'Bundler+NodeNext+Vue SFC (skipLibCheck=false)', browser: 'production Chromium light+dark, six examples', mcp: 'installed bin, 3 tools, six lookups, invalid input' })
+    report.consumers.push({ vue: version, typescript: host('typescript/package.json').version, packageVersion: manifest.version, imports: 'ESM+CJS', declarations: 'Bundler+NodeNext+Vue SFC (skipLibCheck=false)', browser: 'production Chromium light+dark, six examples', mcp: 'installed bin, 3 tools, six lookups, invalid input; compiled startup rejects simulated stale runtime' })
     console.log(`PASS installed tarball: Vue ${version}, strict types, production consumer, six examples, MCP bin on ${report.mcpNodes.join(', ')}`)
   }
   if (process.env.LB_REPORT) writeFileSync(resolve(process.env.LB_REPORT), JSON.stringify(report, null, 2) + '\n')

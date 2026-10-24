@@ -1,6 +1,6 @@
 # Current compatible dependency baseline — 2026-10-24
 
-**Runtime follow-up:** the owner subsequently approved Node **22+** for both package manifests and the bundled MCP CLI; development needs Node 22.12+. The earlier unchanged-Node-engine/untested-Node-18 statements below are historical. See [distributable verification](DISTRIBUTABLE_VERIFICATION.md) for the installed Node 22/current-runtime matrix and the explicit migration. Dependency versions and the Vue peer range were not changed by that follow-up.
+**Runtime follow-up:** after the Node 22 migration, the October security review requires **`^22.23.4 || ^24.22.1 || ^26.12.1`** in both manifests and pins development to patched LTS 22.23.4. The earlier generic Node 22+/Node 22.12+/unchanged-engine statements below are historical, not a security recommendation. See [distributable verification](DISTRIBUTABLE_VERIFICATION.md) for the installed Node 22/current-runtime matrix and the explicit migration. Dependency versions and the Vue peer range were not changed by that follow-up.
 
 ## Decision and scope
 
