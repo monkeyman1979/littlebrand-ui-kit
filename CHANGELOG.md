@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Synced the repository's tracked compiled MCP server with the verified 0.9.0 npm artifact. A source checkout now exposes `lb_search`, `lb_get`, and `lb_setup` instead of the old ten-tool CLI; the already-published 0.9.0 package is unchanged.
+
 ## [0.9.0] - 2026-10-28
 
 **Migration:** Node.js must be on a security-patched supported 22/24/26 line. The default theme now follows the OS, and the bundled MCP tool names change from ten legacy tools to `lb_search`, `lb_get`, and `lb_setup`. The local Vue docs preview is not a hosted site. Only the checked component slice has verified APIs/examples; other public names are discoverable as catalog-only.
