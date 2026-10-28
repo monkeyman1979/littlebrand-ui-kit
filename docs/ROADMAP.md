@@ -10,9 +10,9 @@ Preserve the semantic design language: **text, surface, fill, border, and shadow
 
 ## Current baseline and constraints
 
-- Published package: `littlebrand-ui-kit` 0.8.3; Vue 3, Vite, SASS/Pug, runtime theming, npm distribution, and a bundled stdio MCP server.
-- The MCP component data is generated from 26 `.vue.d.ts` files; the source contains 33 `.vue` files, including internal and compound components. Inventory *public exports*, not raw file counts, before stating a catalog size. Generated descriptions and examples are currently generic.
-- Steps 04–05 replaced placeholder `lint`/`typecheck` scripts and added a source self-reference TypeScript consumer fixture. Step 05 now includes an owner-authorized local tarball and clean installed Vue + TypeScript consumer check; accurate generated documentation and a future published release still require separate checks.
+- Published package: `littlebrand-ui-kit` 0.9.0; Vue 3, Vite, SASS/Pug, runtime theming, npm distribution, and a bundled local stdio MCP server. See the [current release status](MODERNIZATION_STATUS.md#current-release--2026-10-28); the numbered phases below remain the original plan, not a checklist of what shipped.
+- MCP 0.9.0 discovers 33 public root-exported component names; only seven checked entries (including one compound child) have verified APIs/examples. The separate legacy extractor still generates 26 `.vue.d.ts`-derived records, whose generic details are not authoritative. Inventory *public exports*, not raw file counts, before stating a catalog size.
+- Steps 04–05 replaced placeholder `lint`/`typecheck` scripts and added a source self-reference TypeScript consumer fixture. The 0.9.0 release passed a fresh installed Vue + TypeScript consumer and compiled MCP check; generic legacy metadata outside the verified slice remains unverified.
 - Do not replace the npm package with a registry. Do not add AI-specific runtime dependencies to visual components. Do not assume headless agent applications need a UI.
 - Work on feature branches; do not publish or run `npm run build` as part of planning. Build only when explicitly requested, following project instructions.
 

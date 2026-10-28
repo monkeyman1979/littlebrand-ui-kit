@@ -237,7 +237,7 @@ See [CUSTOMIZATION.md](./CUSTOMIZATION.md) for detailed customization options in
 
 ## 🧩 Components
 
-The [first verified component slice](docs/STEP_08_COMPONENT_SLICE.md) documents source-level Button, Input, Dialog, and SegmentButton APIs with a checked Vue example. These changes are included in the 0.9.0 release candidate, not the earlier 0.8.3 package.
+The [first verified component slice](docs/STEP_08_COMPONENT_SLICE.md) documents source-level Button, Input, Dialog, and SegmentButton APIs with a checked Vue example. These changes ship in 0.9.0, not the earlier 0.8.3 package.
 
 ### Form Components
 - `LbInput` - Text input with validation states

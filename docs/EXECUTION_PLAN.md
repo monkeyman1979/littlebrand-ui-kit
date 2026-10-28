@@ -1,6 +1,6 @@
 # Modernization execution plan
 
-Status: proposed ordering for the [roadmap](ROADMAP.md), not an implementation or a release commitment. See the [handoff status](MODERNIZATION_STATUS.md) for merged Steps 01–12A and outstanding release-readiness work. Each numbered item is a small PR to `develop` unless investigation shows it must be split. Complete the acceptance gate before moving to its dependent item. Keep this plan for work that has *not* shipped; update `CHANGELOG.md` in each PR with user-visible changes only. Do not run `npm run build` without an explicit request from the project owner.
+Status: historical ordering for the [roadmap](ROADMAP.md). **0.9.0 shipped on 2026-10-28**; see the [current release status](MODERNIZATION_STATUS.md#current-release--2026-10-28) and [`CHANGELOG.md`](../CHANGELOG.md) instead of treating this pre-release plan as current gates. The details below preserve the original acceptance sequence. Each numbered item is a small PR to `develop` unless investigation shows it must be split. Complete the acceptance gate before moving to its dependent item. Keep this plan for work that has *not* shipped; update `CHANGELOG.md` in each PR with user-visible changes only. Do not run `npm run build` without an explicit request from the project owner.
 
 ## Why this order
 
@@ -108,6 +108,6 @@ Choose a concrete agent workflow that works without Vue. Add an optional visual 
 - Keep PRs bounded. For every user-visible change, update `CHANGELOG.md` under Unreleased and include a migration path if behavior or names change. Do not mark planned features as released.
 - Before an npm release, verify documented imports/types, token and theme behavior, component tests, and generated metadata against that exact version. A release build and publish are separate steps requiring the owner's instruction.
 
-## Immediate next PR
+## Historical next PR (before 0.9.0)
 
 **Steps 01–12A and subsequent source follow-ups are on `develop`.** The [kit-directed six-intent agent trial](MCP_AGENT_KIT_DIRECTED_TRIAL.md), [Zod 4 source compatibility](ZOD4_MCP_SOURCE_COMPAT.md), and [Vue 3.3.0 source/declaration checks](VUE33_SOURCE_COMPATIBILITY.md) extend the earlier checkpoints. The [current compatible dependency baseline](CURRENT_DEPENDENCY_BASELINE.md) records tooling updates and intentional major-version exceptions. An owner-authorized [local artifact check](DISTRIBUTABLE_VERIFICATION.md) now passes for source commit `daebb95` on Node 26.9.0 with Vue 3.3.0/3.5.44. The runtime-policy follow-up resolved the Node 18 mismatch; the October security review now restricts both manifests to `^22.23.4 || ^24.22.1 || ^26.12.1`, with a patched dev pin, engine-strict installs and a CLI startup guard. Do not treat old-patch compatibility evidence or npm audit alone as runtime security clearance. Before publication, repeat the artifact gate for the final release version/commit. No updated npm package, hosted docs, or `main` merge is implied. The owner intends future docs within the not-yet-built seedtoshelves.com project. See the [current handoff](MODERNIZATION_STATUS.md).

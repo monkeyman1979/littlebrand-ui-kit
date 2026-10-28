@@ -1,6 +1,14 @@
 # LittleBrand modernization — handoff status
 
-## Current source checkpoint — 2026-10-24
+## Current release — 2026-10-28
+
+`littlebrand-ui-kit` **0.9.0** is published on npm (`latest`); tag [`v0.9.0`](https://github.com/monkeyman1979/littlebrand-ui-kit/tree/v0.9.0) points to `develop` commit `e1ff228`. The registry tarball matched the locally verified artifact byte-for-byte (SHA-256 `9083f563f60222b08b90c0d5d17ff3b9ff1dcc4157d641ac90e60de8095a03d2`). PRs #150–#151 contain the final source and release notes. No `main` merge or hosted docs deployment occurred.
+
+The installed artifact passed Vue 3.3.0/3.5.44 strict declarations, ESM/CJS and CSS imports, production Chromium light/dark interactions, and the compiled local stdio MCP CLI. The MCP searches 33 public component names; seven checked entries (six standalone examples plus a compound child) provide verified details, while 26 catalog-only entries do not claim an API or generated example. The Node range is `^22.23.4 || ^24.22.1 || ^26.12.1`. Root/MCP production lockfile audits had zero findings at the release checkpoint; this is not a guarantee against later advisories. Broader component/API audits, real Safari/Firefox and screen-reader coverage remain open. See [`CHANGELOG.md`](../CHANGELOG.md) for 0.9.0 migrations.
+
+The sections below record **historical pre-release checkpoints**. Their statements about the published 0.8.3 package and open artifact gates are not the current release status.
+
+## Historical source checkpoint — 2026-10-24
 
 **Toolchain follow-up:** the owner-requested Vite+ 1.4.0 adoption centralizes Vite, Vitest, formatting, native lint, the existing ESLint rules and strict Vue/TypeScript validation tasks in `vite.config.js`. `npm run check` is the full source gate; `npm run check:all` adds Chromium probes. Native `vp check` alone is not the full Vue gate. Public library sources and historical evidence remain unchanged; the new production toolchain still needs a separately authorized fresh build/tarball check. See [development commands](../README.md#️-development).
 
@@ -31,7 +39,7 @@ Current dependency exceptions are recorded in [the dependency baseline](CURRENT_
 
 **Earlier validation:** Three owner-authorized Step 05 `npm run build` runs succeeded (extraction, Vite, MCP); **no build/extraction was run for Steps 06–12A**. `npm pack --ignore-scripts` created only a local artifact, installed into a fresh temp Vue + TS + Vite consumer. Its full type fixture passed in Bundler and NodeNext modes with `skipLibCheck: false`; ESM and CJS root imports passed; Vite emitted CSS. Named Button JS was 81,557 bytes versus 190,138 bytes with the global plugin; both bundled the full 294,316-byte CSS. `npm run lint`, `npm run typecheck`, `npm test` (5 files, 27 tests), `npm run test:browser` (Chromium theme and component slices), and `git diff --check` passed. Steps 01–11 were merged via PR; no publication, `main` merge, or end-to-end MCP CLI test occurred. The earlier MCP install reported 6 audit findings (3 moderate, 2 high, 1 critical). The [pre-remediation lockfile triage](MCP_RELEASE_READINESS.md) confirmed those six and 18 root findings. [Remediation](DEPENDENCY_REMEDIATION.md) merged via #134; both audited lockfiles reported zero findings at that commit, pending exact-artifact verification.
 
-## Resume from this checkpoint
+## Historical resume notes (pre-0.9.0)
 
 1. The [original agent trial evidence](MCP_AGENT_TRIAL_EVIDENCE.md) remains historical, including its double-save failure. The later [kit-directed six-intent trial](MCP_AGENT_KIT_DIRECTED_TRIAL.md) passed its measured source-fixture interactions; [Vue 3.3 source compatibility](VUE33_SOURCE_COMPATIBILITY.md) adds minimum-version source/declaration and overlay checks, not installed-artifact certification. Step 10's exact-release artifact gate is still open. A future release needs an owner-authorized **new** build/extraction and tarball/browser/MCP check against the exact release commit; the Step 05 artifact predates all this work.
 2. The owner viewed the full local `npm run dev` showcase and reported that it worked; this is not an independent MCP agent or released-package check. [Step 05 remaining checks](STEP_05_NPM_CONSUMER.md#remaining-before-release) include installed-package MCP CLI verification and re-auditing the exact release lockfiles. [Step 07 limits](STEP_07_THEME_RELIABILITY.md#verification-and-limits) include restrictive CSP and arbitrary palettes; [Step 08 limits](STEP_08_COMPONENT_SLICE.md#verification-and-remaining-boundaries) include routing hosts, multi-dialog, cross-engine and screen-reader coverage.
