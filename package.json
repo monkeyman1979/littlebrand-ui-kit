@@ -1,6 +1,6 @@
 {
   "name": "littlebrand-ui-kit",
-  "version": "0.8.3",
+  "version": "0.9.0",
   "description": "Clean, semantic Vue.js UI kit using Pug & SASS. Zero utility classes, CSS Grid-first, fully themeable.",
   "type": "module",
   "files": [
@@ -11,6 +11,7 @@
     "types",
     "TOKENS.md",
     "reference/v1.json",
+    "reference/catalog.json",
     "docs/reference/v1",
     "mcp-server/dist",
     "mcp-server/package.json",

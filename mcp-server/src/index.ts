@@ -37,6 +37,18 @@ interface Token {
   purpose: string
   related: string[]
 }
+interface CatalogComponent {
+  name: string
+  purpose: string
+  intents: string[]
+  source: string
+  parent?: string
+}
+interface Catalog {
+  schemaVersion: number
+  packageVersion: string
+  components: CatalogComponent[]
+}
 interface Reference {
   schemaVersion: number
   packageVersion: string
@@ -59,6 +71,10 @@ function loadReference(): Reference {
   return reference
 }
 
+function loadCatalog(): Catalog {
+  return JSON.parse(readFileSync(new URL('../../reference/catalog.json', import.meta.url), 'utf8'))
+}
+
 const pathFor = (id: string) =>
   id.startsWith('component:')
     ? `docs/reference/v1/components/${id.slice('component:'.length)}.md`
@@ -75,34 +91,58 @@ const words = (text: string) =>
       (word) =>
         word.length > 2 && !['the', 'for', 'with', 'and', 'use', 'how', 'can'].includes(word)
     )
-const search = (reference: Reference, query: string, limit: number) => {
+const search = (reference: Reference, catalog: Catalog, query: string, limit: number) => {
   const normalized = normalize(query)
   const terms = words(query)
   const entries = [
-    ...reference.components
-      .filter((c) => !c.compoundOnly)
-      .map((c) => ({
-        id: c.id,
-        name: c.name,
-        purpose: c.purpose,
-        terms: normalize([c.name, c.purpose, c.use, ...c.intents].join(' ')),
-        intents: c.intents.map(normalize)
-      })),
+    ...reference.components.map((c) => ({
+      id: c.id,
+      name: c.name,
+      purpose: c.purpose,
+      terms: normalize([c.name, c.purpose, c.use, ...c.intents].join(' ')),
+      intents: c.intents.map(normalize),
+      verification: 'checked' as const,
+      referencePath: pathFor(c.id),
+      ...(c.compoundOnly
+        ? {
+            parent: c.related.find((id) => id.startsWith('component:'))?.slice('component:'.length)
+          }
+        : {})
+    })),
+    ...catalog.components.map((c) => ({
+      id: `component:${c.name}`,
+      name: c.name,
+      purpose: c.purpose,
+      terms: normalize([c.name, c.purpose, ...c.intents].join(' ')),
+      intents: c.intents.map(normalize),
+      verification: 'catalog-only' as const,
+      sourcePath: c.source,
+      ...(c.parent ? { parent: c.parent } : {})
+    })),
     ...reference.tokens.map((t) => ({
       id: t.id,
       name: t.name,
       purpose: t.purpose,
       terms: normalize(`${t.name} ${t.purpose}`),
-      intents: [] as string[]
+      intents: [] as string[],
+      verification: 'checked' as const,
+      referencePath: pathFor(t.id)
     }))
   ]
   return entries
+    .filter(
+      (entry) =>
+        !('parent' in entry) ||
+        normalize(entry.name) === normalized ||
+        entry.intents.includes(normalized)
+    )
     .map((entry) => {
       const name = normalize(entry.name)
       const score =
         (name === normalized ? 100 : 0) +
         (terms.includes('token') && entry.id.startsWith('token:') ? 30 : 0) +
         (terms.includes('component') && entry.id.startsWith('component:') ? 30 : 0) +
+        (entry.intents.some((intent) => intent === normalized) ? 40 : 0) +
         (entry.intents.some((intent) => normalized.includes(intent)) ? 25 : 0) +
         (terms.length && terms.every((term) => entry.terms.includes(term)) ? 12 : 0) +
         terms.reduce((total, term) => total + (entry.terms.includes(term) ? 1 : 0), 0)
@@ -110,7 +150,10 @@ const search = (reference: Reference, query: string, limit: number) => {
         id: entry.id,
         name: entry.name,
         purpose: entry.purpose,
-        referencePath: pathFor(entry.id),
+        verification: entry.verification,
+        ...('referencePath' in entry ? { referencePath: entry.referencePath } : {}),
+        ...('sourcePath' in entry ? { sourcePath: entry.sourcePath } : {}),
+        ...('parent' in entry ? { parent: entry.parent } : {}),
         score
       }
     })
@@ -124,11 +167,30 @@ const response = (value: unknown, isError = false) => ({
   ...(isError ? { isError: true } : {})
 })
 const note =
-  'This reference is unreleased source work, not the published npm 0.8.3 artifact. Published 0.8.3 has known strict TypeScript and CJS failures; the exact future release artifact and MCP CLI remain unverified.'
+  'Only checked items have verified APIs and tested examples. Catalog-only items have unverified APIs; do not infer props or use a compound child alone. Older package versions may expose different MCP tools and examples.'
 
-export function createServer(reference: Reference = loadReference()) {
+export function createServer(
+  reference: Reference = loadReference(),
+  catalog: Catalog = loadCatalog()
+) {
   assertSupportedNodeVersion()
-  if (reference.schemaVersion !== 1) throw new Error('Unsupported MCP reference schema')
+  if (reference.schemaVersion !== 1 || catalog.schemaVersion !== 1)
+    throw new Error('Unsupported MCP reference schema')
+  if (catalog.packageVersion !== reference.packageVersion)
+    throw new Error('MCP catalog package version mismatch')
+  const checked = new Set(reference.components.map((item) => item.name))
+  const names = new Set<string>()
+  for (const item of catalog.components) {
+    if (checked.has(item.name) || names.has(item.name))
+      throw new Error(`Duplicate MCP catalog component: ${item.name}`)
+    names.add(item.name)
+  }
+  if (
+    catalog.components.some(
+      (item) => item.parent && !checked.has(item.parent) && !names.has(item.parent)
+    )
+  )
+    throw new Error('MCP catalog has an unknown compound parent')
   const packageVersion = reference.packageVersion
   const server = new McpServer({ name: 'littlebrand-mcp-server', version: packageVersion })
   const annotations = {
@@ -141,8 +203,8 @@ export function createServer(reference: Reference = loadReference()) {
   server.registerTool(
     'lb_search',
     {
-      title: 'Search verified LittleBrand components and tokens',
-      description: `Small intent search over ${reference.components.filter((c) => !c.compoundOnly).length} verified examples and selected semantic tokens. Returns stable IDs and reference paths. Search, then use lb_get for the exact item.`,
+      title: 'Search LittleBrand public components and verified tokens',
+      description: `Search ${reference.components.length + catalog.components.length} source root-exported components and selected semantic tokens. Results distinguish checked examples from catalog-only names without verified APIs. Compound children name their parent. Use lb_get for one item; only checked items have tested Vue examples.`,
       inputSchema: {
         query: z.string().trim().min(2),
         limit: z.number().int().min(1).max(5).default(4)
@@ -154,16 +216,16 @@ export function createServer(reference: Reference = loadReference()) {
         schemaVersion: reference.schemaVersion,
         packageVersion,
         status: reference.status,
-        results: search(reference, query, limit)
+        results: search(reference, catalog, query, limit)
       })
   )
 
   server.registerTool(
     'lb_get',
     {
-      title: 'Retrieve one verified LittleBrand component or token',
+      title: 'Retrieve one LittleBrand component or verified token',
       description:
-        'Retrieve by exact stable ID or name. Set detail=full for API and tested, npm-ready Vue example. SegmentButtonItem always requires its parent.',
+        'Retrieve by exact stable ID or name. Checked items include tested Vue examples with detail=full. Catalog-only components return name, purpose, source path and parent when applicable; no unverified API or example.',
       inputSchema: {
         id: z.string().trim().min(1),
         detail: z.enum(['summary', 'full']).default('summary')
@@ -174,13 +236,32 @@ export function createServer(reference: Reference = loadReference()) {
       const matches = (entry: Component | Token) =>
         entry.id.toLowerCase() === id.toLowerCase() || entry.name.toLowerCase() === id.toLowerCase()
       const component = reference.components.find(matches)
+      const catalogItem = catalog.components.find(
+        (entry) =>
+          entry.name.toLowerCase() === id.toLowerCase() ||
+          `component:${entry.name}`.toLowerCase() === id.toLowerCase()
+      )
       const item = component ?? reference.tokens.find(matches)
+      if (catalogItem)
+        return response({
+          schemaVersion: reference.schemaVersion,
+          packageVersion,
+          status: reference.status,
+          id: `component:${catalogItem.name}`,
+          name: catalogItem.name,
+          purpose: catalogItem.purpose,
+          verification: 'catalog-only',
+          sourcePath: catalogItem.source,
+          ...(catalogItem.parent ? { parent: catalogItem.parent } : {}),
+          caveat:
+            'Public source export, but props, slots, events and examples are not verified. Do not infer an API; check parent context for compound pieces.'
+        })
       if (!item)
         return response(
           {
-            error: 'Unknown or unverified item',
+            error: 'Unknown item',
             id,
-            hint: 'Use lb_search for the verified slice.'
+            hint: 'Use lb_search for source exports and the verified slice.'
           },
           true
         )
@@ -188,6 +269,7 @@ export function createServer(reference: Reference = loadReference()) {
         schemaVersion: reference.schemaVersion,
         packageVersion,
         status: reference.status,
+        verification: 'checked',
         id: item.id,
         name: item.name,
         purpose: item.purpose,
@@ -235,7 +317,7 @@ export function createServer(reference: Reference = loadReference()) {
         install: 'npm install littlebrand-ui-kit',
         vue: "import { LbButton } from 'littlebrand-ui-kit'\nimport 'littlebrand-ui-kit/style.css'",
         mcpStdio: 'node ./node_modules/littlebrand-ui-kit/mcp-server/dist/index.js',
-        supported: `Security-patched Node (${NODE_ENGINE_RANGE}) for the bundled MCP CLI. Vue peer ^3.3.0; npm root component exports and /style.css. For reusable wrappers compatible with Vue 3.3, use modelValue and update:modelValue; defineModel requires Vue 3.4+. No deep import or hosted MCP contract.`
+        supported: `Security-patched Node (${NODE_ENGINE_RANGE}) for the bundled MCP CLI. Vue peer ^3.3.0; npm root component exports and /style.css. Search covers source root exports; only checked results have verified APIs/examples. For reusable wrappers compatible with Vue 3.3, use modelValue and update:modelValue; defineModel requires Vue 3.4+. No deep import or hosted MCP contract.`
       })
   )
   return server

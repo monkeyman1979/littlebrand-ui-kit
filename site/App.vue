@@ -8,7 +8,8 @@
         a(href="#components") Components
         a(href="#tokens") Tokens
         a(href="#installation") Install
-      span.release-pill Source preview · not published
+        a(href="#mcp") MCP guide
+      span.release-pill Local docs preview · not hosted
 
   main#main
     section#top.hero(aria-labelledby="hero-title")
@@ -19,7 +20,7 @@
         .hero-links
           a.jump(href="#components") Explore components →
           a(href="/reference/v1/ai-index.md") Compact AI index
-        p.source-note The published npm 0.8.3 package has not been refreshed with this source work. This site is a local preview, not a release or an accessibility certification.
+        p.source-note These examples describe LittleBrand 0.9.0. This site is a local preview, not a hosted website or an accessibility certification; check your installed package version.
 
     section#components.catalog(aria-labelledby="catalog-title")
       .container
@@ -194,8 +195,38 @@
           code npm install littlebrand-ui-kit
         pre
           code {{ installVue }}
-        p.source-note These source examples are ahead of the published 0.8.3 artifact. Verify the exact future package before relying on its types, MCP server, or theme changes.
+        p.source-note Install version 0.9.0 or later for these examples, types, theme behavior and MCP tools. The earlier 0.8.3 package has a different MCP server.
         a(href="/reference/v1/README.md") Human-readable reference index →
+
+    section#mcp.mcp-guide(aria-labelledby="mcp-title")
+      .container
+        .section-heading
+          span.eyebrow 05 / agent discovery
+          h2#mcp-title Connect the source MCP server.
+          p The local stdio server lets an MCP-compatible agent search public component names by intent, retrieve checked Vue examples where available, and get npm setup guidance. It does not install components or generate new code.
+          p.source-note This walkthrough runs the 0.9.0 source server from this checkout, not the installed package. For a packaged client, install 0.9.0 or later and use its compiled MCP path. The earlier 0.8.3 CLI exposes ten different tools.
+        ol.mcp-steps
+          li
+            h3 Prepare the checkout
+            p From the repository root, install both sets of dependencies using a supported Node version. No release build is needed.
+            pre
+              code {{ sourceInstall }}
+          li
+            h3 Connect an MCP client
+            p Use your client's local stdio server settings. This example shows the common mcpServers shape for macOS/Linux; replace both absolute paths with paths to this checkout, then restart the client. Other clients may use a different config format.
+            pre
+              code {{ sourceMcpConfig }}
+          li
+            h3 Search, then retrieve
+            p Ask your agent for a confirmation modal. It should call the tools in this order (these are MCP tool calls, not terminal commands):
+            pre
+              code {{ sourceFlow }}
+            p Checked results include a testedVueExample with the package root and CSS import. Try “popover trigger” to see a catalog-only result with its parent: it has a source path but no verified props or example. Inspect its source before using it. Use lb_setup for installation details.
+        p If it does not connect, check the two absolute paths, the supported Node version, and the MCP dependencies. Seeing ten legacy tools instead of lb_search, lb_get, and lb_setup means your client is running the old 0.8.3 server.
+        p To check the source protocol without an agent client, run
+          code  npm run test:mcp
+          |  from the repository root. This smoke test checks the three tools, six verified intent-to-example lookups, and one catalog-only lookup; it does not test your client's configuration.
+        a.md-link(href="https://github.com/monkeyman1979/littlebrand-ui-kit/blob/develop/mcp-server/README.md") MCP details and release boundaries →
   footer.site-footer
     .container
       span LittleBrand · source reference {{ reference.packageVersion }}
@@ -257,6 +288,21 @@ const palettes = [
 ]
 const installVue =
   "import { LbButton } from 'littlebrand-ui-kit'\nimport 'littlebrand-ui-kit/style.css'"
+const sourceInstall = 'npm ci --ignore-scripts\nnpm ci --ignore-scripts --prefix mcp-server'
+const sourceFlow =
+  'lb_search({"query":"Show a confirmation in a modal"})\nlb_get({"id":"component:LbDialog","detail":"full"})'
+const sourceMcpConfig = JSON.stringify(
+  {
+    mcpServers: {
+      'littlebrand-ui-kit': {
+        command: '/absolute/path/to/littlebrand-ui-kit/mcp-server/node_modules/.bin/tsx',
+        args: ['/absolute/path/to/littlebrand-ui-kit/mcp-server/src/index.ts']
+      }
+    }
+  },
+  null,
+  2
+)
 const copyStatus = ref('')
 const copyLabel = computed(() =>
   copyStatus.value === 'Example copied' ? 'Copied' : 'Copy example'
@@ -404,12 +450,12 @@ section
   border-radius: base.$radius-sm
   text-decoration: none
 
-.section-heading, .reference-intro, .guidance, .preview-column, .code-column, .api, .install-inner
+.section-heading, .reference-intro, .guidance, .preview-column, .code-column, .api, .install-inner, .mcp-guide .container
   display: flex
   flex-direction: column
   gap: base.$space-lg
 
-.section-heading h2, .reference-intro h2, .install h2
+.section-heading h2, .reference-intro h2, .install h2, .mcp-guide h2
   font-size: clamp(1.8rem, calc(1.3rem + 1.5vw), 2.8rem)
 
 .component-index
@@ -620,6 +666,21 @@ legend
 
 .install-inner
   gap: base.$space-xl
+
+.mcp-steps
+  display: flex
+  flex-direction: column
+  gap: base.$space-xl
+  padding-inline-start: base.$space-xl
+
+.mcp-steps li
+  display: flex
+  flex-direction: column
+  gap: base.$space-md
+  padding-inline-start: base.$space-sm
+
+.mcp-guide pre
+  max-width: 100%
 
 .site-footer
   border-top: base.$border-sm solid var(--lb-border-neutral-line)

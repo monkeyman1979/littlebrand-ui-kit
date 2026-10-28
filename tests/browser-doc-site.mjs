@@ -1,8 +1,10 @@
 import assert from 'node:assert/strict'
-import { readFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { chromium } from 'playwright'
 import { createServer } from 'vite'
+import { Client } from '@modelcontextprotocol/sdk/client/index.js'
+import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js'
 
 const reference = JSON.parse(readFileSync(resolve('reference/v1.json'), 'utf8'))
 
@@ -29,6 +31,58 @@ try {
       .waitFor()
     assert.equal(await page.locator('.component-link').count(), 6)
     assert.equal(await page.locator('.token-list li').count(), 9)
+    await page.getByRole('link', { name: 'MCP guide' }).click()
+    await page.getByRole('heading', { name: 'Connect the source MCP server.' }).waitFor()
+    const guide = page.locator('#mcp')
+    assert.match(await guide.innerText(), /earlier 0\.8\.3 CLI exposes ten different tools/)
+    const install = await guide.locator('.mcp-steps li').nth(0).locator('pre').innerText()
+    assert.match(install, /npm ci --ignore-scripts --prefix mcp-server/)
+    const config = JSON.parse(
+      await guide.locator('.mcp-steps li').nth(1).locator('pre code').innerText()
+    )
+    const entry = config.mcpServers['littlebrand-ui-kit']
+    assert.equal(
+      entry.command,
+      '/absolute/path/to/littlebrand-ui-kit/mcp-server/node_modules/.bin/tsx'
+    )
+    assert.deepEqual(entry.args, ['/absolute/path/to/littlebrand-ui-kit/mcp-server/src/index.ts'])
+    const local = (file) => file.replace('/absolute/path/to/littlebrand-ui-kit', resolve('.'))
+    for (const file of [entry.command, ...entry.args]) assert.ok(existsSync(local(file)))
+    const client = new Client({ name: 'docs-first-run-check', version: '1.0.0' })
+    try {
+      await client.connect(
+        new StdioClientTransport({
+          command: local(entry.command),
+          args: entry.args.map(local),
+          cwd: resolve('.'),
+          stderr: 'pipe'
+        })
+      )
+      assert.deepEqual(
+        (await client.listTools()).tools.map((tool) => tool.name),
+        ['lb_search', 'lb_get', 'lb_setup']
+      )
+      const search = await client.callTool({
+        name: 'lb_search',
+        arguments: { query: 'Show a confirmation in a modal' }
+      })
+      assert.equal(JSON.parse(search.content[0].text).results[0].id, 'component:LbDialog')
+      const full = await client.callTool({
+        name: 'lb_get',
+        arguments: { id: 'component:LbDialog', detail: 'full' }
+      })
+      assert.equal(
+        JSON.parse(full.content[0].text).testedVueExample,
+        reference.components.find((item) => item.id === 'component:LbDialog').usage
+      )
+    } finally {
+      await client.close()
+    }
+    assert.match(
+      await guide.locator('.mcp-steps li').nth(2).locator('pre').innerText(),
+      /lb_search.*confirmation in a modal.*\nlb_get.*component:LbDialog.*full/
+    )
+    assert.match(await guide.innerText(), /npm run test:mcp/)
     assert.equal(
       await page.locator('th[scope="row"]').count(),
       reference.components[0].props.length,

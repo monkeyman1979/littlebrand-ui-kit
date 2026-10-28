@@ -60,7 +60,7 @@ function run(command, args, cwd) {
   return result.stdout
 }
 
-async function mcp(consumer, reference, runtime) {
+async function mcp(consumer, reference, catalog, runtime) {
   const command = join(consumer, 'node_modules/.bin/littlebrand-mcp')
   assert.ok(existsSync(command), 'npm must install the executable bin link')
   const client = new Client({ name: 'installed-tarball-probe', version: '1.0.0' })
@@ -93,6 +93,27 @@ async function mcp(consumer, reference, runtime) {
         reference.components.find((c) => c.name === name).usage
       )
     }
+    for (const item of catalog.components) {
+      const search = await client.callTool({
+        name: 'lb_search',
+        arguments: { query: item.name }
+      })
+      assert.equal(JSON.parse(search.content[0].text).results[0]?.id, `component:${item.name}`)
+      const result = await client.callTool({
+        name: 'lb_get',
+        arguments: { id: `component:${item.name}`, detail: 'full' }
+      })
+      const body = JSON.parse(result.content[0].text)
+      assert.equal(body.verification, 'catalog-only')
+      assert.equal(body.sourcePath, item.source)
+      assert.equal(body.testedVueExample, undefined)
+      assert.equal(body.props, undefined)
+    }
+    const child = await client.callTool({
+      name: 'lb_search',
+      arguments: { query: 'segment item' }
+    })
+    assert.equal(JSON.parse(child.content[0].text).results[0]?.parent, 'LbSegmentButton')
     const invalid = await client.callTool({ name: 'lb_search', arguments: { query: 'x' } })
     assert.equal(invalid.isError, true)
   } finally {
@@ -229,6 +250,8 @@ try {
     )
     const manifest = JSON.parse(readFileSync(join(installed, 'package.json'), 'utf8'))
     const reference = JSON.parse(readFileSync(join(installed, 'reference/v1.json'), 'utf8'))
+    const catalog = JSON.parse(readFileSync(join(installed, 'reference/catalog.json'), 'utf8'))
+    assert.equal(catalog.packageVersion, manifest.version)
     assert.equal(manifest.engines.node, engineRange)
     assert.equal(
       JSON.parse(readFileSync(join(installed, 'mcp-server/package.json'), 'utf8')).engines.node,
@@ -333,7 +356,7 @@ try {
       "import {defineConfig} from 'vite'; import vue from '@vitejs/plugin-vue'; export default defineConfig({plugins:[vue()]})"
     )
     run(process.execPath, [join(consumer, 'node_modules/vite/bin/vite.js'), 'build'], consumer)
-    for (const node of nodes) await mcp(consumer, reference, node)
+    for (const node of nodes) await mcp(consumer, reference, catalog, node)
     const { preview } = await import(
       pathToFileURL(join(consumer, 'node_modules/vite/dist/node/index.js')).href
     )
@@ -371,7 +394,7 @@ try {
       imports: 'ESM+CJS',
       declarations: 'Bundler+NodeNext+Vue SFC (skipLibCheck=false)',
       browser: 'production Chromium light+dark, six examples',
-      mcp: 'installed bin, 3 tools, six lookups, invalid input; compiled startup rejects simulated stale runtime'
+      mcp: 'installed bin, 3 tools, six checked lookups, catalog-only names and compound parent, invalid input; compiled startup rejects simulated stale runtime'
     })
     console.log(
       `PASS installed tarball: Vue ${version}, strict types, production consumer, six examples, MCP bin on ${report.mcpNodes.join(', ')}`

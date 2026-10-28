@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Expanded the unreleased source MCP search to discover all 33 public root-exported components. Results distinguish `checked` APIs/examples from `catalog-only` source names and identify compound parents; catalog-only retrieval never supplies unverified props or generated examples. The bundled/published MCP artifacts are unchanged.
+- Added a source-only MCP first-run walkthrough to the local docs preview: checkout setup, a generic stdio client configuration, intent search → verified example retrieval, and troubleshooting. It distinguishes the unreleased source server from the published 0.8.3 and old compiled MCP artifacts; no release or MCP runtime change.
 - Extended the unreleased verified reference, local docs preview and source MCP lookup with tested Textarea and FormField Vue examples, checked API/intent guidance and per-component Markdown. Standalone Label/HintText APIs remain unverified.
 - Added a local Vue documentation preview for the verified Button, Input, Dialog and compound SegmentButton slice, with live previews, source-derived API and guidance, copyable tested examples, nine semantic token swatches, theme/brand controls, and npm setup. A compact AI index and per-item Markdown are generated from the same reference and served beside the preview. This is **unreleased source work**, not a deployed site or updated npm package.
 - Added source-only local stdio MCP retrieval over the verified reference: `lb_search`, `lb_get` and `lb_setup`, with bounded intent results and tested Vue examples on demand. The machine reference and Markdown pages are marked for future npm packaging; no new MCP artifact has been built or published.
