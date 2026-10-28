@@ -4,12 +4,13 @@ component.lb-button(
   :class="buttonClasses"
   v-bind="computedProps"
   :disabled="disabled || loading"
+  :aria-busy="loading || undefined"
   @click="handleClick"
 )
   //- Leading icon
-  span.icon-leading(v-if="$slots['icon-leading'] || (loading && iconPosition === 'leading')")
+  span.icon-leading(v-if="$slots['icon-leading'] || (loading && (iconPosition === 'leading' || iconOnly))")
     transition(name="lb-fade" mode="out-in")
-      .spinner(v-if="loading && iconPosition === 'leading'" key="spinner")
+      .spinner(v-if="loading && (iconPosition === 'leading' || iconOnly)" key="spinner" aria-hidden="true")
         svg(viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg")
           circle(cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round")
       slot(v-else name="icon-leading")
@@ -19,7 +20,7 @@ component.lb-button(
   
   span.icon-trailing(v-if="!iconOnly && ($slots['icon-trailing'] || (loading && iconPosition === 'trailing'))")
     transition(name="lb-fade" mode="out-in")
-      .spinner(v-if="loading && iconPosition === 'trailing'" key="spinner")
+      .spinner(v-if="loading && iconPosition === 'trailing'" key="spinner" aria-hidden="true")
         svg(viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg")
           circle(cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" stroke-linecap="round")
       slot(v-else name="icon-trailing")
@@ -59,6 +60,12 @@ const props = withDefaults(defineProps<{
   muted: false
 })
 
+defineSlots<{
+  default?(): any
+  'icon-leading'?(): any
+  'icon-trailing'?(): any
+}>()
+
 // Emits
 const emit = defineEmits<{
   click: [event: Event]
@@ -81,6 +88,8 @@ const buttonClasses = computed(() => [
 ])
 
 const computedTag = computed(() => {
+  // A disabled/loading link must not keep a router-link's navigation handler.
+  if ((props.disabled || props.loading) && (props.to || props.href)) return 'button'
   if (props.to) return 'router-link'
   if (props.href) return 'a'
   return 'button'
@@ -158,8 +167,11 @@ defineOptions({
     color: inherit
   
   &:focus-visible
-    outline: base.$focus-ring-width solid var(--lb-focus-ring-color)
+    // Preserve the brand focus hue as an outer ring, with an inner ring
+    // that remains distinguishable from both light and dark canvases.
+    outline: base.$focus-ring-width solid var(--lb-text-neutral-contrast-high)
     outline-offset: base.$focus-ring-offset
+    box-shadow: 0 0 0 calc(#{base.$focus-ring-width} + #{base.$focus-ring-offset}) var(--lb-focus-ring-color)
     transition: none
   
   // Size modifiers
@@ -274,8 +286,10 @@ defineOptions({
 
 // Variant styles
 @mixin button-variant($variant, $color, $color-name)
-  // Common active state for all non-link variants
-  @if $variant != 'link'
+  // Keep the same semantic mapping without Sass's deprecated if() function.
+  $text-family: $color
+  @if $color == 'neutral' or $color == 'warning'
+    $text-family: 'neutral'
   
   // Base colors for each variant
   @if $variant == 'filled'
@@ -306,22 +320,22 @@ defineOptions({
       
   @else if $variant == 'tonal'
     background-color: var(--lb-surface-#{$color}-normal)
-    color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
+    color: var(--lb-text-#{$text-family}-contrast-high)
     .icon-leading,
     .icon-trailing
-      color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-normal), var(--lb-text-#{$color}-normal))
+      color: var(--lb-text-#{$text-family}-normal)
     &:not(.disabled):not(.loading)
       @include base.hover-supported
         background-color: var(--lb-surface-#{$color}-hover)
-        color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
+        color: var(--lb-text-#{$text-family}-contrast-high)
         .icon-leading,
         .icon-trailing
-          color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
+          color: var(--lb-text-#{$text-family}-contrast-high)
     &:active:not(.disabled):not(.loading)
       background-color: var(--lb-surface-#{$color}-active)
       .icon-leading,
       .icon-trailing
-        color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
+        color: var(--lb-text-#{$text-family}-contrast-high)
     &.disabled
       background-color: var(--lb-surface-subtle)
       color: var(--lb-text-neutral-disabled)
@@ -331,11 +345,11 @@ defineOptions({
       
   @else if $variant == 'outline'
     background-color: transparent
-    color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
+    color: var(--lb-text-#{$text-family}-contrast-high)
     box-shadow: inset 0 0 0 base.$border-sm var(--lb-border-#{$color}-normal)
     .icon-leading,
     .icon-trailing
-      color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-normal), var(--lb-text-#{$color}-normal))
+      color: var(--lb-text-#{$text-family}-normal)
     &:not(.disabled):not(.loading)
       @include base.hover-supported
         background-color: var(--lb-fill-#{$color}-normal)
@@ -360,23 +374,23 @@ defineOptions({
       
   @else if $variant == 'ghost'
     background-color: transparent
-    color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
+    color: var(--lb-text-#{$text-family}-contrast-high)
     .icon-leading,
     .icon-trailing
-      color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-normal), var(--lb-text-#{$color}-normal))
+      color: var(--lb-text-#{$text-family}-normal)
     &:not(.disabled):not(.loading)
       @include base.hover-supported
         background-color: var(--lb-surface-#{$color}-normal)
-        color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
+        color: var(--lb-text-#{$text-family}-contrast-high)
         .icon-leading,
         .icon-trailing
-          color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
+          color: var(--lb-text-#{$text-family}-contrast-high)
     &:active:not(.disabled):not(.loading)
       background-color: var(--lb-surface-#{$color}-hover)
       transform: translateY(1px)
       .icon-leading,
       .icon-trailing
-        color: if($color == 'neutral' or $color == 'warning', var(--lb-text-neutral-contrast-high), var(--lb-text-#{$color}-contrast-high))
+        color: var(--lb-text-#{$text-family}-contrast-high)
     &.disabled
       color: var(--lb-text-neutral-disabled)
       .icon-leading,
@@ -439,37 +453,8 @@ $color-map: ('primary': 'orange', 'secondary': 'teal', 'tertiary': 'sky', 'neutr
         .icon-trailing
           color: var(--lb-text-neutral-normal)
 
-// Light mode specific warning text colors
-:root:not([data-theme="dark"])
-  .lb-button.tonal-warning,
-  .lb-button.outline-warning,
-  .lb-button.ghost-warning
-    color: var(--lb-text-warning-contrast-high)
-    .icon-leading,
-    .icon-trailing
-      color: var(--lb-text-warning-normal)
-    &:not(.disabled):not(.loading)
-      @include base.hover-supported
-        .icon-leading,
-        .icon-trailing
-          color: var(--lb-text-warning-contrast-high)
-    &:active:not(.disabled):not(.loading)
-      .icon-leading,
-      .icon-trailing
-        color: var(--lb-text-warning-contrast-high)
-
-  // Link warning follows the standard link pattern (step 9 → 10)
-  .lb-button.link-warning
-    color: var(--lb-text-warning-contrast-low)
-    .icon-leading,
-    .icon-trailing
-      color: var(--lb-text-warning-normal)
-    &:not(.disabled):not(.loading)
-      @include base.hover-supported
-        color: var(--lb-warning-10)
-        .icon-leading,
-        .icon-trailing
-          color: var(--lb-text-warning-contrast-high)
+// Warning variants use the same semantic color mapping as other families.
+// A root-only light override would also leak into system-dark and nested-dark scopes.
 
 // Animations
 @keyframes lb-spin
@@ -493,4 +478,15 @@ $color-map: ('primary': 'orange', 'secondary': 'teal', 'tertiary': 'sky', 'neutr
 .lb-fade-enter-from,
 .lb-fade-leave-to
   opacity: base.$opacity-0
+
+@media (prefers-reduced-motion: reduce)
+  .lb-button,
+  .lb-button .icon-leading,
+  .lb-button .icon-trailing,
+  .lb-fade-enter-active,
+  .lb-fade-leave-active
+    transition: none
+  .lb-button .spinner,
+  .lb-button .spinner circle
+    animation: none
 </style>

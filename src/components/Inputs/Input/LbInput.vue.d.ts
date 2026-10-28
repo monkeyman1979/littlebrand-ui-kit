@@ -1,4 +1,5 @@
-import type { DefineComponent, VNode } from 'vue'
+import type { DefineComponent, SlotsType, VNode } from 'vue'
+import type { ComponentEmits, ComponentPublicProps as PublicProps, ComponentEventProps as EmitsToProps } from '../../component-emits.js'
 
 export interface LbInputProps {
   modelValue?: string | number
@@ -12,7 +13,7 @@ export interface LbInputProps {
   ariaDescribedby?: string
   clearable?: boolean
   loading?: boolean
-  size?: 'small' | 'medium' | 'large'
+  size?: 'medium' | 'large'
   autofocus?: boolean
 }
 
@@ -26,14 +27,21 @@ export interface LbInputEmits {
 }
 
 export interface LbInputSlots {
-  'icon-leading'(): VNode[]
-  'icon-trailing'(): VNode[]
-  'icon-password-show'(): VNode[]
-  'icon-password-hide'(): VNode[]
-  'icon-clear'(): VNode[]
-  'icon-loading'(): VNode[]
+  'icon-leading'?(): VNode[]
+  'icon-trailing'?(): VNode[]
+  'icon-password-show'?(): VNode[]
+  'icon-password-hide'?(): VNode[]
+  'icon-clear'?(): VNode[]
+  'icon-loading'?(): VNode[]
 }
 
-declare const LbInput: DefineComponent<LbInputProps, {}, {}, {}, {}, {}, {}, {}>
+type InputEventTuples = { [K in keyof LbInputEmits]: LbInputEmits[K] extends (...args: infer Args) => void ? Args : never }
+type InputVueEmits = ComponentEmits<InputEventTuples>
+declare const LbInput: DefineComponent<
+  LbInputProps, {}, {}, {}, {}, {}, {},
+  InputVueEmits, never, PublicProps,
+  Readonly<LbInputProps> & EmitsToProps<InputVueEmits>,
+  {}, SlotsType<LbInputSlots>
+>
 
 export default LbInput

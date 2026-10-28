@@ -1,4 +1,5 @@
 <template lang="pug">
+span.lb-dialog-origin(ref="originRef" hidden aria-hidden="true")
 Teleport(to="body")
   Transition(
     name="dialog"
@@ -13,11 +14,15 @@ Teleport(to="body")
       ref="overlayRef"
     )
       .lb-dialog(
+        ref="dialogRef"
+        v-bind="$attrs"
         :class="dialogClasses"
+        tabindex="-1"
         role="dialog"
         :aria-modal="true"
-        :aria-labelledby="titleId"
-        :aria-describedby="contentId"
+        :aria-labelledby="$attrs['aria-labelledby'] || (hasVisibleTitle ? titleId : undefined)"
+        :aria-label="$attrs['aria-label'] || (title && !hasVisibleTitle ? title : undefined)"
+        :aria-describedby="$attrs['aria-describedby'] || contentId"
         @click.stop
       )
         //- Header only for fullscreen variant
@@ -57,15 +62,15 @@ Teleport(to="body")
 </template>
 
 <script setup lang="ts">
-import { computed, ref, nextTick, onBeforeUnmount, onMounted } from 'vue'
-import { useScrollLock } from '@vueuse/core'
+import { computed, ref, nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
+import { useBodyScrollLock } from '@/utils/body-scroll-lock'
 import LbButton from '@/components/Buttons/Button/LbButton.vue'
 
 // Types
 export type DialogVariant = 'default' | 'fullscreen'
 
 export interface LbDialogProps {
-  modelValue: boolean
+  modelValue?: boolean
   title?: string
   variant?: DialogVariant
   showClose?: boolean
@@ -93,12 +98,73 @@ const emit = defineEmits<{
 const generateId = (prefix: string) => `${prefix}-${Math.random().toString(36).substring(2, 9)}`
 
 // Refs
+const originRef = ref<HTMLElement>()
 const overlayRef = ref<HTMLElement>()
+const dialogRef = ref<HTMLElement>()
+let themeObserver: MutationObserver | undefined
+let themeMedia: MediaQueryList | undefined
+const portalTokens = new Set<string>()
+
+const effectiveOriginMode = () => {
+  for (let element = originRef.value?.parentElement; element; element = element.parentElement) {
+    const attribute = element.getAttribute('data-theme')
+    if (attribute === 'light' || attribute === 'dark') return attribute
+    if (element.classList.contains('dark')) return 'dark'
+  }
+  return window.matchMedia?.('(prefers-color-scheme: dark)')?.matches ? 'dark' : 'light'
+}
+
+const syncPortalTheme = () => {
+  const source = originRef.value?.parentElement
+  const overlay = overlayRef.value
+  if (!source || !overlay) return
+  overlay.dataset.theme = effectiveOriginMode()
+  const computed = getComputedStyle(source)
+  for (const token of portalTokens) overlay.style.removeProperty(token)
+  portalTokens.clear()
+  for (let index = 0; index < computed.length; index++) {
+    const token = computed.item(index)
+    if (!token.startsWith('--lb-')) continue
+    const value = computed.getPropertyValue(token).trim()
+    if (!value) continue
+    overlay.style.setProperty(token, value)
+    portalTokens.add(token)
+  }
+  overlay.style.colorScheme = computed.colorScheme
+}
+
+const stopThemeSync = () => {
+  themeObserver?.disconnect()
+  themeObserver = undefined
+  themeMedia?.removeEventListener?.('change', syncPortalTheme)
+  themeMedia = undefined
+  document.removeEventListener('lb-theme-change', syncPortalTheme)
+  portalTokens.clear()
+}
+
+const startThemeSync = () => {
+  stopThemeSync()
+  const source = originRef.value?.parentElement
+  if (!source || !overlayRef.value) return
+  syncPortalTheme()
+  themeObserver = new MutationObserver(syncPortalTheme)
+  for (let ancestor: HTMLElement | null = source; ancestor; ancestor = ancestor.parentElement) {
+    themeObserver.observe(ancestor, { attributes: true, attributeFilter: ['class', 'data-theme', 'style'] })
+  }
+  themeMedia = window.matchMedia?.('(prefers-color-scheme: dark)')
+  themeMedia?.addEventListener?.('change', syncPortalTheme)
+  document.addEventListener('lb-theme-change', syncPortalTheme)
+}
+
+watch(() => props.modelValue, async (open) => {
+  if (!open) { stopThemeSync(); return }
+  await nextTick()
+  if (props.modelValue) startThemeSync()
+}, { flush: 'post' })
 const titleId = generateId('dialog-title')
 const contentId = generateId('dialog-content')
 
-// Scroll lock using VueUse
-const isScrollLocked = useScrollLock(typeof document !== 'undefined' ? document.body : null)
+const { lock: lockBodyScroll, unlock: unlockBodyScroll } = useBodyScrollLock()
 
 // Focus management
 const lastFocusedElement = ref<HTMLElement | null>(null)
@@ -106,21 +172,26 @@ const lastFocusedElement = ref<HTMLElement | null>(null)
 const getFocusableElements = () => {
   if (!overlayRef.value) return []
   
-  const selector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-  return Array.from(overlayRef.value.querySelectorAll(selector)) as HTMLElement[]
+  const selector = 'button:not(:disabled), [href], input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])'
+  return (Array.from(dialogRef.value?.querySelectorAll(selector) || []) as HTMLElement[])
+    .filter(element => !element.closest('[hidden], [inert]') && getComputedStyle(element).visibility !== 'hidden')
 }
 
 const trapFocus = (event: KeyboardEvent) => {
   if (event.key !== 'Tab') return
   
   const elements = getFocusableElements()
-  if (elements.length === 0) return
-  
+  if (elements.length === 0) {
+    event.preventDefault()
+    dialogRef.value?.focus()
+    return
+  }
+
   const firstElement = elements[0]
   const lastElement = elements[elements.length - 1]
   const { activeElement } = document
   
-  if (event.shiftKey && activeElement === firstElement) {
+  if (event.shiftKey && (activeElement === firstElement || !elements.includes(activeElement as HTMLElement))) {
     event.preventDefault()
     lastElement.focus()
   } else if (!event.shiftKey && activeElement === lastElement) {
@@ -140,12 +211,13 @@ const dialogClasses = computed(() => ({
 }))
 
 const hasHeader = computed(() => props.title || !!slots.header)
+const hasVisibleTitle = computed(() => props.variant === 'fullscreen' && !!props.title && !slots.header)
 
 // Get slots
 const slots = defineSlots<{
-  default(): any
-  header(): any
-  footer(): any
+  default?(): any
+  header?(): any
+  footer?(): any
 }>()
 
 // Methods
@@ -163,15 +235,15 @@ const handleBackdropClick = (event: MouseEvent) => {
 
 const onEnter = async () => {
   await nextTick()
+  if (!props.modelValue || !overlayRef.value) return
   
   // Store last focused element
   lastFocusedElement.value = document.activeElement as HTMLElement
   
-  // Lock scroll using VueUse
-  isScrollLocked.value = true
+  lockBodyScroll()
   
-  // Focus overlay for keyboard events
-  overlayRef.value?.focus()
+  // The dialog container carries the accessible name and is the first focus stop.
+  dialogRef.value?.focus()
   
   // Set up focus trap
   overlayRef.value?.addEventListener('keydown', trapFocus)
@@ -180,8 +252,8 @@ const onEnter = async () => {
 }
 
 const onAfterLeave = () => {
-  // Unlock scroll using VueUse
-  isScrollLocked.value = false
+  // A reopen during the leave transition still owns its lock.
+  if (!props.modelValue) unlockBodyScroll()
   
   // Remove focus trap
   overlayRef.value?.removeEventListener('keydown', trapFocus)
@@ -200,17 +272,21 @@ const handleEscapeKey = (event: KeyboardEvent) => {
 
 // Set up escape key listener when mounted
 onMounted(() => {
+  if (props.modelValue) lockBodyScroll()
   document.addEventListener('keydown', handleEscapeKey)
+  if (props.modelValue) nextTick(startThemeSync)
 })
 
 // Clean up on unmount
 onBeforeUnmount(() => {
+  stopThemeSync()
   // Remove escape key listener
   document.removeEventListener('keydown', handleEscapeKey)
   
   // Clean up scroll lock if dialog is open
   if (props.modelValue) {
-    isScrollLocked.value = false
+    unlockBodyScroll()
+    lastFocusedElement.value?.focus()
   }
   
   // Remove focus trap listener if still attached
@@ -350,6 +426,16 @@ defineExpose({
 .dialog-leave-to .lb-dialog
   opacity: base.$opacity-0
   transform: scale(0.95) translateY(base.$space-sm)
+
+@media (prefers-reduced-motion: reduce)
+  .dialog-enter-active,
+  .dialog-leave-active,
+  .dialog-enter-active .lb-dialog,
+  .dialog-leave-active .lb-dialog
+    transition: none
+  .dialog-enter-from .lb-dialog,
+  .dialog-leave-to .lb-dialog
+    transform: none
 
 // Responsive adjustments
 @media (max-width: 640px)

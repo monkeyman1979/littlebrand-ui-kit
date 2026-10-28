@@ -1,159 +1,29 @@
-# LittleBrand UI Kit MCP Server
+# LittleBrand local MCP (0.9.0)
 
-A Model Context Protocol (MCP) server that enables AI assistants to discover, document, and generate code for the [LittleBrand UI Kit](https://www.npmjs.com/package/littlebrand-ui-kit).
+**Security-patched runtime required:** Both the root package (which ships the CLI) and MCP manifest require **`^22.23.4 || ^24.22.1 || ^26.12.1`** after the [October 2026 Node security releases](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases). The server checks this before creating tools; vulnerable older patches, EOL odd majors and unreviewed future majors are refused even if npm engine checks were bypassed. `.node-version` pins LTS **22.23.4** for development. Upgrade Node and restart MCP clients to load fixes; npm dependency audits do not cover Node's bundled libraries. Vue peer `^3.3.0` and SDK v1 remain unchanged.
 
-## Features
+The bundled server uses **local stdio**, not a hosted endpoint. Version 0.9.0 replaces the old ten unverified tools with three read-only tools. It combines the authored [verified v1 reference](../docs/reference/v1/README.md) with a source root-export inventory in [`reference/catalog.json`](../reference/catalog.json):
 
-This MCP server provides 10 powerful tools for working with LittleBrand UI Kit:
+| Tool | Response |
+| --- | --- |
+| `lb_search` | At most five intent-matched IDs and purposes from all 33 source root-exported components and selected verified tokens. Each result is marked `checked` or `catalog-only`; catalog-only entries provide a source path, and compound children name their parent. |
+| `lb_get` | Exact component/token by ID or name. Only `checked` items expose verified API and a tested Vue SFC with `detail=full`. Catalog-only components expose a name, purpose, source path and parent where applicable, **never** inferred props or examples. |
+| `lb_setup` | npm root/CSS setup, local stdio path and version caveats. |
 
-### Component Discovery
-- **`lb_list_components`** - List all 33+ Vue components by category
-- **`lb_search_components`** - Search components by name, description, or features
-- **`lb_get_component_info`** - Get comprehensive documentation for any component
+The server loads `reference/v1.json` and `reference/catalog.json` from the same package root at runtime, checks schema/package versions and duplicate names, and does not read the unverified generic `src/data/` examples. The catalog contains only lightweight source-export facts and short discovery intents; it is **not** an all-catalog API reference or an example library. No synthetic code/theme generation, hosted endpoint, or registry install path exists. The earlier npm 0.8.3 CLI exposes ten different tools. The tracked `mcp-server/dist/` now matches the published 0.9.0 package, with three tools; installed clients should use the 0.9.0 package. Building a release regenerates the bundled `dist/` from source. The source is on the maintained `@modelcontextprotocol/sdk` **v1** line (`^1.32.2`), not the new split-package v2 SDK or a hosted transport. For agent trial context, see the [handoff](../docs/MCP_AGENT_TRIAL_HANDOFF.md); local artifact checks and runtime coverage are recorded in [distributable verification](../docs/DISTRIBUTABLE_VERIFICATION.md). SDK v2 remains a separate migration.
 
-### Design Token System
-- **`lb_list_tokens`** - Browse 312 design tokens (colors, spacing, typography)
-- **`lb_search_tokens`** - Search tokens by name or description
-- **`lb_get_token_info`** - Get detailed information about specific tokens
+## Installed npm usage (0.9.0)
 
-### Code Generation
-- **`lb_generate_component_example`** - Generate ready-to-use Vue component code
-- **`lb_generate_theme_config`** - Generate theme configuration JavaScript
+In a Vue 3 application, install via `npm install littlebrand-ui-kit`, import from `littlebrand-ui-kit`, and import `littlebrand-ui-kit/style.css`. Configure an MCP-compatible client to start `node ./node_modules/littlebrand-ui-kit/mcp-server/dist/index.js` from the project root (client config format varies). Use the matching 0.9.0 package for these tools; older 0.8.3 has known strict TypeScript and CommonJS failures. Deep imports are unsupported. See [Step 05 consumer evidence](../docs/STEP_05_NPM_CONSUMER.md).
 
-### Documentation
-- **`lb_get_installation_guide`** - Get installation and setup instructions
-- **`lb_get_theming_guide`** - Get theming and customization guide
+## Source-level checks (no release build)
 
-## Installation
+From the repository root, with dependencies already installed:
 
-The MCP server is **automatically included** when you install `littlebrand-ui-kit` via npm:
-
-```bash
-npm install littlebrand-ui-kit
+```sh
+./mcp-server/node_modules/.bin/tsc --noEmit -p mcp-server/tsconfig.json
+npm test
+npm run test:mcp
 ```
 
-All dependencies (`@modelcontextprotocol/sdk`, `zod`) are bundled with the main package - no additional installation required!
-
-## Usage
-
-### For Claude Code (Recommended for Projects)
-
-Create `.claude/config.json` in your project root:
-
-```json
-{
-  "mcpServers": {
-    "littlebrand-ui-kit": {
-      "command": "node",
-      "args": [
-        "./node_modules/littlebrand-ui-kit/mcp-server/dist/index.js"
-      ]
-    }
-  }
-}
-```
-
-**Then restart Claude Code** (fully quit and relaunch). The MCP server will load automatically.
-
-### For Claude Desktop
-
-Add to your Claude Desktop configuration file:
-
-**macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-**Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
-
-```json
-{
-  "mcpServers": {
-    "littlebrand-ui-kit": {
-      "command": "node",
-      "args": [
-        "/absolute/path/to/your-project/node_modules/littlebrand-ui-kit/mcp-server/dist/index.js"
-      ]
-    }
-  }
-}
-```
-
-Replace `/absolute/path/to/your-project/` with your actual project path where `littlebrand-ui-kit` is installed.
-
-### With Other MCP Clients
-
-The server uses stdio transport and can be integrated with any MCP-compatible client:
-
-```bash
-node ./node_modules/littlebrand-ui-kit/mcp-server/dist/index.js
-```
-
-### Verifying Setup
-
-After restarting your AI assistant, test the connection:
-
-```
-"Show me all available LittleBrand components"
-```
-
-You should see the assistant use tools like `lb_list_components` to provide accurate information.
-
-## Example Queries
-
-Once connected, try asking Claude:
-
-- "Show me all available LittleBrand components"
-- "How do I use the LbButton component?"
-- "Generate a form with email input and submit button"
-- "What spacing tokens are available?"
-- "Create a theme config with purple and orange brand colors"
-- "Search for components with icon support"
-- "Show me typography tokens"
-
-## Development
-
-```bash
-# Install dependencies
-npm install
-
-# Build TypeScript
-npm run build
-
-# Watch mode for development
-npm run dev
-```
-
-## Architecture
-
-- **`src/index.ts`** - Main server with tool registrations
-- **`src/data/components.ts`** - Component metadata (33+ components)
-- **`src/data/tokens.ts`** - Design token metadata (312 tokens)
-- **`dist/`** - Compiled JavaScript output
-
-## Available Components
-
-The server provides documentation for all LittleBrand components:
-
-- **Form**: LbInput, LbTextarea, LbSelect, LbCheckbox, LbRadio, LbSwitch, LbFormField, LbChatInput
-- **Buttons**: LbButton, LbSegmentButton
-- **Feedback**: LbDialog, LbSnackbar, LbBottomSheet
-- **Navigation**: LbNavigationBar
-- **Display**: LbAvatar, LbBadge, LbChip, LbDivider, LbProgress
-- **Utility**: LbPopover, LbMenu, LbDropdown, LbCalendar, LbDatePicker
-
-## Design Token Categories
-
-Access complete documentation for:
-
-- **Colors**: Border, Fill, Text, Surface (with 8 color variants × multiple states)
-- **Spacing**: 14 spacing sizes (2xs to 10xl)
-- **Typography**: Font families, sizes, weights, line heights
-- **Layout**: Border radius, sizes, shadows
-- **Other**: Icons, inputs, transitions, opacity
-
-## License
-
-MIT © LittleBrand
-
-## Links
-
-- [LittleBrand UI Kit](https://www.npmjs.com/package/littlebrand-ui-kit)
-- [GitHub Repository](https://github.com/monkeyman1979/littlebrand-ui-kit)
-- [MCP Protocol Documentation](https://modelcontextprotocol.io)
+`npm run test:mcp` launches the **source** server through the local `tsx` dev dependency and calls it over real stdio. It does not compile or verify the packaged `dist/` artifact. See [Step 10 limits](../docs/STEP_10_LOCAL_MCP.md). Do not run `npm run build` or `npm run build:mcp` unless the owner authorizes a release build. The prior 10-tool `evaluation.xml` was retired; source-level retrieval and response-size checks are in `tests/mcp-reference.test.js` and `tests/mcp-stdio.mjs`.

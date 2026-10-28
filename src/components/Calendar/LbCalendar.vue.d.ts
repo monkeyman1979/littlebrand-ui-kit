@@ -1,4 +1,5 @@
-import { DefineComponent } from 'vue'
+import type { DefineComponent } from 'vue'
+import type { ComponentEmits } from '../component-emits.js'
 
 export interface CalendarDay {
   date: number
@@ -90,6 +91,6 @@ export interface LbCalendarEmits {
  * - Localization support
  * - Accessible with ARIA labels
  */
-declare const LbCalendar: DefineComponent<LbCalendarProps, {}, {}, {}, {}, any, any, LbCalendarEmits>
+declare const LbCalendar: DefineComponent<LbCalendarProps, {}, {}, {}, {}, {}, {}, ComponentEmits<LbCalendarEmits>>
 
 export default LbCalendar

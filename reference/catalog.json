@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "packageVersion": "0.9.0",
+  "status": "Source root-export inventory; catalog-only items have no verified API or tested example",
+  "components": [
+    { "name": "LbAvatar", "purpose": "Show an avatar or fallback identity.", "intents": ["avatar", "profile image", "identity"], "source": "src/components/Avatar/LbAvatar.vue" },
+    { "name": "LbBadge", "purpose": "Show a compact status badge.", "intents": ["badge", "status"], "source": "src/components/Badge/LbBadge.vue" },
+    { "name": "LbCalendar", "purpose": "Show a calendar for date selection.", "intents": ["calendar", "date"], "source": "src/components/Calendar/LbCalendar.vue" },
+    { "name": "LbDatePicker", "purpose": "Choose a date with a date picker.", "intents": ["date picker", "choose date"], "source": "src/components/DatePicker/LbDatePicker.vue" },
+    { "name": "LbChip", "purpose": "Show a compact chip for filtering or selection.", "intents": ["chip", "filter"], "source": "src/components/Chip/LbChip.vue" },
+    { "name": "LbDivider", "purpose": "Separate content with a divider.", "intents": ["divider", "separator"], "source": "src/components/Divider/LbDivider.vue" },
+    { "name": "LbChatInput", "purpose": "Enter chat-style messages.", "intents": ["chat input", "message composer"], "source": "src/components/Inputs/ChatInput/LbChatInput.vue" },
+    { "name": "LbLabel", "purpose": "Display a form control label.", "intents": ["label", "form label"], "source": "src/components/Label/LbLabel.vue" },
+    { "name": "LbHintText", "purpose": "Display helper or validation text.", "intents": ["hint", "helper text"], "source": "src/components/HintText/LbHintText.vue" },
+    { "name": "LbCheckbox", "purpose": "Show a checkbox control.", "intents": ["checkbox", "check option"], "source": "src/components/Checkbox/LbCheckbox.vue" },
+    { "name": "LbRadio", "purpose": "Show a radio option.", "intents": ["radio", "choose option"], "source": "src/components/Radio/LbRadio.vue" },
+    { "name": "LbSwitch", "purpose": "Toggle a setting with a switch.", "intents": ["switch", "toggle setting"], "source": "src/components/Switch/LbSwitch.vue" },
+    { "name": "LbSelect", "purpose": "Choose from a list of options.", "intents": ["select", "options", "dropdown choice"], "source": "src/components/Select/LbSelect.vue" },
+    { "name": "LbCustomSelect", "purpose": "Choose from a custom select control.", "intents": ["custom select", "options"], "source": "src/components/CustomSelect/LbCustomSelect.vue" },
+    { "name": "LbBottomSheet", "purpose": "Show content in a bottom sheet overlay.", "intents": ["bottom sheet", "mobile overlay"], "source": "src/components/BottomSheet/LbBottomSheet.vue" },
+    { "name": "LbNavigationBar", "purpose": "Group navigation bar items.", "intents": ["navigation bar", "navigation"], "source": "src/components/NavigationBar/LbNavigationBar.vue" },
+    { "name": "LbNavigationBarItem", "purpose": "One item within a navigation bar.", "intents": ["navigation item"], "source": "src/components/NavigationBar/LbNavigationBarItem.vue", "parent": "LbNavigationBar" },
+    { "name": "LbProgress", "purpose": "Show progress through a task.", "intents": ["progress", "loading progress"], "source": "src/components/Progress/LbProgress.vue" },
+    { "name": "LbSnackbar", "purpose": "Show a snackbar notification inside its provider.", "intents": ["snackbar", "toast notification"], "source": "src/components/Snackbar/LbSnackbar.vue", "parent": "LbSnackbarProvider" },
+    { "name": "LbSnackbarProvider", "purpose": "Provide context for snackbar notifications.", "intents": ["snackbar provider", "toast provider"], "source": "src/components/Snackbar/LbSnackbarProvider.vue" },
+    { "name": "LbPopover", "purpose": "Group a popover trigger and content.", "intents": ["popover", "floating panel"], "source": "src/components/Popover/LbPopover.vue" },
+    { "name": "LbPopoverTrigger", "purpose": "Trigger a popover within its root.", "intents": ["popover trigger"], "source": "src/components/Popover/LbPopoverTrigger.vue", "parent": "LbPopover" },
+    { "name": "LbPopoverContent", "purpose": "Show popover content within its root.", "intents": ["popover content"], "source": "src/components/Popover/LbPopoverContent.vue", "parent": "LbPopover" },
+    { "name": "LbPopoverArrow", "purpose": "Show an arrow within a popover.", "intents": ["popover arrow"], "source": "src/components/Popover/LbPopoverArrow.vue", "parent": "LbPopover" },
+    { "name": "LbMenu", "purpose": "Show a menu of options.", "intents": ["menu", "menu options"], "source": "src/components/Menu/LbMenu.vue" },
+    { "name": "LbDropdown", "purpose": "Show a dropdown panel.", "intents": ["dropdown", "dropdown panel"], "source": "src/components/Dropdown/LbDropdown.vue" }
+  ]
+}

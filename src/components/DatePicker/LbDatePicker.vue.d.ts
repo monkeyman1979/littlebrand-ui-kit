@@ -1,4 +1,5 @@
-import { DefineComponent } from 'vue'
+import type { DefineComponent } from 'vue'
+import type { ComponentEmits } from '../component-emits.js'
 
 export type DateFormat = 'MM/DD/YYYY' | 'DD/MM/YYYY' | 'YYYY-MM-DD'
 export type PopoverPlacement = 'bottom' | 'top' | 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end' | 'auto'
@@ -140,13 +141,13 @@ export interface LbDatePickerEmits {
 
 declare const LbDatePicker: DefineComponent<
   LbDatePickerProps,
-  LbDatePickerEmits,
   {},
   {},
   {},
   {},
   {},
-  LbDatePickerSlots
+  {},
+  ComponentEmits<LbDatePickerEmits>
 >
 
 export default LbDatePicker

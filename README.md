@@ -2,25 +2,31 @@
 
 A modern Vue 3 UI component library with a powerful color generation system. Build beautiful, accessible interfaces with minimal effort.
 
+See the [modernization roadmap](./docs/ROADMAP.md) for planned semantic-token, documentation, MCP, registry, and optional headless-integration work.
+
 ## ✨ Features
 
 - 🎨 **Radix UI Color System** - Professional color scales with precise OKLCH values
 - 🚀 **Runtime Theming** - Change colors instantly without rebuilding
 - 📦 **20+ Components** - Buttons, forms, dialogs, navigation, and more
-- 🌙 **Dark Mode** - Opt-in dark mode with optimized colors
+- 🌙 **Dark Mode** - Follows the system unless light or dark is explicitly selected
 - 🎯 **Zero Config** - Works out of the box with beautiful defaults
-- 🌳 **Tree-Shakeable** - Only bundle what you use
+- 🌳 **Named Imports** - Import components individually (bundle size varies; the global CSS remains shared)
 - 💅 **SASS + Pug** - Clean, maintainable component code
 - 📝 **312 CSS Variables** - Complete control over typography, spacing, and colors
 - 🔤 **Flexible Typography** - Three independent font families for headings, body, and UI elements
 - 🎭 **Alpha Scales** - Complete transparency scales for overlays and subtle backgrounds
-- 🤖 **MCP Server Integration** - Built-in AI assistant tools for accurate component and token discovery
+- 🤖 **MCP Server Integration** - Bundled local stdio server; 0.9.0 distinguishes public component names from verified APIs/examples
 
 ## 📦 Installation
+
+**0.9.0 runtime requirement:** Both manifests require **`^22.23.4 || ^24.22.1 || ^26.12.1`**, the supported Node release lines patched for the [October 2026 security advisory](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases). Older patches, EOL odd-numbered majors and unreviewed future majors are unsupported. Upgrade/select Node before installing this package, even if you only use its Vue components. `.node-version` pins patched LTS **22.23.4** for development; `.npmrc` enforces package engines, and the MCP server refuses unsupported runtimes. A pin does not upgrade your installed Node or restart running clients. The Vue peer remains `^3.3.0`; earlier 0.8.3 supported a different Node range.
 
 ```bash
 npm install littlebrand-ui-kit
 ```
+
+**Version note:** The earlier 0.8.3 package has missing root TypeScript declarations and a broken CommonJS entry. This 0.9.0 source corrects those paths; use the matching package version when following these examples. Deep source imports are unsupported, and named imports do not imply per-component CSS tree-shaking.
 
 ## 🚀 Quick Start
 
@@ -46,7 +52,7 @@ app.use(LittleBrandUI)  // Registers all components globally
 app.mount('#app')
 ```
 
-### Method 2: Import as Needed (Recommended - Tree-shaking)
+### Method 2: Import as Needed (Recommended)
 
 Import only the components you need in each file:
 
@@ -231,6 +237,8 @@ See [CUSTOMIZATION.md](./CUSTOMIZATION.md) for detailed customization options in
 
 ## 🧩 Components
 
+The [first verified component slice](docs/STEP_08_COMPONENT_SLICE.md) documents source-level Button, Input, Dialog, and SegmentButton APIs with a checked Vue example. These changes ship in 0.9.0, not the earlier 0.8.3 package.
+
 ### Form Components
 - `LbInput` - Text input with validation states
 - `LbTextarea` - Multi-line text input
@@ -267,7 +275,7 @@ See [CUSTOMIZATION.md](./CUSTOMIZATION.md) for detailed customization options in
 
 ## 🌙 Dark Mode
 
-Full dark mode support is built-in! Simply activate it with the `dark` class or `data-theme` attribute:
+Without an explicit choice, the kit follows your system light/dark preference, including subsequent changes. To keep an app light regardless of the OS, set `<html data-theme="light">`. To force dark, use `data-theme="dark"` or the existing `.dark` class:
 
 ```html
 <!-- Using class -->
@@ -281,7 +289,7 @@ Full dark mode support is built-in! Simply activate it with the `dark` class or 
 </html>
 ```
 
-Dark mode automatically switches all 312 tokens to properly optimized dark values.
+The nearest explicit theme scope wins, including inside previews. On the same element, `data-theme="light"` takes precedence over `.dark`. `applyTheme()` retains the latest custom colors across mode changes; a teleported Dialog inherits its opening scope's theme while open. Your application owns persistence of any user-selected mode.
 
 ## 🎯 Color System Features
 
@@ -296,18 +304,7 @@ From ONE color, get:
 
 ### Saturation Curves
 
-Choose the mood of your colors:
-
-```javascript
-// Natural (default) - balanced
-applyTheme({ primary: '#6366f1' }, 'natural')
-
-// Vivid - more saturated, bold
-applyTheme({ primary: '#6366f1' }, 'vivid')
-
-// Muted - less saturated, subtle
-applyTheme({ primary: '#6366f1' }, 'muted')
-```
+The optional curve argument is retained for compatibility, but the current generator uses its natural scale for all values. Do not rely on `'vivid'` or `'muted'` changing the output until implemented.
 
 ## 📖 Examples
 
@@ -330,7 +327,7 @@ applyTheme({
   primary: '#8b5cf6',
   secondary: '#ec4899',
   success: '#10b981'
-}, 'vivid') // Use vivid curve for more saturation
+}) // A new call replaces the previous custom palette
 ```
 
 ### Override Specific Variables
@@ -365,40 +362,28 @@ applyTheme({
 
 ## 🤖 AI Assistant Integration
 
-LittleBrand UI Kit includes an integrated **Model Context Protocol (MCP) server** that enables AI assistants like Claude to accurately discover components, design tokens, and generate code without hallucinating prop names or variable names.
+The **0.9.0** MCP server uses local stdio and three read-only tools (`lb_search`, `lb_get`, `lb_setup`). Search covers the 33 public source root-exported components and selected semantic tokens, marking catalog-only names distinctly from checked results. Only Button, Input, Textarea, FormField, Dialog, SegmentButton (with its child), and selected tokens have [verified references](./docs/reference/v1/README.md), API facts and tested Vue examples. Other components return a source path and purpose **without** inferred props or generated code; compound children name their parent. See the [catalog inventory](./reference/catalog.json). Generic code generation and unverified API claims have been removed.
 
-### Why Use the MCP Server?
+**The earlier 0.8.3 package contains a different ten-tool server with generic, unverified examples.** Do not use its Dialog `variant="filled"` or a standalone SegmentButtonItem. Install version 0.9.0 or later to use the three reference-backed tools described here.
 
-**Problem**: LLMs often guess wrong component props and design token variable names.
+### Local MCP setup (0.9.0)
 
-**Solution**: The MCP server provides a source of truth that AI assistants can query for:
-- Exact component prop names, types, and options
-- Design token variable names and values
-- Usage examples and documentation
-- Code generation with accurate syntax
+npm remains the primary distribution path. The package declares MCP runtime dependencies, which npm installs separately; they are not bundled into the UI library.
 
-### Quick Setup
+#### For MCP-compatible agents
 
-The MCP server is automatically included when you install `littlebrand-ui-kit`. All dependencies are bundled, so no additional installation is needed!
-
-#### For Claude Code (Project-Specific)
-
-Create `.claude/config.json` in your project root:
+Configure your agent's MCP client to run the bundled stdio server from your installed project. The location and format of the client configuration vary by agent; a common server entry looks like:
 
 ```json
 {
-  "mcpServers": {
-    "littlebrand-ui-kit": {
-      "command": "node",
-      "args": [
-        "./node_modules/littlebrand-ui-kit/mcp-server/dist/index.js"
-      ]
-    }
+  "littlebrand-ui-kit": {
+    "command": "node",
+    "args": ["./node_modules/littlebrand-ui-kit/mcp-server/dist/index.js"]
   }
 }
 ```
 
-Then restart Claude Code. The MCP server will load automatically and provide access to all LittleBrand components and tokens.
+Use your project's `AGENTS.md` for tool-agnostic guidance about when to consult component and token references.
 
 #### For Claude Desktop
 
@@ -422,50 +407,38 @@ Add to your Claude Desktop config file:
 
 Replace `/absolute/path/to/your-project/` with your actual project path.
 
-#### For Global Access (Optional)
+### MCP tools (0.9.0)
 
-If you want the MCP server available across all projects, you can reference it from any project where littlebrand-ui-kit is installed, or install it globally:
+- `lb_search`: intent-based discovery across source root exports and selected checked tokens; results say `checked` or `catalog-only`.
+- `lb_get`: exact item details; `detail="full"` includes the tested Vue example **only** for checked items. Catalog-only names return source paths, not unverified APIs.
+- `lb_setup`: npm root/CSS import paths and release caveats.
 
-```bash
-npm install -g littlebrand-ui-kit
-```
-
-Then use the global path in your config.
-
-### Available MCP Tools
-
-- **Component Discovery**: `lb_list_components`, `lb_search_components`, `lb_get_component_info`
-- **Design Tokens**: `lb_list_tokens`, `lb_search_tokens`, `lb_get_token_info`
-- **Code Generation**: `lb_generate_component_example`, `lb_generate_theme_config`
-- **Documentation**: `lb_get_installation_guide`, `lb_get_theming_guide`
-
-### Testing the MCP Server
-
-After setup, try asking your AI assistant:
-- "Show me all available LittleBrand components"
-- "How do I use the LbButton component?"
-- "What spacing tokens are available?"
-- "Generate a form with email input and submit button"
+Try: “Find a confirmation modal”, then request `component:LbDialog` with full detail. A query like “popover trigger” returns a catalog-only child with its parent, not a made-up example.
 
 ### Learn More
 
-See the [MCP Server README](./mcp-server/README.md) for detailed documentation and troubleshooting.
+The local docs preview (`npm run dev:site`, then the **MCP guide** section) walks through connecting the source server and retrieving a verified example. See the [MCP Server README](./mcp-server/README.md) for packaged setup and source checks.
 
 ## 🛠️ Development
 
+Use a security-patched Node version from `.node-version` / `package.json`.
+
 ```bash
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-
-# Build library
-npm run build
-
-# Preview production build
-npm run preview
+npm ci --ignore-scripts
+npm ci --ignore-scripts --prefix mcp-server
+npm run dev        # component showcase
+npm run dev:site   # local documentation
+npm run check      # formatting, lint, strict types, unit tests, source MCP, reference freshness
+npm run check:all  # the same checks plus Chromium theme/component/overlay/docs probes
 ```
+
+**Vite+ 1.4.0 uses one central `vite.config.js`** for Vite, Vitest, Oxfmt, Oxlint, the existing ESLint rules, and validation tasks. There are no separate ESLint, Vitest or site Vite configs. TypeScript project/consumer-fixture configs remain separate deliberately.
+
+Use `npm run check`, not bare `vp check`, for the full source gate: native `vp check` covers formatting and script linting, while the central task also runs the existing Vue-essential ESLint rules and strict `vue-tsc` / TypeScript 6 checks. Native TypeScript-Go checking is disabled rather than masking Vue imports with an `any` shim. The framework lint runner only consumes rules from the central config; it does not define another policy.
+
+`npm run lint`, `npm run typecheck`, and `npm test` remain available individually. `npm run format` / `npm run format:check` cover tooling, tests, MCP source and the docs app; public library sources, generated references and captured historical answers are intentionally excluded to avoid an unrelated formatting migration. Validation task caching is disabled so checks execute on the current runtime.
+
+Source checks do not build or extract metadata. Production builds still require explicit owner authorization and a fresh installed-tarball gate for each release; earlier 0.8.3 artifacts do not certify the 0.9.0 toolchain.
 
 ## 📄 License
 

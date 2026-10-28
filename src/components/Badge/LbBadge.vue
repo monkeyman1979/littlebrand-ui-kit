@@ -8,7 +8,7 @@ span.lb-badge(
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, type VNode } from 'vue'
 
 // Types
 type Variant = 'default' | 'neutral' | 'primary' | 'secondary' | 'tertiary' | 'success' | 'warning' | 'error' | 'info'
@@ -53,9 +53,10 @@ const displayValue = computed(() => {
   
   // Extract text content from slot
   const textContent = slotContent
-    .map(node => {
-      if (typeof node.children === 'string') return node.children
-      if (typeof node.children === 'number') return node.children.toString()
+    .map((node: VNode) => {
+      const children: unknown = node.children
+      if (typeof children === 'string') return children
+      if (typeof children === 'number') return children.toString()
       return ''
     })
     .join('')

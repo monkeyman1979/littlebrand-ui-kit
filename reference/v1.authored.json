@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "packageVersion": "0.9.0",
+  "status": "Versioned 0.9.0 reference; only listed items have checked APIs and examples",
+  "distribution": "Vue peer range ^3.3.0. For package version 0.9.0, import components from littlebrand-ui-kit and CSS from littlebrand-ui-kit/style.css. Deep imports are unsupported; catalog-only names have no verified API or tested example.",
+  "components": [
+    {
+      "id": "component:LbButton", "name": "LbButton", "source": "src/components/Buttons/Button/LbButton.vue", "example": "reference/examples/button.vue",
+      "purpose": "Trigger an action or navigate to a destination.", "intents": ["action", "submit", "save", "button", "link", "navigate"], "use": "Use a native button for actions; inside a form use type=submit with one form @submit.prevent handler. Use href for a URL, or to only in a host with Vue Router.", "avoid": "Do not attach the same action to both a submit button click and its form submit; do not use iconOnly without an accessible name or a link for a disabled action.",
+      "accessibility": "Native button by default; iconOnly needs aria-label. Loading exposes aria-busy and blocks activation. Disabled/loading links become disabled buttons.",
+      "states": ["filled, tonal, outline, ghost or link", "small, medium or large", "disabled", "loading", "keyboard focus"],
+      "related": ["component:LbDialog", "token:--lb-fill-primary-normal", "token:--lb-text-on-primary", "token:--lb-focus-ring-color"],
+      "dependencies": ["Vue 3", "Vue Router only for the to prop"]
+    },
+    {
+      "id": "component:LbInput", "name": "LbInput", "source": "src/components/Inputs/Input/LbInput.vue", "example": "reference/examples/input.vue",
+      "purpose": "Collect one line of text with v-model.", "intents": ["input", "email", "text field", "form", "entry"], "use": "Use a visible label or aria-label; pass native name and autocomplete when submitting forms.", "avoid": "Do not request small size or assume v-model emits numbers: updates are strings.",
+      "accessibility": "Invalid sets aria-invalid; loading disables the native input. Clear and password controls are unavailable while disabled or readonly.",
+      "states": ["medium or large", "disabled", "readonly", "required", "invalid", "loading", "clearable", "keyboard focus"],
+      "related": ["token:--lb-border-neutral-normal", "token:--lb-border-error-normal", "token:--lb-text-neutral-normal"], "dependencies": ["Vue 3"]
+    },
+    {
+      "id": "component:LbTextarea", "name": "LbTextarea", "source": "src/components/Textarea/LbTextarea.vue", "example": "reference/examples/textarea.vue",
+      "purpose": "Collect longer free-form text with v-model.", "intents": ["textarea", "multiline", "notes", "long form", "feedback"], "use": "Associate a visible label or aria-label. For a standalone textarea, pass native name and aria-describedby for helper text; when nested in FormField, it supplies the control id and message description.", "avoid": "Do not assume FormField supplies validation or a required native attribute; explicitly set invalid/required on the control. No small size exists.",
+      "accessibility": "Uses a native textarea. Invalid sets aria-invalid; readonly and disabled preserve native semantics. The outline and ring stay visible on keyboard focus in both themes.",
+      "states": ["medium or large", "disabled", "readonly", "required", "invalid", "autoResize with optional maxRows", "keyboard focus", "reduced motion"],
+      "related": ["component:LbFormField", "component:LbInput", "token:--lb-border-neutral-normal", "token:--lb-border-error-normal"], "dependencies": ["Vue 3"]
+    },
+    {
+      "id": "component:LbFormField", "name": "LbFormField", "source": "src/components/FormField/LbFormField.vue", "example": "reference/examples/form-field.vue",
+      "purpose": "Compose a label, control and one helper or validation message.", "intents": ["form field", "validation", "label and hint", "error message", "field group"], "use": "Nest an Input or Textarea, supply label and hint/error, and bind v-model on the control. Pass required and invalid to the control itself. For submission, handle the native form @submit.prevent once and use LbButton type=submit.", "avoid": "Do not expect FormField to validate or set aria-invalid/required on its child. Do not also call the submit handler on button click. If using labelFor, keep it matched to the actual control ID.",
+      "accessibility": "Provides a stable generated id and aria-describedby for injected Input/Textarea; the visible label targets that id and the message supplies its description. A label alone does not mark the control required.",
+      "states": ["hint", "error, warning or success message (in that priority)", "required indicator", "stable control/description ids"],
+      "related": ["component:LbTextarea", "component:LbInput", "token:--lb-border-error-normal"], "dependencies": ["Vue 3", "LbLabel and LbHintText internally (standalone APIs not verified in this slice)"]
+    },
+    {
+      "id": "component:LbDialog", "name": "LbDialog", "source": "src/components/Dialog/LbDialog.vue", "example": "reference/examples/dialog.vue",
+      "purpose": "Present a modal decision or focused content.", "intents": ["dialog", "modal", "confirmation", "preferences", "overlay"], "use": "Bind v-model and give the dialog a title or an ARIA name; use the footer slot for actions. For a reusable wrapper supporting Vue 3.3, declare modelValue and emit update:modelValue (a computed getter/setter can bridge to v-model).", "avoid": "Do not use defineModel in a Vue 3.3-compatible wrapper: that macro requires Vue 3.4+. Do not use variant=filled; only default and fullscreen exist. The header slot renders only in fullscreen and needs its own visible heading.",
+      "accessibility": "Teleports to body with originating theme; focuses dialog on open, contains Tab and restores trigger focus on close. Escape/backdrop respect close props.",
+      "states": ["closed or open", "default or fullscreen", "close button", "Escape and backdrop policy"],
+      "related": ["component:LbButton", "token:--lb-surface-subtle", "token:--lb-surface-overlay"], "dependencies": ["Vue 3", "@vueuse/core (package dependency)"]
+    },
+    {
+      "id": "component:LbSegmentButton", "name": "LbSegmentButton", "source": "src/components/Buttons/SegmentButton/LbSegmentButton.vue", "example": "reference/examples/segment-button.vue",
+      "purpose": "Choose one or more options from a short set of segments.", "intents": ["segment", "segmented control", "choose frequency", "selection", "toggle group"], "use": "Nest LbSegmentButtonItem inside the root; bind v-model and label the group. For a reusable wrapper supporting Vue 3.3, declare modelValue and emit update:modelValue (a computed getter/setter can bridge to v-model).", "avoid": "Do not use defineModel in a Vue 3.3-compatible wrapper: that macro requires Vue 3.4+. Never mount LbSegmentButtonItem alone; it requires root context. Do not treat optional toggle mode as mandatory radio mode.",
+      "accessibility": "Optional selection uses toggle buttons; nonempty mandatory single selection uses radio semantics. Arrow/Home/End skip disabled items; label icon-only items.",
+      "states": ["optional or mandatory", "single or multi-select", "medium or large", "disabled", "keyboard focus"],
+      "related": ["component:LbSegmentButtonItem", "token:--lb-surface-primary-active"], "dependencies": ["Vue 3"]
+    },
+    {
+      "id": "component:LbSegmentButtonItem", "name": "LbSegmentButtonItem", "source": "src/components/Buttons/SegmentButton/LbSegmentButtonItem.vue", "example": "reference/examples/segment-button.vue", "compoundOnly": true,
+      "purpose": "One option within LbSegmentButton.", "intents": ["segment item", "segmented option"], "use": "Provide a unique value and visible text or ariaLabel within a labelled root.", "avoid": "Never use independently; it throws without its parent context.", "accessibility": "Renders a button, with aria-pressed in optional/multi mode or radio semantics in mandatory single mode.",
+      "states": ["selected", "disabled", "keyboard focus"], "related": ["component:LbSegmentButton"], "dependencies": ["LbSegmentButton parent"]
+    }
+  ],
+  "tokens": [
+    {"id":"token:--lb-fill-primary-normal","name":"--lb-fill-primary-normal","purpose":"Primary solid control fill; light/dark palette step 9.","related":["component:LbButton"]},
+    {"id":"token:--lb-text-on-primary","name":"--lb-text-on-primary","purpose":"Readable foreground on primary normal fill; contrast anchor chosen per mode/state, not ordinary primary text.","related":["component:LbButton"]},
+    {"id":"token:--lb-focus-ring-color","name":"--lb-focus-ring-color","purpose":"Button focus ring color, resolved from the primary focus border role; width and offset use shared SASS sizing.","related":["component:LbButton"]},
+    {"id":"token:--lb-border-neutral-normal","name":"--lb-border-neutral-normal","purpose":"Neutral control border, palette step 7.","related":["component:LbInput"]},
+    {"id":"token:--lb-border-error-normal","name":"--lb-border-error-normal","purpose":"Error control border, palette step 7.","related":["component:LbInput"]},
+    {"id":"token:--lb-text-neutral-normal","name":"--lb-text-neutral-normal","purpose":"Normal neutral reading text, palette step 11.","related":["component:LbInput"]},
+    {"id":"token:--lb-surface-subtle","name":"--lb-surface-subtle","purpose":"Global background-source subtle layer used by the Dialog panel, separate from family-specific surfaces.","related":["component:LbDialog"]},
+    {"id":"token:--lb-surface-overlay","name":"--lb-surface-overlay","purpose":"Dialog backdrop overlay, not a tinted surface step.","related":["component:LbDialog"]},
+    {"id":"token:--lb-surface-primary-active","name":"--lb-surface-primary-active","purpose":"Primary tinted selected/pressed surface, palette step 5; not keyboard focus.","related":["component:LbSegmentButton"]}
+  ]
+}

@@ -1,4 +1,5 @@
-import type { DefineComponent } from 'vue'
+import type { DefineComponent, SlotsType } from 'vue'
+import type { ComponentEmits, ComponentPublicProps as PublicProps, ComponentEventProps as EmitsToProps } from '../component-emits.js'
 
 export interface LbTextareaProps {
   modelValue?: string
@@ -29,6 +30,15 @@ export interface LbTextareaEmits {
   'blur': (event: FocusEvent) => void
 }
 
-declare const LbTextarea: DefineComponent<LbTextareaProps, {}, {}, {}, {}, {}, {}, {}>
+export interface LbTextareaSlots {}
+
+type TextareaEventTuples = { [K in keyof LbTextareaEmits]: LbTextareaEmits[K] extends (...args: infer Args) => void ? Args : never }
+type TextareaVueEmits = ComponentEmits<TextareaEventTuples>
+declare const LbTextarea: DefineComponent<
+  LbTextareaProps, {}, {}, {}, {}, {}, {},
+  TextareaVueEmits, never, PublicProps,
+  Readonly<LbTextareaProps> & EmitsToProps<TextareaVueEmits>,
+  {}, SlotsType<LbTextareaSlots>
+>
 
 export default LbTextarea

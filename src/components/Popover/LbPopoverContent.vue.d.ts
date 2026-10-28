@@ -1,14 +1,7 @@
 import type { DefineComponent } from 'vue'
 
-export interface LbPopoverContentProps {
-  side?: 'top' | 'right' | 'bottom' | 'left'
-  align?: 'start' | 'center' | 'end'
-  sideOffset?: number
-  alignOffset?: number
-  avoidCollisions?: boolean
-  collisionBoundary?: Element | null
-  sticky?: 'partial' | 'always'
-}
+// Positioning is controlled by LbPopover, not by content props.
+export interface LbPopoverContentProps {}
 
 declare const LbPopoverContent: DefineComponent<LbPopoverContentProps>
 

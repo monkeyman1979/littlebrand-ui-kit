@@ -48,7 +48,7 @@ Teleport(to="body")
 
 <script setup lang="ts">
 import { computed, ref, nextTick, onBeforeUnmount, onMounted, watch } from 'vue'
-import { useScrollLock } from '@vueuse/core'
+import { useBodyScrollLock } from '@/utils/body-scroll-lock'
 
 // Types
 export type BottomSheetState = 'closed' | 'default' | 'expanded'
@@ -104,8 +104,7 @@ const lastMoveY = ref(0)
 const isContentAtTop = ref(true)
 const touchStartedOnContent = ref(false)
 
-// Scroll lock using VueUse
-const isScrollLocked = useScrollLock(typeof document !== 'undefined' ? document.body : null)
+const { lock: lockBodyScroll, unlock: unlockBodyScroll } = useBodyScrollLock()
 
 // Focus management
 const lastFocusedElement = ref<HTMLElement | null>(null)
@@ -360,14 +359,14 @@ const handleBackdropClick = (event: MouseEvent) => {
 
 const onEnter = async () => {
   await nextTick()
+  if (!props.modelValue || !overlayRef.value) return
   
   currentState.value = 'default'
   
   // Store last focused element
   lastFocusedElement.value = document.activeElement as HTMLElement
   
-  // Lock scroll using VueUse
-  isScrollLocked.value = true
+  lockBodyScroll()
   
   // Focus overlay for keyboard events
   overlayRef.value?.focus()
@@ -394,8 +393,8 @@ const onEnter = async () => {
 const onAfterLeave = () => {
   currentState.value = 'closed'
   
-  // Unlock scroll using VueUse
-  isScrollLocked.value = false
+  // A reopen during the leave transition still owns its lock.
+  if (!props.modelValue) unlockBodyScroll()
   
   // Remove focus trap
   overlayRef.value?.removeEventListener('keydown', trapFocus)
@@ -432,6 +431,7 @@ const handleEscapeKey = (event: KeyboardEvent) => {
 
 // Set up escape key listener when mounted
 onMounted(() => {
+  if (props.modelValue) lockBodyScroll()
   document.addEventListener('keydown', handleEscapeKey)
 })
 
@@ -442,7 +442,7 @@ onBeforeUnmount(() => {
   
   // Clean up scroll lock if sheet is open
   if (props.modelValue) {
-    isScrollLocked.value = false
+    unlockBodyScroll()
   }
   
   // Remove all event listeners
