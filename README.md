@@ -9,24 +9,24 @@ See the [modernization roadmap](./docs/ROADMAP.md) for planned semantic-token, d
 - 🎨 **Radix UI Color System** - Professional color scales with precise OKLCH values
 - 🚀 **Runtime Theming** - Change colors instantly without rebuilding
 - 📦 **20+ Components** - Buttons, forms, dialogs, navigation, and more
-- 🌙 **Dark Mode** - Opt-in dark mode with optimized colors
+- 🌙 **Dark Mode** - Follows the system unless light or dark is explicitly selected
 - 🎯 **Zero Config** - Works out of the box with beautiful defaults
 - 🌳 **Named Imports** - Import components individually (bundle size varies; the global CSS remains shared)
 - 💅 **SASS + Pug** - Clean, maintainable component code
 - 📝 **312 CSS Variables** - Complete control over typography, spacing, and colors
 - 🔤 **Flexible Typography** - Three independent font families for headings, body, and UI elements
 - 🎭 **Alpha Scales** - Complete transparency scales for overlays and subtle backgrounds
-- 🤖 **MCP Server Integration** - Bundled local stdio server; unreleased source distinguishes public component names from verified APIs/examples (published 0.8.3 still has generic metadata)
+- 🤖 **MCP Server Integration** - Bundled local stdio server; 0.9.0 distinguishes public component names from verified APIs/examples
 
 ## 📦 Installation
 
-**Unreleased security baseline:** Both manifests require **`^22.23.4 || ^24.22.1 || ^26.12.1`**, the supported Node release lines patched for the [October 2026 security advisory](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases). Older patches, EOL odd-numbered majors and unreviewed future majors are unsupported. Upgrade/select Node before installing this package, even if you only use its Vue components. `.node-version` pins patched LTS **22.23.4** for development; `.npmrc` enforces package engines, and the MCP server refuses unsupported runtimes. A pin does not upgrade your installed Node or restart running clients. The Vue peer remains `^3.3.0`; published npm 0.8.3 is unchanged.
+**0.9.0 runtime requirement:** Both manifests require **`^22.23.4 || ^24.22.1 || ^26.12.1`**, the supported Node release lines patched for the [October 2026 security advisory](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases). Older patches, EOL odd-numbered majors and unreviewed future majors are unsupported. Upgrade/select Node before installing this package, even if you only use its Vue components. `.node-version` pins patched LTS **22.23.4** for development; `.npmrc` enforces package engines, and the MCP server refuses unsupported runtimes. A pin does not upgrade your installed Node or restart running clients. The Vue peer remains `^3.3.0`; earlier 0.8.3 supported a different Node range.
 
 ```bash
 npm install littlebrand-ui-kit
 ```
 
-**Packaging status:** The currently published 0.8.3 package resolves named ESM root imports and the `style.css` path in a Node consumer, but its root TypeScript declarations are not discoverable and its declared CommonJS `require` target is missing. Fixes have passed a local build and clean consumer check but remain **Unreleased** until separately reviewed and published. Do not assume deep source imports or tree-shaking until validated in a consumer.
+**Version note:** The earlier 0.8.3 package has missing root TypeScript declarations and a broken CommonJS entry. This 0.9.0 source corrects those paths; use the matching package version when following these examples. Deep source imports are unsupported, and named imports do not imply per-component CSS tree-shaking.
 
 ## 🚀 Quick Start
 
@@ -237,7 +237,7 @@ See [CUSTOMIZATION.md](./CUSTOMIZATION.md) for detailed customization options in
 
 ## 🧩 Components
 
-The [first verified component slice](docs/STEP_08_COMPONENT_SLICE.md) documents source-level Button, Input, Dialog, and SegmentButton APIs with a checked Vue example. These Step 08 fixes are **unreleased** and are not present in the currently published npm package.
+The [first verified component slice](docs/STEP_08_COMPONENT_SLICE.md) documents source-level Button, Input, Dialog, and SegmentButton APIs with a checked Vue example. These changes are included in the 0.9.0 release candidate, not the earlier 0.8.3 package.
 
 ### Form Components
 - `LbInput` - Text input with validation states
@@ -362,11 +362,11 @@ applyTheme({
 
 ## 🤖 AI Assistant Integration
 
-The **unreleased source** MCP server uses local stdio and three read-only tools (`lb_search`, `lb_get`, `lb_setup`). Search covers the 33 public source root-exported components and selected semantic tokens, marking catalog-only names distinctly from checked results. Only Button, Input, Textarea, FormField, Dialog, SegmentButton (with its child), and selected tokens have [verified references](./docs/reference/v1/README.md), API facts and tested Vue examples. Other components return a source path and purpose **without** inferred props or generated code; compound children name their parent. See the [catalog inventory](./reference/catalog.json). Generic code generation and unverified API claims have been removed from the source server.
+The **0.9.0** MCP server uses local stdio and three read-only tools (`lb_search`, `lb_get`, `lb_setup`). Search covers the 33 public source root-exported components and selected semantic tokens, marking catalog-only names distinctly from checked results. Only Button, Input, Textarea, FormField, Dialog, SegmentButton (with its child), and selected tokens have [verified references](./docs/reference/v1/README.md), API facts and tested Vue examples. Other components return a source path and purpose **without** inferred props or generated code; compound children name their parent. See the [catalog inventory](./reference/catalog.json). Generic code generation and unverified API claims have been removed.
 
-**Published npm 0.8.3 still contains the older ten-tool server and generic examples.** Its artifact has not been refreshed or verified against the new source reference; do not treat its examples as verified (in particular, Dialog `variant="filled"` and a standalone SegmentButtonItem are invalid). A future owner-authorized release build/extraction and installed-package check are required before promising the new tools through npm.
+**The earlier 0.8.3 package contains a different ten-tool server with generic, unverified examples.** Do not use its Dialog `variant="filled"` or a standalone SegmentButtonItem. Install version 0.9.0 or later to use the three reference-backed tools described here.
 
-### Planned setup after a verified release
+### Local MCP setup (0.9.0)
 
 npm remains the primary distribution path. The package declares MCP runtime dependencies, which npm installs separately; they are not bundled into the UI library.
 
@@ -407,7 +407,7 @@ Add to your Claude Desktop config file:
 
 Replace `/absolute/path/to/your-project/` with your actual project path.
 
-### Source tools (not yet in npm)
+### MCP tools (0.9.0)
 
 - `lb_search`: intent-based discovery across source root exports and selected checked tokens; results say `checked` or `catalog-only`.
 - `lb_get`: exact item details; `detail="full"` includes the tested Vue example **only** for checked items. Catalog-only names return source paths, not unverified APIs.
@@ -417,7 +417,7 @@ Try: “Find a confirmation modal”, then request `component:LbDialog` with ful
 
 ### Learn More
 
-The local docs preview (`npm run dev:site`, then the **MCP guide** section) walks through connecting the unreleased source server and retrieving a verified example. See the [MCP Server README](./mcp-server/README.md) for release boundaries and source checks.
+The local docs preview (`npm run dev:site`, then the **MCP guide** section) walks through connecting the source server and retrieving a verified example. See the [MCP Server README](./mcp-server/README.md) for packaged setup and source checks.
 
 ## 🛠️ Development
 
@@ -438,7 +438,7 @@ Use `npm run check`, not bare `vp check`, for the full source gate: native `vp c
 
 `npm run lint`, `npm run typecheck`, and `npm test` remain available individually. `npm run format` / `npm run format:check` cover tooling, tests, MCP source and the docs app; public library sources, generated references and captured historical answers are intentionally excluded to avoid an unrelated formatting migration. Validation task caching is disabled so checks execute on the current runtime.
 
-Source checks do not build or extract metadata. Production builds still require explicit owner authorization and a fresh installed-tarball gate; published npm 0.8.3 and historical artifact results do not certify this toolchain.
+Source checks do not build or extract metadata. Production builds still require explicit owner authorization and a fresh installed-tarball gate for each release; earlier 0.8.3 artifacts do not certify the 0.9.0 toolchain.
 
 ## 📄 License
 

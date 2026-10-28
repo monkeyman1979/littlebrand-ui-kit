@@ -167,7 +167,7 @@ const response = (value: unknown, isError = false) => ({
   ...(isError ? { isError: true } : {})
 })
 const note =
-  'This reference is unreleased source work, not the published npm 0.8.3 artifact. Published 0.8.3 has known strict TypeScript and CJS failures; the exact future release artifact and MCP CLI remain unverified.'
+  'Only checked items have verified APIs and tested examples. Catalog-only items have unverified APIs; do not infer props or use a compound child alone. Older package versions may expose different MCP tools and examples.'
 
 export function createServer(
   reference: Reference = loadReference(),

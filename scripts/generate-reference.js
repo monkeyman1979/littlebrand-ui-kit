@@ -209,7 +209,7 @@ output.set(
     .map((c) => `- ${c.id} — ${c.purpose} [Reference](${link(c.id)})`)
     .join(
       '\n'
-    )}\n\nCompound child: [component:LbSegmentButtonItem](${link('component:LbSegmentButtonItem')}) only inside LbSegmentButton.\n\n## Selected tokens\n\n${authored.tokens.map((t) => `- ${t.id} — [${t.name}](${link(t.id)})`).join('\n')}\n\nUse the package root and \`littlebrand-ui-kit/style.css\`. Current published npm 0.8.3 has not been verified against this source reference.\n`
+    )}\n\nCompound child: [component:LbSegmentButtonItem](${link('component:LbSegmentButtonItem')}) only inside LbSegmentButton.\n\n## Selected tokens\n\n${authored.tokens.map((t) => `- ${t.id} — [${t.name}](${link(t.id)})`).join('\n')}\n\nUse the package root and \`littlebrand-ui-kit/style.css\`. This reference is for version ${authored.packageVersion}; older releases may have different MCP tools and unverified examples.\n`
 )
 for (const item of authored.components) {
   const entry = api[item.id]

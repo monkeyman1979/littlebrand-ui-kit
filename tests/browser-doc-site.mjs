@@ -34,7 +34,7 @@ try {
     await page.getByRole('link', { name: 'MCP guide' }).click()
     await page.getByRole('heading', { name: 'Connect the source MCP server.' }).waitFor()
     const guide = page.locator('#mcp')
-    assert.match(await guide.innerText(), /Published npm 0\.8\.3.*older, unverified tools/)
+    assert.match(await guide.innerText(), /earlier 0\.8\.3 CLI exposes ten different tools/)
     const install = await guide.locator('.mcp-steps li').nth(0).locator('pre').innerText()
     assert.match(install, /npm ci --ignore-scripts --prefix mcp-server/)
     const config = JSON.parse(

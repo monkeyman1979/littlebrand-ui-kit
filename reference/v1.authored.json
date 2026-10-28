@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "packageVersion": "0.9.0",
-  "status": "Unreleased 0.9.0 candidate; published npm remains 0.8.3",
-  "distribution": "Vue peer range ^3.3.0. After release, install from npm; import components from littlebrand-ui-kit and CSS from littlebrand-ui-kit/style.css. This source reference describes a 0.9.0 candidate, not the published 0.8.3 artifact. Deep imports are unsupported.",
+  "status": "Versioned 0.9.0 reference; only listed items have checked APIs and examples",
+  "distribution": "Vue peer range ^3.3.0. For package version 0.9.0, import components from littlebrand-ui-kit and CSS from littlebrand-ui-kit/style.css. Deep imports are unsupported; catalog-only names have no verified API or tested example.",
   "components": [
     {
       "id": "component:LbButton", "name": "LbButton", "source": "src/components/Buttons/Button/LbButton.vue", "example": "reference/examples/button.vue",

@@ -1,8 +1,8 @@
 # LittleBrand verified reference v1
 
-Source: `reference/v1.authored.json`; API derived from implementation and declarations. Package version: `0.9.0`. Unreleased 0.9.0 candidate; published npm remains 0.8.3.
+Source: `reference/v1.authored.json`; API derived from implementation and declarations. Package version: `0.9.0`. Versioned 0.9.0 reference; only listed items have checked APIs and examples.
 
-Vue peer range ^3.3.0. After release, install from npm; import components from littlebrand-ui-kit and CSS from littlebrand-ui-kit/style.css. This source reference describes a 0.9.0 candidate, not the published 0.8.3 artifact. Deep imports are unsupported.
+Vue peer range ^3.3.0. For package version 0.9.0, import components from littlebrand-ui-kit and CSS from littlebrand-ui-kit/style.css. Deep imports are unsupported; catalog-only names have no verified API or tested example.
 
 ## Find a verified item
 
@@ -27,4 +27,4 @@ Compound child: [component:LbSegmentButtonItem](./components/LbSegmentButtonItem
 - token:--lb-surface-overlay — [--lb-surface-overlay](./TOKENS.md#token---lb-surface-overlay)
 - token:--lb-surface-primary-active — [--lb-surface-primary-active](./TOKENS.md#token---lb-surface-primary-active)
 
-Use the package root and `littlebrand-ui-kit/style.css`. Current published npm 0.8.3 has not been verified against this source reference.
+Use the package root and `littlebrand-ui-kit/style.css`. This reference is for version 0.9.0; older releases may have different MCP tools and unverified examples.
