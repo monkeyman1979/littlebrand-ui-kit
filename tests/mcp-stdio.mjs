@@ -43,6 +43,23 @@ try {
     arguments: { query: 'save', limit: 4 }
   })
   assert.deepEqual(defaultSearch, explicitSearch, 'omitted limit still defaults to 4')
+  const catalogSearch = await client.callTool({
+    name: 'lb_search',
+    arguments: { query: 'popover trigger' }
+  })
+  assert.deepEqual(JSON.parse(catalogSearch.content[0].text).results[0], {
+    id: 'component:LbPopoverTrigger',
+    name: 'LbPopoverTrigger',
+    purpose: 'Trigger a popover within its root.',
+    verification: 'catalog-only',
+    sourcePath: 'src/components/Popover/LbPopoverTrigger.vue',
+    parent: 'LbPopover'
+  })
+  const catalogGet = await client.callTool({
+    name: 'lb_get',
+    arguments: { id: 'component:LbPopoverTrigger', detail: 'full' }
+  })
+  assert.equal(JSON.parse(catalogGet.content[0].text).testedVueExample, undefined)
   const defaultGet = await client.callTool({
     name: 'lb_get',
     arguments: { id: 'component:LbButton' }

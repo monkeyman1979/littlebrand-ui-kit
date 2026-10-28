@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "packageVersion": "0.8.3",
-  "status": "Unreleased source reference; not a published 0.8.3 artifact",
-  "distribution": "Vue peer range ^3.3.0. Install from npm; import components from littlebrand-ui-kit and CSS from littlebrand-ui-kit/style.css. This source reference describes unreleased develop work, not the published 0.8.3 artifact. Deep imports are unsupported.",
+  "packageVersion": "0.9.0",
+  "status": "Unreleased 0.9.0 candidate; published npm remains 0.8.3",
+  "distribution": "Vue peer range ^3.3.0. After release, install from npm; import components from littlebrand-ui-kit and CSS from littlebrand-ui-kit/style.css. This source reference describes a 0.9.0 candidate, not the published 0.8.3 artifact. Deep imports are unsupported.",
   "components": [
     {
       "id": "component:LbButton",

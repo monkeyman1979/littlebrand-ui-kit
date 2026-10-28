@@ -1,8 +1,8 @@
 # LittleBrand verified reference v1
 
-Source: `reference/v1.authored.json`; API derived from implementation and declarations. Package version: `0.8.3`. Unreleased source reference; not a published 0.8.3 artifact.
+Source: `reference/v1.authored.json`; API derived from implementation and declarations. Package version: `0.9.0`. Unreleased 0.9.0 candidate; published npm remains 0.8.3.
 
-Vue peer range ^3.3.0. Install from npm; import components from littlebrand-ui-kit and CSS from littlebrand-ui-kit/style.css. This source reference describes unreleased develop work, not the published 0.8.3 artifact. Deep imports are unsupported.
+Vue peer range ^3.3.0. After release, install from npm; import components from littlebrand-ui-kit and CSS from littlebrand-ui-kit/style.css. This source reference describes a 0.9.0 candidate, not the published 0.8.3 artifact. Deep imports are unsupported.
 
 ## Find a verified item
 

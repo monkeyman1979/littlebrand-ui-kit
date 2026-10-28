@@ -16,7 +16,7 @@ See the [modernization roadmap](./docs/ROADMAP.md) for planned semantic-token, d
 - 📝 **312 CSS Variables** - Complete control over typography, spacing, and colors
 - 🔤 **Flexible Typography** - Three independent font families for headings, body, and UI elements
 - 🎭 **Alpha Scales** - Complete transparency scales for overlays and subtle backgrounds
-- 🤖 **MCP Server Integration** - Bundled local stdio server; verified-slice discovery is in unreleased source (published 0.8.3 still has generic metadata)
+- 🤖 **MCP Server Integration** - Bundled local stdio server; unreleased source distinguishes public component names from verified APIs/examples (published 0.8.3 still has generic metadata)
 
 ## 📦 Installation
 
@@ -362,7 +362,7 @@ applyTheme({
 
 ## 🤖 AI Assistant Integration
 
-The **unreleased source** MCP server uses local stdio and the [verified component/token reference](./docs/reference/v1/README.md). Three read-only tools (`lb_search`, `lb_get`, `lb_setup`) return concise intent matches, exact checked details with tested Vue examples on demand, and npm setup guidance. Only Button, Input, Textarea, FormField, Dialog, SegmentButton (with its child), and selected tokens have verified references. Generic code generation and all-catalog claims have been removed from the source server.
+The **unreleased source** MCP server uses local stdio and three read-only tools (`lb_search`, `lb_get`, `lb_setup`). Search covers the 33 public source root-exported components and selected semantic tokens, marking catalog-only names distinctly from checked results. Only Button, Input, Textarea, FormField, Dialog, SegmentButton (with its child), and selected tokens have [verified references](./docs/reference/v1/README.md), API facts and tested Vue examples. Other components return a source path and purpose **without** inferred props or generated code; compound children name their parent. See the [catalog inventory](./reference/catalog.json). Generic code generation and unverified API claims have been removed from the source server.
 
 **Published npm 0.8.3 still contains the older ten-tool server and generic examples.** Its artifact has not been refreshed or verified against the new source reference; do not treat its examples as verified (in particular, Dialog `variant="filled"` and a standalone SegmentButtonItem are invalid). A future owner-authorized release build/extraction and installed-package check are required before promising the new tools through npm.
 
@@ -409,15 +409,15 @@ Replace `/absolute/path/to/your-project/` with your actual project path.
 
 ### Source tools (not yet in npm)
 
-- `lb_search`: intent-based discovery over the verified slice, returning stable IDs.
-- `lb_get`: exact component/token details; `detail="full"` includes the checked Vue example.
+- `lb_search`: intent-based discovery across source root exports and selected checked tokens; results say `checked` or `catalog-only`.
+- `lb_get`: exact item details; `detail="full"` includes the tested Vue example **only** for checked items. Catalog-only names return source paths, not unverified APIs.
 - `lb_setup`: npm root/CSS import paths and release caveats.
 
-Try: “Find a confirmation modal”, then request `component:LbDialog` with full detail. Other components/tokens must not be treated as verified by these source tools.
+Try: “Find a confirmation modal”, then request `component:LbDialog` with full detail. A query like “popover trigger” returns a catalog-only child with its parent, not a made-up example.
 
 ### Learn More
 
-See the [MCP Server README](./mcp-server/README.md) for detailed documentation and troubleshooting.
+The local docs preview (`npm run dev:site`, then the **MCP guide** section) walks through connecting the unreleased source server and retrieving a verified example. See the [MCP Server README](./mcp-server/README.md) for release boundaries and source checks.
 
 ## 🛠️ Development
 
